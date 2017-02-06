@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:showDividers="middle"
+    android:divider="@drawable/shape_divider_line"
+    >
+
+    <include layout="@layout/layout_title" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@null"
+        android:hint="请留下您的宝贵意见和建议，我们将努力改进"
+        android:textColor="@color/color_bf"
+        android:textSize="@dimen/dimen_14"
+        android:gravity="left"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@null"
+        android:hint="请留下您的宝贵意见"
+        android:textColor="@color/color_bf"
+        android:textSize="@dimen/dimen_14"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        />
+
+    <!--<Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />-->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="27dp"
+        android:background="@drawable/shape_save_address_bg"
+        android:text="提交"
+        android:textColor="@color/color_while"
+        android:textSize="@dimen/dimen_15"
+        />
+
+</LinearLayout>

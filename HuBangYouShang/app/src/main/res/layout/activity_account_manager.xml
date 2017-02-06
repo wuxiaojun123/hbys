@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@drawable/shape_divider_line"
+    android:orientation="vertical"
+    android:showDividers="middle|end">
+
+    <include layout="@layout/layout_title" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/tv_person_info"
+        style="@style/style_my_account_text_item"
+        android:text="个人信息" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/tv_certification"
+        style="@style/style_my_account_text_item"
+        android:text="实名认证" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/shape_divider_line"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:showDividers="middle">
+
+        <TextView
+            android:id="@+id/tv_verify_ldentity"
+            style="@style/style_my_account_text_item"
+            android:text="手机认证" />
+
+        <TextView
+            android:id="@+id/tv_login_pwd"
+            style="@style/style_my_account_text_item"
+            android:text="登陆密码" />
+
+        <TextView
+            android:id="@+id/tv_payment_pwd"
+            style="@style/style_my_account_text_item"
+            android:text="支付密码" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/tv_address_manager"
+        style="@style/style_my_account_text_item"
+        android:text="地址管理" />
+
+</LinearLayout>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_170"
+        android:background="@mipmap/img_myaccount_head_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@mipmap/img_myaccount_back" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@mipmap/img_default_head_portrait" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="小荷才露尖尖角"
+                    android:textColor="@color/color_while"
+                    android:textSize="@dimen/dimen_15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="噼里啪啦巴拉巴拉小魔仙"
+                    android:textColor="@color/color_while"
+                    android:textSize="@dimen/dimen_11" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:divider="@drawable/shape_divider_line"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+            <LinearLayout
+                style="@style/style_my_account_ll"
+                >
+
+                <TextView
+                    style="@style/style_my_account_text_balance"
+                    android:text="22.0"
+                    />
+
+                <TextView
+                    style="@style/style_my_account_text_title"
+                    android:text="余额"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/style_my_account_ll">
+
+                <TextView
+                    style="@style/style_my_account_text_balance"
+                    android:text="220" />
+
+                <TextView
+                    style="@style/style_my_account_text_title"
+                    android:text="帮赏分" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/style_my_account_ll"
+                android:gravity="center">
+
+                <TextView
+                    style="@style/style_my_account_text_balance"
+                    android:text="5张" />
+
+                <TextView
+                    style="@style/style_my_account_text_title"
+                    android:text="优惠劵" />
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/style_my_account_ll">
+
+                <TextView
+                    style="@style/style_my_account_text_balance"
+                    android:text="150" />
+
+                <TextView
+                    style="@style/style_my_account_text_title"
+                    android:text="通用劵" />
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/style_my_account_ll">
+
+                <TextView
+                    style="@style/style_my_account_text_balance"
+                    android:text="90%" />
+
+                <TextView
+                    style="@style/style_my_account_text_title"
+                    android:text="优惠百分比" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:divider="@drawable/shape_divider_line"
+        android:showDividers="middle|beginning|end"
+        >
+
+        <TextView
+            android:id="@+id/tv_balance_recharge"
+            android:text="余额充值"
+            style="@style/style_my_account_text_item"
+            />
+
+        <TextView
+            android:id="@+id/tv_coupon_trading"
+            android:text="优惠劵交易"
+            style="@style/style_my_account_text_item"
+            />
+
+        <TextView
+            android:id="@+id/tv_coupon_generic"
+            android:text="通用卷交易"
+            style="@style/style_my_account_text_item"
+            />
+
+        <TextView
+            android:id="@+id/tv_exchange"
+            android:text="帮赏分兑换"
+            style="@style/style_my_account_text_item"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

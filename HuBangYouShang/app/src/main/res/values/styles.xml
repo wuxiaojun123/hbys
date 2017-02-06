@@ -1,0 +1,250 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="style_line">
+        <item name="android:background">@color/color_e4</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+
+    </style>
+
+    <!--首页底部radiobutton-->
+    <style name="style_radio_button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/dimen_10</item>
+        <item name="android:textColor">@drawable/selector_color_main_text</item>
+    </style>
+
+    <!--新增收货地址-->
+    <style name="style_add_address_text">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
+    <!--新增收货地址 edittext-->
+    <style name="style_add_address_edit">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/dimen_14</item>
+        <item name="android:textColor">@color/color_bf</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <!--个人信息-->
+    <style name="style_person_info_text_left">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="style_person_info_text_right">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+        <item name="android:textColor">@color/color_bf</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <!--设置页面的样式-->
+    <style name="style_setting_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_40</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:drawableRight">@mipmap/img_disclosure_arrow</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+
+    <!--注册页面的样式-->
+    <style name="style_register_text_title">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+    </style>
+
+    <style name="style_register_edit">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="style_register_linearlayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_45</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <!--实名认证-->
+    <style name="style_certification_text_title">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+    </style>
+
+    <style name="style_certification_edit">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:textColor">@color/color_bf</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="style_certification_linearlayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_45</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <!--帮助中心-->
+    <style name="style_help_center_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_45</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:drawableRight">@mipmap/img_disclosure_arrow</item>
+        <item name="android:paddingRight">20dp</item>
+    </style>
+
+    <!--我的账户-->
+    <style name="style_my_account_ll">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="style_my_account_text_balance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/dimen_16</item>
+        <item name="android:textColor">@color/color_while</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="style_my_account_text_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/dimen_12</item>
+        <item name="android:textColor">@color/color_while</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+
+    <style name="style_my_account_text_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:drawableRight">@mipmap/img_disclosure_arrow</item>
+    </style>
+
+    <!--我的界面 功能text-->
+    <style name="style_my_function_text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawablePadding">3dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:textColor">@color/color_6b</item>
+        <item name="android:textSize">@dimen/dimen_12</item>
+    </style>
+    <style name="style_my_function_linear_layout">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="style_my_function_quantity">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_6b</item>
+        <item name="android:textSize">@dimen/dimen_16</item>
+    </style>
+    <style name="style_my_function_quantity_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_6b</item>
+        <item name="android:textSize">@dimen/dimen_12</item>
+        <item name="android:layout_marginTop">6dp</item>
+    </style>
+    <style name="style_my_function_text_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:drawableRight">@mipmap/img_disclosure_arrow</item>
+    </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabMaxWidth">@dimen/tab_max_width</item>
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabPaddingStart">12dp</item>
+        <item name="tabPaddingEnd">12dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
+        <item name="tabSelectedTextColor">?android:textColorPrimary</item>
+    </style>
+    <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+
+</resources>

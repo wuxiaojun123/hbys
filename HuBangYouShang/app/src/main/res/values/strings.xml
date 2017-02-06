@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">互帮赞赏</string>
+
+    <!--首页底部-->
+    <string name="string_help">互帮</string>
+    <string name="string_integration">积分</string>
+    <string name="string_benefit">获益</string>
+    <string name="string_consumption">消费</string>
+    <string name="string_my">我的</string>
+
+    <!--搜索-->
+    <string name="string_search_hint">搜索关键字广告</string>
+    
+    <string name="string_all">全部</string>
+    <string name="string_expenditure">支出</string>
+    <string name="string_support">支入</string>
+
+
+
+</resources>

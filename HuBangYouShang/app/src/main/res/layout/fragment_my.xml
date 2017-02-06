@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <include layout="@layout/layout_my_no_login" />
+
+        <include layout="@layout/layout_my_function" />
+
+        <View
+            style="@style/style_line"
+            android:layout_marginTop="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/shape_divider_line"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:showDividers="middle">
+
+            <TextView
+                style="@style/style_my_account_text_item"
+                android:text="我的求助" />
+
+            <TextView
+                style="@style/style_my_account_text_item"
+                android:text="我的获赏" />
+
+            <TextView
+                style="@style/style_my_account_text_item"
+                android:text="我的投票" />
+
+            <TextView
+                style="@style/style_my_account_text_item"
+                android:text="我的收藏" />
+
+            <TextView
+                style="@style/style_my_account_text_item"
+                android:text="分享APP" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

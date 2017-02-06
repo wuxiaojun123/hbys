@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@drawable/shape_divider_line"
+    android:showDividers="middle|end"
+    >
+
+    <include layout="@layout/layout_title" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:text="如何获得帮赏分"
+        style="@style/style_help_center_text"
+        />
+
+    <TextView
+        android:text="帮赏分有哪些用途"
+        style="@style/style_help_center_text"
+        />
+
+    <TextView
+        android:text="如何获得帮赏分"
+        style="@style/style_help_center_text"
+        />
+
+    <TextView
+        android:text="如何获得通用劵"
+        style="@style/style_help_center_text"
+        />
+
+    <TextView
+        android:text="如何获得优惠劵"
+        style="@style/style_help_center_text"
+        />
+
+    <TextView
+        android:text="如何使用通用卷，优惠劵"
+        style="@style/style_help_center_text"
+        />
+
+    <TextView
+        android:text="什么事优惠百分比"
+        style="@style/style_help_center_text"
+        />
+
+</LinearLayout>

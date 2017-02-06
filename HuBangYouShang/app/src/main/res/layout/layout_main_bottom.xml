@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <RadioButton
+            android:id="@+id/radio_help"
+            style="@style/style_radio_button"
+            android:drawableTop="@drawable/selector_help"
+            android:text="@string/string_help"
+            />
+
+        <RadioButton
+            android:id="@+id/radio_integration"
+            style="@style/style_radio_button"
+            android:drawableTop="@drawable/selector_integration"
+            android:text="@string/string_integration"
+            />
+
+        <RadioButton
+            android:id="@+id/radio_benefit"
+            style="@style/style_radio_button"
+            android:drawableTop="@drawable/selector_benefit"
+            android:text="@string/string_benefit" />
+
+        <RadioButton
+            android:id="@+id/radio_consumption"
+            style="@style/style_radio_button"
+            android:drawableTop="@drawable/selector_consumption"
+            android:text="@string/string_consumption" />
+
+        <RadioButton
+            android:id="@+id/radio_my"
+            style="@style/style_radio_button"
+            android:drawableTop="@drawable/selector_my"
+            android:text="@string/string_my" />
+
+    </RadioGroup>
+
+
+</LinearLayout>

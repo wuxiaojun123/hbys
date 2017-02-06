@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@drawable/shape_divider_line"
+    android:showDividers="middle|end"
+    >
+
+    <include layout="@layout/layout_title" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:background="@color/color_while"
+         >
+
+        <TextView
+            android:text="滑动开关"
+            style="@style/style_setting_text"
+            android:drawableRight="@null"
+            />
+
+        <ToggleButton
+            android:id="@+id/btn_switch"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            android:background="@null"
+            android:button="@drawable/switch_button_ios"
+            android:checked="false"
+            android:gravity="center_vertical|right"
+            android:textOff=""
+            android:textOn=""
+            android:layout_marginRight="10dp"
+            />
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <TextView
+        style="@style/style_setting_text"
+        android:text="清除缓存"
+        />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <TextView
+        style="@style/style_setting_text"
+        android:text="客服中心"
+        />
+
+    <TextView
+        android:id="@+id/tv_help_center"
+        style="@style/style_setting_text"
+        android:text="帮助中心"
+        />
+
+    <TextView
+        android:id="@+id/tv_feedback"
+        style="@style/style_setting_text"
+        android:text="意见反馈"
+        />
+
+    <TextView
+        android:id="@+id/tv_about"
+        style="@style/style_setting_text"
+        android:text="关于我们"
+        />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <TextView
+        style="@style/style_setting_text"
+        android:text="退出当前账号"
+        />
+
+
+</LinearLayout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="480dp"
+        android:layout_margin="@dimen/dimen_margin_10"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="@dimen/dimen_margin_10"
+            android:gravity="center_vertical"
+            android:text="这里是广告标题"
+            android:textColor="#3a4a6b"
+            android:textSize="@dimen/dimen_15" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="@dimen/dimen_margin_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="这里是商家名称这里是商家名称这里是商家名称这里是商家名称这里是"
+                android:textColor="#afb0bc"
+                android:textSize="@dimen/dimen_12" />
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dimen_margin_10"
+                android:layout_weight="0.1"
+                android:gravity="center_vertical|right"
+                android:maxLines="1"
+                android:text="5赞赏分"
+                android:textColor="@color/color_text_ad_score"
+                android:textSize="@dimen/dimen_12" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_img_ad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/test_img_watch_ad" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_point_of_praise"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_dc"
+        android:gravity="center"
+        android:text="看完点赞(100/99)"
+        android:textColor="@color/color_8a"
+        android:textSize="@dimen/dimen_15" />
+
+</LinearLayout>
