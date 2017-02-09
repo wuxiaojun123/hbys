@@ -22,6 +22,7 @@ import com.wxj.hbys.activity.FeedbackActivity;
 import com.wxj.hbys.activity.HelpCenterActivity;
 import com.wxj.hbys.activity.LoginActivity;
 import com.wxj.hbys.activity.MyAccountActivity;
+import com.wxj.hbys.activity.MyHelpActivity;
 import com.wxj.hbys.activity.PersonInfoActivity;
 import com.wxj.hbys.activity.RegisterActivity;
 import com.wxj.hbys.activity.SettingActivity;
@@ -59,7 +60,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     }
 
 
-    @OnClick({R.id.rl_user_info, R.id.iv_setting, R.id.tv_login, R.id.tv_register, R.id.tv_account})
+    @OnClick({R.id.rl_user_info, R.id.iv_setting, R.id.tv_login, R.id.tv_register, R.id.tv_account,
+            R.id.tv_my_help, R.id.tv_my_reward, R.id.tv_my_vote, R.id.tv_my_collection, R.id.tv_share})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -93,7 +95,22 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(mContext, MyAccountActivity.class));
 
                 break;
+            case R.id.tv_my_help:
+                startActivity(new Intent(mContext,MyHelpActivity.class));
 
+                break;
+            case R.id.tv_my_reward:
+
+                break;
+            case R.id.tv_my_vote:
+
+                break;
+            case R.id.tv_my_collection:
+
+                break;
+            case R.id.tv_share:
+
+                break;
         }
     }
 

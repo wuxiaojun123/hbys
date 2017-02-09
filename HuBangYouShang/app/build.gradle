@@ -43,6 +43,8 @@ dependencies {
 
     //基本工具类
     compile project(':library_base')
+    //
+    compile project(':library_pagerSlidingTabStrip')
 
     debugCompile 'com.antfortune.freeline:runtime:0.8.4'
     releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'

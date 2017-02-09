@@ -82,6 +82,9 @@
         <activity android:name=".activity.PwdPaymentActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.MyHelpActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

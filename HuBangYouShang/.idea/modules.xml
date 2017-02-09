@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/HuBangYouShang.iml" filepath="$PROJECT_DIR$/HuBangYouShang.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library_base/library_base.iml" filepath="$PROJECT_DIR$/library_base/library_base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library_pagerSlidingTabStrip/library_pagerSlidingTabStrip.iml" filepath="$PROJECT_DIR$/library_pagerSlidingTabStrip/library_pagerSlidingTabStrip.iml" />
     </modules>
   </component>
 </project>
