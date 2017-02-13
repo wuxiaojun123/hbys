@@ -85,6 +85,18 @@
         <activity android:name=".activity.MyHelpActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.MyRewardActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.MyVoteActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.MyCollectionActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.MyShareActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

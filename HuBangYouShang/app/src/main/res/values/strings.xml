@@ -14,7 +14,13 @@
     <string name="string_all">全部</string>
     <string name="string_expenditure">支出</string>
     <string name="string_support">支入</string>
+    
+    <string name="string_comment">跟帖</string>
+    <string name="string_replies">回帖</string>
 
+    <string name="string_post">帖子</string>
+    <string name="string_goods">商品</string>
+    <string name="string_store">店铺</string>
 
 
 </resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/layout_title" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="192dp"
+            android:layout_height="192dp"
+            android:background="@color/color_3a" />
+
+        <TextView
+            android:layout_width="192dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="29dp"
+            android:layout_marginTop="18dp"
+            android:text="让朋友扫描二维码，共享互帮服务，您还可以获得共享积分!"
+            android:textColor="@color/color_bf"
+            android:textSize="@dimen/dimen_13" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:background="@drawable/shape_login_bg"
+            android:text="马上分享"
+            android:textColor="@color/color_while"
+            android:textSize="@dimen/dimen_14" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

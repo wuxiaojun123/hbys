@@ -22,7 +22,11 @@ import com.wxj.hbys.activity.FeedbackActivity;
 import com.wxj.hbys.activity.HelpCenterActivity;
 import com.wxj.hbys.activity.LoginActivity;
 import com.wxj.hbys.activity.MyAccountActivity;
+import com.wxj.hbys.activity.MyCollectionActivity;
 import com.wxj.hbys.activity.MyHelpActivity;
+import com.wxj.hbys.activity.MyRewardActivity;
+import com.wxj.hbys.activity.MyShareActivity;
+import com.wxj.hbys.activity.MyVoteActivity;
 import com.wxj.hbys.activity.PersonInfoActivity;
 import com.wxj.hbys.activity.RegisterActivity;
 import com.wxj.hbys.activity.SettingActivity;
@@ -96,19 +100,23 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.tv_my_help:
-                startActivity(new Intent(mContext,MyHelpActivity.class));
+                startActivity(new Intent(mContext, MyHelpActivity.class));
 
                 break;
             case R.id.tv_my_reward:
+                startActivity(new Intent(mContext, MyRewardActivity.class));
 
                 break;
             case R.id.tv_my_vote:
+                startActivity(new Intent(mContext, MyVoteActivity.class));
 
                 break;
             case R.id.tv_my_collection:
+                startActivity(new Intent(mContext, MyCollectionActivity.class));
 
                 break;
             case R.id.tv_share:
+                startActivity(new Intent(mContext, MyShareActivity.class));
 
                 break;
         }

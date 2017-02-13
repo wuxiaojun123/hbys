@@ -3,69 +3,6 @@
 
     <item
         is-multidex="false"
-        jar="C:\Users\wuxiaojun\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.0.1\345b89f45d02d8b09400b472fab7b7e38f4ede1f\butterknife-annotations-8.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="345b89f45d02d8b09400b472fab7b7e38f4ede1f">
-        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\butterknife-annotations-8.0.1_8f52aa2b3ad8dd05159e8d5fd78d02b6e0520870.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="E:\androidStudio\sdk\extras\android\m2repository\com\android\support\support-annotations\23.3.0\support-annotations-23.3.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
-        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\support-annotations-23.3.0_49f8b7a27996076e72148c873002b42ede02b393.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\wuxiaojun\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\adapter-rxjava\2.0.2\a60c039ba54c73d1133b72178e1b04133c73d13d\adapter-rxjava-2.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="a60c039ba54c73d1133b72178e1b04133c73d13d">
-        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\adapter-rxjava-2.0.2_d4ef947a9d3e67d83167bbd4bb073741edb50031.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\wuxiaojun\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.6.0\98476622f10715998eacf9240d6b479f12c66143\okio-1.6.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\okio-1.6.0_cd1f48790b293a3ee084fa706eb5094d62dd7fa0.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="3eeb5590e132e1d51d4b37590c766344ed8ef292">
-        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_224cc13a72c3f0fa199792b9056aac1b584d7f8a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\wuxiaojun\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
-        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\glide-3.7.0_5963042a696f0439625b8b43822603cef9798e9a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="80434c45861675a57d690fba5ca31c3d55c89489">
-        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-22.1.0_120ea084afea0ef308771566846d550d4d4b5491.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\jars\libs\internal_impl-22.2.0.jar"
         jumboMode="true"
         optimize="true"
@@ -75,12 +12,30 @@
     </item>
     <item
         is-multidex="false"
+        jar="C:\Users\wuxiaojun\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.0.1\345b89f45d02d8b09400b472fab7b7e38f4ede1f\butterknife-annotations-8.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="345b89f45d02d8b09400b472fab7b7e38f4ede1f">
+        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\butterknife-annotations-8.0.1_8f52aa2b3ad8dd05159e8d5fd78d02b6e0520870.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\exploded-aar\com.jakewharton\butterknife\8.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="22.0.1"
         sha1="74ca46e7da11e3d065eb64cdbe6568a7ed74c211">
         <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\com.jakewharton-butterknife-8.0.1_75f655a19f74ab3e1e4eb17e35fbe56d050cd6fe.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\androidStudio\sdk\extras\android\m2repository\com\android\support\support-annotations\23.3.0\support-annotations-23.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\support-annotations-23.3.0_49f8b7a27996076e72148c873002b42ede02b393.jar" />
     </item>
     <item
         is-multidex="false"
@@ -120,12 +75,30 @@
     </item>
     <item
         is-multidex="false"
+        jar="C:\Users\wuxiaojun\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\adapter-rxjava\2.0.2\a60c039ba54c73d1133b72178e1b04133c73d13d\adapter-rxjava-2.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="a60c039ba54c73d1133b72178e1b04133c73d13d">
+        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\adapter-rxjava-2.0.2_d4ef947a9d3e67d83167bbd4bb073741edb50031.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\wuxiaojun\.gradle\caches\modules-2\files-2.1\io.reactivex\rxjava\1.1.6\2586312cd2b8a511e4c6236736f5a039fc0f2273\rxjava-1.1.6.jar"
         jumboMode="true"
         optimize="true"
         revision="22.0.1"
         sha1="2586312cd2b8a511e4c6236736f5a039fc0f2273">
         <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\rxjava-1.1.6_df0970066a2aed6d0138b87dbef82a96a128a9d3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\wuxiaojun\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.6.0\98476622f10715998eacf9240d6b479f12c66143\okio-1.6.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\okio-1.6.0_cd1f48790b293a3ee084fa706eb5094d62dd7fa0.jar" />
     </item>
     <item
         is-multidex="false"
@@ -138,12 +111,30 @@
     </item>
     <item
         is-multidex="false"
+        jar="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="9ddee014c4dd06100ba32b1c3e16e0d7a51219f4">
+        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_224cc13a72c3f0fa199792b9056aac1b584d7f8a.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="22.0.1"
         sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
         <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-22.2.0_785d65ed44ad1a87d78f7251dae5fa8adc280caa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\wuxiaojun\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\glide-3.7.0_5963042a696f0439625b8b43822603cef9798e9a.jar" />
     </item>
     <item
         is-multidex="false"
@@ -180,6 +171,15 @@
         revision="22.0.1"
         sha1="f8d87f15b94b8d74e7ccf61d7eedb558811cdb30">
         <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\converter-gson-2.0.2_5b445549f1aef37f2ea3982ed2c01efb9ea8a3b5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="80434c45861675a57d690fba5ca31c3d55c89489">
+        <dex dex="E:\hubangyoushang_pro\code\hbys\HuBangYouShang\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-22.1.0_120ea084afea0ef308771566846d550d4d4b5491.jar" />
     </item>
 
 </items>
