@@ -46,14 +46,17 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
         switch (id){
             case R.id.tv_balance_recharge:
                 // 余额充值
+                startActivity(new Intent(MyAccountActivity.this,MyBalanceActivity.class));
 
                 break;
             case R.id.tv_coupon_trading:
                 // 优惠劵交易
+                startActivity(new Intent(MyAccountActivity.this,MyCouponActivity.class));
 
                 break;
             case R.id.tv_coupon_generic:
                 // 通用卷交易
+                startActivity(new Intent(MyAccountActivity.this,MyGeneralVolumeActivity.class));
 
                 break;
             case R.id.tv_exchange:

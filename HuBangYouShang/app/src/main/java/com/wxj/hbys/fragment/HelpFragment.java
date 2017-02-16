@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.wxj.hbys.R;
 
 /**
+ * 首页-互帮
  * Created by wuxiaojun on 2017/1/8.
  */
 

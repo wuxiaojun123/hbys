@@ -14,10 +14,15 @@
     <string name="string_all">全部</string>
     <string name="string_expenditure">支出</string>
     <string name="string_support">支入</string>
-    
+
+    <!--首页 积分-->
+    <string name="string_watch_point_praise">看完点赞</string>
+    <string name="string_group_buying">加群购买</string>
+
+    <!--个人中心 我的获赏，我的求助-->
     <string name="string_comment">跟帖</string>
     <string name="string_replies">回帖</string>
-
+    <!--个人中心 我的收藏-->
     <string name="string_post">帖子</string>
     <string name="string_goods">商品</string>
     <string name="string_store">店铺</string>

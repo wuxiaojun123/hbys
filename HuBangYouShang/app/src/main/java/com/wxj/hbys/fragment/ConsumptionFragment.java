@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.wxj.hbys.R;
 
 /**
+ * 首页-消费
  * Created by wuxiaojun on 2017/1/8.
  */
 

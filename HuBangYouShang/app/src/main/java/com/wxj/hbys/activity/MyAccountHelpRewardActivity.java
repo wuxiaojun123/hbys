@@ -1,5 +1,6 @@
 package com.wxj.hbys.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -7,7 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.TextView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.wxj.hbys.R;
 import com.wxj.hbys.fragment.BaseFragment;
 import com.wxj.hbys.fragment.MyAccountHelpRewardFragment;
@@ -17,19 +21,23 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
- * 帮赏分兑换
+ * 帮赏分
  * <p>
  * Created by wuxiaojun on 2017/1/10.
  */
 
-public class MyAccountHelpRewardActivity extends BaseActivity {
+public class MyAccountHelpRewardActivity extends BaseActivity implements View.OnClickListener {
 
+    @BindView(R.id.tv_exchange)
+    TextView tv_exchange;//兑换通用卷
     @BindView(R.id.id_viewpager)
-    ViewPager mViewPager;
-    @BindView(R.id.id_tablayout)
-    TabLayout mTabLayout;
+    ViewPager viewPager;
+    @BindView(R.id.tabs)
+    PagerSlidingTabStrip tabStrip;
+
 
     private MyFragmentPageAdapter mAdapter;
     private List<BaseFragment> fragmentList;
@@ -49,39 +57,26 @@ public class MyAccountHelpRewardActivity extends BaseActivity {
         fragmentList.add(new MyAccountHelpRewardFragment());
         fragmentList.add(new MyAccountHelpRewardFragment());
         fragmentList.add(new MyAccountHelpRewardFragment());
-        mAdapter = new MyFragmentPageAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));
+        tabStrip.setViewPager(viewPager);
     }
 
     private void initEvent() {
-        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
+    }
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+    @OnClick({R.id.tv_exchange})
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.tv_exchange:
+                //兑换通用卷
+//                startActivity(new Intent(MyAccountHelpRewardActivity.this,));
+                break;
 
-            @Override
-            public void onPageSelected(int position) {
-            }
+        }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
     }
 
 

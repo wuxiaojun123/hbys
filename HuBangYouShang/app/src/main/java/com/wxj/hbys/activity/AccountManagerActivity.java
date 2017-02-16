@@ -13,6 +13,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ *
+ * 账户管理
  * Created by wuxiaojun on 2017/1/14.
  */
 

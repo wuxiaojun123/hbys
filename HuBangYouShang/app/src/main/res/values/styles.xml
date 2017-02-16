@@ -246,5 +246,34 @@
         <item name="textAllCaps">true</item>
     </style>
 
+    <!-- 充值余额  充值金额10,20,30-->
+    <style name="style_prepaid_balance_tv" >
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/shape_bg_prepaid_balance_tv</item>
+    </style>
+
+    <!--优惠劵详情-->
+    <style name="style_coupon_details_text_left">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/color_bf</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="style_coupon_details_text_right">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
 
 </resources>

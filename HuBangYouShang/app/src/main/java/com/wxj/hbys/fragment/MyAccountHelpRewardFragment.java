@@ -11,6 +11,7 @@ import com.wxj.hbys.R;
 import butterknife.ButterKnife;
 
 /**
+ * 帮赏分兑换-全部、支出、支入
  * Created by wuxiaojun on 2017/1/15.
  */
 

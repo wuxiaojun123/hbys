@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_170"
+        android:background="@mipmap/img_myaccount_head_bg"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:scaleType="center"
+            android:src="@mipmap/img_myaccount_back" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/iv_back"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="优惠劵账户"
+                android:textColor="@color/color_while"
+                android:textSize="@dimen/dimen_14" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="22.00"
+                    android:textColor="@color/color_while"
+                    android:textSize="40dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="说明:余额增值不可再次增值"
+                    android:textColor="@color/color_while"
+                    android:textSize="@dimen/dimen_14" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="45dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_balance_recharge"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:background="@drawable/shape_help_reward_exchange_bg"
+                android:gravity="center"
+                android:text="余额充值"
+                android:textColor="@color/color_3a"
+                android:textSize="@dimen/dimen_13" />
+
+            <TextView
+                android:id="@+id/tv_help_score"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape_help_reward_exchange_bg"
+                android:gravity="center"
+                android:text="兑换帮赏分"
+                android:textColor="@color/color_3a"
+                android:textSize="@dimen/dimen_13" />
+
+            <TextView
+                android:id="@+id/tv_general_volume"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:background="@drawable/shape_help_reward_exchange_bg"
+                android:gravity="center"
+                android:text="兑换通用卷"
+                android:textColor="@color/color_3a"
+                android:textSize="@dimen/dimen_13" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:background="@color/color_while"
+        app:pstsIndicatorColor="@color/color_f6"
+        app:pstsIndicatorHeight="2dp"
+        app:pstsShouldExpand="true"
+        app:pstsTabTextColor="@color/color_3a"
+        app:pstsTabTextSize="@dimen/dimen_14" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/id_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+
+</LinearLayout>
