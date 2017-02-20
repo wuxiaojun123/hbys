@@ -12,7 +12,7 @@ import com.antfortune.freeline.FreelineCore;
 
 public class App extends Application {
 
-    public static final String A = "test git commit";
+    public static final String A = "remove test git commit";
 
     @Override
     public void onCreate() {
