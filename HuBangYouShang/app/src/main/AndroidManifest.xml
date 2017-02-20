@@ -111,6 +111,30 @@
 
         <activity android:name=".activity.CouponDetailsActivity"
             android:screenOrientation="portrait" />
+        <!--消息中心-->
+        <activity android:name=".activity.MsgCenterActivity"
+            android:screenOrientation="portrait" />
+        <!--帖子动态-->
+        <activity android:name=".activity.PostActivity"
+            android:screenOrientation="portrait" />
+        <!--互帮筛选-->
+        <activity android:name=".activity.HelpFilterActivity"
+            android:screenOrientation="portrait" />
+        <!--发布帖子-->
+        <activity android:name=".activity.ReleaseActivity"
+            android:screenOrientation="portrait" />
+        <!--发布求助帖-->
+        <activity android:name=".activity.ReleaseHelpActivity"
+            android:screenOrientation="portrait" />
+        <!--发布获赏帖-->
+        <activity android:name=".activity.ReleaseRewardActivity"
+            android:screenOrientation="portrait" />
+        <!--帖子详情-->
+        <activity android:name=".activity.HelpInfoActivity"
+            android:screenOrientation="portrait" />
+        <!--帖子详情-->
+        <activity android:name=".activity.TradeActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

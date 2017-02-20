@@ -1,37 +1,26 @@
 package com.wxj.hbys.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.idotools.utils.MetricsUtils;
 import com.wxj.hbys.R;
-import com.wxj.hbys.activity.AboutActivity;
 import com.wxj.hbys.activity.AccountManagerActivity;
-import com.wxj.hbys.activity.AddressManagerActivity;
-import com.wxj.hbys.activity.CertificationActivity;
-import com.wxj.hbys.activity.FeedbackActivity;
-import com.wxj.hbys.activity.HelpCenterActivity;
-import com.wxj.hbys.activity.LoginActivity;
 import com.wxj.hbys.activity.MyAccountActivity;
 import com.wxj.hbys.activity.MyCollectionActivity;
 import com.wxj.hbys.activity.MyHelpActivity;
 import com.wxj.hbys.activity.MyRewardActivity;
 import com.wxj.hbys.activity.MyShareActivity;
 import com.wxj.hbys.activity.MyVoteActivity;
-import com.wxj.hbys.activity.PersonInfoActivity;
+import com.wxj.hbys.activity.PostActivity;
 import com.wxj.hbys.activity.RegisterActivity;
 import com.wxj.hbys.activity.SettingActivity;
-import com.wxj.hbys.activity.VerifyIdentityActivity;
-import com.wxj.hbys.activity.WatchAdActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

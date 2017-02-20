@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_msgcenter_item"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/style_text_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/release_lable5" />
+
+            <EditText
+                android:id="@+id/et_release_help_title"
+                style="@style/style_text_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/release_hint1"
+                android:maxLength="30"
+                android:textCursorDrawable="@color/color_spiline" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_spiline" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/style_text_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/release_lable6" />
+
+            <TextView
+                android:id="@+id/tv_release_help_address"
+                style="@style/style_text_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:drawableRight="@mipmap/img_disclosure_arrow"
+                android:gravity="center_vertical"
+                android:text="@string/release_hint2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_spiline" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/style_text_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/release_lable7" />
+
+            <TextView
+                android:id="@+id/tv_release_help_type"
+                style="@style/style_text_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:drawableRight="@mipmap/img_disclosure_arrow"
+                android:gravity="center_vertical"
+                android:text="@string/release_hint3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_spiline" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/style_text_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/release_lable8" />
+
+            <TextView
+                android:id="@+id/tv_release_help_data"
+                style="@style/style_text_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:gravity="center_vertical"
+                android:text="@string/release_hint4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_spiline" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/style_text_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/release_lable9" />
+
+            <TextView
+                android:id="@+id/tv_release_help_score"
+                style="@style/style_text_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:gravity="center_vertical"
+                android:text="@string/release_hint5" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:background="@drawable/bg_msgcenter_item"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin">
+
+        <TextView
+            style="@style/style_text_lable"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44"
+            android:gravity="center_vertical"
+            android:text="@string/release_lable10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_spiline" />
+
+        <EditText
+            android:id="@+id/et_release_help_content"
+            style="@style/style_text_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/layout_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/layout_margin"
+            android:background="@null"
+            android:gravity="top|left"
+            android:hint="@string/release_hint6"
+            android:maxLength="400"
+            android:minLines="6" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_spiline" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44">
+            <ImageView
+                android:id="@+id/iv_release_addphoto"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/add_gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                style="@style/style_text_content"
+                android:text="@string/release_hint7"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -29,5 +29,8 @@
     <color name="color_f6">#f6b352</color>
 
     <color name="color_fa">#fa372d</color>
-    
+
+    <color name="color_spiline">#cdcdcd</color>
+    <color name="color_allbg">#f8f8f8</color>
+
 </resources>

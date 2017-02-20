@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <RelativeLayout
+        android:id="@+id/layout_msgcenter_post"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hight_msgcenter_item"
+        android:layout_marginBottom="@dimen/layout_margin"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:background="@drawable/bg_msgcenter_item"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/tv_msgcenter1"
+            style="@style/style_text_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:layout_centerVertical="true"
+            android:text="@string/msgcenter_lable1" />
+        <ImageView
+            android:id="@+id/iv_msgcenter_post"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_alignRight="@id/tv_msgcenter1"
+            android:layout_alignTop="@id/tv_msgcenter1"
+            android:background="@drawable/bg_reddot"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/img_disclosure_arrow" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_msgcenter_item"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        >
+        <RelativeLayout
+        android:id="@+id/layout_msgcenter_deal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/hight_msgcenter_item"
+        >
+        <TextView
+            android:id="@+id/tv_msgcenter2"
+            style="@style/style_text_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:layout_centerVertical="true"
+            android:text="@string/msgcenter_lable2" />
+        <ImageView
+            android:id="@+id/iv_msgcenter_deal"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_alignRight="@id/tv_msgcenter2"
+            android:layout_alignTop="@id/tv_msgcenter2"
+            android:background="@drawable/bg_reddot"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/img_disclosure_arrow" />
+    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_spiline"/>
+
+        <RelativeLayout
+            android:id="@+id/layout_msgcenter_complain"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hight_msgcenter_item"
+            >
+            <TextView
+                android:id="@+id/tv_msgcenter3"
+                style="@style/style_text_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:layout_centerVertical="true"
+                android:text="@string/msgcenter_lable3" />
+            <ImageView
+                android:id="@+id/iv_msgcenter_complain"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_alignRight="@id/tv_msgcenter3"
+                android:layout_alignTop="@id/tv_msgcenter3"
+                android:background="@drawable/bg_reddot"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/img_disclosure_arrow" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_spiline"/>
+
+        <RelativeLayout
+            android:id="@+id/layout_msgcenter_ss"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hight_msgcenter_item"
+            >
+            <TextView
+                android:id="@+id/tv_msgcenter4"
+                style="@style/style_text_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:layout_centerVertical="true"
+                android:text="@string/msgcenter_lable4" />
+            <ImageView
+                android:id="@+id/iv_msgcenter_sys"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_alignRight="@id/tv_msgcenter4"
+                android:layout_alignTop="@id/tv_msgcenter4"
+                android:background="@drawable/bg_reddot"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/img_disclosure_arrow" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
