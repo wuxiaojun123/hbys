@@ -10,10 +10,7 @@
 
     <!--搜索-->
     <string name="string_search_hint">搜索关键字广告</string>
-    
-    <string name="string_all">全部</string>
-    <string name="string_expenditure">支出</string>
-    <string name="string_support">支入</string>
+
 
     <!--首页 积分-->
     <string name="string_watch_point_praise">看完点赞</string>
@@ -26,6 +23,22 @@
     <string name="string_post">帖子</string>
     <string name="string_goods">商品</string>
     <string name="string_store">店铺</string>
+    <!--个人中心  我的账户-->
+    <string name="string_all">全部</string>
+    <string name="string_expenditure">支出</string>
+    <string name="string_support">支入</string>
+
+    <!-- 交易大厅 -->
+    <string name="string_meoney_from_high_to_low">面额从高到低</string>
+    <string name="string_meoney_from_low_to_high">面额从低到高</string>
+
+    <!--个人中心  我的订单-->
+    <string name="string_all_order">全部订单</string>
+    <string name="string_stay_payment">待付款</string>
+    <string name="string_stay_goods_receipt">待收货</string>
+    <string name="string_stay_evaluate">待评价</string>
+    <string name="string_refund">退款/退货</string>
+
 
     <!--消息中心-->
     <string name="msgcenter_lable1">帖子动态</string>

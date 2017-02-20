@@ -1,5 +1,6 @@
 package com.wxj.hbys.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -70,7 +71,8 @@ public class MyGeneralVolumeActivity extends BaseActivity implements View.OnClic
         switch (id) {
             case R.id.tv_exchange:
                 //兑换通用卷
-//                startActivity(new Intent(MyAccountHelpRewardActivity.this,));
+                startActivity(new Intent(MyGeneralVolumeActivity.this,ExchangeOptionActivity.class));
+
                 break;
 
         }

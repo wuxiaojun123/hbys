@@ -71,8 +71,9 @@ public class MyAccountHelpRewardActivity extends BaseActivity implements View.On
         int id = v.getId();
         switch (id) {
             case R.id.tv_exchange:
-                //兑换通用卷
-//                startActivity(new Intent(MyAccountHelpRewardActivity.this,));
+                //兑换方式
+                startActivity(new Intent(MyAccountHelpRewardActivity.this,GeneralExchangeVolumeActivity.class));
+
                 break;
 
         }
