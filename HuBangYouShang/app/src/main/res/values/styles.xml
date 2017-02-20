@@ -276,6 +276,26 @@
         <item name="android:layout_marginRight">10dp</item>
     </style>
 
+    <!--标签类文字样式-->
+    <style name="style_text_lable">
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/color_3a</item>
+    </style>
+    <!--内容类文字样式-->
+    <style name="style_text_content">
+        <item name="android:textSize">@dimen/dimen_12</item>
+        <item name="android:textColor">#aeb1bd</item>
+    </style>
+    <!--内容类文字样式-->
+    <style name="style_text_content_red">
+        <item name="android:textSize">@dimen/dimen_12</item>
+        <item name="android:textColor">#ff503f</item>
+    </style>
+    <!--标题栏右边文字样式-->
+    <style name="style_text_title_right">
+        <item name="android:textSize">@dimen/dimen_18</item>
+        <item name="android:textColor">#d17171</item>
+    </style>
     <!-- 订单详情 -->
     <style name="style_order_details_bottom_tv" >
         <item name="android:layout_width">75dp</item>

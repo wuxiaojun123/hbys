@@ -24,4 +24,10 @@
     <dimen name="dimen_18">18dp</dimen>
     <dimen name="dimen_text_size_50">50dp</dimen>
 
+    <!--消息中心-->
+    <dimen name="hight_msgcenter_item">50dp</dimen>
+    <dimen name="layout_margin">10dp</dimen>
+    <dimen name="content_margin">5dp</dimen>
+
+
 </resources>

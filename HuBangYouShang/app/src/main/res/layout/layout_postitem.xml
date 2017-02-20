@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_item_post"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:paddingBottom="@dimen/layout_margin"
+    android:paddingTop="@dimen/layout_margin">
+    <TextView
+        android:id="@+id/tv_item_posttitle"
+        style="@style/style_text_lable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="贴子标题" />
+
+    <TextView
+        android:id="@+id/tv_item_poststate"
+        style="@style/style_text_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_item_posttitle"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:text="贴子标题" />
+
+    <TextView
+        android:id="@+id/tv_item_postdate"
+        style="@style/style_text_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:text="贴子标题" />
+</RelativeLayout>

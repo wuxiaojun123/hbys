@@ -31,5 +31,8 @@
     <color name="color_f6b258">#f6b258</color>
 
     <color name="color_fa">#fa372d</color>
-    
+
+    <color name="color_spiline">#cdcdcd</color>
+    <color name="color_allbg">#f8f8f8</color>
+
 </resources>

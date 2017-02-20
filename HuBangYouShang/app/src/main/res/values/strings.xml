@@ -38,6 +38,48 @@
     <string name="string_stay_goods_receipt">待收货</string>
     <string name="string_stay_evaluate">待评价</string>
     <string name="string_refund">退款/退货</string>
-    
+
+
+    <!--消息中心-->
+    <string name="msgcenter_lable1">帖子动态</string>
+    <string name="msgcenter_lable2">交易信息</string>
+    <string name="msgcenter_lable3">投诉信息</string>
+    <string name="msgcenter_lable4">系统消息</string>
+
+    <!--交易信息-->
+    <string name="trade_lable1">交易信息</string>
+    <string name="trade_lable2">订单编号：</string>
+
+    <!--互帮-->
+    <string name="help_lable1">筛选</string>
+    <string name="help_lable2">搜索关键字相关帖子</string>
+    <string name="help_lable3">求助</string>
+    <string name="help_lable4">获赏</string>
+    <string name="help_lable5">投票</string>
+
+    <!--筛选-->
+    <string name="fileter_lable1">筛选</string>
+    <string name="fileter_lable2">当前：</string>
+    <string name="fileter_lable3">国内热门城市</string>
+    <string name="fileter_lable4">帖子归属种类</string>
+
+    <!--发布帖子-->
+    <string name="release_lable1">发布帖子</string>
+    <string name="release_lable2">请选择帖子的类型</string>
+    <string name="release_lable3">求助</string>
+    <string name="release_lable4">获赏</string>
+    <string name="release_lable5">帖子标题</string>
+    <string name="release_lable6">可见地区</string>
+    <string name="release_lable7">帖子种类</string>
+    <string name="release_lable8">有效时间</string>
+    <string name="release_lable9">悬赏分\t\t</string>
+    <string name="release_lable10">帖子内容</string>
+    <string name="release_hint1">请输入帖子标题，30字以内</string>
+    <string name="release_hint2">请选择帖子可见地区</string>
+    <string name="release_hint3">请选择帖子所属种类</string>
+    <string name="release_hint4">请选择帖子有效时间</string>
+    <string name="release_hint5">请设置悬赏分，至少10分</string>
+    <string name="release_hint6">请填写可以帮助别人的资源信息，400字以内</string>
+    <string name="release_hint7">还可上传（）张</string>
 
 </resources>
