@@ -76,40 +76,87 @@
             android:name=".activity.AccountManagerActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.PwdLoginActivity"
+        <activity
+            android:name=".activity.PwdLoginActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.PwdPaymentActivity"
+        <activity
+            android:name=".activity.PwdPaymentActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.MyHelpActivity"
+        <activity
+            android:name=".activity.MyHelpActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.MyRewardActivity"
+        <activity
+            android:name=".activity.MyRewardActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.MyVoteActivity"
+        <activity
+            android:name=".activity.MyVoteActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.MyCollectionActivity"
+        <activity
+            android:name=".activity.MyCollectionActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.MyShareActivity"
+        <activity
+            android:name=".activity.MyShareActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.PrepaidBalanceActivity"
+        <activity
+            android:name=".activity.PrepaidBalanceActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.MyGeneralVolumeActivity"
+        <activity
+            android:name=".activity.MyGeneralVolumeActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.MyCouponActivity"
+        <activity
+            android:name=".activity.MyCouponActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.MyBalanceActivity"
+        <activity
+            android:name=".activity.MyBalanceActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.CouponDetailsActivity"
+        <activity
+            android:name=".activity.CouponDetailsBuyersActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.DiscountAmountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.BalanceExchangeHelpScoreActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.BalanceExchangeVolumeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.ExchangeOptionActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.GeneralExchangeVolumeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.CouponTradingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.MyOrderActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.OrderDetailsActivity"
+        android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.OrderPulishedEvaluateActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.OrderComplaintsMerchantActivity"
             android:screenOrientation="portrait" />
 
 

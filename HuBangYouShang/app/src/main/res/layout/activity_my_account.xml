@@ -119,7 +119,9 @@
 
             </LinearLayout>
 
-            <LinearLayout style="@style/style_my_account_ll">
+            <LinearLayout
+                android:id="@+id/ll_discount_amount"
+                style="@style/style_my_account_ll">
 
                 <TextView
                     style="@style/style_my_account_text_balance"

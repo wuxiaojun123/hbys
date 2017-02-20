@@ -24,6 +24,7 @@ import com.wxj.hbys.activity.LoginActivity;
 import com.wxj.hbys.activity.MyAccountActivity;
 import com.wxj.hbys.activity.MyCollectionActivity;
 import com.wxj.hbys.activity.MyHelpActivity;
+import com.wxj.hbys.activity.MyOrderActivity;
 import com.wxj.hbys.activity.MyRewardActivity;
 import com.wxj.hbys.activity.MyShareActivity;
 import com.wxj.hbys.activity.MyVoteActivity;
@@ -65,23 +66,25 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
 
     @OnClick({R.id.rl_user_info, R.id.iv_setting, R.id.tv_login, R.id.tv_register, R.id.tv_account,
-            R.id.tv_my_help, R.id.tv_my_reward, R.id.tv_my_vote, R.id.tv_my_collection, R.id.tv_share})
+            R.id.tv_my_help, R.id.tv_my_reward, R.id.tv_my_vote, R.id.tv_my_collection, R.id.tv_share,
+            R.id.tv_order})
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
             case R.id.rl_user_info:
-                //需要判断是否已登陆
+                // 需要判断是否已登陆
                 startActivity(new Intent(mContext, AccountManagerActivity.class));
 
                 break;
             case R.id.iv_setting:
+                // 设置页面
                 startActivity(new Intent(mContext, SettingActivity.class));
 
                 break;
 
             case R.id.tv_login:
-                //点击登陆完成，需要动态改变布局的高度
+                // 点击登陆完成，需要动态改变布局的高度
                 if (ll_logined.getVisibility() == View.GONE) {
                     LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_login_height.getLayoutParams();
                     lp.height = MetricsUtils.dipToPx(210);
@@ -95,7 +98,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(mContext, RegisterActivity.class));
 
                 break;
+            case R.id.tv_order:
+                // 我的订单
+                startActivity(new Intent(mContext, MyOrderActivity.class));
+
+                break;
             case R.id.tv_account:
+                // 我的账户
                 startActivity(new Intent(mContext, MyAccountActivity.class));
 
                 break;
