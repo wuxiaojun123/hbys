@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.idotools.utils.MetricsUtils;
 import com.wxj.hbys.R;
 import com.wxj.hbys.activity.AccountManagerActivity;
+import com.wxj.hbys.activity.LoginActivity;
 import com.wxj.hbys.activity.MyAccountActivity;
 import com.wxj.hbys.activity.MyCollectionActivity;
 import com.wxj.hbys.activity.MyHelpActivity;
@@ -22,6 +23,7 @@ import com.wxj.hbys.activity.MyVoteActivity;
 import com.wxj.hbys.activity.PostActivity;
 import com.wxj.hbys.activity.RegisterActivity;
 import com.wxj.hbys.activity.SettingActivity;
+import com.wxj.hbys.utils.ActivitySlideAnim;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,12 +76,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
             case R.id.tv_login:
                 // 点击登陆完成，需要动态改变布局的高度
-                if (ll_logined.getVisibility() == View.GONE) {
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+                /*if (ll_logined.getVisibility() == View.GONE) {
                     LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_login_height.getLayoutParams();
                     lp.height = MetricsUtils.dipToPx(210);
                     ll_login_height.requestLayout();
                     ll_logined.setVisibility(View.VISIBLE);
-                }
+                }*/
 
 
                 break;
