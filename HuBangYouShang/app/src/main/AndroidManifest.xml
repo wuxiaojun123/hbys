@@ -182,6 +182,9 @@
         <!--帖子详情-->
         <activity android:name=".activity.TradeActivity"
             android:screenOrientation="portrait" />
+        <!--选择支付方式-->
+        <activity android:name=".activity.PayTypeActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

@@ -23,7 +23,6 @@ public class BenefitFragment extends BaseFragment {
         if(contentView == null){
             contentView = inflater.inflate(R.layout.fragment_benefit,null);
         }
-
         return contentView;
     }
 
