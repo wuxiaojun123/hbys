@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.MetricsUtils;
 import com.wxj.hbys.R;
 import com.wxj.hbys.activity.AccountManagerActivity;
@@ -23,11 +24,15 @@ import com.wxj.hbys.activity.MyVoteActivity;
 import com.wxj.hbys.activity.PostActivity;
 import com.wxj.hbys.activity.RegisterActivity;
 import com.wxj.hbys.activity.SettingActivity;
+import com.wxj.hbys.rxbus.RxBus;
 import com.wxj.hbys.utils.ActivitySlideAnim;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by wuxiaojun on 2017/1/8.
@@ -76,15 +81,20 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
             case R.id.tv_login:
                 // 点击登陆完成，需要动态改变布局的高度
+                RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        LogUtils.e("获取到消息了" + s);
+                        if (ll_logined.getVisibility() == View.GONE) {
+                            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_login_height.getLayoutParams();
+                            lp.height = MetricsUtils.dipToPx(210);
+                            ll_login_height.requestLayout();
+                            ll_logined.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
-                /*if (ll_logined.getVisibility() == View.GONE) {
-                    LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_login_height.getLayoutParams();
-                    lp.height = MetricsUtils.dipToPx(210);
-                    ll_login_height.requestLayout();
-                    ll_logined.setVisibility(View.VISIBLE);
-                }*/
-
 
                 break;
             case R.id.tv_register:

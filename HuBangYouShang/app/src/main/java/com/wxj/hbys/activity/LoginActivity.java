@@ -13,6 +13,7 @@ import com.idotools.utils.ToastUtils;
 import com.wxj.hbys.R;
 import com.wxj.hbys.bean.Response.LoginResponse;
 import com.wxj.hbys.network.LoginRegisterNetwork;
+import com.wxj.hbys.rxbus.RxBus;
 import com.wxj.hbys.utils.Constant;
 
 import butterknife.BindView;
@@ -87,6 +88,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
+                        RxBus.getDefault().post("loginSuccess");
                         ToastUtils.show(mContext, "登录失败，服务器异常");
                     }
 
@@ -94,6 +97,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     public void onNext(LoginResponse res) {
                         if (res.code == 200) {
                             LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
+                            RxBus.getDefault().post("loginSuccess");
                         } else {
                             ToastUtils.show(mContext, res.msg);
                         }

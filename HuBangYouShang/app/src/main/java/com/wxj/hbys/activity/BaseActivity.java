@@ -6,6 +6,8 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.wxj.hbys.utils.ActivitySlideAnim;
+
 import butterknife.ButterKnife;
 
 /**
@@ -23,4 +25,9 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        ActivitySlideAnim.slideOutAnim(this);
+        super.onBackPressed();
+    }
 }
