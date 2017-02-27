@@ -28,7 +28,7 @@ public class MyHelpPostFragment extends BaseFragment {
         ButterKnife.bind(this,view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter();
+//        recyclerView.setAdapter();
 
         return view;
     }
