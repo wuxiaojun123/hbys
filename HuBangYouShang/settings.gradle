@@ -1,5 +1,7 @@
-include ':app'
+include ':app', ':library_recycler'
 
 include ':library_base'
 
 include ':library_pagerSlidingTabStrip'
+
+//include ':LRecyclerview_library'

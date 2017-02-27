@@ -45,6 +45,8 @@ dependencies {
     compile project(':library_base')
     //
     compile project(':library_pagerSlidingTabStrip')
+    // recyclerview
+    compile project(':library_recycler')
 
     debugCompile 'com.antfortune.freeline:runtime:0.8.4'
     releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'

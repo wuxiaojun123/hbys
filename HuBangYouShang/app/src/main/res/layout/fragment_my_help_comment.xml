@@ -3,11 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.base.recyclerview.LRecyclerView
+        android:id="@+id/id_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="跟帖界面"
-        android:gravity="center"
         />
 
 </LinearLayout>

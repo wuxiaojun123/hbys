@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.wxj.hbys.R;
@@ -21,7 +23,10 @@ import butterknife.ButterKnife;
  */
 
 public class MyHelpActivity extends BaseActivity {
-
+    @BindView(R.id.tv_title)
+    TextView tv_title;
+    @BindView(R.id.tv_title_right)
+    TextView tv_title_right;
     @BindView(R.id.id_viewpager)
     ViewPager viewPager;
     @BindView(R.id.tabs)
@@ -34,12 +39,19 @@ public class MyHelpActivity extends BaseActivity {
         setContentView(R.layout.activity_my_help);
         ButterKnife.bind(this);
 
+        initView();
+
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
     }
 
+    private void initView() {
+        tv_title.setText(R.string.string_my_help_title);
+        tv_title_right.setVisibility(View.GONE);
+    }
 
-    private class MyPagerAdapter extends FragmentPagerAdapter{
+
+    private class MyPagerAdapter extends FragmentPagerAdapter {
 
         private String[] TITLES = new String[2];
 
@@ -56,9 +68,9 @@ public class MyHelpActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0){
+            if (position == 0) {
                 return new MyHelpPostFragment();
-            }else{
+            } else {
                 return new MyHelpCommentFragment();
             }
         }
