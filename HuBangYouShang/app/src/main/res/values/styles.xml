@@ -230,7 +230,7 @@
         <item name="android:drawableRight">@mipmap/img_disclosure_arrow</item>
     </style>
 
-    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+    <!--<style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabMaxWidth">@dimen/tab_max_width</item>
         <item name="tabIndicatorColor">?attr/colorAccent</item>
         <item name="tabIndicatorHeight">2dp</item>
@@ -244,7 +244,7 @@
         <item name="android:textSize">25sp</item>
         <item name="android:textColor">@color/color_3a</item>
         <item name="textAllCaps">true</item>
-    </style>
+    </style>-->
 
     <!-- 充值余额  充值金额10,20,30-->
     <style name="style_prepaid_balance_tv" >

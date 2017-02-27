@@ -42,22 +42,20 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SuperV
     }
 
     //局部刷新关键：带payload的这个onBindViewHolder方法必须实现
-    /*public void onBindViewHolder(SuperViewHolder holder, int position, List<Object> payloads) {
+    public void onBindViewHolder(SuperViewHolder holder, int position, List<Object> payloads) {
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position);
         } else {
             onBindItemHolder(holder, position, payloads);
         }
-
-    }*/
+    }
 
     public abstract int getLayoutId();
 
     public abstract void onBindItemHolder(SuperViewHolder holder, int position);
 
-    /*public void onBindItemHolder(SuperViewHolder holder, int position, List<Object> payloads){
-
-    }*/
+    public void onBindItemHolder(SuperViewHolder holder, int position, List<Object> payloads){
+    }
 
     @Override
     public int getItemCount() {

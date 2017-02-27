@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.wxj.hbys.R;
 import com.wxj.hbys.adapter.viewholder.SuperViewHolder;
+import com.wxj.hbys.bean.HelpPostBean;
 
 import java.util.List;
 
@@ -19,10 +20,6 @@ import butterknife.ButterKnife;
 
 public class MyHelpPostAdapter extends BaseRecyclerAdapter {
 
-    private Context context;
-    private List<String> list;
-
-
     public MyHelpPostAdapter(Context context) {
         super(context);
     }
@@ -34,12 +31,11 @@ public class MyHelpPostAdapter extends BaseRecyclerAdapter {
 
     @Override
     public void onBindItemHolder(SuperViewHolder holder, int position) {
+//        HelpPostViewHolder viewHolder = (HelpPostViewHolder) holder;
+        TextView textView = holder.getView(R.id.tv_content);
+        HelpPostBean bean = (HelpPostBean) mDataList.get(position);
 
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        textView.setText(bean.content);
     }
 
 
