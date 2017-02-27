@@ -82,7 +82,17 @@
     <string name="release_hint6">请填写可以帮助别人的资源信息，400字以内</string>
     <string name="release_hint7">还可上传（）张</string>
 
+<<<<<<< HEAD
     <!--我的求助-->
     <string name="string_my_help_title">我的求助</string>
+=======
+    <!--支付-->
+    <string name="pay_lable1">选择支付方式</string>
+    <string name="pay_lable2">订单金额</string>
+    <string name="pay_lable3">微信</string>
+    <string name="pay_lable4">支付宝</string>
+    <string name="pay_lable5">银联</string>
+
+>>>>>>> c68c2c22295be14f97705176bce73a52cf543102
 
 </resources>
