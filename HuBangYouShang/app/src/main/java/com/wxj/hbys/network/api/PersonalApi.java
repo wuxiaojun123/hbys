@@ -9,6 +9,4 @@ import rx.Observable;
 public interface PersonalApi {
 
 
-
-
 }
