@@ -84,12 +84,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        LogUtils.e("获取到消息了" + s);
-                        if (ll_logined.getVisibility() == View.GONE) {
-                            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_login_height.getLayoutParams();
-                            lp.height = MetricsUtils.dipToPx(210);
-                            ll_login_height.requestLayout();
-                            ll_logined.setVisibility(View.VISIBLE);
+                        if("loginSuccess".equals(s)){
+                            if (ll_logined.getVisibility() == View.GONE) {
+                                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_login_height.getLayoutParams();
+                                lp.height = MetricsUtils.dipToPx(210);
+                                ll_login_height.requestLayout();
+                                ll_logined.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 });

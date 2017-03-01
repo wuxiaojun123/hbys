@@ -34,20 +34,21 @@ public class MyHelpPostFragment extends BaseFragment {
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private List<HelpPostBean> helpPostBeenList;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_help_post,null);
         ButterKnife.bind(this,view);
 
+        // 设置样式
+        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mHelpPostAdapter = new MyHelpPostAdapter(mContext);
         helpPostBeenList = new ArrayList<>();
-        helpPostBeenList.add(new HelpPostBean("AAA"));
-        helpPostBeenList.add(new HelpPostBean("BBB"));
-        helpPostBeenList.add(new HelpPostBean("CCC"));
-        mHelpPostAdapter.addAll(helpPostBeenList);
 
+        mHelpPostAdapter.addAll(helpPostBeenList);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
         mRecyclerView.setAdapter(mLRecyclerViewAdapter);
 

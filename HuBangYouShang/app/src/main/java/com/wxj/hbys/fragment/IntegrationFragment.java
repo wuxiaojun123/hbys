@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.wxj.hbys.R;
-import com.wxj.hbys.activity.MyRewardActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,9 +65,9 @@ public class IntegrationFragment extends BaseFragment {
         public Fragment getItem(int position) {
             // 下面两个fragment是个人中心里的
             if(position == 0){
-                return new MyHelpPostFragment();
+                return new IntegrationWatchPraiseFragment();
             }else{
-                return new MyHelpCommentFragment();
+                return new IntegrationGroupBuyingFragment();
             }
         }
 

@@ -16,6 +16,7 @@ import com.wxj.hbys.bean.Response.LoginResponse;
 import com.wxj.hbys.network.BaseSubscriber;
 import com.wxj.hbys.network.LoginRegisterNetwork;
 import com.wxj.hbys.rxbus.RxBus;
+import com.wxj.hbys.utils.ActivitySlideAnim;
 import com.wxj.hbys.utils.Constant;
 import com.wxj.hbys.view.LoadingDialog;
 
@@ -27,6 +28,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -65,9 +68,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.tv_register:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
 
+
                 break;
         }
     }
+
+    private Subscription subscribe;
 
     /***
      * 登录逻辑
@@ -83,21 +89,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             ToastUtils.show(mContext, "请输入密码");
             return;
         }
-        LoginRegisterNetwork
+        subscribe = LoginRegisterNetwork
                 .getLoginApi()
-                .getLoginBean(username, password, Constant.PLATFORM_CLIENT)
-                .subscribeOn(Schedulers.io()) // 请求放在io线程中
+                .getLoginBean(username, password, Constant.PLATFORM_CLIENT).subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<LoginResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        LogUtils.e("请求错误啦啦啦啦啦  mContext="+mContext);
-                        if(e instanceof UnknownHostException){
+                        LogUtils.e("请求错误啦啦啦啦啦  mContext=" + mContext);
+                        if (e instanceof UnknownHostException) {
                             ToastUtils.show(mContext, "请求到错误服务器");
                             LogUtils.e("UnknownHostException");
-                        }else if(e instanceof SocketTimeoutException){
-                            ToastUtils.show(mContext,"请求超时");
+                        } else if (e instanceof SocketTimeoutException) {
+                            ToastUtils.show(mContext, "请求超时");
                             LogUtils.e("SocketTimeoutException");
                         }
                     }
@@ -108,15 +113,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
                             App.APP_CLIENT_KEY = res.data.key;
                             RxBus.getDefault().post("loginSuccess");
+
+                            ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                            finish();
                         } else {
                             ToastUtils.show(mContext, res.msg);
                         }
                     }
                 });
+
     }
 
     @Override
     protected void onDestroy() {
+        if(subscribe != null && !subscribe.isUnsubscribed()){
+            LogUtils.e("取消订阅");
+            subscribe.unsubscribe();
+        }
         super.onDestroy();
     }
 }

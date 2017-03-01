@@ -8,6 +8,8 @@ import retrofit2.http.POST;
 import rx.Observable;
 
 /**
+ *
+ * http://210.72.13.135/mobile/index.php?act=login
  * Created by wuxiaojun on 2017/2/22.
  */
 

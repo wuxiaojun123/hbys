@@ -68,7 +68,8 @@ public class ArrowRefreshHeader extends LinearLayout implements IRefreshHeader {
 
         //init the progress view
         mProgressBar = (SimpleViewSwitcher)findViewById(R.id.listview_header_progressbar);
-        mProgressBar.setView(initIndicatorView(ProgressStyle.BallSpinFadeLoader));
+//        mProgressBar.setView(initIndicatorView(ProgressStyle.BallSpinFadeLoader));
+        mProgressBar.setView(initIndicatorView(ProgressStyle.LineSpinFadeLoader));
 
         mRotateUpAnim = new RotateAnimation(0.0f, -180.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -97,7 +98,8 @@ public class ArrowRefreshHeader extends LinearLayout implements IRefreshHeader {
     private View initIndicatorView(int style) {
         AVLoadingIndicatorView progressView = (AVLoadingIndicatorView) LayoutInflater.from(getContext()).inflate(R.layout.layout_indicator_view, null);
         progressView.setIndicatorId(style);
-        progressView.setIndicatorColor(Color.GRAY);
+//        progressView.setIndicatorColor(Color.GRAY);
+        progressView.setIndicatorColor(getResources().getColor(R.color.color_yellow));
         return progressView;
     }
 
