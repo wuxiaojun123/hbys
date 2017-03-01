@@ -1,5 +1,6 @@
 package com.wxj.hbys.network;
 
+import com.idotools.utils.LogUtils;
 import com.wxj.hbys.App;
 import com.wxj.hbys.utils.Constant;
 
@@ -29,6 +30,7 @@ public class RetrofitUtils {
     private static CallAdapter.Factory rxjavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
 
     private static Retrofit mRetrofit;
+    private static Retrofit mCookieRetrofit;
 
     public static Retrofit getRetrofit() {
         if (mRetrofit == null) {
@@ -37,6 +39,7 @@ public class RetrofitUtils {
                     .connectTimeout(20, TimeUnit.SECONDS)
                     .readTimeout(20, TimeUnit.SECONDS)
                     .writeTimeout(20, TimeUnit.SECONDS)
+//                    .addInterceptor(new GetCookiesInterceptor())
                     .build();
 
             mRetrofit = new Retrofit.Builder()
@@ -50,12 +53,13 @@ public class RetrofitUtils {
     }
 
     public static Retrofit getRetrofitCookie() {
-        if (mRetrofit == null) {
+        if (mCookieRetrofit == null) {
             OkHttpClient mOkHttpClient = new OkHttpClient()
                     .newBuilder()
                     .addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
+                            LogUtils.e("cookie的值是："+App.APP_CLIENT_KEY);
                             Request request = chain.request().newBuilder().addHeader("cookie", App.APP_CLIENT_KEY).build();
                             return chain.proceed(request);
                         }
@@ -65,14 +69,14 @@ public class RetrofitUtils {
                     .writeTimeout(20, TimeUnit.SECONDS)
                     .build();
 
-            mRetrofit = new Retrofit.Builder()
+            mCookieRetrofit = new Retrofit.Builder()
                     .client(mOkHttpClient)
                     .baseUrl(Constant.BASE_URL)
                     .addConverterFactory(gsonConverterFactory)
                     .addCallAdapterFactory(rxjavaCallAdapterFactory)
                     .build();
         }
-        return mRetrofit;
+        return mCookieRetrofit;
     }
 
 }

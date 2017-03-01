@@ -70,7 +70,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         switch (id) {
             case R.id.rl_user_info:
                 // 需要判断是否已登陆
-                startActivity(new Intent(mContext, AccountManagerActivity.class));
+//                startActivity(new Intent(mContext, AccountManagerActivity.class));
 
                 break;
             case R.id.iv_setting:

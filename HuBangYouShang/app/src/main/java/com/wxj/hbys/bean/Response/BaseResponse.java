@@ -11,4 +11,10 @@ public class BaseResponse<T> {
     public String msg;// 信息
     public T data;
 
+
+    @Override
+    public String toString() {
+        return code + "msg=" + msg + data + "=====";
+    }
+
 }
