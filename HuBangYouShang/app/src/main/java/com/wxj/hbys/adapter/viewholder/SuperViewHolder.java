@@ -4,6 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 
+import com.wxj.hbys.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by wuxiaojun on 17-2-24.
  */

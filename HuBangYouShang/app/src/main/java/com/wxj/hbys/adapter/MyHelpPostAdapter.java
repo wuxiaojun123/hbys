@@ -41,7 +41,7 @@ public class MyHelpPostAdapter extends BaseRecyclerAdapter {
 
     class HelpPostViewHolder extends SuperViewHolder{
 
-        @BindView(R.id.tv_content)
+        /*@BindView(R.id.tv_content)
         TextView tv_content;
         @BindView(R.id.tv_title)
         TextView tv_title;
@@ -52,12 +52,11 @@ public class MyHelpPostAdapter extends BaseRecyclerAdapter {
         @BindView(R.id.tv_post)
         TextView tv_post;
         @BindView(R.id.tv_reward)
-        TextView tv_reward;
-
+        TextView tv_reward;*/
 
         public HelpPostViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+//            ButterKnife.bind(this,itemView);
         }
     }
 

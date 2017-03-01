@@ -12,14 +12,18 @@ import com.antfortune.freeline.FreelineCore;
 
 public class App extends Application {
 
-    public static final String A = "remove test git commit";
+    private static App mApp;
+    public static String APP_CLIENT_KEY = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
         FreelineCore.init(this);
-
+        mApp = this;
     }
 
+    public static App getApplication(){
+        return mApp;
+    }
 
 }

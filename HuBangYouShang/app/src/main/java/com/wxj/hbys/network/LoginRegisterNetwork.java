@@ -11,19 +11,13 @@ import retrofit2.Retrofit;
  * Created by wuxiaojun on 2017/2/22.
  */
 
-public class LoginRegisterNetwork extends BaseNetwork {
+public class LoginRegisterNetwork {
 
     private static LoginApi mLoginApi;
 
     public static LoginApi getLoginApi() {
         if (mLoginApi == null) {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .client(mOkHttpClient)
-                    .baseUrl(Constant.BASE_URL)
-                    .addConverterFactory(gsonConverterFactory)
-                    .addCallAdapterFactory(rxjavaCallAdapterFactory)
-                    .build();
-            mLoginApi = retrofit.create(LoginApi.class);
+            mLoginApi = RetrofitUtils.getRetrofit().create(LoginApi.class);
         }
         return mLoginApi;
     }

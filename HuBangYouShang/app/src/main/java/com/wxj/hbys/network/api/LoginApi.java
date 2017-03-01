@@ -14,7 +14,7 @@ import rx.Observable;
 public interface LoginApi {
 
     @FormUrlEncoded
-    @POST("/mobile/index.php?act=login")
+    @POST("mobile/index.php?act=login")
     Observable<LoginResponse> getLoginBean(
             @Field("username") String username,
             @Field("password") String password,

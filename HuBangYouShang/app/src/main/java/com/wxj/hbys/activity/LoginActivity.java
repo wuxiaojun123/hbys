@@ -10,15 +10,22 @@ import android.widget.TextView;
 
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
+import com.wxj.hbys.App;
 import com.wxj.hbys.R;
 import com.wxj.hbys.bean.Response.LoginResponse;
+import com.wxj.hbys.network.BaseSubscriber;
 import com.wxj.hbys.network.LoginRegisterNetwork;
 import com.wxj.hbys.rxbus.RxBus;
 import com.wxj.hbys.utils.Constant;
+import com.wxj.hbys.view.LoadingDialog;
+
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -81,22 +88,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 .getLoginBean(username, password, Constant.PLATFORM_CLIENT)
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
-                .subscribe(new Observer<LoginResponse>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
+                .subscribe(new BaseSubscriber<LoginResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        RxBus.getDefault().post("loginSuccess");
-                        ToastUtils.show(mContext, "登录失败，服务器异常");
+                        LogUtils.e("请求错误啦啦啦啦啦  mContext="+mContext);
+                        if(e instanceof UnknownHostException){
+                            ToastUtils.show(mContext, "请求到错误服务器");
+                            LogUtils.e("UnknownHostException");
+                        }else if(e instanceof SocketTimeoutException){
+                            ToastUtils.show(mContext,"请求超时");
+                            LogUtils.e("SocketTimeoutException");
+                        }
                     }
 
                     @Override
                     public void onNext(LoginResponse res) {
                         if (res.code == 200) {
                             LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
+                            App.APP_CLIENT_KEY = res.data.key;
                             RxBus.getDefault().post("loginSuccess");
                         } else {
                             ToastUtils.show(mContext, res.msg);
@@ -105,5 +115,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 });
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

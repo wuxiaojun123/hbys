@@ -40,10 +40,6 @@ public class MyHelpPostFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_my_help_post,null);
         ButterKnife.bind(this,view);
 
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.LineSpinFadeLoader);
-        mRecyclerView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
-        mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mHelpPostAdapter = new MyHelpPostAdapter(mContext);
         helpPostBeenList = new ArrayList<>();
@@ -54,7 +50,6 @@ public class MyHelpPostFragment extends BaseFragment {
 
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
         mRecyclerView.setAdapter(mLRecyclerViewAdapter);
-
 
         mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
             @Override
