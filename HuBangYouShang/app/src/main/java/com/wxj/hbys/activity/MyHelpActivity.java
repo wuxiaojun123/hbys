@@ -33,6 +33,7 @@ public class MyHelpActivity extends BaseActivity implements View.OnClickListener
     TextView tv_title;
     @BindView(R.id.tv_title_right)
     TextView tv_title_right;
+
     @BindView(R.id.id_viewpager)
     ViewPager viewPager;
     @BindView(R.id.tabs)
@@ -76,7 +77,7 @@ public class MyHelpActivity extends BaseActivity implements View.OnClickListener
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
-            TITLES[0] = getResources().getString(R.string.string_replies);
+            TITLES[0] = getResources().getString(R.string.string_posted);
             TITLES[1] = getResources().getString(R.string.string_comment);
         }
 

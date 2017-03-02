@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.wxj.hbys.R;
@@ -25,6 +28,12 @@ import butterknife.ButterKnife;
  * Created by wuxiaojun on 2017/2/8.
  */
 public class MyCollectionActivity extends BaseActivity {
+    @BindView(R.id.iv_title_back)
+    ImageView iv_title_back;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
+    @BindView(R.id.tv_title_right)
+    TextView tv_title_right;
 
     @BindView(R.id.id_viewpager)
     ViewPager viewPager;
@@ -37,11 +46,15 @@ public class MyCollectionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_collection);
         ButterKnife.bind(this);
-
+        initView();
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
     }
 
+    private void initView() {
+        tv_title.setText(R.string.string_my_vote_title);
+        tv_title_right.setText(R.string.string_my_clean);
+    }
 
     private class MyPagerAdapter extends FragmentPagerAdapter{
 

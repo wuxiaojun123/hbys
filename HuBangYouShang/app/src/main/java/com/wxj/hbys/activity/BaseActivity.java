@@ -32,7 +32,8 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        finish();
         ActivitySlideAnim.slideOutAnim(this);
-        super.onBackPressed();
+//        super.onBackPressed();
     }
 }

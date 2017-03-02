@@ -19,6 +19,7 @@
     <!--个人中心 我的获赏，我的求助-->
     <string name="string_comment">跟帖</string>
     <string name="string_replies">回帖</string>
+    <string name="string_posted">发帖</string>
     <!--个人中心 我的收藏-->
     <string name="string_post">帖子</string>
     <string name="string_goods">商品</string>
@@ -84,6 +85,15 @@
 
     <!--我的求助-->
     <string name="string_my_help_title">我的求助</string>
+    <!--我的获赏-->
+    <string name="string_my_help_reward">我的获赏</string>
+    <!--我的投票-->
+    <string name="string_my_vote_title">我的投票</string>
+    <!--我的收藏-->
+    <string name="string_my_collection_title">我的收藏</string>
+    <string name="string_my_clean">清空</string>
+    <!--我的分享-->
+    <string name="string_my_share_title">我的分享</string>
     <!--支付-->
     <string name="pay_lable1">选择支付方式</string>
     <string name="pay_lable2">订单金额</string>

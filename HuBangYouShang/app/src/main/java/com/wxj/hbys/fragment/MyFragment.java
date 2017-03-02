@@ -14,6 +14,7 @@ import com.idotools.utils.MetricsUtils;
 import com.wxj.hbys.R;
 import com.wxj.hbys.activity.AccountManagerActivity;
 import com.wxj.hbys.activity.LoginActivity;
+import com.wxj.hbys.activity.MainActivity;
 import com.wxj.hbys.activity.MyAccountActivity;
 import com.wxj.hbys.activity.MyCollectionActivity;
 import com.wxj.hbys.activity.MyHelpActivity;
@@ -76,6 +77,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             case R.id.iv_setting:
                 // 设置页面
                 startActivity(new Intent(mContext, SettingActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
 
@@ -100,36 +102,44 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.tv_register:
                 startActivity(new Intent(mContext, RegisterActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.tv_order:
                 // 我的订单
                 startActivity(new Intent(mContext, MyOrderActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.tv_account:
                 // 我的账户
                 startActivity(new Intent(mContext, MyAccountActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.tv_my_help:
                 startActivity(new Intent(mContext, MyHelpActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.tv_my_reward:
                 startActivity(new Intent(mContext, MyRewardActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.tv_my_vote:
                 startActivity(new Intent(mContext, MyVoteActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.tv_my_collection:
                 startActivity(new Intent(mContext, MyCollectionActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.tv_share:
                 startActivity(new Intent(mContext, MyShareActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
         }
