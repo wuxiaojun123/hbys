@@ -1,6 +1,5 @@
 package com.wxj.hbys.bean.Response;
 
-import com.wxj.hbys.bean.HelpPostBean;
 
 import java.util.List;
 

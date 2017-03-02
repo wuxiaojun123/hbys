@@ -17,7 +17,7 @@ public class PersonalNetwork {
     }
 
     // 获取个人的信息
-    public static PersonalApi getMyHelpPostResponseApi(){
+    public static PersonalApi getResponseApi(){
         return RetrofitUtils.getRetrofitCookie().create(PersonalApi.class);
     }
 

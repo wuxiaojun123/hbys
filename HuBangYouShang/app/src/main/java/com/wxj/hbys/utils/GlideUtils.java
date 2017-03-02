@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.wxj.hbys.R;
 
 /**
  * Created by wuxiaojun on 17-3-2.
@@ -19,8 +20,8 @@ public class GlideUtils {
             Glide.with(imageView.getContext())
                     .load(imgUrl)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                    .error(R.mipmap.img_default)
-//                    .placeholder(R.mipmap.img_default)
+                    .error(R.mipmap.img_default)
+                    .placeholder(R.mipmap.img_default)
                     .centerCrop()
                     .crossFade()
                     .into(imageView);

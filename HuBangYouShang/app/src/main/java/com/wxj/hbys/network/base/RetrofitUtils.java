@@ -53,17 +53,18 @@ public class RetrofitUtils {
     }
 
     public static Retrofit getRetrofitCookie() {
-        if(App.APP_CLIENT_COOKIE == null){
-            return null;
-        }
         if (mCookieRetrofit == null) {
             OkHttpClient mOkHttpClient = new OkHttpClient()
                     .newBuilder()
                     .addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
-                            Request request = chain.request().newBuilder().addHeader("Cookie", App.APP_CLIENT_COOKIE).build();
-                            return chain.proceed(request);
+                            if(App.APP_CLIENT_COOKIE != null){
+                                Request request = chain.request().newBuilder().addHeader("Cookie", App.APP_CLIENT_COOKIE).build();
+                                return chain.proceed(request);
+                            }else{
+                                return null;
+                            }
                         }
                     })
                     .connectTimeout(20, TimeUnit.SECONDS)

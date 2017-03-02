@@ -18,6 +18,8 @@ import com.wxj.hbys.network.base.BaseSubscriber;
 import com.wxj.hbys.rxbus.RxBus;
 import com.wxj.hbys.utils.ActivitySlideAnim;
 import com.wxj.hbys.utils.Constant;
+import com.wxj.hbys.view.LoadingDialog;
+import com.wxj.hbys.view.MyProcessDialog;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -84,6 +86,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             ToastUtils.show(mContext, "请输入密码");
             return;
         }
+
+        MyProcessDialog.showDialog(mContext);
         subscribe = PersonalNetwork
                 .getLoginApi()
                 .getLoginBean(username, password, Constant.PLATFORM_CLIENT).subscribeOn(Schedulers.io()) // 请求放在io线程中
@@ -91,6 +95,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 .subscribe(new BaseSubscriber<LoginResponse>() {
                     @Override
                     public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
                         e.printStackTrace();
                         LogUtils.e("请求错误啦啦啦啦啦  mContext=" + mContext);
                         if (e instanceof UnknownHostException) {
@@ -104,6 +109,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     @Override
                     public void onNext(LoginResponse res) {
+                        MyProcessDialog.closeDialog();
                         if (res.code == 200) {
                             LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
                             App.APP_CLIENT_KEY = res.data.key;

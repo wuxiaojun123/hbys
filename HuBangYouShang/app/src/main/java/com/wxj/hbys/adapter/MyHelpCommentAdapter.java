@@ -5,21 +5,22 @@ import android.widget.TextView;
 
 import com.wxj.hbys.R;
 import com.wxj.hbys.adapter.viewholder.SuperViewHolder;
+import com.wxj.hbys.bean.Response.MyHelpCommentResponse;
 import com.wxj.hbys.bean.Response.MyHelpPostResponse;
 
 /**
  * Created by wuxiaojun on 2017/2/26.
  */
 
-public class MyHelpPostAdapter extends BaseRecyclerAdapter {
+public class MyHelpCommentAdapter extends BaseRecyclerAdapter {
 
-    public MyHelpPostAdapter(Context context) {
+    public MyHelpCommentAdapter(Context context) {
         super(context);
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.item_my_help_post;
+        return R.layout.item_my_help_comment;
     }
 
     @Override
@@ -30,8 +31,10 @@ public class MyHelpPostAdapter extends BaseRecyclerAdapter {
         TextView tv_state = holder.getView(R.id.tv_state);
         TextView tv_post = holder.getView(R.id.tv_post);
         TextView tv_reward = holder.getView(R.id.tv_reward);
+        TextView tv_help = holder.getView(R.id.tv_help);
 
-        MyHelpPostResponse bean = (MyHelpPostResponse) mDataList.get(position);
+
+        MyHelpCommentResponse bean = (MyHelpCommentResponse) mDataList.get(position);
 
         tv_content.setText(bean.title);
         tv_title.setText(bean.board_name);
@@ -39,6 +42,7 @@ public class MyHelpPostAdapter extends BaseRecyclerAdapter {
         tv_state.setText(bean.status);
         tv_post.setText(bean.comment);
         tv_reward.setText(bean.offer);
+        tv_help.setText(bean.u_name);
 
     }
 

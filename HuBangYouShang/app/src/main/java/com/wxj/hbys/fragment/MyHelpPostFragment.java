@@ -43,7 +43,7 @@ public class MyHelpPostFragment extends BaseFragment {
 
     private void initNetwork() {
         PersonalNetwork
-                .getMyHelpPostResponseApi()
+                .getResponseApi()
                 .getMyHelpPostResponse("post", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -77,7 +77,6 @@ public class MyHelpPostFragment extends BaseFragment {
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
         initLoadMoreListener();
-        lRecyclerview.refresh();
     }
 
     private void initLoadMoreListener() {
