@@ -1,6 +1,8 @@
 package com.wxj.hbys.bean.Response;
 
 
+import java.util.List;
+
 /**
  * Created by wuxiaojun on 2017/2/23.
  */

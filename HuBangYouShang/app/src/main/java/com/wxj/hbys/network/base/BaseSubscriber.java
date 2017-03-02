@@ -1,4 +1,4 @@
-package com.wxj.hbys.network;
+package com.wxj.hbys.network.base;
 
 import com.idotools.utils.JudgeNetWork;
 import com.idotools.utils.ToastUtils;

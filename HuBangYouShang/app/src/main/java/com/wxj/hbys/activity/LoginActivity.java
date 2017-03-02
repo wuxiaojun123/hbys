@@ -13,12 +13,11 @@ import com.idotools.utils.ToastUtils;
 import com.wxj.hbys.App;
 import com.wxj.hbys.R;
 import com.wxj.hbys.bean.Response.LoginResponse;
-import com.wxj.hbys.network.BaseSubscriber;
-import com.wxj.hbys.network.LoginRegisterNetwork;
+import com.wxj.hbys.network.PersonalNetwork;
+import com.wxj.hbys.network.base.BaseSubscriber;
 import com.wxj.hbys.rxbus.RxBus;
 import com.wxj.hbys.utils.ActivitySlideAnim;
 import com.wxj.hbys.utils.Constant;
-import com.wxj.hbys.view.LoadingDialog;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -26,12 +25,8 @@ import java.net.UnknownHostException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -89,7 +84,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             ToastUtils.show(mContext, "请输入密码");
             return;
         }
-        subscribe = LoginRegisterNetwork
+        subscribe = PersonalNetwork
                 .getLoginApi()
                 .getLoginBean(username, password, Constant.PLATFORM_CLIENT).subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中

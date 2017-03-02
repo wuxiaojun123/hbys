@@ -92,4 +92,6 @@
     <string name="pay_lable5">银联</string>
 
 
+    <string name="string_error">获取数据失败</string>
+
 </resources>

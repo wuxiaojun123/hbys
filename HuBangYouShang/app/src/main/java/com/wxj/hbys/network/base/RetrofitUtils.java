@@ -1,4 +1,4 @@
-package com.wxj.hbys.network;
+package com.wxj.hbys.network.base;
 
 import com.idotools.utils.LogUtils;
 import com.wxj.hbys.App;
@@ -39,7 +39,7 @@ public class RetrofitUtils {
                     .connectTimeout(20, TimeUnit.SECONDS)
                     .readTimeout(20, TimeUnit.SECONDS)
                     .writeTimeout(20, TimeUnit.SECONDS)
-//                    .addInterceptor(new GetCookiesInterceptor())
+                    .addInterceptor(new GetCookiesInterceptor())
                     .build();
 
             mRetrofit = new Retrofit.Builder()
@@ -53,14 +53,16 @@ public class RetrofitUtils {
     }
 
     public static Retrofit getRetrofitCookie() {
+        if(App.APP_CLIENT_COOKIE == null){
+            return null;
+        }
         if (mCookieRetrofit == null) {
             OkHttpClient mOkHttpClient = new OkHttpClient()
                     .newBuilder()
                     .addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
-                            LogUtils.e("cookie的值是："+App.APP_CLIENT_KEY);
-                            Request request = chain.request().newBuilder().addHeader("cookie", App.APP_CLIENT_KEY).build();
+                            Request request = chain.request().newBuilder().addHeader("Cookie", App.APP_CLIENT_COOKIE).build();
                             return chain.proceed(request);
                         }
                     })

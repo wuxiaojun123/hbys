@@ -18,9 +18,9 @@ public interface PersonalApi {
 
     @FormUrlEncoded
     @POST("mobile/index.php?act=member_index&op=my_seek_help")
-    Observable<BaseResponse> getMyHelpPostResponse(
+    Observable<MyHelpPostResponse> getMyHelpPostResponse(
             @Field("type") String type,
-            @Field("cookie") String cookie
+            @Field("key") String key
     );
 
 }

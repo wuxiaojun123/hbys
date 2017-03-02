@@ -4,7 +4,10 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+    android:divider="@drawable/shape_divider_line"
+    android:showDividers="end"
+    >
 
     <TextView
         android:id="@+id/tv_content"

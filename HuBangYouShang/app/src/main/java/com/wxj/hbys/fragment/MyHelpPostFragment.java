@@ -1,37 +1,20 @@
 package com.wxj.hbys.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
-import com.base.recyclerview.ProgressStyle;
-import com.idotools.utils.LogUtils;
+import com.idotools.utils.ToastUtils;
 import com.wxj.hbys.App;
 import com.wxj.hbys.R;
 import com.wxj.hbys.adapter.MyHelpPostAdapter;
-import com.wxj.hbys.bean.HelpPostBean;
-import com.wxj.hbys.bean.Response.BaseResponse;
 import com.wxj.hbys.bean.Response.MyHelpPostResponse;
-import com.wxj.hbys.network.BaseSubscriber;
 import com.wxj.hbys.network.PersonalNetwork;
-import com.wxj.hbys.network.api.PersonalApi;
-import com.wxj.hbys.utils.Constant;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.wxj.hbys.network.base.BaseSubscriber;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import retrofit2.Retrofit;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -44,57 +27,61 @@ public class MyHelpPostFragment extends BaseFragment {
     private int numSize = 15;
 
     @BindView(R.id.id_recycler_view)
-    LRecyclerView mRecyclerView;
+    LRecyclerView lRecyclerview;
     private MyHelpPostAdapter mHelpPostAdapter;
-    private LRecyclerViewAdapter mLRecyclerViewAdapter;
-    private List<HelpPostBean> helpPostBeenList;
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_help_post, null);
-        ButterKnife.bind(this, view);
+    protected int getLayoutId() {
+        return R.layout.fragment_my_help_post;
+    }
 
-        // 设置样式
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
+    @Override
+    protected void init() {
+        initRecyclerView();
+        initNetwork();
+    }
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mHelpPostAdapter = new MyHelpPostAdapter(mContext);
-        helpPostBeenList = new ArrayList<>();
-
-        mHelpPostAdapter.addAll(helpPostBeenList);
-        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
-        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
-        initRefreshListener();
-        initLoadMoreListener();
-        mRecyclerView.refresh();
-
+    private void initNetwork() {
         PersonalNetwork
                 .getMyHelpPostResponseApi()
-                .getMyHelpPostResponse("post",App.APP_CLIENT_KEY)
+                .getMyHelpPostResponse("post", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse>() {
+                .subscribe(new BaseSubscriber<MyHelpPostResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        LogUtils.e("请求出错");
-                        mRecyclerView.refreshComplete(numSize);
+                        lRecyclerview.refreshComplete(numSize);
+                        ToastUtils.show(mContext, R.string.string_error);
                     }
 
                     @Override
-                    public void onNext(BaseResponse response) {
-                        mRecyclerView.refreshComplete(numSize);
-                        LogUtils.e("请求成功：" + response + "  数据是：" + response.toString());
+                    public void onNext(MyHelpPostResponse response) {
+                        lRecyclerview.refreshComplete(numSize);
+                        if (response.code == 200) {
+                            if (response.data != null) {
+                                mHelpPostAdapter.addAll(response.data);
+                            }
+                            lRecyclerview.setPullRefreshEnabled(false);
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
                     }
                 });
+    }
 
-        return view;
+    private void initRecyclerView() {
+        lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+        mHelpPostAdapter = new MyHelpPostAdapter(mContext);
+        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
+        lRecyclerview.setAdapter(mLRecyclerViewAdapter);
+        initRefreshListener();
+        initLoadMoreListener();
+        lRecyclerview.refresh();
     }
 
     private void initLoadMoreListener() {
-        mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
+        lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
 
@@ -103,7 +90,7 @@ public class MyHelpPostFragment extends BaseFragment {
     }
 
     private void initRefreshListener() {
-        mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
+        lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
 

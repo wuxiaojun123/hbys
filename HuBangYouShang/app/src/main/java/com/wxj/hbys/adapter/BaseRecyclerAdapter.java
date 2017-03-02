@@ -26,7 +26,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SuperV
 
     public BaseRecyclerAdapter(Context context) {
         mContext = context;
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater = LayoutInflater.from(mContext);
     }
 
     @Override

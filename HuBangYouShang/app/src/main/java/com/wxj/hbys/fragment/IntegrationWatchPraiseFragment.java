@@ -1,20 +1,36 @@
 package com.wxj.hbys.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.widget.LinearLayoutManager;
 
+import com.base.recyclerview.LRecyclerView;
+import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnLoadMoreListener;
+import com.base.recyclerview.OnRefreshListener;
+import com.idotools.utils.ToastUtils;
 import com.wxj.hbys.R;
+import com.wxj.hbys.adapter.IntegrationWatchPraiseAdapter;
+import com.wxj.hbys.bean.Response.AdvertisementResponse;
+import com.wxj.hbys.network.IntegrationNetwork;
+import com.wxj.hbys.network.base.BaseSubscriber;
 
-import butterknife.ButterKnife;
-
+import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 /**
+ * 看完点赞
+ * <p>
  * Created by wuxiaojun on 17-3-1.
  */
 
 public class IntegrationWatchPraiseFragment extends BaseFragment {
+
+
+    @BindView(R.id.id_recycler_view)
+    LRecyclerView lRecyclerview;
+
+    private int numSize = 15;
+    private IntegrationWatchPraiseAdapter mIntegrationWatchPraiseAdapter;
+
 
     @Override
     protected int getLayoutId() {
@@ -23,7 +39,74 @@ public class IntegrationWatchPraiseFragment extends BaseFragment {
 
     @Override
     protected void init() {
+        initRecycler();
+        initNetwor();
 
     }
 
+    private void initRecycler() {
+        lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+        mIntegrationWatchPraiseAdapter = new IntegrationWatchPraiseAdapter(mContext);
+        LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mIntegrationWatchPraiseAdapter);
+        lRecyclerview.setAdapter(adapter);
+        initRefreshListener();
+        initLoadMoreListener();
+        lRecyclerview.refresh();
+    }
+
+    private void initRefreshListener() {
+        lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() { // 如果集合中没有数据，则进行刷新，否则不刷新
+
+            }
+        });
+    }
+
+    private void initLoadMoreListener() {
+        lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
+    }
+
+    private void initNetwor() {
+        subscribe = IntegrationNetwork
+                .getIntegrationApi()
+                .getAdvertisementWatchPraise("watchPraise")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<AdvertisementResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        lRecyclerview.refreshComplete(numSize);
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(AdvertisementResponse response) {
+                        lRecyclerview.refreshComplete(numSize);
+                        if (response.code == 200) {
+                            if(response.data != null){
+                                mIntegrationWatchPraiseAdapter.addAll(response.data.adv_list);
+                            }
+                            if (!response.hasmore) { // 是否有更多数据
+                                lRecyclerview.setLoadMoreEnabled(false);
+                            }
+                            lRecyclerview.setPullRefreshEnabled(false);
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

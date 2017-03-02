@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.wxj.hbys.R;
 import com.wxj.hbys.adapter.viewholder.SuperViewHolder;
 import com.wxj.hbys.bean.HelpPostBean;
+import com.wxj.hbys.bean.Response.MyHelpPostResponse;
 
 import java.util.List;
 
@@ -31,17 +32,27 @@ public class MyHelpPostAdapter extends BaseRecyclerAdapter {
 
     @Override
     public void onBindItemHolder(SuperViewHolder holder, int position) {
-//        HelpPostViewHolder viewHolder = (HelpPostViewHolder) holder;
-        TextView textView = holder.getView(R.id.tv_content);
-        HelpPostBean bean = (HelpPostBean) mDataList.get(position);
+        TextView tv_content = holder.getView(R.id.tv_content);
+        TextView tv_title = holder.getView(R.id.tv_title);
+        TextView tv_time = holder.getView(R.id.tv_time);
+        TextView tv_state = holder.getView(R.id.tv_state);
+        TextView tv_post = holder.getView(R.id.tv_post);
+        TextView tv_reward = holder.getView(R.id.tv_reward);
 
-        textView.setText(bean.content);
+        MyHelpPostResponse bean = (MyHelpPostResponse) mDataList.get(position);
+
+        tv_content.setText(bean.title);
+        tv_title.setText(bean.board_name);
+        tv_time.setText(bean.create_time);
+        tv_state.setText(bean.status);
+        tv_post.setText(bean.comment);
+        tv_reward.setText(bean.offer);
+
     }
 
 
-    class HelpPostViewHolder extends SuperViewHolder{
-
-        /*@BindView(R.id.tv_content)
+    /*class HelpPostViewHolder extends SuperViewHolder{
+        *//*@BindView(R.id.tv_content)
         TextView tv_content;
         @BindView(R.id.tv_title)
         TextView tv_title;
@@ -52,12 +63,12 @@ public class MyHelpPostAdapter extends BaseRecyclerAdapter {
         @BindView(R.id.tv_post)
         TextView tv_post;
         @BindView(R.id.tv_reward)
-        TextView tv_reward;*/
+        TextView tv_reward;*//*
 
         public HelpPostViewHolder(View itemView) {
             super(itemView);
 //            ButterKnife.bind(this,itemView);
         }
-    }
+    }*/
 
 }

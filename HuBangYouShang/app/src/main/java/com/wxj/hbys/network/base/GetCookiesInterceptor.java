@@ -1,8 +1,9 @@
-package com.wxj.hbys.network;
+package com.wxj.hbys.network.base;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.idotools.utils.LogUtils;
 import com.wxj.hbys.App;
 
 import java.io.IOException;
@@ -18,11 +19,9 @@ import rx.functions.Func1;
  */
 
 public class GetCookiesInterceptor implements Interceptor {
-//    private Context context;
 
     public GetCookiesInterceptor() {
         super();
-//        this.context = context;
     }
 
     @Override
@@ -44,7 +43,7 @@ public class GetCookiesInterceptor implements Interceptor {
                             cookieBuffer.append(cookie).append(";");
                         }
                     });
-            App.APP_CLIENT_KEY = cookieBuffer.toString();
+            App.APP_CLIENT_COOKIE = cookieBuffer.toString();
 
             /*SharedPreferences sharedPreferences = context.getSharedPreferences("cookie", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();

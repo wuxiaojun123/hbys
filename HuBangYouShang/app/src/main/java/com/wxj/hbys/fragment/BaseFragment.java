@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+import rx.Subscription;
 
 /**
  * Created by wuxiaojun on 2017/1/8.
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 public class BaseFragment extends Fragment {
 
     protected Context mContext;
+    protected Subscription subscribe;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,4 +44,11 @@ public class BaseFragment extends Fragment {
         return 0;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(subscribe != null && !subscribe.isUnsubscribed()){
+            subscribe.unsubscribe();
+        }
+    }
 }
