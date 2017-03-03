@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_allbg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/layout_margin"
+            android:background="@color/color_while"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_shopinfo_fillter_all"
+                style="@style/style_text_lable"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="@string/shop_lable15" />
+
+            <TextView
+                android:id="@+id/tv_shopinfo_fillter_sell"
+                style="@style/style_text_lable"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="@string/shop_lable16" />
+
+            <LinearLayout
+                android:id="@+id/layout_shopinfo_filter_price"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/style_text_lable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/shop_lable17" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginLeft="@dimen/content_margin"
+                    android:src="@mipmap/up_to_down" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_shopinfo_filter_type"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="12dp"
+                    android:src="@mipmap/list_piece" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.wxj.hbys.view.MyGridView
+            android:id="@+id/gv_shopinfo_searchresult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:horizontalSpacing="@dimen/layout_margin"
+            android:numColumns="2" />
+    </LinearLayout>
+</ScrollView>

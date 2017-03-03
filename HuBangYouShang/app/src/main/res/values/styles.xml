@@ -281,6 +281,11 @@
         <item name="android:textSize">@dimen/dimen_15</item>
         <item name="android:textColor">@color/color_3a</item>
     </style>
+    <!--标签类文字样式红色-->
+    <style name="style_text_lable_red">
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:textColor">#f93820</item>
+    </style>
     <!--内容类文字样式-->
     <style name="style_text_content">
         <item name="android:textSize">@dimen/dimen_12</item>

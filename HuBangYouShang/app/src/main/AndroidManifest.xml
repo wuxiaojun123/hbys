@@ -190,6 +190,15 @@
         <!--选择支付方式-->
         <activity android:name=".activity.PayTypeActivity"
             android:screenOrientation="portrait" />
+        <!--订单支付成功-->
+        <activity android:name=".activity.PayendActivity"
+            android:screenOrientation="portrait" />
+        <!--店铺详情-->
+        <activity android:name=".activity.ShopInfoActivity"
+            android:screenOrientation="portrait" />
+        <!--商品详情-->
+        <activity android:name=".activity.GoodInfoActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

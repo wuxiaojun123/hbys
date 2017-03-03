@@ -29,6 +29,9 @@
     <dimen name="hight_msgcenter_item">50dp</dimen>
     <dimen name="layout_margin">10dp</dimen>
     <dimen name="content_margin">5dp</dimen>
+    <!--右方向箭头宽高-->
+    <dimen name="hight_arrow">19dp</dimen>
+    <dimen name="width_arrow">8dp</dimen>
 
 
 </resources>

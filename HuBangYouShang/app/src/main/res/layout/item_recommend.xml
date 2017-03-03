@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_while"
+    android:paddingBottom="@dimen/layout_margin">
+
+    <TextView
+        android:id="@+id/tv_item_recommend_count"
+        style="@style/style_text_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/layout_margin"
+        android:text="35人付款"
+        android:textColor="#aeb1bd"
+        android:textSize="@dimen/dimen_15" />
+
+    <TextView
+    android:id="@+id/tv_item_recommend_price"
+    style="@style/style_text_lable_red"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_marginLeft="@dimen/layout_margin"
+    android:text="￥200.00" />
+
+    <TextView
+        android:id="@+id/tv_item_recommend_name"
+        style="@style/style_text_lable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/layout_margin"
+        android:layout_above="@+id/tv_item_recommend_price"
+        android:minLines="2"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="这里是商品名称，这里是商品名称" />
+
+    <ImageView
+        android:id="@+id/iv_item_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tv_item_recommend_name"
+        android:background="@mipmap/ic_launcher"
+        android:scaleType="centerCrop" />
+</RelativeLayout>

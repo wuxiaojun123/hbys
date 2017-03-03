@@ -113,8 +113,49 @@
     <string name="pay_lable3">微信</string>
     <string name="pay_lable4">支付宝</string>
     <string name="pay_lable5">银联</string>
+    <string name="pay_lable6">支付方式：</string>
+    <string name="pay_lable7">支付金额：</string>
+    <string name="pay_lable8">查看订单</string>
+    <string name="pay_lable9">回首页</string>
+    <string name="pay_lable10">继续购物</string>
 
+    <!--商城-->
+    <string name="shop_lable1">我的账户</string>
+    <string name="shop_lable2">我的订单</string>
+    <string name="shop_lable3">优惠券</string>
+    <string name="shop_lable4">分类</string>
+    <string name="shop_lable5">推荐店铺</string>
+    <string name="shop_lable6">热门商品</string>
 
     <string name="string_error">获取数据失败</string>
 
+    <!--店铺-->
+    <string name="shop_lable11">搜索店铺内的宝贝</string>
+    <string name="shop_lable12">收藏</string>
+    <string name="shop_lable13">销量排行</string>
+    <string name="shop_lable14">店铺推荐</string>
+    <string name="shop_lable15">综合</string>
+    <string name="shop_lable16">销量</string>
+    <string name="shop_lable17">价格</string>
+    <string name="shop_lable18">首页</string>
+    <string name="shop_lable19">全部商品</string>
+    <string name="shop_lable20">上新</string>
+
+    <!--商品详情-->
+    <string name="good_lable1">店铺</string>
+    <string name="good_lable2">商家群</string>
+    <string name="good_lable3">收藏</string>
+    <string name="good_lable4">加入购物车</string>
+    <string name="good_lable5">立即购买</string>
+    <string name="good_lable6">正品保证</string>
+    <string name="good_lable7">7天无理由退货</string>
+    <string name="good_lable8">极速退款</string>
+    <string name="good_lable9">优惠券交易</string>
+    <string name="good_lable10">选择颜色分类尺码</string>
+    <string name="good_lable11">描述相符</string>
+    <string name="good_lable12">服务态度</string>
+    <string name="good_lable13">发货速度</string>
+    <string name="good_lable14">商品</string>
+    <string name="good_lable15">详情</string>
+    <string name="good_lable16">评价</string>
 </resources>

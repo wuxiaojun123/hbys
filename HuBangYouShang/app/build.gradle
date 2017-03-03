@@ -60,5 +60,7 @@ dependencies {
     debugCompile 'com.antfortune.freeline:runtime:0.8.4'
     releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
     testCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
+    //广告位banner
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 
 }

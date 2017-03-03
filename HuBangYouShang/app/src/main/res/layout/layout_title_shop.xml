@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_44"
+    android:background="@color/color_title_background">
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_help_title_sms"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="@dimen/layout_margin"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_email"
+            />
+        <TextView
+            android:id="@+id/tv_title_help_msgcount"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="-8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="2dp"
+            android:background="@drawable/bg_reddot"
+            android:textSize="10sp"
+            android:textColor="@color/color_while"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:text="1"/>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_shop_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="6dp"
+        android:background="@drawable/shape_search_background"
+        android:drawableLeft="@mipmap/img_search"
+        android:drawableRight="@mipmap/img_search_close"
+        android:hint="@string/help_lable2"
+        android:textColor="@color/color_while"
+        android:textSize="@dimen/dimen_13"
+        android:textColorHint="@color/color_while"
+        android:layout_toLeftOf="@+id/layout_help_title_sms"
+        android:layout_toRightOf="@+id/layout_help_titleleft"
+        />
+</RelativeLayout>
