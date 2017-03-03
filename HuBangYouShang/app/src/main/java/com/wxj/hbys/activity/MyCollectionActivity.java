@@ -17,17 +17,19 @@ import com.wxj.hbys.fragment.MyCollectionPostFragment;
 import com.wxj.hbys.fragment.MyCollectionStoreFragment;
 import com.wxj.hbys.fragment.MyHelpCommentFragment;
 import com.wxj.hbys.fragment.MyHelpPostFragment;
+import com.wxj.hbys.utils.ActivitySlideAnim;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
- *
  * 我的收藏
- *
+ * <p>
  * Created by wuxiaojun on 2017/2/8.
  */
-public class MyCollectionActivity extends BaseActivity {
+public class MyCollectionActivity extends BaseActivity implements View.OnClickListener {
+
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -47,16 +49,34 @@ public class MyCollectionActivity extends BaseActivity {
         setContentView(R.layout.activity_my_collection);
         ButterKnife.bind(this);
         initView();
-        viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-        tabStrip.setViewPager(viewPager);
     }
 
     private void initView() {
-        tv_title.setText(R.string.string_my_vote_title);
+        tv_title.setText(R.string.string_my_collection_title);
         tv_title_right.setText(R.string.string_my_clean);
+        initViewPager();
     }
 
-    private class MyPagerAdapter extends FragmentPagerAdapter{
+    private void initViewPager() {
+        viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        tabStrip.setViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(3);
+    }
+
+    @OnClick({R.id.iv_title_back})
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.iv_title_back:
+                finish();
+                ActivitySlideAnim.slideOutAnim(MyCollectionActivity.this);
+
+                break;
+        }
+    }
+
+    private class MyPagerAdapter extends FragmentPagerAdapter {
 
         private String[] TITLES = new String[3];
 
@@ -74,11 +94,11 @@ public class MyCollectionActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0){
+            if (position == 0) {
                 return new MyCollectionPostFragment();
-            }else if(position == 1){
+            } else if (position == 1) {
                 return new MyCollectionGoodsFragment();
-            }else{
+            } else {
                 return new MyCollectionStoreFragment();
             }
         }

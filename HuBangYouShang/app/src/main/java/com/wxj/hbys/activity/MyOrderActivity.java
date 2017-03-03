@@ -8,12 +8,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.wxj.hbys.R;
 import com.wxj.hbys.fragment.BaseFragment;
 import com.wxj.hbys.fragment.MyAccountHelpRewardFragment;
+import com.wxj.hbys.fragment.MyOrderAllFragment;
+import com.wxj.hbys.utils.ActivitySlideAnim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,12 @@ import butterknife.OnClick;
  */
 
 public class MyOrderActivity extends BaseActivity implements View.OnClickListener {
+    @BindView(R.id.iv_title_back)
+    ImageView iv_title_back;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
+    @BindView(R.id.tv_title_right)
+    TextView tv_title_right;
 
     @BindView(R.id.id_viewpager)
     ViewPager viewPager;
@@ -42,36 +51,46 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_coupon);
+        setContentView(R.layout.activity_my_order);
         ButterKnife.bind(this);
 
+        initView();
         initEvent();
         initData();
     }
 
+    private void initView() {
+        tv_title.setText(R.string.string_my_order_title);
+        tv_title_right.setVisibility(View.GONE);
+    }
+
     private void initData() {
         fragmentList = new ArrayList<>(5);
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
+        fragmentList.add(new MyOrderAllFragment());
+        fragmentList.add(new MyOrderAllFragment());
+        fragmentList.add(new MyOrderAllFragment());
+        fragmentList.add(new MyOrderAllFragment());
+        fragmentList.add(new MyOrderAllFragment());
         viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(5);
     }
 
     private void initEvent() {
 
     }
 
+    @OnClick({R.id.iv_title_back})
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.iv_title_back:
+                finish();
+                ActivitySlideAnim.slideOutAnim(MyOrderActivity.this);
 
-
+                break;
         }
-
     }
 
 
@@ -83,11 +102,11 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
                 return getMString(R.string.string_all_order);
             } else if (position == 1) {
                 return getMString(R.string.string_stay_payment);
-            } else if(position == 2){
+            } else if (position == 2) {
                 return getMString(R.string.string_stay_goods_receipt);
-            }else if(position == 3){
+            } else if (position == 3) {
                 return getMString(R.string.string_stay_evaluate);
-            }else{
+            } else {
                 return getMString(R.string.string_refund);
             }
         }

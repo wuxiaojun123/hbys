@@ -34,6 +34,7 @@
     <string name="string_meoney_from_low_to_high">面额从低到高</string>
 
     <!--个人中心  我的订单-->
+    <string name="string_my_order_title">我的订单</string>
     <string name="string_all_order">全部订单</string>
     <string name="string_stay_payment">待付款</string>
     <string name="string_stay_goods_receipt">待收货</string>
@@ -94,6 +95,18 @@
     <string name="string_my_clean">清空</string>
     <!--我的分享-->
     <string name="string_my_share_title">我的分享</string>
+
+    <!--设置-->
+    <string name="string_setting_title">设置</string>
+
+    <!--关于-->
+    <string name="string_about_title">关于</string>
+    <!--意见反馈-->
+    <string name="string_feedback_title">意见反馈</string>
+    <!--帮助中心-->
+    <string name="string_help_center_title">帮助中心</string>
+
+
     <!--支付-->
     <string name="pay_lable1">选择支付方式</string>
     <string name="pay_lable2">订单金额</string>
