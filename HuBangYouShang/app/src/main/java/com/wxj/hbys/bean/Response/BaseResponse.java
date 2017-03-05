@@ -16,7 +16,7 @@ public class BaseResponse<T> {
 
     @Override
     public String toString() {
-        return code + "msg=" + msg + data + "=====";
+        return code + "msg=" + msg + data + "====="+data;
     }
 
 }

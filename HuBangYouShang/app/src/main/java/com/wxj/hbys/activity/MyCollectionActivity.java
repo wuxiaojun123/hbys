@@ -109,5 +109,4 @@ public class MyCollectionActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-
 }

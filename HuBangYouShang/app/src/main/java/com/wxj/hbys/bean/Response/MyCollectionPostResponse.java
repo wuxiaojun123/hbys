@@ -14,15 +14,10 @@ public class MyCollectionPostResponse extends BaseResponse<MyCollectionPostRespo
     public boolean hasmore; // 是否还有更多
     public int page_total; // 总页数
 
-
-    public class MyCollectionPost{
+    public class MyCollectionPost {
 
         public List<MyCollectionPostBean> favorites_list;
 
     }
-
-
-
-
 
 }

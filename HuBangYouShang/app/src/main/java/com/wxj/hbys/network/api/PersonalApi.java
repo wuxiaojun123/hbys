@@ -69,6 +69,15 @@ public interface PersonalApi {
             @Field("key") String key
     );
 
+    // 我的收藏--删除帖子
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_favorites_post&op=favorites_del")
+    Observable<BaseResponse> getDeleteMyCollectionPostResponse(
+            @Field("key") String key,
+            @Field("post_id") String post_id,
+            @Field("type") String type
+    );
+
     // 我的收藏--商品
     @FormUrlEncoded
     @POST("/mobile/index.php?act=member_favorites&op=favorites_list")

@@ -61,7 +61,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         return contentView;
     }
 
-
     @OnClick({R.id.rl_user_info, R.id.iv_setting, R.id.tv_login, R.id.tv_register, R.id.tv_account,
             R.id.tv_my_help, R.id.tv_my_reward, R.id.tv_my_vote, R.id.tv_my_collection, R.id.tv_share,
             R.id.tv_order})
@@ -71,7 +70,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         switch (id) {
             case R.id.rl_user_info:
                 // 需要判断是否已登陆
-//                startActivity(new Intent(mContext, AccountManagerActivity.class));
+                login();
 
                 break;
             case R.id.iv_setting:
@@ -83,21 +82,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
             case R.id.tv_login:
                 // 点击登陆完成，需要动态改变布局的高度
-                RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        if("loginSuccess".equals(s)){
-                            if (ll_logined.getVisibility() == View.GONE) {
-                                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_login_height.getLayoutParams();
-                                lp.height = MetricsUtils.dipToPx(210);
-                                ll_login_height.requestLayout();
-                                ll_logined.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    }
-                });
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-                ActivitySlideAnim.slideInAnim(getActivity());
+                login();
 
                 break;
             case R.id.tv_register:
@@ -145,5 +130,23 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+
+    private void login(){
+        RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
+            @Override
+            public void call(String s) {
+                if("loginSuccess".equals(s)){
+                    if (ll_logined.getVisibility() == View.GONE) {
+                        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_login_height.getLayoutParams();
+                        lp.height = MetricsUtils.dipToPx(210);
+                        ll_login_height.requestLayout();
+                        ll_logined.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+        ActivitySlideAnim.slideInAnim(getActivity());
+    }
 
 }

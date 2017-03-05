@@ -24,6 +24,7 @@
     <string name="string_post">帖子</string>
     <string name="string_goods">商品</string>
     <string name="string_store">店铺</string>
+    <string name="string_remove">删除</string>
     <!--个人中心  我的账户-->
     <string name="string_all">全部</string>
     <string name="string_expenditure">支出</string>

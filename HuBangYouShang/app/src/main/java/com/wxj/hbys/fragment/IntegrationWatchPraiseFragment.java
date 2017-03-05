@@ -16,6 +16,7 @@ import com.wxj.hbys.network.base.BaseSubscriber;
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
 /**
  * 看完点赞
  * <p>
@@ -29,6 +30,7 @@ public class IntegrationWatchPraiseFragment extends BaseFragment {
     LRecyclerView lRecyclerview;
 
     private int numSize = 15;
+    private int currentPage = 1;
     private IntegrationWatchPraiseAdapter mIntegrationWatchPraiseAdapter;
 
 
@@ -51,7 +53,6 @@ public class IntegrationWatchPraiseFragment extends BaseFragment {
         lRecyclerview.setAdapter(adapter);
         initRefreshListener();
         initLoadMoreListener();
-        lRecyclerview.refresh();
     }
 
     private void initRefreshListener() {
@@ -67,7 +68,7 @@ public class IntegrationWatchPraiseFragment extends BaseFragment {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                initNetwor();
             }
         });
     }
@@ -75,7 +76,7 @@ public class IntegrationWatchPraiseFragment extends BaseFragment {
     private void initNetwor() {
         subscribe = IntegrationNetwork
                 .getIntegrationApi()
-                .getAdvertisementWatchPraise("watchPraise")
+                .getAdvertisementWatchPraise("advertisement", "" + currentPage, "watchPraise")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<AdvertisementResponse>() {
@@ -90,13 +91,17 @@ public class IntegrationWatchPraiseFragment extends BaseFragment {
                     public void onNext(AdvertisementResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
-                            if(response.data != null){
+                            if (response.data != null) {
                                 mIntegrationWatchPraiseAdapter.addAll(response.data.adv_list);
+                            }
+                            if (currentPage == 1) {
+                                lRecyclerview.setPullRefreshEnabled(false);
                             }
                             if (!response.hasmore) { // 是否有更多数据
                                 lRecyclerview.setLoadMoreEnabled(false);
+                            } else {
+                                currentPage += 1;
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

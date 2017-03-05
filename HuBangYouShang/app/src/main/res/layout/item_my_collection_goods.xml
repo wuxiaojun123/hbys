@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wxj.hbys.view.SwipeMenuView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:id="@+id/iv_goods"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:text="商品名称商品名称商品名称商品名称商品名称商品名称商品名称"
+                android:textColor="@color/color_6b"
+                android:textSize="@dimen/dimen_13" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:layout_gravity="bottom"
+                android:text="¥ 175.00"
+                android:textColor="@color/color_fa"
+                android:textSize="@dimen/dimen_13" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_fa"
+        android:text="@string/string_remove"
+        android:textSize="@dimen/dimen_15"
+        android:gravity="center"
+        android:textColor="@android:color/white" />
+
+</com.wxj.hbys.view.SwipeMenuView>
