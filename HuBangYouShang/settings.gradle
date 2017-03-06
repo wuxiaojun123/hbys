@@ -1,4 +1,4 @@
-include ':app', ':library_recycler'
+include ':app', ':library_recycler', ':easeui', ':library_chat'
 
 include ':library_base'
 
