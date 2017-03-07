@@ -119,13 +119,15 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <com.wxj.hbys.view.MyGridView
+            <include layout="@layout/layout_shop_mall" />
+
+            <!--<com.wxj.hbys.view.MyGridView
                 android:id="@+id/gv_shop_hot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/layout_margin"
                 android:horizontalSpacing="1dp"
-                android:numColumns="2"/>
+                android:numColumns="2" />
 
             <com.wxj.hbys.view.MyGridView
                 android:id="@+id/gv_shop_recommand_good"
@@ -133,49 +135,51 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:horizontalSpacing="1dp"
-                android:numColumns="3"/>
+                android:numColumns="3" />-->
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/color_while"
-                >
+                android:background="@color/color_while">
+
                 <TextView
                     android:id="@+id/tv_shop_recommand"
+                    style="@style/style_text_lable_red"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    style="@style/style_text_lable_red"
-                    android:text="@string/shop_lable5"/>
+                    android:text="@string/shop_lable5"
+                    android:textSize="@dimen/dimen_18" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/tv_shop_recommand"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/layout_margin"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/store_bar_left"
-                    />
+                    android:layout_toLeftOf="@id/tv_shop_recommand"
+                    android:src="@mipmap/store_bar_left" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tv_shop_recommand"
-                    android:layout_marginLeft="@dimen/layout_margin"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/store_bar_right"
-                    />
+                    android:layout_marginLeft="@dimen/layout_margin"
+                    android:layout_toRightOf="@id/tv_shop_recommand"
+                    android:src="@mipmap/store_bar_right" />
             </RelativeLayout>
 
             <com.wxj.hbys.view.MyGridView
                 android:id="@+id/gv_shop_recommand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="5dp"
+                android:horizontalSpacing="10dp"
+                android:numColumns="3"
+                android:paddingBottom="@dimen/layout_margin"
                 android:paddingLeft="@dimen/layout_margin"
                 android:paddingRight="@dimen/layout_margin"
-                android:paddingBottom="@dimen/layout_margin"
-                android:horizontalSpacing="@dimen/layout_margin"
-                android:numColumns="3"/>
+                android:verticalSpacing="10dp" />
 
             <com.bigkoo.convenientbanner.ConvenientBanner
                 android:id="@+id/banner_shop2"
@@ -186,40 +190,45 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/color_while"
-                >
+                android:background="@color/color_while">
+
                 <TextView
                     android:id="@+id/tv_shop_hot"
+                    style="@style/style_text_lable"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:gravity="center"
-                    style="@style/style_text_lable"
-                    android:text="@string/shop_lable6"/>
+                    android:text="@string/shop_lable6"
+                    android:textColor="@color/color_8b4ab8"
+                    android:textSize="@dimen/dimen_18" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/tv_shop_hot"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/layout_margin"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/store_bar_left"
-                    />
+                    android:layout_toLeftOf="@id/tv_shop_hot"
+                    android:src="@mipmap/store_bar_left" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tv_shop_hot"
-                    android:layout_marginLeft="@dimen/layout_margin"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/store_bar_right"
-                    />
+                    android:layout_marginLeft="@dimen/layout_margin"
+                    android:layout_toRightOf="@id/tv_shop_hot"
+                    android:src="@mipmap/store_bar_right" />
             </RelativeLayout>
+
             <com.wxj.hbys.view.MyGridView
                 android:id="@+id/gv_shop_hot_more"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:horizontalSpacing="@dimen/layout_margin"
-                android:numColumns="2"/>
+                android:horizontalSpacing="7dp"
+                android:numColumns="2"
+                android:verticalSpacing="7dp" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

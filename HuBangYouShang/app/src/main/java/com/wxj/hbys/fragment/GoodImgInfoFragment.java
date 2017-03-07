@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wxj.hbys.R;
-import com.wxj.hbys.activity.ShopInfoActivity;
 
 /**
  * Created by MXY on 2017/2/26.

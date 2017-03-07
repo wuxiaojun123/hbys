@@ -70,12 +70,11 @@ public class GoodInfoActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             // 下面两个fragment是个人中心里的
-            if(position == 0){
+            if (position == 0) {
                 return new GoodFragment();
-            }else if(position == 1){
+            } else if (position == 1) {
                 return new GoodRetedFragment();
-            }
-            else{
+            } else {
                 return new GoodImgInfoFragment();
             }
         }

@@ -21,10 +21,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * 店铺信息
  * Created by MXY on 2017/2/26.
  */
 
-public class ShopInfoActivity extends FragmentActivity {
+public class StoreInfoActivity extends BaseActivity {
 
     @BindView(R.id.iv_shopinfo_title_back)
     ImageView ivShopinfoTitleBack;
