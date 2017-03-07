@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void initChat() {
-        String userName = "hdyb1";
+        String userName = "hdyb3";
         String password = "123456";
         EMClient.getInstance().login(userName,password,new EMCallBack() {//回调
             @Override

@@ -6,7 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
@@ -34,6 +36,14 @@ public class BenefitFragment extends BaseFragment {
 
     @BindView(R.id.list)
     LRecyclerView groupListView;
+
+    @BindView(R.id.iv_title_back)
+    ImageView ivTitleBack;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_title_right)
+    TextView tvTitleRight;
+
     private GroupAdapter groupAdapter;
 
     @Nullable
@@ -43,9 +53,14 @@ public class BenefitFragment extends BaseFragment {
             contentView = inflater.inflate(R.layout.fragment_benefit,null);
         }
         ButterKnife.bind(this, contentView);
+
+        tvTitle.setText("聊天");
+        ivTitleBack.setVisibility(View.GONE);
+        tvTitleRight.setVisibility(View.GONE);
+
+
+
         grouplist = EMClient.getInstance().groupManager().getAllGroups();
-
-
 
         groupListView.setLayoutManager(new LinearLayoutManager(mContext));
         groupAdapter = new GroupAdapter(this.getActivity(), 1, 1);

@@ -7,7 +7,7 @@ android {
     buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.wxj.hbys.merchant"
+        applicationId "com.wxj.hbys"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
@@ -34,8 +34,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     /*compile 'com.android.support:appcompat-v7:22.1.0'
-            compile 'com.android.support:recyclerview-v7:22.1.0'
-            compile 'com.android.support:design:22.2.0'//design风格*/
+                compile 'com.android.support:recyclerview-v7:22.1.0'
+                compile 'com.android.support:design:22.2.0'//design风格*/
     //butterknife
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
