@@ -2,17 +2,16 @@ package com.wxj.hbys.activity;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.wxj.hbys.R;
-import com.wxj.hbys.fragment.BenefitFragment;
+import com.wxj.hbys.chat.ui.BenefitFragment;
 import com.wxj.hbys.fragment.ConsumptionFragment;
 import com.wxj.hbys.fragment.HelpFragment;
 import com.wxj.hbys.fragment.IntegrationFragment;
@@ -65,7 +64,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         ButterKnife.bind(this);
 
         initData();
+        initChat();
+    }
 
+    private void initChat() {
+        String userName = "hdyb1";
+        String password = "123456";
+        EMClient.getInstance().login(userName,password,new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+                Log.d("main", "登录聊天服务器成功！");
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                Log.d("main", "登录聊天服务器失败！");
+            }
+        });
     }
 
     private void initData() {
