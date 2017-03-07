@@ -1,16 +1,16 @@
 {
     "android_gradle_plugin_version": "2.2.2",
-    "apk_path": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\outputs\\apk\\app-debug.apk",
+    "apk_path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\outputs\\apk\\app-debug.apk",
     "apt": {
         "app": {
             "aptArgs": [
                 
             ],
-            "aptOutput": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\generated\\source\\apt\\debug",
+            "aptOutput": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\generated\\source\\apt\\debug",
             "disableDiscovery": false,
             "enabled": true,
             "processor": null,
-            "processorPath": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\recyclerview-v7\\22.1.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\22.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.jakewharton\\butterknife\\8.0.1\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\io.reactivex\\rxandroid\\1.2.1\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\HuBangYouShang\\library_base\\unspecified\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\22.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-v4\\22.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-v4\\22.2.0\\jars\\libs\\internal_impl-22.2.0.jar;E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.antfortune.freeline\\runtime\\0.8.4\\jars\\classes.jar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-annotations\\23.3.0\\support-annotations-23.3.0.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\io.reactivex\\rxjava\\1.1.6\\2586312cd2b8a511e4c6236736f5a039fc0f2273\\rxjava-1.1.6.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.jakewharton\\butterknife-annotations\\8.0.1\\345b89f45d02d8b09400b472fab7b7e38f4ede1f\\butterknife-annotations-8.0.1.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.github.bumptech.glide\\glide\\3.7.0\\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\\glide-3.7.0.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.retrofit2\\retrofit\\2.0.2\\43eeae0b9fb087bb3194ba59ab63a38a32fbf3e\\retrofit-2.0.2.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.okhttp3\\okhttp\\3.2.0\\f7873a2ebde246a45c2a8d6f3247108b4c88a879\\okhttp-3.2.0.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.okio\\okio\\1.6.0\\98476622f10715998eacf9240d6b479f12c66143\\okio-1.6.0.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.retrofit2\\converter-gson\\2.0.2\\f8d87f15b94b8d74e7ccf61d7eedb558811cdb30\\converter-gson-2.0.2.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.google.code.gson\\gson\\2.6.1\\b9d63507329a7178e026fc334f87587ee5070ac5\\gson-2.6.1.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.retrofit2\\adapter-rxjava\\2.0.2\\a60c039ba54c73d1133b72178e1b04133c73d13d\\adapter-rxjava-2.0.2.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.jakewharton\\butterknife-compiler\\8.0.1\\6e3b29589d7e38efd94d2e9505b7b542e8cf9669\\butterknife-compiler-8.0.1.jar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\recyclerview-v7\\22.1.0\\recyclerview-v7-22.1.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\design\\22.2.0\\design-22.2.0.aar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.jakewharton\\butterknife\\8.0.1\\8d13c3b2bd69e94ff87bb620bd8f5dbe9610afd9\\butterknife-8.0.1.aar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\io.reactivex\\rxandroid\\1.2.1\\78179b876174994f66432947fa15338ba13747a4\\rxandroid-1.2.1.aar;E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\build\\outputs\\aar\\library_base-release.aar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.google.auto\\auto-common\\0.6\\cf7212b0f8bfef12657b942df8f4f2cf032d3f41\\auto-common-0.6.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.google.auto.service\\auto-service\\1.0-rc2\\51033a5b8fcf7039159e35b6878f106ccd5fb35f\\auto-service-1.0-rc2.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup\\javapoet\\1.6.1\\5395a1879f4607c5f27fc8c97b1edcfe01b1316c\\javapoet-1.6.1.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.google.guava\\guava\\18.0\\cce0823396aa693798f8882e64213b1772032b09\\guava-18.0.jar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\appcompat-v7\\22.2.0\\appcompat-v7-22.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-v4\\22.2.0\\support-v4-22.2.0.aar"
+            "processorPath": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.jakewharton\\butterknife\\8.0.1\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\io.reactivex\\rxandroid\\1.2.1\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\HuBangYouShang\\library_base\\unspecified\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\HuBangYouShang\\library_pagerSlidingTabStrip\\unspecified\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\HuBangYouShang\\library_recycler\\unspecified\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\recyclerview-v7\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.bigkoo\\convenientbanner\\2.0.5\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\animated-vector-drawable\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-vector-drawable\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-v4\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-fragment\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-fragment\\24.2.0\\jars\\libs\\internal_impl-24.2.0.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-core-utils\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-core-utils\\24.2.0\\jars\\libs\\internal_impl-24.2.0.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-media-compat\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-media-compat\\24.2.0\\jars\\libs\\internal_impl-24.2.0.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-core-ui\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-core-ui\\24.2.0\\jars\\libs\\internal_impl-24.2.0.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-compat\\24.2.0\\jars\\classes.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-compat\\24.2.0\\jars\\libs\\internal_impl-24.2.0.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\intermediates\\exploded-aar\\com.antfortune.freeline\\runtime\\0.8.4\\jars\\classes.jar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-annotations\\24.2.0\\support-annotations-24.2.0.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\io.reactivex\\rxjava\\1.1.6\\2586312cd2b8a511e4c6236736f5a039fc0f2273\\rxjava-1.1.6.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.jakewharton\\butterknife-annotations\\8.0.1\\345b89f45d02d8b09400b472fab7b7e38f4ede1f\\butterknife-annotations-8.0.1.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.github.bumptech.glide\\glide\\3.7.0\\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\\glide-3.7.0.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.retrofit2\\retrofit\\2.0.2\\43eeae0b9fb087bb3194ba59ab63a38a32fbf3e\\retrofit-2.0.2.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.okhttp3\\okhttp\\3.2.0\\f7873a2ebde246a45c2a8d6f3247108b4c88a879\\okhttp-3.2.0.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.okio\\okio\\1.6.0\\98476622f10715998eacf9240d6b479f12c66143\\okio-1.6.0.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.retrofit2\\converter-gson\\2.0.2\\f8d87f15b94b8d74e7ccf61d7eedb558811cdb30\\converter-gson-2.0.2.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.google.code.gson\\gson\\2.6.1\\b9d63507329a7178e026fc334f87587ee5070ac5\\gson-2.6.1.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup.retrofit2\\adapter-rxjava\\2.0.2\\a60c039ba54c73d1133b72178e1b04133c73d13d\\adapter-rxjava-2.0.2.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.jakewharton\\butterknife-compiler\\8.0.1\\6e3b29589d7e38efd94d2e9505b7b542e8cf9669\\butterknife-compiler-8.0.1.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.jakewharton\\butterknife\\8.0.1\\8d13c3b2bd69e94ff87bb620bd8f5dbe9610afd9\\butterknife-8.0.1.aar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\io.reactivex\\rxandroid\\1.2.1\\78179b876174994f66432947fa15338ba13747a4\\rxandroid-1.2.1.aar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\build\\outputs\\aar\\library_base-release.aar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.bigkoo\\convenientbanner\\2.0.5\\a9ef72e0b9be8cc70002554ed10ee5705a0afa8d\\convenientbanner-2.0.5.aar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.google.auto\\auto-common\\0.6\\cf7212b0f8bfef12657b942df8f4f2cf032d3f41\\auto-common-0.6.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.google.auto.service\\auto-service\\1.0-rc2\\51033a5b8fcf7039159e35b6878f106ccd5fb35f\\auto-service-1.0-rc2.jar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup\\javapoet\\1.6.1\\5395a1879f4607c5f27fc8c97b1edcfe01b1316c\\javapoet-1.6.1.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\build\\outputs\\aar\\library_pagerSlidingTabStrip-release.aar;C:\\Users\\wuxiaojun\\.gradle\\caches\\modules-2\\files-2.1\\com.google.guava\\guava\\18.0\\cce0823396aa693798f8882e64213b1772032b09\\guava-18.0.jar;E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\build\\outputs\\aar\\library_recycler-release.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\recyclerview-v7\\24.2.0\\recyclerview-v7-24.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\design\\24.2.0\\design-24.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-compat\\24.2.0\\support-compat-24.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-core-ui\\24.2.0\\support-core-ui-24.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\appcompat-v7\\24.2.0\\appcompat-v7-24.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-vector-drawable\\24.2.0\\support-vector-drawable-24.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\animated-vector-drawable\\24.2.0\\animated-vector-drawable-24.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-v4\\24.2.0\\support-v4-24.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-core-utils\\24.2.0\\support-core-utils-24.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-media-compat\\24.2.0\\support-media-compat-24.2.0.aar;E:\\androidStudio\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-fragment\\24.2.0\\support-fragment-24.2.0.aar"
         }
     },
     "apt_libraries": {
@@ -18,14 +18,14 @@
         "butterknife": true
     },
     "auto_dependency": true,
-    "build_cache_dir": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\freeline",
-    "build_directory": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build",
+    "build_cache_dir": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\freeline",
+    "build_directory": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build",
     "build_script": "gradlew.bat :app:assembleDebug",
     "build_script_work_directory": "",
-    "build_tools_directory": "E:\\androidStudio\\sdk\\build-tools\\22.0.1",
-    "build_tools_version": "22.0.1",
-    "compile_sdk_directory": "E:\\androidStudio\\sdk\\platforms\\android-22",
-    "compile_sdk_version": "android-22",
+    "build_tools_directory": "E:\\androidStudio\\sdk\\build-tools\\24.0.2",
+    "build_tools_version": "24.0.2",
+    "compile_sdk_directory": "E:\\androidStudio\\sdk\\platforms\\android-24",
+    "compile_sdk_version": "android-24",
     "databinding": [
         
     ],
@@ -40,50 +40,64 @@
     "extra_dep_res_paths": [
         
     ],
-    "freeline_cache_dir": "E:\\hubangyoushang_pro\\code\\HuBangYouShang",
+    "freeline_cache_dir": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang",
     "freeline_gradle_plugin_version": "0.8.4",
     "java_home": "C:\\Program Files\\Java\\jdk1.8.0_31",
     "launcher": "com.wxj.hbys.activity.MainActivity",
     "main_assets_directory": [
-        "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\debug\\assets",
-        "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\assets"
+        "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\debug\\assets",
+        "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\assets"
     ],
     "main_jniLibs_directory": [
-        "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\debug\\jniLibs",
-        "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\jniLibs"
+        "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\debug\\jniLibs",
+        "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\libs"
     ],
     "main_jni_directory": [
-        "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\debug\\jni",
-        "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\jni"
+        "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\debug\\jni",
+        "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\main\\jni"
     ],
-    "main_manifest_path": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\AndroidManifest.xml",
+    "main_manifest_path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\main\\AndroidManifest.xml",
     "main_project_dir": "app",
     "main_project_name": "app",
-    "main_r_path": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\build\\generated\\source\\r\\debug\\R.java",
+    "main_r_path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\build\\generated\\source\\r\\debug\\R.java",
     "main_res_directory": [
-        "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\debug\\res",
-        "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\res"
+        "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\debug\\res",
+        "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\main\\res"
     ],
     "main_src_directory": [
-        "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\debug\\java",
-        "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\java"
+        "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\debug\\java",
+        "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\main\\java"
     ],
     "module_dependencies": {
         "app": [
             "library_base"
         ],
         "library_base": [
+            "library_pagerSlidingTabStrip"
+        ],
+        "library_pagerSlidingTabStrip": [
+            "library_recycler"
+        ],
+        "library_recycler": [
             
         ]
     },
     "modules": [
         {
             "name": "app",
-            "path": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app"
+            "path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app"
         },
         {
             "name": "library_base",
-            "path": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base"
+            "path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base"
+        },
+        {
+            "name": "library_pagerSlidingTabStrip",
+            "path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip"
+        },
+        {
+            "name": "library_recycler",
+            "path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler"
         }
     ],
     "package": "com.wxj.hbys",
@@ -91,48 +105,94 @@
     "project_source_sets": {
         "app": {
             "main_assets_directory": [
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\debug\\assets",
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\assets"
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\debug\\assets",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\assets"
             ],
             "main_jniLibs_directory": [
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\debug\\jniLibs",
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\jniLibs"
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\debug\\jniLibs",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\libs"
             ],
             "main_jni_directory": [
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\debug\\jni",
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\jni"
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\debug\\jni",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\main\\jni"
             ],
-            "main_manifest_path": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\AndroidManifest.xml",
+            "main_manifest_path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\main\\AndroidManifest.xml",
             "main_res_directory": [
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\debug\\res",
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\res"
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\debug\\res",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\main\\res"
             ],
             "main_src_directory": [
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\debug\\java",
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\app\\src\\main\\java"
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\debug\\java",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\app\\src\\main\\java"
             ]
         },
         "library_base": {
             "main_assets_directory": [
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\release\\assets",
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\main\\assets"
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\release\\assets",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\main\\assets"
             ],
             "main_jniLibs_directory": [
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\release\\jniLibs",
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\main\\jniLibs"
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\release\\jniLibs",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\main\\jniLibs"
             ],
             "main_jni_directory": [
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\release\\jni",
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\main\\jni"
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\release\\jni",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\main\\jni"
             ],
-            "main_manifest_path": "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\main\\AndroidManifest.xml",
+            "main_manifest_path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\main\\AndroidManifest.xml",
             "main_res_directory": [
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\release\\res",
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\main\\res"
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\release\\res",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\main\\res"
             ],
             "main_src_directory": [
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\release\\java",
-                "E:\\hubangyoushang_pro\\code\\HuBangYouShang\\library_base\\src\\main\\java"
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\release\\java",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_base\\src\\main\\java"
+            ]
+        },
+        "library_pagerSlidingTabStrip": {
+            "main_assets_directory": [
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\src\\release\\assets",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\src\\main\\assets"
+            ],
+            "main_jniLibs_directory": [
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\src\\release\\jniLibs",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\src\\main\\jniLibs"
+            ],
+            "main_jni_directory": [
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\src\\release\\jni",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\src\\main\\jni"
+            ],
+            "main_manifest_path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\AndroidManifest.xml",
+            "main_res_directory": [
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\src\\release\\res",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\res"
+            ],
+            "main_src_directory": [
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\src\\release\\java",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_pagerSlidingTabStrip\\src"
+            ]
+        },
+        "library_recycler": {
+            "main_assets_directory": [
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\release\\assets",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\main\\assets"
+            ],
+            "main_jniLibs_directory": [
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\release\\jniLibs",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\main\\jniLibs"
+            ],
+            "main_jni_directory": [
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\release\\jni",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\main\\jni"
+            ],
+            "main_manifest_path": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\main\\AndroidManifest.xml",
+            "main_res_directory": [
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\release\\res",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\main\\res"
+            ],
+            "main_src_directory": [
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\release\\java",
+                "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang\\library_recycler\\src\\main\\java"
             ]
         }
     },
@@ -140,7 +200,7 @@
     "retrolambda": {
         
     },
-    "root_dir": "E:\\hubangyoushang_pro\\code\\HuBangYouShang",
+    "root_dir": "E:\\hubangyoushang_pro\\code\\hbys\\HuBangYouShang",
     "sdk_directory": "E:\\androidStudio\\sdk",
     "use_jdk8": true
 }

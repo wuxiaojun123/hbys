@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.wxj.hbys.R;
 import com.wxj.hbys.activity.HelpInfoActivity;
 import com.wxj.hbys.adapter.HelpSeekAdapter;
+import com.wxj.hbys.utils.ActivitySlideAnim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class HelpSeekFragment extends BaseFragment {
     @OnItemClick(R.id.lv_fragment_help1)
     void itemCick(int position){
         startActivity(new Intent(mContext, HelpInfoActivity.class));
+        ActivitySlideAnim.slideInAnim(getActivity());
 //        startActivity(new Intent(mContext, PostActivity.class));
 
     }

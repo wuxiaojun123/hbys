@@ -12,7 +12,7 @@
     <color name="color_title_background">#721212</color>
     <color name="color_search_background">#8e4240</color>
     <color name="color_title_bg">#721312</color>
-
+    <color name="color_afb0bc">#afb0bc</color>
     <color name="color_8a">#8a8a8a</color>
     <color name="color_dc">#dcdcdc</color>
     <color name="color_e4">#e4e4e4</color>
@@ -34,5 +34,7 @@
 
     <color name="color_spiline">#cdcdcd</color>
     <color name="color_allbg">#f8f8f8</color>
+
+    <color name="color_8b4ab8">#8b4ab8</color>
 
 </resources>

@@ -194,7 +194,7 @@
         <activity android:name=".activity.PayendActivity"
             android:screenOrientation="portrait" />
         <!--店铺详情-->
-        <activity android:name=".activity.ShopInfoActivity"
+        <activity android:name=".activity.StoreInfoActivity"
             android:screenOrientation="portrait" />
         <!--商品详情-->
         <activity android:name=".activity.GoodInfoActivity"

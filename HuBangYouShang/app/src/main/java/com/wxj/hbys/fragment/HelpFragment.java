@@ -19,6 +19,7 @@ import com.wxj.hbys.R;
 import com.wxj.hbys.activity.HelpFilterActivity;
 import com.wxj.hbys.activity.MsgCenterActivity;
 import com.wxj.hbys.activity.ReleaseActivity;
+import com.wxj.hbys.utils.ActivitySlideAnim;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,17 +58,23 @@ public class HelpFragment extends BaseFragment {
         return contentView;
     }
 
-    @OnClick({R.id.layout_help_titleleft,R.id.layout_help_title_eidt,R.id.layout_help_title_sms})
-    void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.layout_help_titleleft, R.id.layout_help_title_eidt, R.id.layout_help_title_sms})
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.layout_help_titleleft:
                 startActivity(new Intent(mContext, HelpFilterActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
                 break;
             case R.id.layout_help_title_eidt:
                 startActivity(new Intent(mContext, ReleaseActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
                 break;
             case R.id.layout_help_title_sms:
                 startActivity(new Intent(mContext, MsgCenterActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
                 break;
 
         }
@@ -92,12 +99,11 @@ public class HelpFragment extends BaseFragment {
         @Override
         public Fragment getItem(int position) {
             // 下面两个fragment是个人中心里的
-            if(position == 0){
+            if (position == 0) {
                 return new HelpSeekFragment();
-            }else if(position == 1){
+            } else if (position == 1) {
                 return new HelpRewardsFragment();
-            }
-            else{
+            } else {
                 return new HelpVoteFragment();
             }
         }

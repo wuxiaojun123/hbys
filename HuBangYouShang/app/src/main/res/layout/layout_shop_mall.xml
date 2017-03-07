@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="241dp"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_line"
+        android:background="@color/color_bf" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_hot_shop"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/iv_hot_img"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="10dp" />
+
+            <TextView
+                android:id="@+id/tv_hot_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/iv_hot_img"
+                android:gravity="center_vertical"
+                android:text="标题"
+                android:textColor="@color/color_3a"
+                android:textSize="@dimen/dimen_16" />
+
+            <TextView
+                android:id="@+id/tv_hot_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_hot_title"
+                android:layout_toRightOf="@id/iv_hot_img"
+                android:text="介绍"
+                android:textColor="@color/color_afb0bc"
+                android:textSize="@dimen/dimen_14" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="@dimen/dimen_line"
+            android:layout_height="match_parent"
+            android:background="@color/color_bf" />
+
+        <RelativeLayout
+            android:id="@+id/rl_hot_shop2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_hot_img2"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="10dp" />
+
+            <TextView
+                android:id="@+id/tv_hot_title2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/iv_hot_img2"
+                android:gravity="center_vertical"
+                android:text="标题"
+                android:textColor="@color/color_3a"
+                android:textSize="@dimen/dimen_16" />
+
+            <TextView
+                android:id="@+id/tv_hot_info2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_hot_title2"
+                android:layout_toRightOf="@id/iv_hot_img2"
+                android:text="介绍"
+                android:textColor="@color/color_afb0bc"
+                android:textSize="@dimen/dimen_14" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_line"
+        android:background="@color/color_bf" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_hot_shop3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_hot_title3"
+                style="@style/style_shop_hot_text_title"
+                android:text="标题" />
+
+            <TextView
+                android:id="@+id/tv_hot_info3"
+                style="@style/style_shop_hot_text_title_info"
+                android:text="介绍" />
+
+            <ImageView
+                android:id="@+id/iv_hot_img3"
+                style="@style/style_shop_hot_img" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/dimen_line"
+            android:layout_height="match_parent"
+            android:background="@color/color_bf" />
+
+        <LinearLayout
+            android:id="@+id/ll_hot_shop4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_hot_title4"
+                style="@style/style_shop_hot_text_title"
+                android:text="标题" />
+
+            <TextView
+                android:id="@+id/tv_hot_info4"
+                style="@style/style_shop_hot_text_title_info"
+                android:text="介绍" />
+
+            <ImageView
+                android:id="@+id/iv_hot_img4"
+                style="@style/style_shop_hot_img" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/dimen_line"
+            android:layout_height="match_parent"
+            android:background="@color/color_bf" />
+
+        <LinearLayout
+            android:id="@+id/ll_hot_shop5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_hot_title5"
+                style="@style/style_shop_hot_text_title"
+                android:text="标题" />
+
+            <TextView
+                android:id="@+id/tv_hot_info5"
+                style="@style/style_shop_hot_text_title_info"
+                android:text="介绍" />
+
+            <ImageView
+                android:id="@+id/iv_hot_img5"
+                style="@style/style_shop_hot_img" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_line"
+        android:background="@color/color_bf" />
+
+</LinearLayout>
