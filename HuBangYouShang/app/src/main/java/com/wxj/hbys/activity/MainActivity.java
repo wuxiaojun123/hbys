@@ -12,6 +12,7 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.wxj.hbys.R;
 import com.wxj.hbys.chat.ui.BenefitFragment;
+import com.wxj.hbys.chat.ui.ConversationListFragment;
 import com.wxj.hbys.fragment.ConsumptionFragment;
 import com.wxj.hbys.fragment.HelpFragment;
 import com.wxj.hbys.fragment.IntegrationFragment;
@@ -52,7 +53,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private FragmentManager mFragmentManager;
     private HelpFragment mHelpFragment;
     private IntegrationFragment mIntegrationFragment;//积分
-    private BenefitFragment mBenefitFragment;//获益
+    //private BenefitFragment mBenefitFragment;//获益
+    private ConversationListFragment mBenefitFragment;
     private ConsumptionFragment mConSumptionFragment;//消费
     private MyFragment mMyFragment;//我的
 
@@ -145,7 +147,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.radio_benefit:
                 if(mBenefitFragment == null){
-                    mBenefitFragment = new BenefitFragment();
+                    //mBenefitFragment = new BenefitFragment();
+                    mBenefitFragment = new ConversationListFragment();
                     mFragmentTransaction.add(R.id.fl_content,mBenefitFragment);
                 }else{
                     mFragmentTransaction.show(mBenefitFragment);

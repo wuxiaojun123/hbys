@@ -199,8 +199,9 @@
         <!--商品详情-->
         <activity android:name=".activity.GoodInfoActivity"
             android:screenOrientation="portrait" />
-
-
+        <!-- 群组聊天-->
+        <activity android:name=".chat.ui.GroupsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import android.util.Log;
 import com.antfortune.freeline.FreelineCore;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.easeui.controller.EaseUI;
 
 import java.util.Iterator;
 import java.util.List;
@@ -48,6 +49,7 @@ public class App extends Application {
         EMClient.getInstance().init(mApp, options);
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);
+        EaseUI.getInstance().init(this,options);
     }
 
     public static App getApplication(){
