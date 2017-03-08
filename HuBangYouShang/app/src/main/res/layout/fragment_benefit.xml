@@ -4,7 +4,36 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <include layout="@layout/layout_title" />
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/dimen_44"
+       android:background="@color/color_title_background">
+
+      <ImageView
+          android:id="@+id/iv_benefit_back"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:src="@mipmap/img_back"
+          android:layout_centerVertical="true"/>
+
+      <EditText
+          android:id="@+id/et_benefit_search"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="8dp"
+          android:layout_marginTop="8dp"
+          android:drawablePadding="6dp"
+          android:layout_marginLeft="6dp"
+          android:layout_marginRight="10dp"
+          android:background="@drawable/shape_search_background"
+          android:drawableLeft="@mipmap/img_search"
+          android:drawableRight="@mipmap/img_search_close"
+          android:hint="搜索关键字相关群组"
+          android:textColor="@color/color_while"
+          android:textSize="@dimen/dimen_13"
+          android:layout_toRightOf="@+id/iv_benefit_back"
+          android:textColorHint="@color/color_while"/>
+   </RelativeLayout>
 
    <com.base.recyclerview.LRecyclerView
        android:id="@+id/list"

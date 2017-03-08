@@ -18,16 +18,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.base.recyclerview.LRecyclerView;
@@ -35,10 +34,10 @@ import com.base.recyclerview.LRecyclerViewAdapter;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.easeui.ui.EaseBaseActivity;
-import com.hyphenate.exceptions.HyphenateException;
 import com.wxj.hbys.R;
-import com.wxj.hbys.activity.BaseActivity;
+import com.wxj.hbys.chat.Constant;
 import com.wxj.hbys.chat.adapter.GroupAdapter;
+import com.wxj.hbys.chat.adapter.GroupTypesAdapter;
 
 import java.util.List;
 
@@ -53,8 +52,15 @@ public class GroupsActivity extends EaseBaseActivity {
 	public static GroupsActivity instance;
 	private View progressBar;
 	private SwipeRefreshLayout swipeRefreshLayout;
+
 	@BindView(R.id.list)
 	LRecyclerView groupListView;
+
+	@BindView(R.id.iv_benefit_back)
+	ImageView mIvBack;
+
+	@BindView(R.id.et_benefit_search)
+	EditText mEtSearch;
 	
 	Handler handler = new Handler(){
 	    public void handleMessage(android.os.Message msg) {
@@ -81,20 +87,32 @@ public class GroupsActivity extends EaseBaseActivity {
 		ButterKnife.bind(this);
 		instance = this;
 		inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
 		grouplist = EMClient.getInstance().groupManager().getAllGroups();
 		groupListView.setLayoutManager(new LinearLayoutManager(this));
-		groupAdapter = new GroupAdapter(this, 1, 1);
+		groupAdapter = new GroupAdapter(this);
 		LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(groupAdapter);
 		groupListView.setAdapter(mLRecyclerViewAdapter);
+
+		groupListView.setPullRefreshEnabled(false);
+		groupListView.setLoadMoreEnabled(false);
+
 		groupAdapter.setDataList(grouplist);
 
 
 		groupListView.setOnRefreshListener(new com.base.recyclerview.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				groupListView.
+				groupListView.refreshComplete(Integer.MAX_VALUE);
 				grouplist = EMClient.getInstance().groupManager().getAllGroups();
 				groupAdapter.setDataList(grouplist);
+			}
+		});
+
+		mIvBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				GroupsActivity.this.finish();
 			}
 		});
 
@@ -147,19 +165,30 @@ public class GroupsActivity extends EaseBaseActivity {
 //			}
 
 //		});
-//		groupListView.setOnTouchListener(new OnTouchListener() {
-//
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
-//					if (getCurrentFocus() != null)
-//						inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-//								InputMethodManager.HIDE_NOT_ALWAYS);
-//				}
-//				return false;
-//			}
-//		});
-		
+		groupListView.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+					if (getCurrentFocus() != null)
+						inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+								InputMethodManager.HIDE_NOT_ALWAYS);
+				}
+				return false;
+			}
+		});
+
+		groupAdapter.setListener(new com.base.recyclerview.OnItemClickListener() {
+			@Override
+			public void onItemClick(View view, int position) {
+				Intent intent = new Intent(GroupsActivity.this, ChatActivity.class);
+//					// it is group chat
+					intent.putExtra("chatType", Constant.CHATTYPE_GROUP);
+					intent.putExtra("userId", groupAdapter.getDataList().get(position).getGroupId());
+					startActivityForResult(intent, 0);
+			}
+		});
+
 	}
 
 	@Override
