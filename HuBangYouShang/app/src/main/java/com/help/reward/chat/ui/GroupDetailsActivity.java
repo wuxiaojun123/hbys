@@ -639,6 +639,11 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							notifyDataSetChanged();
 						}
 					});
+
+					//TODO 隐藏掉
+					convertView.setClickable(false);
+					convertView.setVisibility(View.INVISIBLE);
+
 				}
 			} else if (position == getCount() - 2) { // 添加群组成员按钮
 			    holder.textView.setText("");
@@ -668,6 +673,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						}
 					});
 				}
+				//TODO 隐藏掉
+				convertView.setClickable(false);
+				convertView.setVisibility(View.INVISIBLE);
 			} else { // 普通item，显示群组成员
 				final String username = getItem(position);
 				convertView.setVisibility(View.VISIBLE);
@@ -777,8 +785,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 		@Override
 		public int getCount() {
-			return  super.getCount();
-			//return super.getCount() + 2;
+			return super.getCount() + 2;
 		}
 	}
 
