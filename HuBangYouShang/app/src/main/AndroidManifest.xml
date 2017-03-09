@@ -44,6 +44,11 @@
             android:name="com.help.reward.activity.ForgetPwdActivity"
             android:screenOrientation="portrait" />
 
+        <!--重置密码-->
+        <activity
+            android:name="com.help.reward.activity.ResetPwdActivity"
+            android:screenOrientation="portrait" />
+
         <!--添加地址-->
         <activity
             android:name="com.help.reward.activity.AddAddressActivity"
@@ -267,13 +272,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"></activity>
 
-        <activity android:name=".chat.ui.GroupDetailsActivity"
+        <activity
+            android:name=".chat.ui.GroupDetailsActivity"
             android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".chat.ui.ExitGroupDialog"
+        <activity
+            android:name=".chat.ui.ExitGroupDialog"
             android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".chat.ui.GroupSearchMessageActivity"
+        <activity
+            android:name=".chat.ui.GroupSearchMessageActivity"
             android:screenOrientation="portrait">
 
         </activity>
