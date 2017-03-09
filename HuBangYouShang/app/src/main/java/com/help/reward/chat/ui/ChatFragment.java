@@ -101,6 +101,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         }
         super.setUpView();
         // set click listener
+        titleBar.setBackgroundColor(getResources().getColor(R.color.color_title_bg));
+        titleBar.setRightImageResource(R.mipmap.group);
         titleBar.setLeftLayoutClickListener(new OnClickListener() {
 
             @Override
@@ -256,9 +258,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 Toast.makeText(getActivity(), R.string.gorup_not_found, Toast.LENGTH_SHORT).show();
                 return;
             }
-//            startActivityForResult(
-//                    (new Intent(getActivity(), GroupDetailsActivity.class).putExtra("groupId", toChatUsername)),
-//                    REQUEST_CODE_GROUP_DETAIL);
+            startActivityForResult(
+                    (new Intent(getActivity(), GroupDetailsActivity.class).putExtra("groupId", toChatUsername)),
+                    REQUEST_CODE_GROUP_DETAIL);
         }/*else if(chatType == Constant.CHATTYPE_CHATROOM){
         	startActivityForResult(new Intent(getActivity(), ChatRoomDetailsActivity.class).putExtra("roomId", toChatUsername), REQUEST_CODE_GROUP_DETAIL);
         }*/
