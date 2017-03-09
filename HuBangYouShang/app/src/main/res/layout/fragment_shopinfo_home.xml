@@ -26,7 +26,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:text="@string/shop_lable13" />
 
-        <com.wxj.hbys.view.MyGridView
+        <com.help.reward.view.MyGridView
             android:id="@+id/gv_shopinfo_hot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:horizontalSpacing="1dp"
             android:numColumns="2" />
 
-        <com.wxj.hbys.view.MyGridView
+        <com.help.reward.view.MyGridView
             android:id="@+id/gv_shopinfo_hot2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:text="@string/shop_lable14" />
 
-        <com.wxj.hbys.view.MyGridView
+        <com.help.reward.view.MyGridView
             android:id="@+id/gv_shopinfo_recommand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -12,8 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         >
 
         <LinearLayout
@@ -172,7 +170,7 @@
                     android:src="@mipmap/store_bar_right" />
             </RelativeLayout>
 
-            <com.wxj.hbys.view.MyGridView
+            <com.help.reward.view.MyGridView
                 android:id="@+id/gv_shop_recommand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -223,7 +221,7 @@
                     android:src="@mipmap/store_bar_right" />
             </RelativeLayout>
 
-            <com.wxj.hbys.view.MyGridView
+            <com.help.reward.view.MyGridView
                 android:id="@+id/gv_shop_hot_more"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -91,7 +91,7 @@
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:text="@string/fileter_lable3" />
 
-                <com.wxj.hbys.view.MyGridView
+                <com.help.reward.view.MyGridView
                     android:id="@+id/gv_filter_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:text="@string/fileter_lable4" />
 
-                <com.wxj.hbys.view.MyGridView
+                <com.help.reward.view.MyGridView
                     android:id="@+id/gv_filter_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

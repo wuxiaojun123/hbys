@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.wxj.hbys.view.SwipeMenuView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.help.reward.view.SwipeMenuView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:clickable="true"
@@ -137,4 +137,4 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/dimen_15" />
 
-</com.wxj.hbys.view.SwipeMenuView>
+</com.help.reward.view.SwipeMenuView>

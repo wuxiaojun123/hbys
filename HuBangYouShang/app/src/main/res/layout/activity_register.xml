@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
 
@@ -49,7 +48,10 @@
                 android:layout_toLeftOf="@id/tv_code"
                 android:layout_toRightOf="@id/tv_number"
                 android:hint="请输入新的手机号"
-                android:paddingRight="60dp" />
+                android:maxLength="11"
+                android:paddingRight="60dp"
+                android:inputType="phone"
+                />
 
         </RelativeLayout>
 
@@ -59,12 +61,16 @@
             <TextView
                 android:id="@+id/tv_code2"
                 style="@style/style_register_text_title"
-                android:text="验证码" />
+                android:text="验证码"
+
+                />
 
             <EditText
                 android:id="@+id/et_code"
                 style="@style/style_register_edit"
-                android:hint="请输入验证码" />
+                android:hint="请输入验证码"
+                android:inputType="number"
+                />
 
         </LinearLayout>
 
@@ -77,7 +83,8 @@
             <EditText
                 android:id="@+id/et_pwd"
                 style="@style/style_register_edit"
-                android:hint="请输入您的密码(6-16位字母数字组合)" />
+                android:hint="请输入您的密码(6-16位字母数字组合)"
+                android:maxLength="16" />
 
         </LinearLayout>
 
@@ -90,7 +97,8 @@
             <EditText
                 android:id="@+id/et_pwd_custom"
                 style="@style/style_register_edit"
-                android:hint="请输入您的密码(6-16位字母数字组合)" />
+                android:hint="请输入您的密码(6-16位字母数字组合)"
+                android:maxLength="16" />
 
         </LinearLayout>
 
@@ -110,7 +118,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_next"
+        android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="20dp"
@@ -125,11 +133,13 @@
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <CheckBox
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:id="@+id/cb_agreement"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:background="@drawable/selector_register_checkbox"
             android:button="@null" />
 

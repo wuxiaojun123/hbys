@@ -121,7 +121,7 @@
         android:background="#f8f8f8"
         style="@style/style_text_lable"
         android:text="@string/pay_lable10"/>
-    <com.wxj.hbys.view.MyGridView
+    <com.help.reward.view.MyGridView
         android:id="@+id/mgv_payend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

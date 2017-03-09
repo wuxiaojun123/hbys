@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wxj.hbys">
+    package="com.help.reward">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".App"
+        android:name="com.help.reward.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.help.reward.activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,196 +23,244 @@
             </intent-filter>
         </activity>
 
+        <!-- 验证身份 -->
         <activity
-            android:name=".activity.VerifyIdentityActivity"
+            android:name="com.help.reward.activity.VerifyIdentityActivity"
             android:screenOrientation="portrait" />
 
+        <!--登录-->
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="com.help.reward.activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
+        <!--注册-->
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name="com.help.reward.activity.RegisterActivity"
             android:screenOrientation="portrait" />
 
+        <!--添加地址-->
         <activity
-            android:name=".activity.AddAddressActivity"
+            android:name="com.help.reward.activity.AddAddressActivity"
             android:screenOrientation="portrait" />
 
+        <!--地址管理-->
         <activity
-            android:name=".activity.AddressManagerActivity"
+            android:name="com.help.reward.activity.AddressManagerActivity"
             android:screenOrientation="portrait" />
 
+        <!--个人信息-->
         <activity
-            android:name=".activity.PersonInfoActivity"
+            android:name="com.help.reward.activity.PersonInfoActivity"
             android:screenOrientation="portrait" />
 
+        <!--设置-->
         <activity
-            android:name=".activity.SettingActivity"
+            android:name="com.help.reward.activity.SettingActivity"
             android:screenOrientation="portrait" />
 
+        <!--关于-->
         <activity
-            android:name=".activity.AboutActivity"
+            android:name="com.help.reward.activity.AboutActivity"
             android:screenOrientation="portrait" />
 
+        <!--意见反馈-->
         <activity
-            android:name=".activity.FeedbackActivity"
+            android:name="com.help.reward.activity.FeedbackActivity"
             android:screenOrientation="portrait" />
 
+        <!--实名认证-->
         <activity
-            android:name=".activity.CertificationActivity"
+            android:name="com.help.reward.activity.CertificationActivity"
             android:screenOrientation="portrait" />
 
+        <!--帮助中心-->
         <activity
-            android:name=".activity.HelpCenterActivity"
+            android:name="com.help.reward.activity.HelpCenterActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的账户-->
         <activity
-            android:name=".activity.MyAccountActivity"
+            android:name="com.help.reward.activity.MyAccountActivity"
             android:screenOrientation="portrait" />
 
+        <!--帮赏分-->
         <activity
-            android:name=".activity.MyAccountHelpRewardActivity"
+            android:name="com.help.reward.activity.MyAccountHelpRewardActivity"
             android:screenOrientation="portrait" />
 
+        <!--账户管理-->
         <activity
-            android:name=".activity.AccountManagerActivity"
+            android:name="com.help.reward.activity.AccountManagerActivity"
             android:screenOrientation="portrait" />
 
+        <!--修改密码-->
         <activity
-            android:name=".activity.PwdLoginActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.PwdPaymentActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.MyHelpActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.MyRewardActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.MyVoteActivity"
+            android:name="com.help.reward.activity.PwdUpdateActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.MyCollectionActivity"
+            android:name="com.help.reward.activity.PwdPaymentActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的求助-->
         <activity
-            android:name=".activity.MyShareActivity"
+            android:name="com.help.reward.activity.MyHelpActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的获赏-->
         <activity
-            android:name=".activity.PrepaidBalanceActivity"
+            android:name="com.help.reward.activity.MyRewardActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的投票-->
         <activity
-            android:name=".activity.MyGeneralVolumeActivity"
+            android:name="com.help.reward.activity.MyVoteActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的收藏-->
         <activity
-            android:name=".activity.MyCouponActivity"
+            android:name="com.help.reward.activity.MyCollectionActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的分享-->
         <activity
-            android:name=".activity.MyBalanceActivity"
+            android:name="com.help.reward.activity.MyShareActivity"
             android:screenOrientation="portrait" />
 
+        <!--充值余额-->
         <activity
-            android:name=".activity.CouponDetailsBuyersActivity"
+            android:name="com.help.reward.activity.PrepaidBalanceActivity"
             android:screenOrientation="portrait" />
 
+        <!--通用卷-->
         <activity
-            android:name=".activity.DiscountAmountActivity"
+            android:name="com.help.reward.activity.MyGeneralVolumeActivity"
             android:screenOrientation="portrait" />
 
+        <!--优惠劵-->
         <activity
-            android:name=".activity.BalanceExchangeHelpScoreActivity"
+            android:name="com.help.reward.activity.MyCouponActivity"
             android:screenOrientation="portrait" />
 
+        <!--余额-->
         <activity
-            android:name=".activity.BalanceExchangeVolumeActivity"
+            android:name="com.help.reward.activity.MyBalanceActivity"
             android:screenOrientation="portrait" />
 
+
+        <!--优惠劵详情 买家-->
         <activity
-            android:name=".activity.ExchangeOptionActivity"
+            android:name="com.help.reward.activity.CouponDetailsBuyersActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的账户优惠金额-->
         <activity
-            android:name=".activity.GeneralExchangeVolumeActivity"
+            android:name="com.help.reward.activity.DiscountAmountActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.CouponTradingActivity"
+        <!--余额兑换帮赏分-->
+        <activity
+            android:name="com.help.reward.activity.BalanceExchangeHelpScoreActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.MyOrderActivity"
+        <!--余额兑换通用卷-->
+        <activity
+            android:name="com.help.reward.activity.BalanceExchangeVolumeActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.OrderDetailsActivity"
-        android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.OrderPulishedEvaluateActivity"
+        <!--选择兑换方式-->
+        <activity
+            android:name="com.help.reward.activity.ExchangeOptionActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.OrderComplaintsMerchantActivity"
+        <!--帮赏分兑换通用卷-->
+        <activity
+            android:name="com.help.reward.activity.GeneralExchangeVolumeActivity"
+            android:screenOrientation="portrait" />
+        <!--优惠劵交易大厅-->
+        <activity
+            android:name="com.help.reward.activity.CouponTradingActivity"
+            android:screenOrientation="portrait" />
+        <!--我的订单-->
+        <activity
+            android:name="com.help.reward.activity.MyOrderActivity"
+            android:screenOrientation="portrait" />
+        <!--订单详情-->
+        <activity
+            android:name="com.help.reward.activity.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <!--发表评价-->
+        <activity
+            android:name="com.help.reward.activity.OrderPulishedEvaluateActivity"
+            android:screenOrientation="portrait" />
+        <!--投诉商家-->
+        <activity
+            android:name="com.help.reward.activity.OrderComplaintsMerchantActivity"
             android:screenOrientation="portrait" />
         <!--消息中心-->
-        <activity android:name=".activity.MsgCenterActivity"
+        <activity
+            android:name="com.help.reward.activity.MsgCenterActivity"
             android:screenOrientation="portrait" />
         <!--帖子动态-->
-        <activity android:name=".activity.PostActivity"
+        <activity
+            android:name="com.help.reward.activity.PostActivity"
             android:screenOrientation="portrait" />
         <!--互帮筛选-->
-        <activity android:name=".activity.HelpFilterActivity"
+        <activity
+            android:name="com.help.reward.activity.HelpFilterActivity"
             android:screenOrientation="portrait" />
         <!--发布帖子-->
-        <activity android:name=".activity.ReleaseActivity"
+        <activity
+            android:name="com.help.reward.activity.ReleaseActivity"
             android:screenOrientation="portrait" />
         <!--发布求助帖-->
-        <activity android:name=".activity.ReleaseHelpActivity"
+        <activity
+            android:name="com.help.reward.activity.ReleaseHelpActivity"
             android:screenOrientation="portrait" />
         <!--发布获赏帖-->
-        <activity android:name=".activity.ReleaseRewardActivity"
+        <activity
+            android:name="com.help.reward.activity.ReleaseRewardActivity"
             android:screenOrientation="portrait" />
         <!--帖子详情-->
-        <activity android:name=".activity.HelpInfoActivity"
+        <activity
+            android:name="com.help.reward.activity.HelpInfoActivity"
             android:screenOrientation="portrait" />
         <!--帖子详情-->
-        <activity android:name=".activity.TradeActivity"
+        <activity
+            android:name="com.help.reward.activity.TradeActivity"
             android:screenOrientation="portrait" />
         <!--选择支付方式-->
-        <activity android:name=".activity.PayTypeActivity"
+        <activity
+            android:name="com.help.reward.activity.PayTypeActivity"
             android:screenOrientation="portrait" />
         <!--订单支付成功-->
-        <activity android:name=".activity.PayendActivity"
+        <activity
+            android:name="com.help.reward.activity.PayendActivity"
             android:screenOrientation="portrait" />
         <!--店铺详情-->
-        <activity android:name=".activity.StoreInfoActivity"
+        <activity
+            android:name="com.help.reward.activity.StoreInfoActivity"
             android:screenOrientation="portrait" />
         <!--商品详情-->
-        <activity android:name=".activity.GoodInfoActivity"
+        <activity
+            android:name="com.help.reward.activity.GoodInfoActivity"
             android:screenOrientation="portrait" />
         <!-- 群组聊天-->
-        <activity android:name=".chat.ui.GroupsActivity"
+        <activity
+            android:name="com.help.reward.chat.ui.GroupsActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".chat.ui.ContextMenuActivity"
+        <activity
+            android:name="com.help.reward.chat.ui.ContextMenuActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".chat.ui.ForwardMessageActivity"
+        <activity
+            android:name="com.help.reward.chat.ui.ForwardMessageActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".chat.ui.PickAtUserActivity"
+        <activity
+            android:name="com.help.reward.chat.ui.PickAtUserActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".chat.ui.ChatActivity"
+        <activity
+            android:name="com.help.reward.chat.ui.ChatActivity"
             android:screenOrientation="portrait"></activity>
         <!-- 开机自启动服务 -->
-        <receiver android:name=".chat.receiver.StartServiceReceiver">
+        <receiver android:name="com.help.reward.chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />

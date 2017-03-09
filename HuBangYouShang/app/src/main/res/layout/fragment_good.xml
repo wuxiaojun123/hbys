@@ -365,7 +365,7 @@
             android:textSize="@dimen/dimen_15"
             />
 
-        <com.wxj.hbys.view.MyGridView
+        <com.help.reward.view.MyGridView
             android:id="@+id/gv_shopinfo_recommand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
