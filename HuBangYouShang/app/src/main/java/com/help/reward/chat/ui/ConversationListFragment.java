@@ -7,6 +7,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.help.reward.chat.Constant;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
@@ -50,19 +52,19 @@ public class ConversationListFragment extends EaseConversationListFragment{
                     Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
                 else {
                     // TODO start chat acitivity
-//                    Intent intent = new Intent(getActivity(), ChatActivity.class);
-//                    if(conversation.isGroup()){
-//                        if(conversation.getType() == EMConversationType.ChatRoom){
-//                            // it's group chat
-//                            intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_CHATROOM);
-//                        }else{
-//                            intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
-//                        }
-//
-//                    }
-//                    // it's single chat
-//                    intent.putExtra(Constant.EXTRA_USER_ID, username);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
+                    if(conversation.isGroup()){
+                        if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
+                            // it's group chat
+                            intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_CHATROOM);
+                        }else{
+                            intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
+                        }
+
+                    }
+                    // it's single chat
+                    intent.putExtra(Constant.EXTRA_USER_ID, username);
+                    startActivity(intent);
                 }
             }
         });
