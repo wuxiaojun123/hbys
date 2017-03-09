@@ -1,24 +1,19 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.bean.Response.LoginResponse;
-import com.help.reward.bean.Response.RegisterResponse;
 import com.help.reward.bean.Response.VerificationCodeResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
-import com.help.reward.rxbus.RxBus;
 import com.help.reward.utils.ActivitySlideAnim;
-import com.help.reward.utils.Constant;
 import com.help.reward.utils.CountDownTimeUtils;
 import com.help.reward.utils.ValidateUtil;
 import com.help.reward.view.MyProcessDialog;
@@ -35,10 +30,12 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by wuxiaojun on 2017/1/8.
+ * 忘记密码
+ * <p>
+ * Created by wuxiaojun on 2017/1/15.
  */
 
-public class RegisterActivity extends BaseActivity implements View.OnClickListener {
+public class ForgetPwdActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
@@ -47,32 +44,29 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.tv_title_right)
     TextView tv_title_right;
 
-    @BindView(R.id.et_phone_number)
-    EditText et_phone_number; // 手机号
     @BindView(R.id.tv_code)
-    TextView tv_code; // 计时器
+    TextView tv_code;
+    @BindView(R.id.et_phone_number)
+    EditText et_phone_number;
     @BindView(R.id.et_code)
-    EditText et_code; // 验证码
-
-    @BindView(R.id.et_pwd)
-    EditText et_pwd; // 密码
-    @BindView(R.id.et_pwd_custom)
-    EditText et_pwd_custom; // 确认密码
-    @BindView(R.id.et_invitation_code)
-    EditText et_invitation_code; // 邀请code
-    @BindView(R.id.cb_agreement)
-    CheckBox cb_agreement; // 复选框
+    EditText et_code;
 
     private CountDownTimeUtils mTimer;
     public String verificationCode; // 请求到的code
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_forget_pwd);
         ButterKnife.bind(this);
         initView();
         initData();
+    }
+
+    private void initView() {
+        tv_title.setText(R.string.string_identity_title);
+        tv_title_right.setVisibility(View.GONE);
     }
 
     private void initData() {
@@ -96,19 +90,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
-    private void initView() {
-        tv_title.setText(R.string.string_register_title);
-        tv_title_right.setVisibility(View.GONE);
-    }
-
-    @OnClick({R.id.iv_title_back, R.id.tv_code, R.id.btn_register})
+    @OnClick({R.id.iv_title_back, R.id.tv_code, R.id.btn_next})
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
             case R.id.iv_title_back:
                 finish();
-                ActivitySlideAnim.slideOutAnim(RegisterActivity.this);
+                ActivitySlideAnim.slideOutAnim(ForgetPwdActivity.this);
 
                 break;
             case R.id.tv_code: // 点击验证code
@@ -126,8 +115,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
 
                 break;
-            case R.id.btn_register: // 注册
-                register();
+            case R.id.btn_next: // 下一步
+                startActivity(new Intent(ForgetPwdActivity.this, ResetPwdActivity.class));
+                ActivitySlideAnim.slideOutAnim(ForgetPwdActivity.this);
 
                 break;
         }
@@ -140,7 +130,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 //        MyProcessDialog.showDialog(mContext);
         PersonalNetwork
                 .getLoginApi()
-                .getVerificationCodeBean(registerUserName, "1")
+                .getVerificationCodeBean(registerUserName, "3")
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<VerificationCodeResponse>() {
@@ -169,79 +159,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         }
                     }
                 });
-    }
 
-    /***
-     * 点击注册
-     */
-    private void register() {
-        String registerUserName = et_phone_number.getText().toString().trim();
-        String registerPwd = et_pwd.getText().toString().trim();
-        String registerPwdAgain = et_pwd_custom.getText().toString().trim();
-        String registerCode = et_code.getText().toString().trim();
-        String registerInvitationCode = et_invitation_code.getText().toString().trim(); // 邀请code
-
-        if (!TextUtils.isEmpty(registerUserName)) {
-            if (ValidateUtil.isMobile(registerUserName)) {
-                if (!TextUtils.isEmpty(registerCode)) {
-                    if (!TextUtils.isEmpty(registerPwd)) {
-                        if (!TextUtils.isEmpty(registerPwdAgain)) {
-                            if (registerPwd.equals(registerPwdAgain)) {
-                                if (cb_agreement.isChecked()) {
-                                    requestRegister(registerUserName, registerPwd, registerCode, registerInvitationCode);
-                                } else {
-                                    ToastUtils.show(mContext, "请选中用户说明");
-                                }
-                            } else {
-                                ToastUtils.show(mContext, "密码不一致，请重新输入");
-                            }
-                        } else {
-                            ToastUtils.show(mContext, "请再次输入密码");
-                        }
-                    } else {
-                        ToastUtils.show(mContext, "请输入密码");
-                    }
-                } else {
-                    ToastUtils.show(mContext, "请输入验证码");
-                }
-            } else {
-                ToastUtils.show(mContext, "手机号格式不正确");
-            }
-        } else {
-            ToastUtils.show(mContext, "请输入手机号");
-        }
-    }
-
-    private void requestRegister(String registerUserName, String registerPwd, String registerCode, String registerInvitationCode) {
-        MyProcessDialog.showDialog(mContext);
-        PersonalNetwork
-                .getLoginApi()
-                .getRegisterBean(registerUserName,registerCode,registerPwd, Constant.PLATFORM_CLIENT)
-                .subscribeOn(Schedulers.io()) // 请求放在io线程中
-                .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
-                .subscribe(new BaseSubscriber<RegisterResponse>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        MyProcessDialog.closeDialog();
-                        e.printStackTrace();
-                        if (e instanceof UnknownHostException) {
-                            ToastUtils.show(mContext, "请求到错误服务器");
-                        } else if (e instanceof SocketTimeoutException) {
-                            ToastUtils.show(mContext, "请求超时");
-                        }
-                    }
-
-                    @Override
-                    public void onNext(RegisterResponse res) {
-                        MyProcessDialog.closeDialog();
-                        if (res.code == 200) { // 获取验证code成功
-                            App.APP_CLIENT_KEY = res.data.key;
-                            LogUtils.e("注册成功。。。"+res.data.username);
-                        } else {
-                            ToastUtils.show(mContext, res.msg);
-                        }
-                    }
-                });
     }
 
     @Override
@@ -252,4 +170,5 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
         super.onDestroy();
     }
+
 }

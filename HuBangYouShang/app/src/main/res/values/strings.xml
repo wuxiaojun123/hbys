@@ -109,6 +109,11 @@
     <!--注册-->
     <string name="string_register_title">注册</string>
     <string name="string_recapture">重新获取</string>
+    <!--忘记密码-->
+    <string name="string_forget_pwd_title">忘记密码</string>
+    <!--修改密码-->
+    <string name="string_update_title">修改密码</string>
+    <string name="string_identity_title">认证身份</string>
 
     <!--支付-->
     <string name="pay_lable1">选择支付方式</string>

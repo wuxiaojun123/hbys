@@ -39,6 +39,11 @@
             android:name="com.help.reward.activity.RegisterActivity"
             android:screenOrientation="portrait" />
 
+        <!--忘记密码-->
+        <activity
+            android:name="com.help.reward.activity.ForgetPwdActivity"
+            android:screenOrientation="portrait" />
+
         <!--添加地址-->
         <activity
             android:name="com.help.reward.activity.AddAddressActivity"
