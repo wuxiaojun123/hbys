@@ -4,7 +4,9 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
 import com.help.reward.R;
@@ -60,6 +62,7 @@ public class MyRewardPostFragment extends BaseFragment {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
+                                LogUtils.e("数据集合是："+response.data.size());
                                 mHelpPostAdapter.addAll(response.data);
                             }
                             lRecyclerview.setPullRefreshEnabled(false);
@@ -77,8 +80,17 @@ public class MyRewardPostFragment extends BaseFragment {
         LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
-//        initLoadMoreListener();
+        initLoadMoreListener();
         lRecyclerview.setLoadMoreEnabled(false);
+    }
+
+    private void initLoadMoreListener() {
+        lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
     }
 
     private void initRefreshListener() {
