@@ -42,13 +42,18 @@ public class GoodInfoActivity extends BaseActivity {
     @BindView(R.id.vp_goodinfo)
     ViewPager vpGoodinfo;
 
+    private String goodsId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goodinfo);
         ButterKnife.bind(this);
+        goodsId = getIntent().getStringExtra("goods_id");
+
         vpGoodinfo.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         pstbGoodinfo.setViewPager(vpGoodinfo);
+        vpGoodinfo.setOffscreenPageLimit(3);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -71,11 +76,15 @@ public class GoodInfoActivity extends BaseActivity {
         public Fragment getItem(int position) {
             // 下面两个fragment是个人中心里的
             if (position == 0) {
-                return new GoodFragment();
+                GoodFragment goodFragment = new GoodFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("goods_id", goodsId);
+                goodFragment.setArguments(bundle);
+                return goodFragment;
             } else if (position == 1) {
-                return new GoodRetedFragment();
-            } else {
                 return new GoodImgInfoFragment();
+            } else {
+                return new GoodRetedFragment();
             }
         }
 

@@ -1,10 +1,10 @@
 /**
  * Copyright (C) 2016 Hyphenate Inc. All rights reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -46,67 +46,67 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GroupsActivity extends EaseBaseActivity {
-	public static final String TAG = "GroupsActivity";
-	protected List<EMGroup> grouplist;
-	private GroupAdapter groupAdapter;
-	private InputMethodManager inputMethodManager;
-	public static GroupsActivity instance;
-	private View progressBar;
-	private SwipeRefreshLayout swipeRefreshLayout;
-	@BindView(R.id.list)
-	LRecyclerView groupListView;
-	
-	Handler handler = new Handler(){
-	    public void handleMessage(android.os.Message msg) {
-	        swipeRefreshLayout.setRefreshing(false);
-	        switch (msg.what) {
-            case 0:
-                refresh();
-                break;
-            case 1:
-                Toast.makeText(GroupsActivity.this, R.string.Failed_to_get_group_chat_information, Toast.LENGTH_LONG).show();
-                break;
+    public static final String TAG = "GroupsActivity";
+    protected List<EMGroup> grouplist;
+    private GroupAdapter groupAdapter;
+    private InputMethodManager inputMethodManager;
+    public static GroupsActivity instance;
+    private View progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.list)
+    LRecyclerView groupListView;
 
-            default:
-                break;
+    Handler handler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            swipeRefreshLayout.setRefreshing(false);
+            switch (msg.what) {
+                case 0:
+                    refresh();
+                    break;
+                case 1:
+                    Toast.makeText(GroupsActivity.this, R.string.Failed_to_get_group_chat_information, Toast.LENGTH_LONG).show();
+                    break;
+
+                default:
+                    break;
             }
-	    }
-	};
-
-		
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_benefit);
-		ButterKnife.bind(this);
-		instance = this;
-		inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		grouplist = EMClient.getInstance().groupManager().getAllGroups();
-		groupListView.setLayoutManager(new LinearLayoutManager(this));
-		groupAdapter = new GroupAdapter(this, 1, 1);
-		LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(groupAdapter);
-		groupListView.setAdapter(mLRecyclerViewAdapter);
-		groupAdapter.setDataList(grouplist);
+        }
+    };
 
 
-		groupListView.setOnRefreshListener(new com.base.recyclerview.OnRefreshListener() {
-			@Override
-			public void onRefresh() {
-				groupListView.
-				grouplist = EMClient.getInstance().groupManager().getAllGroups();
-				groupAdapter.setDataList(grouplist);
-			}
-		});
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_benefit);
+        ButterKnife.bind(this);
+        instance = this;
+        inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        grouplist = EMClient.getInstance().groupManager().getAllGroups();
+        groupListView.setLayoutManager(new LinearLayoutManager(this));
+        groupAdapter = new GroupAdapter(this, 1, 1);
+        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(groupAdapter);
+        groupListView.setAdapter(mLRecyclerViewAdapter);
+        groupAdapter.setDataList(grouplist);
+
+
+        groupListView.setOnRefreshListener(new com.base.recyclerview.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                /*groupListView.
+                        grouplist = EMClient.getInstance().groupManager().getAllGroups();
+                groupAdapter.setDataList(grouplist);*/
+            }
+        });
 
 //		groupListView = (ListView) findViewById(R.id.list);
 //		//show group list
 //        groupAdapter = new GroupAdapter(this, 1, grouplist);
 //        groupListView.setAdapter(groupAdapter);
-		
+
 //		swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
 //		swipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light,
 //		                R.color.holo_orange_light, R.color.holo_red_light);
-		//pull down to refresh
+        //pull down to refresh
 //		swipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
 //
 //			@Override
@@ -125,7 +125,7 @@ public class GroupsActivity extends EaseBaseActivity {
 //				}.start();
 //			}
 //		});
-		
+
 //		groupListView.setOnItemClickListener(new OnItemClickListener() {
 
 //			@Override
@@ -159,34 +159,34 @@ public class GroupsActivity extends EaseBaseActivity {
 //				return false;
 //			}
 //		});
-		
-	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+    }
 
-	@Override
-	public void onResume() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onResume() {
         refresh();
-		super.onResume();
-	}
-	
-	private void refresh(){
-	    //grouplist = EMClient.getInstance().groupManager().getAllGroups();
+        super.onResume();
+    }
+
+    private void refresh() {
+        //grouplist = EMClient.getInstance().groupManager().getAllGroups();
         //groupAdapter = new GroupAdapter(this, 1, grouplist);
         //groupListView.setAdapter(groupAdapter);
         //groupAdapter.notifyDataSetChanged();
-	}
+    }
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		instance = null;
-	}
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        instance = null;
+    }
 
-	public void back(View view) {
-		finish();
-	}
+    public void back(View view) {
+        finish();
+    }
 }

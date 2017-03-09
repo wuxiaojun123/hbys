@@ -47,6 +47,7 @@ public class StoreInfoActivity extends BaseActivity {
     TextView tvShopName;
     @BindView(R.id.vp_shopinfo)
     ViewPager vpShopinfo;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,12 +76,11 @@ public class StoreInfoActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             // 下面两个fragment是个人中心里的
-            if(position == 0){
+            if (position == 0) {
                 return new ShopInfoHomeFragment();
-            }else if(position == 1){
+            } else if (position == 1) {
                 return new ShopInfoAllFragment();
-            }
-            else{
+            } else {
                 return new ShopInfoNewFragment();
             }
         }

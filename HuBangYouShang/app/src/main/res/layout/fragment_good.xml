@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <com.bigkoo.convenientbanner.ConvenientBanner
+            android:id="@+id/cb_goods_img"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             app:canLoop="true" />
@@ -27,6 +28,8 @@
                 style="@style/style_text_lable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="春秋款，小怪兽黑色卫衣" />
 
             <TextView
@@ -194,7 +197,7 @@
                 android:src="@mipmap/img_disclosure_arrow" />
         </RelativeLayout>
 
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/color_spiline" />
@@ -224,27 +227,27 @@
                 android:text="@string/good_lable10" />
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/layout_goodinfo_shop"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:orientation="vertical"
             android:layout_marginTop="@dimen/layout_margin"
             android:background="@drawable/bg_msgcenter_item"
-            android:paddingRight="@dimen/layout_margin"
+            android:paddingBottom="10dp"
             android:paddingLeft="@dimen/layout_margin"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            >
+            android:paddingRight="@dimen/layout_margin"
+            android:paddingTop="10dp">
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/iv_arrow1"
                 android:layout_width="@dimen/width_arrow"
                 android:layout_height="@dimen/hight_arrow"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/img_disclosure_arrow" />
+                android:src="@mipmap/img_disclosure_arrow" />-->
 
-            <RelativeLayout
+            <!--<RelativeLayout
                 android:id="@+id/layout_goodinfo_tip4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -264,29 +267,42 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/iv_shopinfo_2"
                     android:text="XXXXX旗舰店" />
-            </RelativeLayout>
+            </RelativeLayout>-->
+
+            <TextView
+                android:id="@+id/tv_goods_store_name"
+                style="@style/style_text_lable"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@mipmap/store"
+                android:drawableRight="@mipmap/img_disclosure_arrow"
+                android:text="XXXXX旗舰店" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/layout_margin"
+                android:layout_alignParentBottom="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/layout_margin"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:layout_toLeftOf="@+id/iv_arrow1">
+                    android:layout_toLeftOf="@+id/iv_arrow1"
+                    android:layout_weight="1.0">
+
                     <TextView
                         style="@style/style_text_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/good_lable11" />
+
                     <TextView
+                        android:id="@+id/tv_goodinfo_desccredit"
                         style="@style/style_text_content_red"
-                        android:id="@+id/tv_goodinfo_score1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/content_margin"
@@ -296,17 +312,19 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
                     android:layout_toLeftOf="@+id/iv_arrow1"
+                    android:layout_weight="1.0"
                     android:gravity="center_horizontal">
+
                     <TextView
                         style="@style/style_text_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/good_lable12" />
+
                     <TextView
+                        android:id="@+id/tv_goodinfo_servicecredit"
                         style="@style/style_text_content_red"
-                        android:id="@+id/tv_goodinfo_score2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/content_margin"
@@ -316,30 +334,37 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
                     android:layout_toLeftOf="@+id/iv_arrow1"
+                    android:layout_weight="1.0"
                     android:gravity="right">
+
                     <TextView
                         style="@style/style_text_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/good_lable13" />
+
                     <TextView
+                        android:id="@+id/tv_goodinfo_deliverycredit"
                         style="@style/style_text_content_red"
-                        android:id="@+id/tv_goodinfo_score3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/content_margin"
                         android:text="4.5" />
                 </LinearLayout>
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
+
         <TextView
             style="@style/style_text_lable"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="@string/shop_lable14" />
+            android:text="@string/shop_lable14"
+            android:textColor="@color/color_bf"
+            android:textSize="@dimen/dimen_15"
+            />
+
         <com.wxj.hbys.view.MyGridView
             android:id="@+id/gv_shopinfo_recommand"
             android:layout_width="match_parent"

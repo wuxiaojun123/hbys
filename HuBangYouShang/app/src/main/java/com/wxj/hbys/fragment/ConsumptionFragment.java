@@ -130,10 +130,10 @@ public class ConsumptionFragment extends BaseFragment {
                     public void onNext(ShopMallMainResponse response) {
                         if (response.code == 200) {
                             if (response.data != null) {
-                                initStore(response.data.rec_store_list);
                                 initHeadBannerShop(response.data.up_banner);
-                                initMiddleBannerShop(response.data.mid_banner);
                                 initHot5Shop(response.data.adv_list);
+                                initStore(response.data.rec_store_list);
+                                initMiddleBannerShop(response.data.mid_banner);
                                 initHotShop(response.data.hot_goods_list);
                             }
                         } else {
@@ -149,13 +149,13 @@ public class ConsumptionFragment extends BaseFragment {
      *
      * @param hot_goods_list
      */
-    private void initHotShop(List<ShopMallHotBean> hot_goods_list) {
+    private void initHotShop(final List<ShopMallHotBean> hot_goods_list) {
         mShopHotAdapter = new ShopHotAdapter(mContext, hot_goods_list, R.layout.item_hot_shop);
         gvShopHotMore.setAdapter(mShopHotAdapter);
         gvShopHotMore.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LogUtils.e("点击的position=" + position);
+                LogUtils.e("点击的position=" + position + "  good_id=" + hot_goods_list.get(position).goods_id);
                 startActivity(new Intent(mContext, GoodInfoActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
             }
