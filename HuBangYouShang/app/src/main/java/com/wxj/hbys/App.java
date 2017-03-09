@@ -2,13 +2,16 @@ package com.wxj.hbys;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.antfortune.freeline.FreelineCore;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.controller.EaseUI;
+import com.wxj.hbys.chat.DemoHelper;
 
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +30,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
+        MultiDex.install(this);
         super.onCreate();
         FreelineCore.init(this);
         mApp = this;
@@ -42,21 +46,27 @@ public class App extends Application {
             return;
         }
 
-        EMOptions options = new EMOptions();
-        // 默认添加好友时，是不需要验证的，改成需要验证
-        options.setAcceptInvitationAlways(false);
-        //初始化
-        EMClient.getInstance().init(mApp, options);
-        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(true);
-        EaseUI.getInstance().init(this,options);
+//        EMOptions options = new EMOptions();
+//        // 默认添加好友时，是不需要验证的，改成需要验证
+//        options.setAcceptInvitationAlways(false);
+//        //初始化
+//        EMClient.getInstance().init(mApp, options);
+//        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
+//        EMClient.getInstance().setDebugMode(true);
+//        EaseUI.getInstance().init(this,options);
+        DemoHelper.getInstance().init(mApp);
+
     }
 
     public static App getApplication(){
         return mApp;
     }
 
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     private String getAppName(int pID) {
         String processName = null;

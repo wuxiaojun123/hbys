@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
@@ -15,8 +14,7 @@ import com.base.recyclerview.LRecyclerViewAdapter;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.wxj.hbys.R;
-import com.wxj.hbys.adapter.MyHelpCommentAdapter;
-import com.wxj.hbys.chat.adapter.GroupAdapter;
+import com.wxj.hbys.chat.adapter.GroupTypesAdapter;
 import com.wxj.hbys.fragment.BaseFragment;
 
 import java.util.List;
@@ -44,7 +42,7 @@ public class BenefitFragment extends BaseFragment {
     @BindView(R.id.tv_title_right)
     TextView tvTitleRight;
 
-    private GroupAdapter groupAdapter;
+    private GroupTypesAdapter groupAdapter;
 
     @Nullable
     @Override
@@ -63,7 +61,7 @@ public class BenefitFragment extends BaseFragment {
         grouplist = EMClient.getInstance().groupManager().getAllGroups();
 
         groupListView.setLayoutManager(new LinearLayoutManager(mContext));
-        groupAdapter = new GroupAdapter(this.getActivity(), 1, 1);
+        groupAdapter = new GroupTypesAdapter(this.getActivity(), 1, 1);
         LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(groupAdapter);
         groupListView.setAdapter(mLRecyclerViewAdapter);
         groupAdapter.setDataList(grouplist);

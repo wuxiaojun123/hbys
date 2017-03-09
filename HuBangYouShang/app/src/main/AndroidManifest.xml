@@ -202,6 +202,24 @@
         <!-- 群组聊天-->
         <activity android:name=".chat.ui.GroupsActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".chat.ui.ContextMenuActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".chat.ui.ForwardMessageActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".chat.ui.PickAtUserActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".chat.ui.ChatActivity"
+            android:screenOrientation="portrait"></activity>
+        <!-- 开机自启动服务 -->
+        <receiver android:name=".chat.receiver.StartServiceReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
