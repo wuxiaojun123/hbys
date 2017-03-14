@@ -14,6 +14,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
 import com.help.reward.fragment.BaseFragment;
 import com.help.reward.fragment.MyAccountHelpRewardFragment;
+import com.help.reward.utils.ActivitySlideAnim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import butterknife.OnClick;
 
 /**
  * 帮赏分
+ * item_my_balance.xml
  * <p>
  * Created by wuxiaojun on 2017/1/10.
  */
@@ -72,11 +74,10 @@ public class MyAccountHelpRewardActivity extends BaseActivity implements View.On
             case R.id.tv_exchange:
                 //兑换方式
                 startActivity(new Intent(MyAccountHelpRewardActivity.this,GeneralExchangeVolumeActivity.class));
+                ActivitySlideAnim.slideInAnim(MyAccountHelpRewardActivity.this);
 
                 break;
-
         }
-
     }
 
 

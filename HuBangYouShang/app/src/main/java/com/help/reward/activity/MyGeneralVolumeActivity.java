@@ -24,6 +24,7 @@ import butterknife.OnClick;
 
 /**
  * 通用卷
+ * item_my_balance.xml
  * <p>
  * Created by wuxiaojun on 2017/1/10.
  */

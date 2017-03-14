@@ -13,6 +13,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
 import com.help.reward.fragment.BaseFragment;
 import com.help.reward.fragment.MyAccountHelpRewardFragment;
+import com.help.reward.utils.ActivitySlideAnim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ import butterknife.OnClick;
 
 /**
  * 余额
+ *
+ * item_my_balance.xml
+ *
  * <p>
  * Created by wuxiaojun on 2017/1/10.
  */
@@ -69,16 +73,19 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
             case R.id.tv_balance_recharge:
                 // 余额充值
                 startActivity(new Intent(MyBalanceActivity.this, PrepaidBalanceActivity.class));
+                ActivitySlideAnim.slideInAnim(MyBalanceActivity.this);
 
                 break;
             case R.id.tv_help_score:
                 // 兑换帮赏分
                 startActivity(new Intent(MyBalanceActivity.this, BalanceExchangeHelpScoreActivity.class));
+                ActivitySlideAnim.slideInAnim(MyBalanceActivity.this);
 
                 break;
             case R.id.tv_general_volume:
                 // 兑换通用卷
                 startActivity(new Intent(MyBalanceActivity.this, BalanceExchangeVolumeActivity.class));
+                ActivitySlideAnim.slideInAnim(MyBalanceActivity.this);
 
                 break;
         }

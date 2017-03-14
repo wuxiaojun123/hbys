@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.help.reward.App;
+import com.help.reward.activity.AccountManagerActivity;
 import com.idotools.utils.MetricsUtils;
 import com.help.reward.R;
 import com.help.reward.activity.LoginActivity;
@@ -64,7 +66,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         switch (id) {
             case R.id.rl_user_info:
                 // 需要判断是否已登陆
-                login();
+                if(App.APP_CLIENT_KEY != null){
+                    login();
+                }else{
+                    startActivity(new Intent(mContext, AccountManagerActivity.class));
+                    ActivitySlideAnim.slideInAnim(getActivity());
+                }
 
                 break;
             case R.id.iv_setting:
@@ -123,7 +130,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
-
 
     private void login(){
         RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {

@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
  * 优惠劵交易大厅
  *   优惠劵详情--买家
  *   优惠劵详情--卖家
+ *   item_coupon_trading.xml
  * <p>
  * Created by wuxiaojun on 2017/1/10.
  */

@@ -23,6 +23,7 @@
     <dimen name="dimen_15">15dp</dimen>
     <dimen name="dimen_16">16dp</dimen>
     <dimen name="dimen_18">18dp</dimen>
+    <dimen name="dimen_20">20dp</dimen>
     <dimen name="dimen_text_size_50">50dp</dimen>
 
     <!--消息中心-->

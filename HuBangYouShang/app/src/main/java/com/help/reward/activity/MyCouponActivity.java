@@ -14,6 +14,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
 import com.help.reward.fragment.BaseFragment;
 import com.help.reward.fragment.MyAccountHelpRewardFragment;
+import com.help.reward.utils.ActivitySlideAnim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import butterknife.OnClick;
 
 /**
  * 优惠劵
+ * item_my_coupon.xml
  * <p>
  * Created by wuxiaojun on 2017/1/10.
  */
@@ -31,7 +33,7 @@ import butterknife.OnClick;
 public class MyCouponActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.tv_exchange)
-    TextView tv_exchange;//兑换通用卷
+    TextView tv_exchange;
     @BindView(R.id.id_viewpager)
     ViewPager viewPager;
     @BindView(R.id.tabs)
@@ -70,13 +72,13 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
         int id = v.getId();
         switch (id) {
             case R.id.tv_exchange:
-                //兑换通用卷
+                // 交易大厅
                 startActivity(new Intent(MyCouponActivity.this,CouponTradingActivity.class));
+                ActivitySlideAnim.slideInAnim(MyCouponActivity.this);
 
                 break;
 
         }
-
     }
 
 

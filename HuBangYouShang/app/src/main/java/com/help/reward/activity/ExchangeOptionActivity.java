@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.help.reward.R;
+import com.help.reward.utils.ActivitySlideAnim;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -16,6 +17,7 @@ import butterknife.OnClick;
  * Created by wuxiaojun on 2017/1/8.
  */
 public class ExchangeOptionActivity extends BaseActivity implements View.OnClickListener {
+
 
 
     @Override
@@ -34,11 +36,14 @@ public class ExchangeOptionActivity extends BaseActivity implements View.OnClick
             case R.id.tv_balance_exchange:
                 // 余额兑换通用卷
                 startActivity(new Intent(ExchangeOptionActivity.this, BalanceExchangeHelpScoreActivity.class));
+                ActivitySlideAnim.slideInAnim(ExchangeOptionActivity.this);
+
 
                 break;
             case R.id.tv_bonus_points:
                 // 帮赏分兑换通用卷
                 startActivity(new Intent(ExchangeOptionActivity.this, GeneralExchangeVolumeActivity.class));
+                ActivitySlideAnim.slideInAnim(ExchangeOptionActivity.this);
 
                 break;
         }

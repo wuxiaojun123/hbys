@@ -9,7 +9,12 @@
 
     <include layout="@layout/layout_title" />
 
-    <Space
+    <com.base.recyclerview.LRecyclerView
+        android:id="@+id/id_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--<Space
         android:layout_width="match_parent"
         android:layout_height="10dp" />
 
@@ -46,6 +51,6 @@
     <TextView
         android:text="什么事优惠百分比"
         style="@style/style_help_center_text"
-        />
+        />-->
 
 </LinearLayout>

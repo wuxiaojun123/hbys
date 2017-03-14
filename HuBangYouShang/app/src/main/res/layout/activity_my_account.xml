@@ -66,6 +66,7 @@
             android:showDividers="middle">
 
             <LinearLayout
+                android:id="@+id/tv_balance"
                 style="@style/style_my_account_ll"
                 >
 
@@ -81,7 +82,9 @@
 
             </LinearLayout>
 
-            <LinearLayout style="@style/style_my_account_ll">
+            <LinearLayout
+                android:id="@+id/tv_account_help_reward"
+                style="@style/style_my_account_ll">
 
                 <TextView
                     style="@style/style_my_account_text_balance"
@@ -94,6 +97,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/tv_coupon"
                 style="@style/style_my_account_ll"
                 android:gravity="center">
 
@@ -107,7 +111,9 @@
 
             </LinearLayout>
 
-            <LinearLayout style="@style/style_my_account_ll">
+            <LinearLayout
+                android:id="@+id/tv_general_volume"
+                style="@style/style_my_account_ll">
 
                 <TextView
                     style="@style/style_my_account_text_balance"
@@ -161,7 +167,7 @@
 
         <TextView
             android:id="@+id/tv_coupon_generic"
-            android:text="通用卷交易"
+            android:text="通用卷兑换"
             style="@style/style_my_account_text_item"
             />
 

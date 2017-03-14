@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.base.recyclerview.LRecyclerView;
 import com.help.reward.R;
 import com.help.reward.utils.ActivitySlideAnim;
 
@@ -16,7 +17,7 @@ import butterknife.OnClick;
 /**
  *
  * 帮助中心
- *
+ * item_help_center.xml
  * Created by wuxiaojun on 2017/1/9.
  */
 
@@ -29,12 +30,20 @@ public class HelpCenterActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.tv_title_right)
     TextView tv_title_right;
 
+    @BindView(R.id.id_recycler_view)
+    LRecyclerView recyclerView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_center);
         ButterKnife.bind(this);
         initView();
+        initNetwork();
+    }
+
+    private void initNetwork() {
+
     }
 
     private void initView() {
