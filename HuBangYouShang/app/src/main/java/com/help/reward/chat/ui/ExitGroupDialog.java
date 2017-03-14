@@ -32,11 +32,12 @@ public class ExitGroupDialog extends BaseActivity{
         TextView text = (TextView) findViewById(R.id.tv_text);
         Button exitBtn = (Button) findViewById(R.id.btn_exit);
         
-        text.setText(R.string.exit_group_hint);
+        text.setText(R.string.exit_text);
         String toast = getIntent().getStringExtra("deleteToast");
-        if(toast != null)
-        	text.setText(toast);
-        exitBtn.setText(R.string.exit_group);
+        if(toast != null) {
+            text.setText(toast);
+        }
+        exitBtn.setText(R.string.exit_confirm);
     }
     
     public void logout(View view){

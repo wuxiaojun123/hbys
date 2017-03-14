@@ -75,6 +75,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 	private EaseSwitchButton switchButton;
 	private EaseSwitchButton offlinePushSwitch;
+	private EaseSwitchButton conversationToTop;
+
 	private EMPushConfigs pushConfigs;
 
 
@@ -95,6 +97,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		instance = this;
 		st = getResources().getString(R.string.people);
 		RelativeLayout clearAllHistory = (RelativeLayout) findViewById(R.id.clear_all_history);
+		RelativeLayout rlConversationToTop = (RelativeLayout) findViewById(R.id.rl_switch_up);
 		EaseExpandGridView userGridview = (EaseExpandGridView) findViewById(R.id.gridview);
 		loadingPB = (ProgressBar) findViewById(R.id.progressBar);
 		exitBtn = (Button) findViewById(R.id.btn_exit_grp);
@@ -102,7 +105,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		RelativeLayout blacklistLayout = (RelativeLayout) findViewById(R.id.rl_blacklist);
 		RelativeLayout changeGroupNameLayout = (RelativeLayout) findViewById(R.id.rl_change_group_name);
 		RelativeLayout idLayout = (RelativeLayout) findViewById(R.id.rl_group_id);
-		idLayout.setVisibility(View.VISIBLE);
+		TextView mTvMemberNumber = (TextView) findViewById(R.id.tv_group_member_num);
+		idLayout.setVisibility(View.GONE);
 		TextView idText = (TextView) findViewById(R.id.tv_group_id_value);
 
 		RelativeLayout rl_switch_block_groupmsg = (RelativeLayout) findViewById(R.id.rl_switch_block_groupmsg);
@@ -111,6 +115,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 		RelativeLayout blockOfflineLayout = (RelativeLayout) findViewById(R.id.rl_switch_block_offline_message);
 		offlinePushSwitch = (EaseSwitchButton) findViewById(R.id.switch_block_offline_message);
+		conversationToTop = (EaseSwitchButton) findViewById(R.id.switch_up);
 
 		idText.setText(groupId);
 		if (group.getOwner() == null || "".equals(group.getOwner())
@@ -133,7 +138,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		EMClient.getInstance().groupManager().addGroupChangeListener(groupChangeListener);
 		
 		((TextView) findViewById(R.id.group_name)).setText(group.getGroupName() + "(" + group.getMemberCount() + st);
-		
+
+		mTvMemberNumber.setText(group.getMemberCount() + "/200");
+
 		List<String> members = new ArrayList<String>();
 		members.addAll(group.getMembers());
 		
@@ -166,6 +173,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			}
 		});
 
+		rlConversationToTop.setOnClickListener(this);
 		clearAllHistory.setOnClickListener(this);
 		blacklistLayout.setOnClickListener(this);
 		changeGroupNameLayout.setOnClickListener(this);
@@ -290,7 +298,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	 * @param view
 	 */
 	public void exitGroup(View view) {
-		//startActivityForResult(new Intent(this, ExitGroupDialog.class), REQUEST_CODE_EXIT);
+		startActivityForResult(new Intent(this, ExitGroupDialog.class), REQUEST_CODE_EXIT);
 
 	}
 
@@ -452,10 +460,22 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			case R.id.rl_switch_block_offline_message:
 				toggleBlockOfflineMsg();
 				break;
+			case R.id.rl_switch_up://置顶
+				conversationToTop();
+				break;
 			default:
 				break;
 		}
 
+	}
+
+	//设置置顶聊天
+	private void conversationToTop() {
+		if(conversationToTop.isSwitchOpen()){
+			conversationToTop.closeSwitch();
+		}else{
+			conversationToTop.openSwitch();
+		}
 	}
 
 	private void toggleBlockOfflineMsg() {
@@ -611,6 +631,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			    holder = (ViewHolder) convertView.getTag();
 			}
 			final LinearLayout button = (LinearLayout) convertView.findViewById(R.id.button_avatar);
+
+			/*
+
 			// 最后一个item，减人按钮
 			if (position == getCount() - 1) {
 			    holder.textView.setText("");
@@ -676,7 +699,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				//TODO 隐藏掉
 				convertView.setClickable(false);
 				convertView.setVisibility(View.INVISIBLE);
-			} else { // 普通item，显示群组成员
+			} else { // 普通item，显示群组成员 */
 				final String username = getItem(position);
 				convertView.setVisibility(View.VISIBLE);
 				button.setVisibility(View.VISIBLE);
@@ -766,7 +789,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 					        return true;
 						if (group.getOwner().equals(EMClient.getInstance().getCurrentUser())) {
 							new EaseAlertDialog(GroupDetailsActivity.this, null, st15, null, new AlertDialogUser() {
-                                
+
                                 @Override
                                 public void onResult(boolean confirmed, Bundle bundle) {
                                     if(confirmed){
@@ -774,18 +797,19 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
                                     }
                                 }
                             }, true).show();
-							
+
 						}
 						return false;
 					}
 				});
-			}
+			/*}*/
 			return convertView;
 		}
 
 		@Override
 		public int getCount() {
-			return super.getCount() + 2;
+			//return super.getCount() + 2;
+			return  super.getCount();
 		}
 	}
 
@@ -798,7 +822,6 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 					}
 
 				    EMClient.getInstance().groupManager().getGroupFromServer(groupId);
-					
 					runOnUiThread(new Runnable() {
 						public void run() {
 							((TextView) findViewById(R.id.group_name)).setText(group.getGroupName() + "(" + group.getMemberCount()
