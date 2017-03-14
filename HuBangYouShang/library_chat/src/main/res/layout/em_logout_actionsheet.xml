@@ -1,54 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/em_dialog_corner"
         android:clickable="true"
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
+
         <TextView
-            android:id="@+id/tv_text"
+            android:id="@+id/tv_text_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:padding="5dp"
-            android:text="@string/logout_hint"
-            android:textColor="@android:color/white"
+            android:text="@string/exit_title"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+
+
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/exit_text"
+            android:textColor="@android:color/black"
             android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/btn_gray_normal"></ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@android:color/transparent">
 
         <Button
             android:id="@+id/btn_exit"
-            android:layout_width="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="8dp"
             android:gravity="center"
             android:onClick="logout"
             android:padding="6dp"
-            android:text="@string/logout"
-            android:textColor="@android:color/white"
-            android:textSize="19sp" />
+            android:text="@string/exit_confirm"
+            android:textColor="@color/color_blue_7ABBFF"
+            android:background="@android:color/transparent"
+            android:textSize="20sp" />
+
+         <ImageView
+             android:layout_width="1dp"
+             android:layout_height="match_parent"
+             android:background="@color/btn_gray_normal"></ImageView>
 
         <Button
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
             android:gravity="center"
             android:onClick="cancel"
-            android:padding="6dp"
             android:text="@string/cancel"
-            android:textColor="@android:color/white"
-            android:textSize="19sp" />
+            android:textColor="@color/color_blue_7ABBFF"
+            android:background="@android:color/transparent"
+            android:textSize="20sp" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
