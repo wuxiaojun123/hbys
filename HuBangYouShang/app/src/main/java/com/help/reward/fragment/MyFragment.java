@@ -66,7 +66,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         switch (id) {
             case R.id.rl_user_info:
                 // 需要判断是否已登陆
-                if(App.APP_CLIENT_KEY != null){
+                if(App.APP_CLIENT_KEY == null){
                     login();
                 }else{
                     startActivity(new Intent(mContext, AccountManagerActivity.class));

@@ -3,9 +3,6 @@ package com.help.reward.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
@@ -14,27 +11,25 @@ import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.adapter.MyAccountHelpRewardAdapter;
-import com.help.reward.adapter.MyCollectionGoodsAdapter;
+import com.help.reward.adapter.MyGeneralVolumeAdapter;
+import com.help.reward.bean.Response.GeneralVolumeResponse;
 import com.help.reward.bean.Response.HelpRewardResponse;
-import com.help.reward.bean.Response.MyCollectionGoodsResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;
-import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * 帮赏分兑换-全部、支出、支入
+ * 通用卷兑换-全部、支出、支入
  * Created by wuxiaojun on 2017/1/15.
  */
 
-public class MyAccountHelpRewardFragment extends BaseFragment {
+public class MyGeneralVolumeFragment extends BaseFragment {
 
     private int numSize = 15;
     private int currentPage = 1;
@@ -42,7 +37,7 @@ public class MyAccountHelpRewardFragment extends BaseFragment {
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
-    private MyAccountHelpRewardAdapter mCollectionGoodsAdapter;
+    private MyGeneralVolumeAdapter mCollectionGoodsAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +61,7 @@ public class MyAccountHelpRewardFragment extends BaseFragment {
 
     private void initRecycler() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
-        mCollectionGoodsAdapter = new MyAccountHelpRewardAdapter(mContext);
+        mCollectionGoodsAdapter = new MyGeneralVolumeAdapter(mContext);
         LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mCollectionGoodsAdapter);
         lRecyclerview.setAdapter(adapter);
         initRefreshListener();
@@ -77,6 +72,7 @@ public class MyAccountHelpRewardFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() { // 如果集合中没有数据，则进行刷新，否则不刷新
+                initNetwork();
             }
         });
     }
@@ -96,10 +92,10 @@ public class MyAccountHelpRewardFragment extends BaseFragment {
     private void initNetwork() {
         PersonalNetwork
                 .getResponseApi()
-                .getMyHelpRewardResponse("member_points","member_points_detail",""+currentPage,App.APP_CLIENT_KEY,requestType)
+                .getMyGeneralVolumeResponse("member_general_voucher","detail_log",""+currentPage,App.APP_CLIENT_KEY,requestType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<HelpRewardResponse>() {
+                .subscribe(new BaseSubscriber<GeneralVolumeResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
@@ -108,16 +104,18 @@ public class MyAccountHelpRewardFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onNext(HelpRewardResponse response) {
+                    public void onNext(GeneralVolumeResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                mCollectionGoodsAdapter.addAll(response.data.list);
-                                RxBus.getDefault().post(new MyAccountHelpRewardRxbusType(response.data.points));
+                                if(response.data.list != null){
+                                    mCollectionGoodsAdapter.addAll(response.data.list);
+                                }
+                                RxBus.getDefault().post(new MyAccountHelpRewardRxbusType(response.data.general_voucher));
                             }
-                            if (currentPage == 1) {
+//                            if (currentPage == 1) {
                                 lRecyclerview.setPullRefreshEnabled(false);
-                            }
+//                            }
                             if (!response.hasmore) { // 是否有更多数据
                                 lRecyclerview.setLoadMoreEnabled(false);
                             } else {

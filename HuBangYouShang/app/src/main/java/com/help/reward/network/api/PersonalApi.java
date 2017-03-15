@@ -1,6 +1,9 @@
 package com.help.reward.network.api;
 
+import com.help.reward.bean.Response.AdvertisementResponse;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.GeneralVolumeResponse;
+import com.help.reward.bean.Response.HelpRewardResponse;
 import com.help.reward.bean.Response.MyCollectionGoodsResponse;
 import com.help.reward.bean.Response.MyCollectionPostResponse;
 import com.help.reward.bean.Response.MyCollectionStoreResponse;
@@ -9,10 +12,12 @@ import com.help.reward.bean.Response.MyHelpPostResponse;
 import com.help.reward.bean.Response.MyRewardCommentResponse;
 import com.help.reward.bean.Response.MyRewardPostResponse;
 import com.help.reward.bean.Response.MyVoteResponse;
+import com.help.reward.utils.Constant;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -90,6 +95,39 @@ public interface PersonalApi {
     @POST("mobile/index.php?act=member_favorites_store&op=favorites_list")
     Observable<MyCollectionStoreResponse> getMyCollectionStoreResponse(
             @Field("key") String key
+    );
+
+    // 我的账户--帮赏分明细
+    @FormUrlEncoded
+    @POST(Constant.URL_MEMBER_ACCOUNT_HELP_REWARD)
+    Observable<HelpRewardResponse> getMyHelpRewardResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("key") String key,
+            @Field("type") String type
+    );
+
+    // 我的账户--通用卷明细  ?act=member_general_voucher&op=detail_lo
+    @FormUrlEncoded
+    @POST(Constant.URL_MEMBER_ACCOUNT_GENERAL_VOLUME)
+    Observable<GeneralVolumeResponse> getMyGeneralVolumeResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("key") String key,
+            @Field("type") String type
+    );
+
+    // 我的账户--我的优惠卷  ?act=member_general_voucher&op=detail_lo
+    @FormUrlEncoded
+    @POST(Constant.URL_MEMBER_ACCOUNT_GENERAL_VOLUME)
+    Observable<GeneralVolumeResponse> getMyGeneralVolumeResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("key") String key,
+            @Field("type") String type
     );
 
 }

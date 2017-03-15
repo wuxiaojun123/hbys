@@ -73,9 +73,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SuperV
     }
 
     public void addAll(Collection<T> list) {
-        int lastIndex = this.mDataList.size();
-        if (this.mDataList.addAll(list)) {
-            notifyItemRangeInserted(lastIndex, list.size());
+        if(list != null){
+            int lastIndex = this.mDataList.size();
+            if (this.mDataList.addAll(list)) {
+                notifyItemRangeInserted(lastIndex, list.size());
+            }
         }
     }
 

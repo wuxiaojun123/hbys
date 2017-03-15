@@ -14,6 +14,11 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
 import com.help.reward.fragment.BaseFragment;
 import com.help.reward.fragment.MyAccountHelpRewardFragment;
+import com.help.reward.fragment.MyGeneralVolumeFragment;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;
+import com.help.reward.utils.ActivitySlideAnim;
+import com.idotools.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +26,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * 通用卷
@@ -30,7 +37,8 @@ import butterknife.OnClick;
  */
 
 public class MyGeneralVolumeActivity extends BaseActivity implements View.OnClickListener {
-
+    @BindView(R.id.tv_num)
+    TextView tv_num;
     @BindView(R.id.tv_exchange)
     TextView tv_exchange;//兑换通用卷
     @BindView(R.id.id_viewpager)
@@ -38,8 +46,7 @@ public class MyGeneralVolumeActivity extends BaseActivity implements View.OnClic
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
-
-    private MyFragmentPageAdapter mAdapter;
+    private Subscription subscribe;
     private List<BaseFragment> fragmentList;
 
     @Override
@@ -50,13 +57,28 @@ public class MyGeneralVolumeActivity extends BaseActivity implements View.OnClic
 
         initEvent();
         initData();
+        getRxBusData();
     }
 
     private void initData() {
         fragmentList = new ArrayList<>(3);
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
+        MyGeneralVolumeFragment fragmentAll = new MyGeneralVolumeFragment();
+
+        MyGeneralVolumeFragment fragmentPay = new MyGeneralVolumeFragment();
+        // 支出
+        Bundle bundle = new Bundle();
+        bundle.putString("type","2");
+        fragmentPay.setArguments(bundle);
+
+        MyGeneralVolumeFragment fragmentInCome = new MyGeneralVolumeFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("type","1");
+        fragmentInCome.setArguments(bundle2);
+
+        fragmentList.add(fragmentAll);
+        fragmentList.add(fragmentPay);
+        fragmentList.add(fragmentInCome);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
     }
@@ -65,19 +87,36 @@ public class MyGeneralVolumeActivity extends BaseActivity implements View.OnClic
 
     }
 
-    @OnClick({R.id.tv_exchange})
+    /**
+     * 获取rxbus传递过来的数据
+     */
+    public void getRxBusData() {
+        subscribe = RxBus.getDefault().toObservable(MyAccountHelpRewardRxbusType.class).subscribe(new Action1<MyAccountHelpRewardRxbusType>() {
+            @Override
+            public void call(MyAccountHelpRewardRxbusType type) {
+                LogUtils.e("获取到信息" + type.points);
+                tv_num.setText(type.points);
+            }
+        });
+    }
+
+    @OnClick({R.id.iv_back,R.id.tv_exchange})
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.iv_back:
+                finish();
+                ActivitySlideAnim.slideOutAnim(MyGeneralVolumeActivity.this);
+
+                break;
             case R.id.tv_exchange:
                 //兑换通用卷
                 startActivity(new Intent(MyGeneralVolumeActivity.this,ExchangeOptionActivity.class));
+                ActivitySlideAnim.slideInAnim(MyGeneralVolumeActivity.this);
 
                 break;
-
         }
-
     }
 
 
@@ -111,6 +150,14 @@ public class MyGeneralVolumeActivity extends BaseActivity implements View.OnClic
 
     private String getMString(int resId) {
         return mContext.getString(resId);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(subscribe != null && !subscribe.isUnsubscribed()){
+            subscribe.unsubscribe();
+        }
+        super.onDestroy();
     }
 
 }
