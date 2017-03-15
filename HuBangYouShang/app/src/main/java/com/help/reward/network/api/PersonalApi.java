@@ -1,12 +1,14 @@
 package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.AdvertisementResponse;
+import com.help.reward.bean.Response.BalanceExchangeResponse;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.GeneralVolumeResponse;
 import com.help.reward.bean.Response.HelpRewardResponse;
 import com.help.reward.bean.Response.MyCollectionGoodsResponse;
 import com.help.reward.bean.Response.MyCollectionPostResponse;
 import com.help.reward.bean.Response.MyCollectionStoreResponse;
+import com.help.reward.bean.Response.MyCouponResponse;
 import com.help.reward.bean.Response.MyHelpCommentResponse;
 import com.help.reward.bean.Response.MyHelpPostResponse;
 import com.help.reward.bean.Response.MyRewardCommentResponse;
@@ -119,15 +121,31 @@ public interface PersonalApi {
             @Field("type") String type
     );
 
-    // 我的账户--我的优惠卷  ?act=member_general_voucher&op=detail_lo
-    /*@FormUrlEncoded
-    @POST(Constant.URL_MEMBER_ACCOUNT_GENERAL_VOLUME)
-    Observable<GeneralVolumeResponse> getMyGeneralVolumeResponse(
+    // 我的账户--我的优惠卷  mobile/index.php?act=member_voucher&op=voucher_list
+    @FormUrlEncoded
+    @POST(Constant.URL_MEMBER_ACCOUNT_MY_COUPON)
+    Observable<MyCouponResponse> getMyCouponResponse(
             @Query("act") String act,
             @Query("op") String op,
             @Query("curpage") String curpage,
             @Field("key") String key,
-            @Field("type") String type
-    );*/
+            @Field("voucher_state") String voucher_state
+    );
+
+
+    // 余额兑换帮赏分
+    @FormUrlEncoded
+    @POST(Constant.URL_MEMBER_YUE_DUIHUAN_BANGSHANGFEN)
+    Observable<BalanceExchangeResponse> getBalanceExchangeResponse(
+            @Field("key") String key
+    );
+
+    // 余额兑换帮赏分--提交
+    @FormUrlEncoded
+    @POST(Constant.URL_MEMBER_COMMIT_YUE_DUIHUAN_BANGSHANGFEN)
+    Observable<BaseResponse<String>> getBalanceExchangeStringResponse(
+            @Field("key") String key,
+            @Field("exchange") String exchange
+    );
 
 }

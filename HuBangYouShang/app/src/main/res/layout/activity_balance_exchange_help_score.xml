@@ -21,10 +21,11 @@
             android:textSize="@dimen/dimen_15" />
 
         <TextView
+            android:id="@+id/tv_balance"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="1000.00"
+            android:text="0.00"
             android:textColor="@color/color_3a"
             android:textSize="@dimen/dimen_15" />
 
@@ -46,16 +47,20 @@
             android:textSize="@dimen/dimen_15" />
 
         <EditText
+            android:id="@+id/et_recharge_account"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
             android:hint="按需输入充值金额，最低一元"
             android:textColorHint="@color/color_bf"
+            android:maxLines="1"
+            android:inputType="number"
             android:textSize="@dimen/dimen_14" />
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_exchange"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginLeft="10dp"
@@ -66,10 +71,11 @@
 
 
     <Button
+        android:id="@+id/btn_go_to_recharge"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/shape_login_bg"
         android:text="去充值"
         android:textColor="@color/color_while"

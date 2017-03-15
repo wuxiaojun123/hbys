@@ -39,7 +39,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private void initView() {
         tv_title.setText(R.string.string_setting_title);
-
+        tv_title_right.setVisibility(View.GONE);
     }
 
 

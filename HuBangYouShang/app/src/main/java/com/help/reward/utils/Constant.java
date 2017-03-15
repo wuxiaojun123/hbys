@@ -39,4 +39,11 @@ public class Constant {
     // 会员相关--优惠卷上架  参数[post]：price；voucher_id
     public static final String URL_MEMBER_ACCOUNT_MY_COUPON_PUT_ON_SALE = "mobile/index.php?act=member_voucher&op=put_on_sale";
 
+    // 余额兑换帮赏分
+    public static final String URL_MEMBER_YUE_DUIHUAN_BANGSHANGFEN = "mobile/index.php?act=member_points&op=deposit_exchange";
+
+    // 余额兑换帮赏分--提交
+    public static final String URL_MEMBER_COMMIT_YUE_DUIHUAN_BANGSHANGFEN = " mobile/index.php?act=member_points&op=deposit_exchange_post";
+
+
 }

@@ -82,7 +82,7 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.tv_coupon_trading:
                 // 优惠劵交易
-                startActivity(new Intent(MyAccountActivity.this, MyCouponActivity.class));
+                startActivity(new Intent(MyAccountActivity.this, CouponTradingActivity.class));
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 
                 break;
@@ -93,8 +93,9 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
 
                 break;
             case R.id.tv_exchange:
-                // 帮赏分兑换
-
+                // 帮赏分兑换----跳转到余额兑换帮赏分界面
+                startActivity(new Intent(MyAccountActivity.this, BalanceExchangeHelpScoreActivity.class));
+                ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 
                 break;
         }

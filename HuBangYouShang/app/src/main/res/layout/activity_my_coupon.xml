@@ -35,7 +35,7 @@
 
             <RelativeLayout
                 android:layout_width="60dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -43,10 +43,12 @@
                 <TextView
                     android:id="@+id/tv_num"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5"
+                    android:layout_height="match_parent"
+                    android:text="0"
                     android:textColor="@color/color_while"
-                    android:textSize="50dp" />
+                    android:textSize="50dp"
+                    android:layout_alignParentBottom="true"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -55,7 +57,7 @@
                     android:layout_alignParentRight="true"
                     android:text="张"
                     android:textColor="@color/color_while"
-                    android:textSize="20dp" />
+                    android:textSize="16dp" />
             </RelativeLayout>
 
         </LinearLayout>

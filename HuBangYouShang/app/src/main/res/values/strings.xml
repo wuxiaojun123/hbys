@@ -30,6 +30,10 @@
     <string name="string_expenditure">支出</string>
     <string name="string_support">支入</string>
 
+    <string name="string_weishiyong">未使用</string>
+    <string name="string_yishiyong">已使用</string>
+    <string name="string_yiguoqi">已过期</string>
+
     <!-- 交易大厅 -->
     <string name="string_meoney_from_high_to_low">面额从高到低</string>
     <string name="string_meoney_from_low_to_high">面额从低到高</string>
@@ -100,6 +104,23 @@
     <!--设置-->
     <string name="string_setting_title">设置</string>
 
+    <!--账户管理-->
+    <string name="string_account_manager_title">账户管理</string>
+    <!--个人信息-->
+    <string name="string_person_info_title">个人信息</string>
+    <!--实名认证-->
+    <string name="string_certification_title">实名认证</string>
+    <!--验证身份-->
+    <string name="string_verifyidentity_title">验证身份</string>
+    <!--修改密码-->
+    <string name="string_pwd_update_title">修改密码</string>
+    <!--支付密码-->
+    <string name="string_pwd_payment_title">支付密码</string>
+    <!--地址管理-->
+    <string name="string_address_manager_title">地址管理</string>
+    <!--添加地址-->
+    <string name="string_add_address_title">添加地址</string>
+
     <!--关于-->
     <string name="string_about_title">关于</string>
     <!--意见反馈-->
@@ -114,6 +135,15 @@
     <!--修改密码-->
     <string name="string_update_title">修改密码</string>
     <string name="string_identity_title">认证身份</string>
+
+    <!--选择兑换方式-->
+    <string name="string_xuanzeduihuanfangshi_title">选择兑换方式</string>
+    <!--余额兑换帮赏分-->
+    <string name="string_yue_duihuan_bangshangfen_title">余额兑换帮赏分</string>
+    <!--帮赏分兑换通用卷-->
+    <string name="string_bangshangfen_duihuan_tongyongjuan_title">帮赏分兑换通用卷</string>
+    <!--充值余额-->
+    <string name="string_chongzhi_yue_title">充值余额</string>
 
     <!--支付-->
     <string name="pay_lable1">选择支付方式</string>

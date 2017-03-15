@@ -14,7 +14,11 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
 import com.help.reward.fragment.BaseFragment;
 import com.help.reward.fragment.MyAccountHelpRewardFragment;
+import com.help.reward.fragment.MyCouponFragment;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.idotools.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * 优惠劵
@@ -31,7 +37,8 @@ import butterknife.OnClick;
  */
 
 public class MyCouponActivity extends BaseActivity implements View.OnClickListener {
-
+    @BindView(R.id.tv_num)
+    TextView tv_num;
     @BindView(R.id.tv_exchange)
     TextView tv_exchange;
     @BindView(R.id.id_viewpager)
@@ -39,8 +46,7 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
-
-    private MyFragmentPageAdapter mAdapter;
+    private Subscription subscribe;
     private List<BaseFragment> fragmentList;
 
     @Override
@@ -51,13 +57,31 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
 
         initEvent();
         initData();
+        getRxBusData();
     }
 
     private void initData() {
         fragmentList = new ArrayList<>(3);
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
+
+        MyCouponFragment fragmentAll = new MyCouponFragment();
+        //未使用
+        MyCouponFragment fragmentPay = new MyCouponFragment();
+        // 已使用
+        Bundle bundle = new Bundle();
+        bundle.putString("voucher_state", "2");
+        fragmentPay.setArguments(bundle);
+
+        MyCouponFragment fragmentInCome = new MyCouponFragment();
+        // 已过期
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("voucher_state", "3");
+        fragmentInCome.setArguments(bundle2);
+
+        fragmentList.add(fragmentAll);
+        fragmentList.add(fragmentPay);
+        fragmentList.add(fragmentInCome);
+
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
     }
@@ -66,14 +90,32 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
 
     }
 
-    @OnClick({R.id.tv_exchange})
+    /**
+     * 获取rxbus传递过来的数据
+     */
+    public void getRxBusData() {
+        subscribe = RxBus.getDefault().toObservable(MyAccountHelpRewardRxbusType.class).subscribe(new Action1<MyAccountHelpRewardRxbusType>() {
+            @Override
+            public void call(MyAccountHelpRewardRxbusType type) {
+                LogUtils.e("获取到信息" + type.points);
+                tv_num.setText(type.points);
+            }
+        });
+    }
+
+    @OnClick({R.id.iv_back, R.id.tv_exchange})
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.iv_back:
+                finish();
+                ActivitySlideAnim.slideOutAnim(MyCouponActivity.this);
+
+                break;
             case R.id.tv_exchange:
                 // 交易大厅
-                startActivity(new Intent(MyCouponActivity.this,CouponTradingActivity.class));
+                startActivity(new Intent(MyCouponActivity.this, CouponTradingActivity.class));
                 ActivitySlideAnim.slideInAnim(MyCouponActivity.this);
 
                 break;
@@ -87,11 +129,11 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
         @Override
         public CharSequence getPageTitle(int position) {
             if (position == 0) {
-                return getMString(R.string.string_all);
+                return getMString(R.string.string_weishiyong);
             } else if (position == 1) {
-                return getMString(R.string.string_expenditure);
+                return getMString(R.string.string_yishiyong);
             } else {
-                return getMString(R.string.string_support);
+                return getMString(R.string.string_yiguoqi);
             }
         }
 
@@ -114,4 +156,11 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
         return mContext.getString(resId);
     }
 
+    @Override
+    protected void onDestroy() {
+        if (subscribe != null && !subscribe.isUnsubscribed()) {
+            subscribe.unsubscribe();
+        }
+        super.onDestroy();
+    }
 }
