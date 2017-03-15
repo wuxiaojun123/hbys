@@ -83,6 +83,14 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     private static final int ITEM_TRANSFER_PACKET = 17;
     //end of red packet code
 
+    //悬赏分
+    private static final int MESSAGE_TYPE_SENT_REWARD_POINTS = 20;
+    private static final int MESSAGE_TYPE_RECV_REWARD_POINTS = 21;
+
+    //优惠券
+    private static final int MESSAGE_TYPE_SENT_COUPON = 20;
+    private static final int MESSAGE_TYPE_RECV_COUPON = 21;
+
     /**
      * if it is chatBot 
      */
