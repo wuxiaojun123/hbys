@@ -120,7 +120,7 @@ public interface PersonalApi {
     );
 
     // 我的账户--我的优惠卷  ?act=member_general_voucher&op=detail_lo
-    @FormUrlEncoded
+    /*@FormUrlEncoded
     @POST(Constant.URL_MEMBER_ACCOUNT_GENERAL_VOLUME)
     Observable<GeneralVolumeResponse> getMyGeneralVolumeResponse(
             @Query("act") String act,
@@ -128,6 +128,6 @@ public interface PersonalApi {
             @Query("curpage") String curpage,
             @Field("key") String key,
             @Field("type") String type
-    );
+    );*/
 
 }
