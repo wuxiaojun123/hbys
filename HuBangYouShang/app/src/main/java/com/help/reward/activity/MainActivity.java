@@ -101,7 +101,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
         //debug purpose only
         registerInternalDebugReceiver();
-        String userName = "hbys1";
+        String userName = "hbys4";
         String password = "123456";
         EMClient.getInstance().login(userName,password,new EMCallBack() {//回调
             @Override

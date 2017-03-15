@@ -48,6 +48,9 @@ import java.util.Map;
 public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHelper {
 
 	// constant start from 11 to avoid conflict with constant in base class
+    private static final int ITEM_TAKE_PICTURE = 1;
+    private static final int ITEM_PICTURE = 2;
+    private static final int ITEM_LOCATION = 3;
     private static final int ITEM_VIDEO = 11;
     private static final int ITEM_FILE = 12;
     private static final int ITEM_VOICE_CALL = 13;
@@ -140,7 +143,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     @Override
     protected void registerExtendMenuItem() {
         //use the menu in base class
-        super.registerExtendMenuItem();
+        //super.registerExtendMenuItem();
         //extend menu items
         //inputMenu.registerExtendMenuItem(R.string.attach_video, R.drawable.em_chat_video_selector, ITEM_VIDEO, extendMenuItemClickListener);
         //inputMenu.registerExtendMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, ITEM_FILE, extendMenuItemClickListener);
@@ -158,6 +161,13 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         //    inputMenu.registerExtendMenuItem(R.string.attach_transfer_money, R.drawable.em_chat_transfer_selector, ITEM_TRANSFER_PACKET, extendMenuItemClickListener);
         //}
         //end of red packet code
+
+
+        //extend my menu items
+        inputMenu.registerExtendMenuItem(R.string.attach_picture, R.mipmap.photo, ITEM_PICTURE, extendMenuItemClickListener);
+        inputMenu.registerExtendMenuItem(R.string.attach_take_pic, R.mipmap.camera, ITEM_TAKE_PICTURE, extendMenuItemClickListener);
+        inputMenu.registerExtendMenuItem(R.string.attach_location, R.mipmap.position, ITEM_LOCATION, extendMenuItemClickListener);
+
     }
     
     @Override
