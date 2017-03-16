@@ -2,9 +2,12 @@ package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.AdvertisementResponse;
 import com.help.reward.bean.Response.BalanceExchangeResponse;
+import com.help.reward.bean.Response.BalanceExchangeVolumeResponse;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.GeneralExchangeVolumeResponse;
 import com.help.reward.bean.Response.GeneralVolumeResponse;
 import com.help.reward.bean.Response.HelpRewardResponse;
+import com.help.reward.bean.Response.MyBalanceResponse;
 import com.help.reward.bean.Response.MyCollectionGoodsResponse;
 import com.help.reward.bean.Response.MyCollectionPostResponse;
 import com.help.reward.bean.Response.MyCollectionStoreResponse;
@@ -99,6 +102,16 @@ public interface PersonalApi {
             @Field("key") String key
     );
 
+    // 我的账户--余额明细  ?act=member_fund&op=predepositlog
+    @FormUrlEncoded
+    @POST(Constant.URL_MEMBER_BALANCE)
+    Observable<MyBalanceResponse> getMyBalanceResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("key") String key
+    );
+
     // 我的账户--帮赏分明细
     @FormUrlEncoded
     @POST(Constant.URL_MEMBER_ACCOUNT_HELP_REWARD)
@@ -147,5 +160,38 @@ public interface PersonalApi {
             @Field("key") String key,
             @Field("exchange") String exchange
     );
+
+    // 帮赏分兑换通用卷
+    @FormUrlEncoded
+    @POST(Constant.URL_MEMBER_BANGSHANGFEN_DUIHUAN_TONGYONGJUAN)
+    Observable<GeneralExchangeVolumeResponse> getGeneralExchangeVolumeResponse(
+            @Field("key") String key
+    );
+
+    // 帮赏分兑换通用卷--提交
+    @FormUrlEncoded
+    @POST(Constant.URL_MEMBER_COMMIT_BANGSHANGFEN_DUIHUAN_TONGYONGJUAN)
+    Observable<BaseResponse<String>> getCommitGeneralExchangeVolumeResponse(
+            @Field("key") String key,
+            @Field("exchange") String exchange
+    );
+
+
+    // 余额兑换通用卷
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_general_voucher&op=deposit_exchange")
+    Observable<BalanceExchangeVolumeResponse> getBalanceExchangeVolumeResponseResponse(
+            @Field("key") String key
+    );
+
+    // 余额兑换通用卷--提交
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_general_voucher&op=deposit_exchange_post")
+    Observable<BaseResponse<String>> getBalanceExchangeVolumeResponse(
+            @Field("key") String key,
+            @Field("exchange") String exchange
+    );
+
+
 
 }

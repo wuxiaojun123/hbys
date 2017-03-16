@@ -21,10 +21,10 @@
             android:textSize="@dimen/dimen_15" />
 
         <TextView
+            android:id="@+id/tv_balance"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="1000.00"
             android:textColor="@color/color_3a"
             android:textSize="@dimen/dimen_15" />
 
@@ -41,21 +41,25 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:text="充值金额"
+            android:text="兑换数值"
             android:textColor="@color/color_3a"
             android:textSize="@dimen/dimen_15" />
 
         <EditText
+            android:id="@+id/et_exchange_value"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
             android:hint="按需输入充值金额，最低一元"
+            android:inputType="number"
+            android:maxLines="1"
             android:textColorHint="@color/color_bf"
             android:textSize="@dimen/dimen_14" />
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_text"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginLeft="10dp"
@@ -68,8 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        >
+        android:paddingTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,8 +86,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -110,15 +112,15 @@
 
 
     <Button
+        android:id="@+id/btn_commit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/shape_login_bg"
         android:text="去充值"
         android:textColor="@color/color_while"
-        android:textSize="@dimen/dimen_15"
-        android:layout_marginTop="10dp"
-        />
+        android:textSize="@dimen/dimen_15" />
 
 </LinearLayout>

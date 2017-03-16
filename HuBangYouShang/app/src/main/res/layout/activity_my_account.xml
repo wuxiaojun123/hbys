@@ -25,6 +25,7 @@
                 android:src="@mipmap/img_myaccount_back" />
 
             <ImageView
+                android:id="@+id/tv_head"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:scaleType="center"
@@ -38,17 +39,17 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="小荷才露尖尖角"
                     android:textColor="@color/color_while"
                     android:textSize="@dimen/dimen_15" />
 
                 <TextView
+                    android:id="@+id/tv_subscibe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="噼里啪啦巴拉巴拉小魔仙"
                     android:textColor="@color/color_while"
                     android:textSize="@dimen/dimen_11" />
 
@@ -72,7 +73,7 @@
 
                 <TextView
                     style="@style/style_my_account_text_balance"
-                    android:text="22.0"
+                    android:text="0.0"
                     />
 
                 <TextView
@@ -88,7 +89,7 @@
 
                 <TextView
                     style="@style/style_my_account_text_balance"
-                    android:text="220" />
+                    android:text="0" />
 
                 <TextView
                     style="@style/style_my_account_text_title"
@@ -103,7 +104,7 @@
 
                 <TextView
                     style="@style/style_my_account_text_balance"
-                    android:text="5张" />
+                    android:text="0张" />
 
                 <TextView
                     style="@style/style_my_account_text_title"
@@ -117,7 +118,7 @@
 
                 <TextView
                     style="@style/style_my_account_text_balance"
-                    android:text="150" />
+                    android:text="0" />
 
                 <TextView
                     style="@style/style_my_account_text_title"
@@ -131,11 +132,11 @@
 
                 <TextView
                     style="@style/style_my_account_text_balance"
-                    android:text="90%" />
+                    android:text="0" />
 
                 <TextView
                     style="@style/style_my_account_text_title"
-                    android:text="优惠百分比" />
+                    android:text="优惠金额" />
 
             </LinearLayout>
 

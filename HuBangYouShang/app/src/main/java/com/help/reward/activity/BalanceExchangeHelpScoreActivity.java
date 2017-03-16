@@ -23,6 +23,7 @@ import com.idotools.utils.ToastUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -45,6 +46,8 @@ public class BalanceExchangeHelpScoreActivity extends BaseActivity implements Vi
     EditText et_recharge_account; // 充值金额
     @BindView(R.id.tv_balance)
     TextView tv_balance; // 可使用余额
+
+    private Subscription subscribe;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -122,9 +125,9 @@ public class BalanceExchangeHelpScoreActivity extends BaseActivity implements Vi
     }
 
     private void commit(int num) {
-        PersonalNetwork
+        subscribe = PersonalNetwork
                 .getResponseApi()
-                .getBalanceExchangeStringResponse(App.APP_CLIENT_KEY,num+"")
+                .getBalanceExchangeStringResponse(App.APP_CLIENT_KEY, num + "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<String>>() {
@@ -138,7 +141,7 @@ public class BalanceExchangeHelpScoreActivity extends BaseActivity implements Vi
                     public void onNext(BaseResponse<String> response) {
                         if (response.code == 200) {
                             if (response.data != null) {
-                                ToastUtils.show(mContext,response.data.toString());
+                                ToastUtils.show(mContext, response.data.toString());
                                 // 回到原来页面，并且更改帮赏分和余额的数目
                                 back();
                             }
@@ -149,5 +152,11 @@ public class BalanceExchangeHelpScoreActivity extends BaseActivity implements Vi
                 });
     }
 
-
+    @Override
+    protected void onDestroy() {
+        if(subscribe != null && !subscribe.isUnsubscribed()){
+            subscribe.unsubscribe();
+        }
+        super.onDestroy();
+    }
 }

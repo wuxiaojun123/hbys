@@ -8,12 +8,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
 import com.help.reward.fragment.BaseFragment;
 import com.help.reward.fragment.MyAccountHelpRewardFragment;
+import com.help.reward.fragment.MyBalanceFragment;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.idotools.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +26,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
- * 余额
+ * 余额---明细
  *
  * item_my_balance.xml
  *
@@ -33,13 +40,13 @@ import butterknife.OnClick;
 
 public class MyBalanceActivity extends BaseActivity implements View.OnClickListener {
 
+    @BindView(R.id.tv_balance)
+    TextView tv_balance;
     @BindView(R.id.id_viewpager)
     ViewPager viewPager;
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
-
-    private MyFragmentPageAdapter mAdapter;
     private List<BaseFragment> fragmentList;
 
     @Override
@@ -50,19 +57,46 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
 
         initEvent();
         initData();
+        getRxBusData();
     }
 
     private void initData() {
         fragmentList = new ArrayList<>(3);
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
+        MyBalanceFragment fragmentAll = new MyBalanceFragment();
+
+        MyBalanceFragment fragmentPay = new MyBalanceFragment();
+        // 支出
+        Bundle bundle = new Bundle();
+        bundle.putString("type","2");
+        fragmentPay.setArguments(bundle);
+
+        MyBalanceFragment fragmentInCome = new MyBalanceFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("type","1");
+        fragmentInCome.setArguments(bundle2);
+
+        fragmentList.add(fragmentAll);
+        fragmentList.add(fragmentPay);
+        fragmentList.add(fragmentInCome);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
     }
 
     private void initEvent() {
 
+    }
+    private Subscription subscribe;
+    /**
+     * 获取rxbus传递过来的数据
+     */
+    public void getRxBusData() {
+        subscribe = RxBus.getDefault().toObservable(MyAccountHelpRewardRxbusType.class).subscribe(new Action1<MyAccountHelpRewardRxbusType>() {
+            @Override
+            public void call(MyAccountHelpRewardRxbusType type) {
+                tv_balance.setText(type.points);
+            }
+        });
     }
 
     @OnClick({R.id.tv_balance_recharge, R.id.tv_help_score, R.id.tv_general_volume})
@@ -122,6 +156,14 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
 
     private String getMString(int resId) {
         return mContext.getString(resId);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(subscribe != null && !subscribe.isUnsubscribed()){
+            subscribe.unsubscribe();
+        }
+        super.onDestroy();
     }
 
 }

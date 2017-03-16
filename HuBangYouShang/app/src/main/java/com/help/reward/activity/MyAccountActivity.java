@@ -68,7 +68,7 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 
                 break;
-            case R.id.ll_discount_amount: // 优惠百分比
+            case R.id.ll_discount_amount: // 优惠金额
                 startActivity(new Intent(MyAccountActivity.this, DiscountAmountActivity.class));
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 

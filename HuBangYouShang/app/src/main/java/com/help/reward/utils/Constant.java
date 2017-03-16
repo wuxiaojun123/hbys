@@ -24,6 +24,9 @@ public class Constant {
     public static final String URL_SHOP_MALL_INFO = "mobile/index.php";
 
 
+    // 会员相关--余额明细  参数[post]：type=1/2 1-收入2-支出，不带参数为全部
+    public static final String URL_MEMBER_BALANCE = "mobile/index.php";
+
     // 会员相关--帮赏分明细  参数[post]：type=1/2 1-收入2-支出，不带参数为全部
     public static final String URL_MEMBER_ACCOUNT_HELP_REWARD = "mobile/index.php";
 
@@ -43,7 +46,16 @@ public class Constant {
     public static final String URL_MEMBER_YUE_DUIHUAN_BANGSHANGFEN = "mobile/index.php?act=member_points&op=deposit_exchange";
 
     // 余额兑换帮赏分--提交
-    public static final String URL_MEMBER_COMMIT_YUE_DUIHUAN_BANGSHANGFEN = " mobile/index.php?act=member_points&op=deposit_exchange_post";
+    public static final String URL_MEMBER_COMMIT_YUE_DUIHUAN_BANGSHANGFEN = "mobile/index.php?act=member_points&op=deposit_exchange_post";
+
+    // 帮赏分兑换通用卷
+    public static final String URL_MEMBER_BANGSHANGFEN_DUIHUAN_TONGYONGJUAN = "mobile/index.php?act=member_points&op=exchange_general";
+
+    // 帮赏分兑换通用卷--提交
+    public static final String URL_MEMBER_COMMIT_BANGSHANGFEN_DUIHUAN_TONGYONGJUAN = "mobile/index.php?act=member_points&op=exchange_general_post";
+
+
+
 
 
 }

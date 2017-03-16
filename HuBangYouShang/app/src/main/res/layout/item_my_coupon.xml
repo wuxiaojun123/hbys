@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp"
+    android:layout_marginTop="8dp"
     android:divider="@drawable/shape_divider_line"
     android:orientation="horizontal"
     android:showDividers="end">
-
 
     <LinearLayout
         android:id="@+id/ll_left"
@@ -39,10 +39,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
         android:gravity="center_vertical"
-        >
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
 
         <TextView
             android:id="@+id/tv_store_name"
@@ -57,8 +56,8 @@
             android:id="@+id/tv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:text="2016.10.01-2016.11.01"
             android:textColor="@color/color_bf"
@@ -71,8 +70,8 @@
             android:gravity="center_vertical"
             android:text="交易中"
             android:textColor="@color/color_fa"
-            android:visibility="gone"
-            android:textSize="@dimen/dimen_13" />
+            android:textSize="@dimen/dimen_13"
+            android:visibility="gone" />
 
     </LinearLayout>
 

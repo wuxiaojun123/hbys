@@ -142,6 +142,8 @@
     <string name="string_yue_duihuan_bangshangfen_title">余额兑换帮赏分</string>
     <!--帮赏分兑换通用卷-->
     <string name="string_bangshangfen_duihuan_tongyongjuan_title">帮赏分兑换通用卷</string>
+    <!--余额兑换通用卷-->
+    <string name="string_yue_duihuan_tongyongjuan_title">余额兑换通用卷</string>
     <!--充值余额-->
     <string name="string_chongzhi_yue_title">充值余额</string>
 
