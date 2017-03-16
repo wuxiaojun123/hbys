@@ -18,9 +18,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Pair;
+import android.view.MotionEvent;
 import android.widget.ListView;
 
-public class EaseConversationList extends ListView {
+public class EaseConversationList extends ListView{
     
     protected int primaryColor;
     protected int secondaryColor;
@@ -36,6 +37,8 @@ public class EaseConversationList extends ListView {
     protected EaseConversationAdapter adapter;
     protected List<EMConversation> conversations = new ArrayList<EMConversation>();
     protected List<EMConversation> passedListRef = null;
+
+    private EaseConversationAdapter.OnItemOperateListener onItemOperateListener;
     
     
     public EaseConversationList(Context context, AttributeSet attrs) {
@@ -72,7 +75,7 @@ public class EaseConversationList extends ListView {
         if(helper != null){
             this.conversationListHelper = helper;
         }
-        adapter = new EaseConversationAdapter(context, 0, conversationList);
+        adapter = new EaseConversationAdapter(context, 0, conversationList,onItemOperateListener);
         adapter.setCvsListHelper(conversationListHelper);
         adapter.setPrimaryColor(primaryColor);
         adapter.setPrimarySize(primarySize);
@@ -115,6 +118,13 @@ public class EaseConversationList extends ListView {
 
     private EaseConversationListHelper conversationListHelper;
 
+    public void setOnItemOperateListener(EaseConversationAdapter.OnItemOperateListener onItemOperateListener) {
+        this.onItemOperateListener = onItemOperateListener;
+        if (adapter != null) {
+            adapter.setOnItemOperateListener(onItemOperateListener);
+        }
+    }
+
     public interface EaseConversationListHelper{
         /**
          * set content of second line
@@ -125,5 +135,33 @@ public class EaseConversationList extends ListView {
     }
     public void setConversationListHelper(EaseConversationListHelper helper){
         conversationListHelper = helper;
+    }
+
+    // 滑动距离及坐标
+    private float xDistance, yDistance, xLast, yLast;
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        // TODO Auto-generated method stub
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                xDistance = yDistance = 0f;
+                xLast = ev.getX();
+                yLast = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                final float curX = ev.getX();
+                final float curY = ev.getY();
+
+                xDistance += Math.abs(curX - xLast);
+                yDistance += Math.abs(curY - yLast);
+                xLast = curX;
+                yLast = curY;
+
+                if(xDistance > yDistance){
+                    return false;
+                }
+        }
+
+        return super.onInterceptTouchEvent(ev);
     }
 }

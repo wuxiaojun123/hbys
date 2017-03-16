@@ -8,9 +8,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.help.reward.activity.MainActivity;
 import com.help.reward.chat.Constant;
+import com.help.reward.chat.db.InviteMessgeDao;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.easeui.adapter.EaseConversationAdapter;
+import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.util.NetUtils;
 import com.help.reward.R;
@@ -26,7 +30,7 @@ public class ConversationListFragment extends EaseConversationListFragment{
         errorItemContainer.addView(errorView);
         errorText = (TextView) errorView.findViewById(R.id.tv_connect_errormsg);
 
-        titleBar.setTitle("获益");
+        titleBar.setTitle("聊天");
         titleBar.setBackgroundColor(getResources().getColor(R.color.color_title_background));
         titleBar.setRightImageResource(R.mipmap.list);
         titleBar.getRightLayout().setOnClickListener(new View.OnClickListener() {
@@ -42,6 +46,57 @@ public class ConversationListFragment extends EaseConversationListFragment{
         super.setUpView();
         // register context menu
         registerForContextMenu(conversationListView);
+
+        conversationListView.setOnItemOperateListener(new EaseConversationAdapter.OnItemOperateListener() {
+            @Override
+            public void onItemClickListener(int position) {
+                EMConversation conversation = conversationListView.getItem(position);
+                String username = conversation.conversationId();
+                if (username.equals(EMClient.getInstance().getCurrentUser()))
+                    Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
+                else {
+                    // TODO start chat acitivity
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
+                    if(conversation.isGroup()){
+                        if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
+                            // it's group chat
+                            intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_CHATROOM);
+                        }else{
+                            intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
+                        }
+
+                    }
+                    // it's single chat
+                    intent.putExtra(Constant.EXTRA_USER_ID, username);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onItemDeleteListener(int position) {
+                EMConversation tobeDeleteCons = conversationListView.getItem(position);
+    	        if (tobeDeleteCons == null) {
+    	            return ;
+    	        }
+                if(tobeDeleteCons.getType() == EMConversation.EMConversationType.GroupChat){
+                    EaseAtMessageHelper.get().removeAtMeGroup(tobeDeleteCons.conversationId());
+                }
+                try {
+                    // delete conversation
+                    EMClient.getInstance().chatManager().deleteConversation(tobeDeleteCons.conversationId(), true);
+                    InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(getActivity());
+                    inviteMessgeDao.deleteMessage(tobeDeleteCons.conversationId());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                refresh();
+
+                // update unread count
+                ((MainActivity) getActivity()).updateUnreadLabel();
+                }
+        });
+
+
         conversationListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override

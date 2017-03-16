@@ -2,6 +2,7 @@ package com.hyphenate.easeui.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,9 @@ import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.hyphenate.easeui.widget.EaseConversationList;
 import com.hyphenate.easeui.widget.EaseConversationList.EaseConversationListHelper;
+import com.hyphenate.easeui.widget.SwipeMenuView;
 import com.hyphenate.util.DateUtils;
 
 import java.util.ArrayList;
@@ -50,12 +53,19 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
     protected int secondarySize;
     protected float timeSize;
 
+    private OnItemOperateListener mListener;
+
     public EaseConversationAdapter(Context context, int resource,
-                                   List<EMConversation> objects) {
+                                   List<EMConversation> objects,OnItemOperateListener listener) {
         super(context, resource, objects);
         conversationList = objects;
         copyConversationList = new ArrayList<EMConversation>();
         copyConversationList.addAll(objects);
+        mListener = listener;
+    }
+
+    public void setOnItemOperateListener(OnItemOperateListener onItemOperateListener) {
+        this.mListener = onItemOperateListener;
     }
 
     @Override
@@ -77,7 +87,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.ease_row_chat_history, parent, false);
         }
@@ -92,9 +102,11 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             holder.msgState = convertView.findViewById(R.id.msg_state);
             holder.list_itease_layout = (RelativeLayout) convertView.findViewById(R.id.list_itease_layout);
             holder.motioned = (TextView) convertView.findViewById(R.id.mentioned);
+            holder.mTvDelete = (TextView) convertView.findViewById(R.id.tv_delete);
             convertView.setTag(holder);
         }
-        holder.list_itease_layout.setBackgroundResource(R.drawable.ease_mm_listitem);
+        //holder.list_itease_layout.setBackgroundResource(R.drawable.ease_mm_listitem);
+        ((SwipeMenuView) convertView).setIos(false).setLeftSwipe(true);
 
         // get conversation
         EMConversation conversation = getItem(position);
@@ -161,6 +173,28 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             holder.message.setTextSize(TypedValue.COMPLEX_UNIT_PX, secondarySize);
         if(timeSize != 0)
             holder.time.setTextSize(TypedValue.COMPLEX_UNIT_PX, timeSize);
+
+
+        holder.list_itease_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("brian","点击");
+                if(mListener != null){
+                    mListener.onItemClickListener(position);
+                }
+            }
+        });
+
+
+        holder.mTvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("brian","del");
+                if(mListener != null){
+                    mListener.onItemDeleteListener(position);
+                }
+            }
+        });
 
         return convertView;
     }
@@ -305,6 +339,13 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         /** layout */
         RelativeLayout list_itease_layout;
         TextView motioned;
+
+        TextView mTvDelete;
+    }
+
+    public interface  OnItemOperateListener{
+        void onItemClickListener(int position);
+        void onItemDeleteListener(int position);
     }
 }
 
