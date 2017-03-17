@@ -96,6 +96,8 @@
         android:layout_height="match_parent"
         android:scrollbarStyle="@null"
         android:scrollbars="none"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         >
 
         <TextView

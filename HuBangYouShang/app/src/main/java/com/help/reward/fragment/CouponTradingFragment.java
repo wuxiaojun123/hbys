@@ -10,10 +10,9 @@ import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.adapter.CouponTradingAdapter;
 import com.help.reward.adapter.MyAccountHelpRewardAdapter;
-import com.help.reward.adapter.MyBalanceAdapter;
 import com.help.reward.bean.Response.HelpRewardResponse;
-import com.help.reward.bean.Response.MyBalanceResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
@@ -25,11 +24,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * 余额明细-全部、支出、支入
+ * 优惠劵交易大厅--从高到低--从低到高
  * Created by wuxiaojun on 2017/1/15.
  */
 
-public class MyBalanceFragment extends BaseFragment {
+public class CouponTradingFragment extends BaseFragment {
 
     private int numSize = 15;
     private int currentPage = 1;
@@ -37,7 +36,7 @@ public class MyBalanceFragment extends BaseFragment {
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
-    private MyBalanceAdapter mCollectionGoodsAdapter;
+    private CouponTradingAdapter mCollectionGoodsAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +60,7 @@ public class MyBalanceFragment extends BaseFragment {
 
     private void initRecycler() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
-        mCollectionGoodsAdapter = new MyBalanceAdapter(mContext);
+        mCollectionGoodsAdapter = new CouponTradingAdapter(mContext);
         LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mCollectionGoodsAdapter);
         lRecyclerview.setAdapter(adapter);
         initRefreshListener();
@@ -86,15 +85,15 @@ public class MyBalanceFragment extends BaseFragment {
     }
 
     /***
-     * ?act=member_fund&op=predepositlog
+     * ?act=member_points&op=member_points_detail
      */
     private void initNetwork() {
         PersonalNetwork
                 .getResponseApi()
-                .getMyBalanceResponse("member_fund","predepositlog",""+currentPage,App.APP_CLIENT_KEY,requestType)
+                .getMyHelpRewardResponse("member_points","member_points_detail",""+currentPage,App.APP_CLIENT_KEY,requestType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<MyBalanceResponse>() {
+                .subscribe(new BaseSubscriber<HelpRewardResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
@@ -103,12 +102,12 @@ public class MyBalanceFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onNext(MyBalanceResponse response) {
+                    public void onNext(HelpRewardResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
                                 mCollectionGoodsAdapter.addAll(response.data.list);
-                                RxBus.getDefault().post(new MyAccountHelpRewardRxbusType(response.data.total_num));
+                                RxBus.getDefault().post(new MyAccountHelpRewardRxbusType(response.data.points));
                             }
                             if (currentPage == 1) {
                                 lRecyclerview.setPullRefreshEnabled(false);

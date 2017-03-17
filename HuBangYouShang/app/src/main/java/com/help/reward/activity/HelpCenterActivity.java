@@ -2,17 +2,31 @@ package com.help.reward.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
+import com.base.recyclerview.LRecyclerViewAdapter;
+import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.adapter.HelpCenterAdapter;
+import com.help.reward.adapter.MyCollectionStoreAdapter;
+import com.help.reward.bean.Response.HelpCenterResponse;
+import com.help.reward.bean.Response.MyCollectionStoreResponse;
+import com.help.reward.network.PersonalNetwork;
+import com.help.reward.network.api.PersonalApi;
+import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.idotools.utils.LogUtils;
+import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  *
@@ -31,7 +45,11 @@ public class HelpCenterActivity extends BaseActivity implements View.OnClickList
     TextView tv_title_right;
 
     @BindView(R.id.id_recycler_view)
-    LRecyclerView recyclerView;
+    LRecyclerView lRecyclerview;
+
+    private int numSize = 15;
+
+    private HelpCenterAdapter myCollectionStoreAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,14 +60,46 @@ public class HelpCenterActivity extends BaseActivity implements View.OnClickList
         initNetwork();
     }
 
-    private void initNetwork() {
-
-    }
-
     private void initView() {
         tv_title.setText(R.string.string_help_center_title);
         tv_title_right.setVisibility(View.GONE);
+
+        lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+        myCollectionStoreAdapter = new HelpCenterAdapter(mContext);
+        LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(myCollectionStoreAdapter);
+        lRecyclerview.setAdapter(adapter);
     }
+
+    private void initNetwork() {
+        PersonalNetwork
+                .getResponseApi()
+                .getHelpCenterResponse(App.APP_CLIENT_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<HelpCenterResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        lRecyclerview.refreshComplete(numSize);
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(HelpCenterResponse response) {
+                        lRecyclerview.refreshComplete(numSize);
+                        if (response.code == 200) {
+                            LogUtils.e("获取数据成功。。。" + response.data.article_list.size());
+                            if (response.data != null) {
+                                myCollectionStoreAdapter.addAll(response.data.article_list);
+                            }
+                            lRecyclerview.setPullRefreshEnabled(false);
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
 
     @OnClick({R.id.iv_title_back})
     @Override
