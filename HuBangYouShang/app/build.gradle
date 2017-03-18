@@ -68,4 +68,5 @@ dependencies {
     //广告位banner
     compile 'com.bigkoo:convenientbanner:2.0.5'
     compile project(':library_chat')
+	compile project(':pickerview')
 }

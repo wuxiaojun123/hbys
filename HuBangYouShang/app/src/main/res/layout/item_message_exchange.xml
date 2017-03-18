@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.help.reward.view.SlidingButtonView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginBottom="10dp"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/layout_content"
+            android:background="#ff0000"
+            android:gravity="center"
+            android:text="删 除"
+            android:textColor="#DDFFFFFF" />
+
+        <RelativeLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_while">
+
+            <View
+                android:id="@+id/topLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_spiline" />
+
+            <RelativeLayout
+                android:id="@+id/title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:layout_below="@+id/topLine"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/style_text_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tv_order"
+                    style="@style/style_text_content"
+                    android:layout_width="match_parent"
+                    android:layout_toLeftOf="@+id/tv_time"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/middleLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/title_layout"
+                android:layout_marginLeft="10dp"
+                android:background="@color/color_spiline" />
+
+            <View
+                android:id="@+id/bottomLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_spiline" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottomLine"
+                android:layout_below="@+id/middleLine"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    style="@style/style_text_lable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/iv_icon"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/iv_icon"
+                    android:ellipsize="end"
+                    android:maxLines="2" />
+
+                <TextView
+                    android:id="@+id/tv_body"
+                    style="@style/style_text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/iv_icon"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="@dimen/content_margin"
+                    android:layout_toRightOf="@+id/iv_icon"
+                    android:maxLines="1" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</com.help.reward.view.SlidingButtonView>

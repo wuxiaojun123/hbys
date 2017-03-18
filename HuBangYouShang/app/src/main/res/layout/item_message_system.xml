@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.help.reward.view.SlidingButtonView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="1dp"
+    android:background="@color/color_spiline">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ff0000">
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/layout_content"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:text="删 除"
+            android:textColor="#DDFFFFFF" />
+
+        <RelativeLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_while"
+            android:padding="@dimen/layout_margin">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/style_text_lable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv_title"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="@style/style_text_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tv_body"
+                    style="@style/style_text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/tv_time"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</com.help.reward.view.SlidingButtonView>

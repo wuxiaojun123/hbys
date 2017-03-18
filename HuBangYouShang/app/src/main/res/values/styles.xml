@@ -200,6 +200,7 @@
         <item name="android:textColor">@color/color_6b</item>
         <item name="android:textSize">@dimen/dimen_12</item>
     </style>
+
     <style name="style_my_function_linear_layout">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
@@ -207,12 +208,14 @@
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="style_my_function_quantity">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/color_6b</item>
         <item name="android:textSize">@dimen/dimen_16</item>
     </style>
+
     <style name="style_my_function_quantity_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -220,6 +223,7 @@
         <item name="android:textSize">@dimen/dimen_12</item>
         <item name="android:layout_marginTop">6dp</item>
     </style>
+
     <style name="style_my_function_text_item">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">44dp</item>
@@ -247,7 +251,7 @@
     </style>-->
 
     <!-- 充值余额  充值金额10,20,30-->
-    <style name="style_prepaid_balance_tv" >
+    <style name="style_prepaid_balance_tv">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textColor">@color/color_3a</item>
@@ -302,7 +306,7 @@
         <item name="android:textColor">#d17171</item>
     </style>
     <!-- 订单详情 -->
-    <style name="style_order_details_bottom_tv" >
+    <style name="style_order_details_bottom_tv">
         <item name="android:layout_width">75dp</item>
         <item name="android:layout_height">35dp</item>
         <item name="android:textColor">@color/color_3a</item>
@@ -326,6 +330,7 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_marginBottom">5dp</item>
     </style>
+
     <style name="style_shop_hot_text_title">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -335,6 +340,7 @@
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingTop">5dp</item>
     </style>
+
     <style name="style_shop_hot_text_title_info">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -368,4 +374,9 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <!--标签类文字样式-->
+    <style name="style_text_edit">
+        <item name="android:textSize">@dimen/dimen_14</item>
+        <item name="android:textColor">@color/color_8c</item>
+    </style>
 </resources>

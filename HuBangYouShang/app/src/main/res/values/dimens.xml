@@ -34,5 +34,5 @@
     <dimen name="hight_arrow">19dp</dimen>
     <dimen name="width_arrow">8dp</dimen>
 
-
+    <dimen name="default_divider_height">1dp</dimen>
 </resources>

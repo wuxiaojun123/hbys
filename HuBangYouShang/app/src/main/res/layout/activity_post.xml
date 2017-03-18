@@ -4,15 +4,15 @@
     android:layout_height="match_parent"
     android:background="@color/color_allbg"
     android:orientation="vertical">
-    <include layout="@layout/layout_title"/>
-    <android.support.v7.widget.RecyclerView
+
+    <include layout="@layout/layout_title" />
+
+    <com.base.recyclerview.LRecyclerView
         android:id="@+id/rv_post"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/layout_margin"
-        android:background="@color/color_while"
-        android:scrollbars="none"
         android:orientation="vertical"
         android:overScrollMode="never"
-        />
+        android:scrollbars="none" />
 </LinearLayout>
