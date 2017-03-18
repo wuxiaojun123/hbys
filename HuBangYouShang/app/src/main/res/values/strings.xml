@@ -86,8 +86,10 @@
     <string name="release_hint3">请选择帖子所属种类</string>
     <string name="release_hint4">请选择帖子有效时间</string>
     <string name="release_hint5">请设置悬赏分，至少10分</string>
-    <string name="release_hint6">请填写可以帮助别人的资源信息，400字以内</string>
+    <string name="release_hint6">请输入帖子内容，400字以内</string>
     <string name="release_hint7">还可上传（）张</string>
+    <string name="release_hint8">请填写可以帮助别人的资源信息，400字以内</string>
+    <string name="release_hint9">帮助后得到1分，可向跟帖人索要更多</string>
 
     <!--我的求助-->
     <string name="string_my_help_title">我的求助</string>
