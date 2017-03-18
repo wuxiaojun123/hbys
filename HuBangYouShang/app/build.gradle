@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.antfortune.freeline'
+//apply plugin: 'com.antfortune.freeline'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -28,9 +28,9 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-    freeline {
-        hack true
-    }
+//    freeline {
+//        hack true
+//    }
 
     dexOptions{
         preDexLibraries = false
@@ -62,9 +62,9 @@ dependencies {
     //    compile project(':library_pagerSlidingTabStrip')
     // recyclerview
     //    compile project(':library_recycler')
-    debugCompile 'com.antfortune.freeline:runtime:0.8.4'
-    releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
-    testCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
+//    debugCompile 'com.antfortune.freeline:runtime:0.8.4'
+//    releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
+//    testCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
     //广告位banner
     compile 'com.bigkoo:convenientbanner:2.0.5'
     compile project(':library_chat')

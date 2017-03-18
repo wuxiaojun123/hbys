@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
 
-import com.antfortune.freeline.FreelineCore;
 import com.help.reward.chat.DemoHelper;
 
 import java.util.Iterator;
@@ -28,7 +27,7 @@ public class App extends Application {
     public void onCreate() {
         MultiDex.install(this);
         super.onCreate();
-        FreelineCore.init(this);
+//        FreelineCore.init(this);
         mApp = this;
         
         int pid = android.os.Process.myPid();
