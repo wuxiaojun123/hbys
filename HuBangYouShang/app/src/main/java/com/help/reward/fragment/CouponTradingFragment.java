@@ -12,7 +12,9 @@ import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.adapter.CouponTradingAdapter;
 import com.help.reward.adapter.MyAccountHelpRewardAdapter;
+import com.help.reward.bean.Response.CouponTradingResponse;
 import com.help.reward.bean.Response.HelpRewardResponse;
+import com.help.reward.bean.Response.MyCouponResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
@@ -32,7 +34,8 @@ public class CouponTradingFragment extends BaseFragment {
 
     private int numSize = 15;
     private int currentPage = 1;
-    private String requestType = "0";
+    private String order = "asc";
+    private String storeName = "0";
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -42,8 +45,8 @@ public class CouponTradingFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if(bundle != null){
-            requestType = bundle.getString("type");
+        if (bundle != null) {
+            order = bundle.getString("order");
         }
     }
 
@@ -85,15 +88,15 @@ public class CouponTradingFragment extends BaseFragment {
     }
 
     /***
-     * ?act=member_points&op=member_points_detail
+     * mobile/index.php?act=voucher&op=voucher_list
      */
     private void initNetwork() {
         PersonalNetwork
                 .getResponseApi()
-                .getMyHelpRewardResponse("member_points","member_points_detail",""+currentPage,App.APP_CLIENT_KEY,requestType)
+                .getCouponTradingResponse("voucher", "voucher_list", "" + currentPage, App.APP_CLIENT_KEY, storeName, order)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<HelpRewardResponse>() {
+                .subscribe(new BaseSubscriber<CouponTradingResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
@@ -102,16 +105,13 @@ public class CouponTradingFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onNext(HelpRewardResponse response) {
+                    public void onNext(CouponTradingResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                mCollectionGoodsAdapter.addAll(response.data.list);
-                                RxBus.getDefault().post(new MyAccountHelpRewardRxbusType(response.data.points));
+                                mCollectionGoodsAdapter.addAll(response.data.voucher_list);
                             }
-                            if (currentPage == 1) {
-                                lRecyclerview.setPullRefreshEnabled(false);
-                            }
+                            lRecyclerview.setPullRefreshEnabled(false);
                             if (!response.hasmore) { // 是否有更多数据
                                 lRecyclerview.setLoadMoreEnabled(false);
                             } else {

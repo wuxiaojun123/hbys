@@ -52,7 +52,15 @@ public class CouponTradingActivity extends BaseActivity implements View.OnClickL
     private void initData() {
         fragmentList = new ArrayList<>(2);
         CouponTradingFragment fragment1 = new CouponTradingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("order","asc");
+        fragment1.setArguments(bundle);
+
         CouponTradingFragment fragment2 = new CouponTradingFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("order","desc");
+        fragment2.setArguments(bundle2);
+
         fragmentList.add(fragment1);
         fragmentList.add(fragment2);
         viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));

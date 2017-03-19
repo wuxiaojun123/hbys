@@ -4,6 +4,7 @@ import com.help.reward.bean.Response.AdvertisementResponse;
 import com.help.reward.bean.Response.BalanceExchangeResponse;
 import com.help.reward.bean.Response.BalanceExchangeVolumeResponse;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.CouponTradingResponse;
 import com.help.reward.bean.Response.DiscountAmountResponse;
 import com.help.reward.bean.Response.GeneralExchangeVolumeResponse;
 import com.help.reward.bean.Response.GeneralVolumeResponse;
@@ -155,6 +156,18 @@ public interface PersonalApi {
             @Field("key") String key
     );
 
+
+    // 我的账户--优惠劵交易  mobile/index.php?act=voucher&op=voucher_list
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=voucher&op=voucher_list")
+    Observable<CouponTradingResponse> getCouponTradingResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("key") String key,
+            @Field("storename") String storename,
+            @Field("order") String order
+    );
 
     // 余额兑换帮赏分
     @FormUrlEncoded
