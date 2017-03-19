@@ -291,17 +291,14 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     public boolean onMessageBubbleClick(EMMessage message) {
         //消息框点击事件，demo这里不做覆盖，如需覆盖，return true
         //red packet code : 拆红包页面
-//        if (message.getBooleanAttribute(RPConstant.MESSAGE_ATTR_IS_RED_PACKET_MESSAGE, false)){
-//            if (RedPacketUtil.isRandomRedPacket(message)){
-//                RedPacketUtil.openRandomPacket(getActivity(),message);
-//            } else {
-//                RedPacketUtil.openRedPacket(getActivity(), chatType, message, toChatUsername, messageList);
-//            }
-//            return true;
-//        } else if (message.getBooleanAttribute(RPConstant.MESSAGE_ATTR_IS_TRANSFER_PACKET_MESSAGE, false)) {
-//            RedPacketUtil.openTransferPacket(getActivity(), message);
-//            return true;
-//        }
+        if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_COUPON, false)){
+            //TODO 获取优惠券
+
+            return true;
+        } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_POINTS, false)) {
+            //TODO 获取积分
+            return true;
+        }
         //end of red packet code
         return false;
     }
