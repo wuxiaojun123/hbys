@@ -4,8 +4,10 @@ import com.help.reward.bean.Response.AdvertisementResponse;
 import com.help.reward.bean.Response.BalanceExchangeResponse;
 import com.help.reward.bean.Response.BalanceExchangeVolumeResponse;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.DiscountAmountResponse;
 import com.help.reward.bean.Response.GeneralExchangeVolumeResponse;
 import com.help.reward.bean.Response.GeneralVolumeResponse;
+import com.help.reward.bean.Response.HelpCenterResponse;
 import com.help.reward.bean.Response.HelpRewardResponse;
 import com.help.reward.bean.Response.MyBalanceResponse;
 import com.help.reward.bean.Response.MyCollectionGoodsResponse;
@@ -109,7 +111,8 @@ public interface PersonalApi {
             @Query("act") String act,
             @Query("op") String op,
             @Query("curpage") String curpage,
-            @Field("key") String key
+            @Field("key") String key,
+            @Field("type") String type
     );
 
     // 我的账户--帮赏分明细
@@ -143,6 +146,13 @@ public interface PersonalApi {
             @Query("curpage") String curpage,
             @Field("key") String key,
             @Field("voucher_state") String voucher_state
+    );
+
+    // 我的账户--优惠金额  mobile/index.php?act=member_voucher&op=voucher_list
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_index&op=discount_level")
+    Observable<DiscountAmountResponse> getDiscountAmountResponse(
+            @Field("key") String key
     );
 
 
@@ -192,6 +202,20 @@ public interface PersonalApi {
             @Field("exchange") String exchange
     );
 
+    // 帮助中心
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=article&op=help_center")
+    Observable<HelpCenterResponse> getHelpCenterResponse(
+            @Field("key") String key
+    );
 
+    // 意见反馈
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=consult&op=feedback")
+    Observable<BaseResponse<String>> getFeedbackResponse(
+            @Field("key") String key,
+            @Field("content") String content,
+            @Field("mobile") String mobile
+    );
 
 }

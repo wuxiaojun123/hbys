@@ -55,7 +55,15 @@ public class Constant {
     public static final String URL_MEMBER_COMMIT_BANGSHANGFEN_DUIHUAN_TONGYONGJUAN = "mobile/index.php?act=member_points&op=exchange_general_post";
 
 
+    public static final String URL_MESSAGE = "mobile/index.php?act=member_message";
 
+    public static final String URL_HELP = "mobile/index.php?act=index";
+
+    public static final String URL_AREA = "mobile/index.php?act=area&op=post_area_list";
+    public static final String URL_SUBREWARD = "mobile/index.php?act=get_reward&op=release";
+    //发布求助帖
+    public static final String URL_SUBSEEKHELP = "mobile/index.php?act=seek_help&op=release_post";
+    public static final String URL_UPLOADIMAGE = "mobile/index.php?act=upload_file&op=upload_img";
 
 
 }

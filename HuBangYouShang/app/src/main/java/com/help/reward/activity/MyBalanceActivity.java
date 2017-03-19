@@ -71,6 +71,7 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
         fragmentPay.setArguments(bundle);
 
         MyBalanceFragment fragmentInCome = new MyBalanceFragment();
+        // 收入
         Bundle bundle2 = new Bundle();
         bundle2.putString("type","1");
         fragmentInCome.setArguments(bundle2);

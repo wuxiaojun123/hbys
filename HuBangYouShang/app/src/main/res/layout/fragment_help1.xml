@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/color_allbg"
     android:orientation="vertical">
-    <ListView
+    <com.base.recyclerview.LRecyclerView
         android:id="@+id/lv_fragment_help1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_msgcenter_item"
-        android:scrollbars="none"
-        android:layout_marginTop="@dimen/layout_margin"/>
+        android:layout_marginTop="@dimen/layout_margin"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.help.reward.fragment;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -53,7 +54,8 @@ public class HelpFragment extends BaseFragment {
             contentView = inflater.inflate(R.layout.fragment_help, null);
         }
         ButterKnife.bind(this, contentView);
-        vpHelp.setAdapter(new MyPagerAdapter(getActivity().getSupportFragmentManager()));
+        vpHelp.setOffscreenPageLimit(3);
+        vpHelp.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
         pstbHelp.setViewPager(vpHelp);
         return contentView;
     }
@@ -80,6 +82,9 @@ public class HelpFragment extends BaseFragment {
         }
     }
 
+    HelpSeekFragment helpSeekFragment;
+    HelpRewardsFragment helpRewardsFragment;
+    HelpVoteFragment helpVoteFragment;
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
         private String[] TITLES = new String[3];
@@ -100,17 +105,32 @@ public class HelpFragment extends BaseFragment {
         public Fragment getItem(int position) {
             // 下面两个fragment是个人中心里的
             if (position == 0) {
-                return new HelpSeekFragment();
+                if (helpSeekFragment == null) {
+                    helpSeekFragment = new HelpSeekFragment();
+                }
+                return helpSeekFragment;
             } else if (position == 1) {
-                return new HelpRewardsFragment();
+                if (helpRewardsFragment == null) {
+                    helpRewardsFragment = new HelpRewardsFragment();
+                }
+                return helpRewardsFragment;
             } else {
-                return new HelpVoteFragment();
+                if(helpVoteFragment==null){
+                    helpVoteFragment = new HelpVoteFragment();
+                }
+                return helpVoteFragment;
             }
         }
 
         @Override
         public int getCount() {
             return TITLES.length;
+        }
+
+        @Override
+        public void unregisterDataSetObserver(DataSetObserver observer) {
+            if (observer != null)
+                super.unregisterDataSetObserver(observer);
         }
     }
 }

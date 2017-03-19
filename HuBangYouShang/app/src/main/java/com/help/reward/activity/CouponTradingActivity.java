@@ -11,6 +11,7 @@ import android.view.View;
 import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
 import com.help.reward.fragment.BaseFragment;
+import com.help.reward.fragment.CouponTradingFragment;
 import com.help.reward.fragment.MyAccountHelpRewardFragment;
 
 import java.util.ArrayList;
@@ -36,7 +37,6 @@ public class CouponTradingActivity extends BaseActivity implements View.OnClickL
     PagerSlidingTabStrip tabStrip;
 
 
-    private MyFragmentPageAdapter mAdapter;
     private List<BaseFragment> fragmentList;
 
     @Override
@@ -50,9 +50,11 @@ public class CouponTradingActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initData() {
-        fragmentList = new ArrayList<>(3);
-        fragmentList.add(new MyAccountHelpRewardFragment());
-        fragmentList.add(new MyAccountHelpRewardFragment());
+        fragmentList = new ArrayList<>(2);
+        CouponTradingFragment fragment1 = new CouponTradingFragment();
+        CouponTradingFragment fragment2 = new CouponTradingFragment();
+        fragmentList.add(fragment1);
+        fragmentList.add(fragment2);
         viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
     }
@@ -65,10 +67,7 @@ public class CouponTradingActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.tv_exchange:
-                //兑换通用卷
 
-                break;
 
         }
 

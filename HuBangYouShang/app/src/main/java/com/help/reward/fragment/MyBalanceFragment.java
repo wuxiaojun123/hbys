@@ -91,7 +91,7 @@ public class MyBalanceFragment extends BaseFragment {
     private void initNetwork() {
         PersonalNetwork
                 .getResponseApi()
-                .getMyBalanceResponse("member_fund","predepositlog",""+currentPage,App.APP_CLIENT_KEY)
+                .getMyBalanceResponse("member_fund","predepositlog",""+currentPage,App.APP_CLIENT_KEY,requestType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyBalanceResponse>() {

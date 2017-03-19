@@ -113,7 +113,7 @@
 
             <TextView
                 style="@style/style_my_account_text_balance"
-                android:text="22.5" />
+                android:text="0" />
 
             <TextView
                 style="@style/style_my_account_text_title"
@@ -125,7 +125,7 @@
 
             <TextView
                 style="@style/style_my_account_text_balance"
-                android:text="300" />
+                android:text="0" />
 
             <TextView
                 style="@style/style_my_account_text_title"
@@ -139,7 +139,7 @@
 
             <TextView
                 style="@style/style_my_account_text_balance"
-                android:text="0.5" />
+                android:text="0" />
 
             <TextView
                 style="@style/style_my_account_text_title"
@@ -151,7 +151,7 @@
 
             <TextView
                 style="@style/style_my_account_text_balance"
-                android:text="1" />
+                android:text="0" />
 
             <TextView
                 style="@style/style_my_account_text_title"

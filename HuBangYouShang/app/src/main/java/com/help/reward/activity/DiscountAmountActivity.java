@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.Response.BalanceExchangeResponse;
+import com.help.reward.bean.Response.DiscountAmountResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
@@ -43,7 +44,7 @@ public class DiscountAmountActivity extends BaseActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount_amount);
         ButterKnife.bind(this);
-
+        initNetwork();
     }
 
     private Subscription subscribe;
@@ -51,10 +52,10 @@ public class DiscountAmountActivity extends BaseActivity implements View.OnClick
     private void initNetwork() {
         subscribe = PersonalNetwork
                 .getResponseApi()
-                .getBalanceExchangeResponse(App.APP_CLIENT_KEY)
+                .getDiscountAmountResponse(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BalanceExchangeResponse>() {
+                .subscribe(new BaseSubscriber<DiscountAmountResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
@@ -62,12 +63,12 @@ public class DiscountAmountActivity extends BaseActivity implements View.OnClick
                     }
 
                     @Override
-                    public void onNext(BalanceExchangeResponse response) {
+                    public void onNext(DiscountAmountResponse response) {
                         if (response.code == 200) {
                             if (response.data != null) {
-                                /*tv_discount_percentage.setText();
-                                tv_discount_level.setText();
-                                tv_content.setText();*/
+                                tv_discount_percentage.setText(response.data.discount_level+"%");
+                                tv_discount_level.setText(response.data.discount_level);
+                                tv_content.setText(response.data.rule);
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
