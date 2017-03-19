@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.help.reward.chat.ui.GroupActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.EMMessageListener;
@@ -33,7 +34,6 @@ import com.help.reward.chat.db.InviteMessgeDao;
 import com.help.reward.chat.runtimepermissions.PermissionsManager;
 import com.help.reward.chat.ui.ChatActivity;
 import com.help.reward.chat.ui.ConversationListFragment;
-import com.help.reward.chat.ui.GroupsActivity;
 import com.help.reward.fragment.ConsumptionFragment;
 import com.help.reward.fragment.HelpFragment;
 import com.help.reward.fragment.IntegrationFragment;
@@ -305,8 +305,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 //                }
                 String action = intent.getAction();
                 if(action.equals(Constant.ACTION_GROUP_CHANAGED)){
-                    if (EaseCommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
-                        GroupsActivity.instance.onResume();
+                    if (EaseCommonUtils.getTopActivity(MainActivity.this).equals(GroupActivity.class.getName())) {
+                        GroupActivity.instance.onResume();
                     }
                 }
                 //red packet code : 处理红包回执透传消息

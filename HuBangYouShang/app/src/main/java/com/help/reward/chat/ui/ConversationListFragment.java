@@ -1,10 +1,22 @@
 package com.help.reward.chat.ui;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +34,13 @@ import com.help.reward.R;
 public class ConversationListFragment extends EaseConversationListFragment{
 
     private TextView errorText;
+    private Dialog dialog;
+
 
     @Override
     protected void initView() {
         super.initView();
-        View errorView = (LinearLayout) View.inflate(getActivity(),R.layout.em_chat_neterror_item, null);
+        View errorView = (LinearLayout) View.inflate(getActivity(), R.layout.em_chat_neterror_item, null);
         errorItemContainer.addView(errorView);
         errorText = (TextView) errorView.findViewById(R.id.tv_connect_errormsg);
 
@@ -36,11 +50,17 @@ public class ConversationListFragment extends EaseConversationListFragment{
         titleBar.getRightLayout().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),GroupsActivity.class));
+                startActivity(new Intent(getActivity(), GroupActivity.class));
+            }
+        });
+
+        mRlSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),GroupActivity.class).putExtra(GroupActivity.TAG,true));
             }
         });
     }
-    
     @Override
     protected void setUpView() {
         super.setUpView();
@@ -203,5 +223,4 @@ public class ConversationListFragment extends EaseConversationListFragment{
 //        ((MainActivity) getActivity()).updateUnreadLabel();
 //        return true;
 //    }
-
 }

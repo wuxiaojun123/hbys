@@ -19,6 +19,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
@@ -46,7 +47,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     protected List<EMConversation> conversationList = new ArrayList<EMConversation>();
     protected EaseConversationList conversationListView;
     protected FrameLayout errorItemContainer;
-
+    protected RelativeLayout mRlSearch;
     protected boolean isConflict;
     
     protected EMConversationListener convListener = new EMConversationListener(){
@@ -77,6 +78,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         //query = (EditText) getView().findViewById(R.id.query);
         // button to clear content in search bar
         //clearSearch = (ImageButton) getView().findViewById(R.id.search_clear);
+        mRlSearch = (RelativeLayout) getView().findViewById(R.id.rl_search);
         errorItemContainer = (FrameLayout) getView().findViewById(R.id.fl_error_item);
     }
     

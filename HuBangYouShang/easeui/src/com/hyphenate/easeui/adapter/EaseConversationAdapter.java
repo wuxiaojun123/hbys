@@ -56,12 +56,11 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
     private OnItemOperateListener mListener;
 
     public EaseConversationAdapter(Context context, int resource,
-                                   List<EMConversation> objects,OnItemOperateListener listener) {
+                                   List<EMConversation> objects) {
         super(context, resource, objects);
         conversationList = objects;
         copyConversationList = new ArrayList<EMConversation>();
         copyConversationList.addAll(objects);
-        mListener = listener;
     }
 
     public void setOnItemOperateListener(OnItemOperateListener onItemOperateListener) {
