@@ -19,6 +19,10 @@ import android.widget.BaseAdapter;
 import android.widget.Toast;
 
 
+import com.coupon.CouponPointsConstant;
+import com.coupon.CouponPointsUtils;
+import com.coupon.widget.ChatRowCoupon;
+import com.coupon.widget.ChatRowPoints;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMGroup;
@@ -68,28 +72,13 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     private static final int MESSAGE_TYPE_SENT_VIDEO_CALL = 3;
     private static final int MESSAGE_TYPE_RECV_VIDEO_CALL = 4;
 
-    //red packet code : 红包功能使用的常量
-    private static final int MESSAGE_TYPE_RECV_RED_PACKET = 5;
-    private static final int MESSAGE_TYPE_SEND_RED_PACKET = 6;
-    private static final int MESSAGE_TYPE_SEND_RED_PACKET_ACK = 7;
-    private static final int MESSAGE_TYPE_RECV_RED_PACKET_ACK = 8;
-    private static final int MESSAGE_TYPE_RECV_TRANSFER_PACKET = 9;
-    private static final int MESSAGE_TYPE_SEND_TRANSFER_PACKET = 10;
-    private static final int MESSAGE_TYPE_RECV_RANDOM = 11;
-    private static final int MESSAGE_TYPE_SEND_RANDOM = 12;
-    private static final int REQUEST_CODE_SEND_RED_PACKET = 16;
-    private static final int ITEM_RED_PACKET = 16;
-    private static final int REQUEST_CODE_SEND_TRANSFER_PACKET = 17;
-    private static final int ITEM_TRANSFER_PACKET = 17;
-    //end of red packet code
-
     //悬赏分
-    private static final int MESSAGE_TYPE_SENT_REWARD_POINTS = 20;
-    private static final int MESSAGE_TYPE_RECV_REWARD_POINTS = 21;
+    private static final int MESSAGE_TYPE_SENT_REWARD_POINTS = 5;
+    private static final int MESSAGE_TYPE_RECV_REWARD_POINTS = 6;
 
     //优惠券
-    private static final int MESSAGE_TYPE_SENT_COUPON = 20;
-    private static final int MESSAGE_TYPE_RECV_COUPON = 21;
+    private static final int MESSAGE_TYPE_SENT_COUPON = 7;
+    private static final int MESSAGE_TYPE_RECV_COUPON = 8;
 
     /**
      * if it is chatBot 
@@ -302,17 +291,14 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     public boolean onMessageBubbleClick(EMMessage message) {
         //消息框点击事件，demo这里不做覆盖，如需覆盖，return true
         //red packet code : 拆红包页面
-//        if (message.getBooleanAttribute(RPConstant.MESSAGE_ATTR_IS_RED_PACKET_MESSAGE, false)){
-//            if (RedPacketUtil.isRandomRedPacket(message)){
-//                RedPacketUtil.openRandomPacket(getActivity(),message);
-//            } else {
-//                RedPacketUtil.openRedPacket(getActivity(), chatType, message, toChatUsername, messageList);
-//            }
-//            return true;
-//        } else if (message.getBooleanAttribute(RPConstant.MESSAGE_ATTR_IS_TRANSFER_PACKET_MESSAGE, false)) {
-//            RedPacketUtil.openTransferPacket(getActivity(), message);
-//            return true;
-//        }
+        if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_COUPON, false)){
+            //TODO 获取优惠券
+
+            return true;
+        } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_POINTS, false)) {
+            //TODO 获取积分
+            return true;
+        }
         //end of red packet code
         return false;
     }
@@ -345,6 +331,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         case ITEM_VIDEO:
  //           Intent intent = new Intent(getActivity(), ImageGridActivity.class);
  //           startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
+            Intent intent = new Intent();
+            intent.putExtra(CouponPointsConstant.EXTRA_GREETING,"满500减20");
+            sendMessage(CouponPointsUtils.createCouponMessage(getActivity(), intent, toChatUsername));
             break;
         case ITEM_FILE: //file
             selectFileFromLocal();
@@ -355,6 +344,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         case ITEM_VIDEO_CALL:
             startVideoCall();
             break;
+
         //red packet code : 进入发红包页面
 //        case ITEM_RED_PACKET:
 //            if (chatType == Constant.CHATTYPE_SINGLE) {
@@ -438,19 +428,27 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         public int getCustomChatRowTypeCount() {
             //here the number is the message type in EMMessage::Type
         	//which is used to count the number of different chat row
-            return 12;
+            return 8;
         }
 
         @Override
         public int getCustomChatRowType(EMMessage message) {
-            if(message.getType() == EMMessage.Type.TXT){
+            if(message.getType() == EMMessage.Type.TXT) {
                 //voice call
-                if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false)){
+                if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false)) {
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE_CALL : MESSAGE_TYPE_SENT_VOICE_CALL;
-                }else if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false)){
+                } else if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false)) {
                     //video call
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL : MESSAGE_TYPE_SENT_VIDEO_CALL;
+                } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_COUPON, false)) {
+                    //优惠券
+                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_COUPON : MESSAGE_TYPE_SENT_COUPON;
+                } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_POINTS, false)) {
+                    //积分
+                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_REWARD_POINTS : MESSAGE_TYPE_SENT_REWARD_POINTS;
                 }
+
+
 //                //red packet code : 红包消息、红包回执消息以及转账消息的chatrow type
 //                else if (RedPacketUtil.isRandomRedPacket(message)) {
 //                    //小额随机红包
@@ -477,6 +475,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false) ||
                     message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false)){
                     return new ChatRowVoiceCall(getActivity(), message, position, adapter);
+                } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_COUPON,false)) {
+                    return new ChatRowCoupon(getActivity(), message, position, adapter);
+                } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_POINTS,false)) {
+                    return new ChatRowPoints(getActivity(), message, position, adapter);
                 }
                 //red packet code : 红包消息、红包回执消息以及转账消息的chat row
 //                else if (RedPacketUtil.isRandomRedPacket(message)) {//小额随机红包
