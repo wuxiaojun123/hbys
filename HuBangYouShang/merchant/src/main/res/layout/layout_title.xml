@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/color_while">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
+    <ImageView
+        android:id="@+id/iv_title_back"
+        android:layout_width="@dimen/dimen_50"
+        android:layout_height="match_parent"
+        android:src="@mipmap/return_title_normal"
+        android:scaleType="center"
+        android:layout_alignParentLeft="true"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="标题"
+        android:textColor="@color/color_black"
+        android:textSize="18dp"/>
+
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:textSize="15dp"
+        android:textColor="@color/color_83b2f6"
+        android:paddingRight="15dp"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.3"
+        android:background="@drawable/shape_main_bottom_line" />
+</LinearLayout>

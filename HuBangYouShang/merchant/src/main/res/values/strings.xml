@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">互帮有赏商家版</string>
+
+
+
+    <!--首页底部按钮 -->
+    <string name="main_bottom_chat">聊天</string>
+    <string name="main_bottom_group">商家群</string>
+    <string name="main_bottom_mine">我的</string>
+
+
+    <!-- 登录-->
+    <string name="login_name">帐号</string>
+    <string name="login_name_hint">请输入邮箱/手机号</string>
+    <string name="login_password">密码</string>
+    <string name="login_password_hint">请输入密码</string>
+    <string name="login_button_login">登录</string>
+    <string name="login_forget_password">忘记密码</string>
+
+
+    <!-- 忘记密码-->
+    <string name="forget_password_get">密码找回</string>
+    <string name="forget_password_phone">手机号码</string>
+    <string name="forget_password_phone_tip">请输入注册时的手机号</string>
+    <string name="forget_password_get_checkcode">获取验证码</string>
+    <string name="forget_password_checkcode">验证码</string>
+    <string name="forget_password_input_checkcode">请输入验证码</string>
+    <string name="next">下一步</string>
+    <string name="set_password">找到密码</string>
+    <string name="new_password">新密码&#160;&#160;&#160;&#160;</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="input_password_hint">请输入新的密码</string>
+    <string name="input_password_confirm_hint">请再次确认密码</string>
+    <string name="commit">提交</string>
+    <!-- 通讯录-->
+    <string name="contact_title">商家群</string>
+    <string name="contact_title_right">申请新建</string>
+    <string name="contact_apply_tip">申请进度查看</string>
+    <string name="apply_new_group">申请新建群组</string>
+
+    <!-- 我的-->
+    <string name="mine_title">个人中心</string>
+    <string name="mine_info_tip">查看或编辑个人资料</string>
+    <string name="mine_store_info">店铺信息</string>
+    <string name="mine_store_info_tip">店铺名称：%1$s</string>
+    <string name="mine_modify_password">修改密码</string>
+    <string name="mine_clear_cache">清理缓存</string>
+    <string name="mine_customer_center">客服中心</string>
+    <string name="mine_feek_back">意见反馈</string>
+    <string name="mine_about_us">关于我们</string>
+    <string name="mine_logout">退出登录</string>
+</resources>

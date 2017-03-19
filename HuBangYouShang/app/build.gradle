@@ -1,4 +1,5 @@
-apply plugin: 'com.android.application'
+//apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
 //apply plugin: 'com.antfortune.freeline'
 
@@ -7,7 +8,7 @@ android {
     buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.help.reward"
+        //applicationId "com.help.reward"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1

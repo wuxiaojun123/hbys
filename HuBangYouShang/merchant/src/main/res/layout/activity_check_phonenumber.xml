@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg">
+
+    <include
+        layout="@layout/layout_title"></include>
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_while">
+
+        <RelativeLayout
+            android:id="@+id/rl_phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#fff"
+            android:layout_marginLeft="13dp">
+
+            <TextView
+                android:id="@+id/tv_phonenumber_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forget_password_phone"
+                android:textSize="15sp"
+                android:textColor="#000"
+                android:layout_centerVertical="true"
+                />
+
+            <Button
+                android:id="@+id/btn_get_checkcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forget_password_get_checkcode"
+                android:background="@color/color_0"
+                android:textColor="@color/color_while"
+                android:layout_alignParentRight="true"
+                />
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_phonenumber_tip"
+                android:layout_toLeftOf="@+id/btn_get_checkcode"
+                android:background="@null"
+                android:hint="@string/forget_password_phone_tip"
+                android:paddingLeft="20dip"
+                android:singleLine="true"
+                android:textColor="#000"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/forget_password_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.3"
+            android:layout_below="@id/rl_phonenumber"
+            android:layout_marginLeft="13dp"
+            android:background="@drawable/shape_main_bottom_line" />
+
+        <RelativeLayout
+            android:id="@+id/rl_checkcode"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/forget_password_line"
+            android:layout_marginLeft="13dp"
+            android:background="#fff" >
+
+            <TextView
+                android:id="@+id/tv_password_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forget_password_checkcode"
+                android:textSize="15sp"
+                android:textColor="#000"
+                android:layout_centerVertical="true"
+                />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_password_tip"
+                android:background="@null"
+                android:hint="@string/forget_password_input_checkcode"
+                android:inputType="textPassword"
+                android:paddingLeft="20dip"
+                android:singleLine="true"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/shape_login_bg"
+        android:text="@string/next"
+        android:textColor="@color/color_while"
+        android:textSize="@dimen/dimen_15" />
+
+</LinearLayout>

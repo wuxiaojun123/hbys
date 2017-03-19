@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg">
+
+    <include layout="@layout/layout_title"></include>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_contact_apply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_while">
+
+        <ImageView
+            android:layout_marginLeft="4dp"
+            android:padding="10dp"
+            android:id="@+id/iv_contact_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/apply"/>
+
+        <TextView
+            android:layout_toRightOf="@+id/iv_contact_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:text="@string/contact_apply_tip"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="#00000000"
+        android:descendantFocusability="afterDescendants"
+        android:divider="#D4D4D4"
+        android:dividerHeight="1px"
+        android:fastScrollAlwaysVisible="false"
+        android:fastScrollEnabled="false" />
+</LinearLayout>

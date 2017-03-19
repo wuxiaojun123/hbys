@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.antfortune.freeline'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.help.reward.merchant"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets{
+        main{
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+//    freeline {
+//        hack true
+//    }
+
+    dexOptions{
+        preDexLibraries = false
+        javaMaxHeapSize = "2g"
+    }
+
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    /*compile 'com.android.support:appcompat-v7:22.1.0'
+                compile 'com.android.support:recyclerview-v7:22.1.0'
+                compile 'com.android.support:design:22.2.0'//design风格*/
+    //butterknife
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    //rxjava和retrofit框架
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    //    compile 'io.reactivex:rxjava2:rxandroid:2.0.1'
+    //    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    //这是添加retrofit对rxjava的支持
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    //基本工具类
+    //
+    //    compile project(':library_pagerSlidingTabStrip')
+    // recyclerview
+    //    compile project(':library_recycler')
+//    debugCompile 'com.antfortune.freeline:runtime:0.8.4'
+//    releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
+//    testCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
+    //广告位banner
+    compile 'com.bigkoo:convenientbanner:2.0.5'
+    compile project(':library_chat')
+    compile project(':pickerview')
+}

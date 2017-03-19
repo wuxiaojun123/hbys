@@ -1,0 +1,97 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="style_line">
+        <item name="android:background">@color/color_e4</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+
+    </style>
+
+
+    <!--标签类文字样式-->
+    <style name="style_text_lable">
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/color_3a</item>
+    </style>
+    <!--标签类文字样式红色-->
+    <style name="style_text_lable_red">
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:textColor">#f93820</item>
+    </style>
+    <!--内容类文字样式-->
+    <style name="style_text_content">
+        <item name="android:textSize">@dimen/dimen_12</item>
+        <item name="android:textColor">#aeb1bd</item>
+    </style>
+    <!--内容类文字样式-->
+    <style name="style_text_content_red">
+        <item name="android:textSize">@dimen/dimen_12</item>
+        <item name="android:textColor">#ff503f</item>
+    </style>
+    <!--标题栏右边文字样式-->
+    <style name="style_text_title_right">
+        <item name="android:textSize">@dimen/dimen_18</item>
+        <item name="android:textColor">#d17171</item>
+    </style>
+
+
+    <style name="style_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
+    <!-- 等待框 -->
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!--首页底部radiobutton-->
+    <style name="style_radio_button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/dimen_10</item>
+        <item name="android:textColor">@drawable/selector_color_main_text</item>
+    </style>
+
+    <style name="style_my_account_text_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:drawableRight">@mipmap/img_disclosure_arrow</item>
+    </style>
+
+    <style name="style_mine_logout" parent="style_my_account_text_item">
+        <item name="android:drawableRight">@null</item>
+    </style>
+</resources>

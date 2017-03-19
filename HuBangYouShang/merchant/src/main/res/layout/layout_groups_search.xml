@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_44"
+    android:background="@color/color_while">
+    <ImageView
+        android:id="@+id/iv_benefit_back"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/return_title_normal"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/iv_benifit_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="取消"
+        android:textSize="@dimen/dimen_14"
+        android:padding="5dp"
+        android:textColor="@color/color_while"
+       android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:visibility="gone"/>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/iv_benefit_back"
+        android:layout_toLeftOf="@+id/iv_benifit_cancel">
+
+        <EditText
+            android:id="@+id/et_benefit_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="5dp"
+            android:background="@drawable/shape_search_background"
+            android:drawableLeft="@mipmap/search_icon"
+            android:hint="搜索关键字相关群组"
+            android:textColor="@color/color_8a"
+            android:textSize="@dimen/dimen_13"
+            android:textColorHint="@color/color_8a"/>
+
+        <ImageButton
+            android:id="@+id/search_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            android:padding="6dp"
+            android:src="@mipmap/clear_button"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

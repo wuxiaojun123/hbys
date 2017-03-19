@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg"
+    android:orientation="vertical" >
+
+   <include layout="@layout/layout_title"></include>
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_while">
+
+        <RelativeLayout
+            android:id="@+id/rl_username"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#fff"
+            android:layout_marginLeft="13dp">
+
+            <TextView
+                android:id="@+id/tv_name_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_name"
+                android:textSize="15sp"
+                android:textColor="#000"
+                android:layout_centerVertical="true"
+                />
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_name_tip"
+                android:background="@null"
+                android:hint="@string/login_name_hint"
+                android:paddingLeft="20dip"
+                android:singleLine="true"
+                android:textColor="#000"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/login_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.3"
+            android:layout_below="@id/rl_username"
+            android:background="@drawable/shape_main_bottom_line" />
+
+        <RelativeLayout
+            android:id="@+id/rl_password"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/login_line"
+            android:layout_marginLeft="13dp"
+            android:background="#fff" >
+
+            <TextView
+                android:id="@+id/tv_password_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_password"
+                android:textSize="15sp"
+                android:textColor="#000"
+                android:layout_centerVertical="true"
+                />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_password_tip"
+                android:background="@null"
+                android:hint="@string/login_password_hint"
+                android:inputType="textPassword"
+                android:paddingLeft="20dip"
+                android:singleLine="true"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="28dp"
+        android:onClick="login"
+        android:background="@drawable/shape_login_bg"
+        android:text="@string/login_button_login"
+        android:textColor="@color/color_while"
+        android:textSize="@dimen/dimen_15" />
+
+    <TextView
+        android:id="@+id/tv_forget_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_forget_password"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginRight="20dp"
+        android:textSize="@dimen/dimen_14"
+        android:textColor="@color/color_8a"
+        android:layout_gravity="right"/>
+
+</LinearLayout>

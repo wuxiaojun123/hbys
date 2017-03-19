@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg">
+
+
+    <include layout="@layout/layout_title"></include>
+
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="10"
+        android:background="@color/color_while"/>
+
+    <Button
+        android:id="@+id/btn_creat_group_commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/shape_login_bg"
+        android:text="@string/commit"
+        android:textColor="@color/color_while"
+        android:textSize="@dimen/dimen_15" />
+</LinearLayout>

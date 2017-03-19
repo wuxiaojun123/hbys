@@ -1,4 +1,4 @@
-include ':app', ':library_recycler', ':easeui', ':library_chat', ':pickerview'
+include ':library_recycler', ':easeui', ':library_chat', ':pickerview', ':merchant'
 
 include ':library_base'
 
