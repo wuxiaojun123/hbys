@@ -49,4 +49,11 @@
     <string name="mine_feek_back">意见反馈</string>
     <string name="mine_about_us">关于我们</string>
     <string name="mine_logout">退出登录</string>
+
+    <string name="profile_info">个人中心</string>
+    <string name="profile_photo">头像</string>
+    <string name="profile_nick_name">昵称</string>
+    <string name="profile_name">姓名</string>
+    <string name="profile_sex">性别</string>
+    <string name="profile_cellphone">手机</string>
 </resources>

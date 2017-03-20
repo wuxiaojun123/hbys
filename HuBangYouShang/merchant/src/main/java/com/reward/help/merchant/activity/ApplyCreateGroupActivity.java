@@ -11,11 +11,7 @@ import com.reward.help.merchant.chat.ui.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by fanjunqing on 20/03/2017.
- */
-
-public class ApplyCreateGroupActivity extends BaseActivity implements View.OnClickListener{
+public class ApplyCreateGroupActivity extends BaseActivity{
     @BindView(R.id.iv_title_back)
     ImageView mIvBack;
     @BindView(R.id.tv_title)
@@ -30,16 +26,13 @@ public class ApplyCreateGroupActivity extends BaseActivity implements View.OnCli
 
     private void initView() {
         mTvTitle.setText(getText(R.string.apply_new_group));
-    }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.iv_title_back:
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 hideSoftKeyboard();
                 ApplyCreateGroupActivity.this.finish();
-                break;
-        }
+            }
+        });
     }
-
 }

@@ -11,9 +11,6 @@ import com.reward.help.merchant.chat.ui.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by fanjunqing on 20/03/2017.
- */
 
 public class QueryApplyGroupActivity extends BaseActivity {
 

@@ -13,9 +13,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by fanjunqing on 19/03/2017.
- */
 
 public class CheckPhoneNumberActivity extends BaseActivity implements View.OnClickListener{
 

@@ -16,7 +16,7 @@
         android:padding="@dimen/dimen_13">
 
 
-        <ImageView
+        <com.reward.help.merchant.view.CircularImage
             android:id="@+id/iv_my_photo"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -68,7 +68,7 @@
         android:padding="@dimen/dimen_13">
 
 
-        <ImageView
+        <com.reward.help.merchant.view.CircularImage
             android:id="@+id/iv_store_photo"
             android:layout_width="60dp"
             android:layout_height="60dp"

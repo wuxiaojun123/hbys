@@ -6,6 +6,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.reward.help.merchant.R;
 
 /**
@@ -39,6 +41,22 @@ public class GlideUtils {
 //                    .placeholder(R.mipmap.img_default)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(imageView);
+        }
+    }
+
+
+    public static void setUserAvatar(Context context, String username, ImageView imageView){
+        EaseUser user = EaseUserUtils.getUserInfo(username);
+        if(user != null && user.getAvatar() != null){
+            try {
+                int avatarResId = Integer.parseInt(user.getAvatar());
+                Glide.with(context).load(avatarResId).into(imageView);
+            } catch (Exception e) {
+                //use default avatar
+                Glide.with(context).load(user.getAvatar()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.mipmap.img_my_default_photo).into(imageView);
+            }
+        }else{
+            Glide.with(context).load(R.mipmap.img_my_default_photo).into(imageView);
         }
     }
 

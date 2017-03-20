@@ -1,9 +1,9 @@
 package com.reward.help.merchant.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +11,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hyphenate.EMCallBack;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseBaseFragment;
-import com.hyphenate.easeui.ui.EaseConversationListFragment;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.reward.help.merchant.R;
 import com.reward.help.merchant.activity.LoginActivity;
 import com.reward.help.merchant.activity.MainActivity;
+import com.reward.help.merchant.activity.ProfileActivity;
 import com.reward.help.merchant.chat.DemoHelper;
+import com.reward.help.merchant.utils.GlideUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by fanjunqing on 19/03/2017.
- */
 
 public class MineFragment extends EaseBaseFragment implements View.OnClickListener{
 
@@ -66,7 +68,14 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
         mTvTitle.setText(getText(R.string.mine_title));
 
         mTvMyStoreName.setText(String.format(getString(R.string.mine_store_info_tip),"dd"));
+
+        String username = DemoHelper.getInstance().getCurrentUsernName();
+        GlideUtils.setUserAvatar(getContext(), username, mIvMyPhoto);
+        EaseUserUtils.setUserNick(username, mTvName);
     }
+
+
+
 
     @Override
     protected void setUpView() {
@@ -80,6 +89,7 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
         switch (v.getId()){
             case R.id.rl_my_info:
                 //TODO edit my info
+                startActivity(new Intent(getActivity(), ProfileActivity.class));
                 break;
             case R.id.rl_my_store_info:
                 //TODO edit my store info

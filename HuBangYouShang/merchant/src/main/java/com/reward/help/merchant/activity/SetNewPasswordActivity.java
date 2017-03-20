@@ -13,9 +13,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by fanjunqing on 20/03/2017.
- */
 
 public class SetNewPasswordActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_title_back)
