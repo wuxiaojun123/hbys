@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_empty_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:drawablePadding="10dp"
+    android:drawableTop="@mipmap/img_empty_address"
+    android:gravity="center"
+    android:text="你还没有添加过收货地址"
+    android:textSize="@dimen/dimen_13"
+    android:visibility="gone" />

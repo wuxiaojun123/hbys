@@ -1,5 +1,6 @@
 package com.help.reward.network.api;
 
+import com.help.reward.bean.Response.AddressResponse;
 import com.help.reward.bean.Response.AdvertisementResponse;
 import com.help.reward.bean.Response.BalanceExchangeResponse;
 import com.help.reward.bean.Response.BalanceExchangeVolumeResponse;
@@ -35,6 +36,16 @@ import rx.Observable;
  */
 
 public interface PersonalApi {
+
+
+    // 我的求助--发帖
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_address&op=address_list")
+    Observable<AddressResponse> getAddressResponse(
+            @Field("key") String key
+    );
+
+
 
     // 我的求助--发帖
     @FormUrlEncoded
