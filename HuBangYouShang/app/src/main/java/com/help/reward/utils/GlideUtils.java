@@ -20,12 +20,10 @@ public class GlideUtils {
             Glide.with(imageView.getContext())
                     .load(imgUrl)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .error(R.mipmap.img_default)
-                    .placeholder(R.mipmap.img_default)
-                    .centerCrop()
                     .crossFade()
                     .into(imageView);
         }
+        // .centerCrop()
     }
 
     public static void loadGIFImage(Context context, String imgUrl, ImageView imageView) {

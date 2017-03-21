@@ -254,6 +254,12 @@
         <activity
             android:name="com.help.reward.activity.GoodInfoActivity"
             android:screenOrientation="portrait" />
+        <!--看广告-->
+        <activity
+            android:name="com.help.reward.activity.WatchAdActivity"
+            android:screenOrientation="portrait" />
+
+
         <!-- 群组聊天-->
         <activity
             android:name="com.help.reward.chat.ui.GroupActivity"

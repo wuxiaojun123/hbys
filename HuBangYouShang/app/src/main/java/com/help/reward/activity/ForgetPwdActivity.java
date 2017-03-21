@@ -75,7 +75,7 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initTimer() {
-        mTimer = new CountDownTimeUtils();
+        mTimer = new CountDownTimeUtils(CountDownTimeUtils.millisInFuture,CountDownTimeUtils.countDownInterval);
         mTimer.setOnCountDownTimeListener(new CountDownTimeUtils.OnCountDownTimeListener() {
             @Override
             public void onTick(long millisUntilFinished) { // 计时开始

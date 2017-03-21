@@ -6,8 +6,8 @@
     android:layout_marginRight="@dimen/dimen_margin_10"
     android:layout_marginTop="@dimen/dimen_margin_10"
     android:orientation="vertical"
-    android:divider="@drawable/shape_divider_line"
-    android:showDividers="end"
+    android:background="@color/color_while"
+    android:id="@+id/ll_content"
     >
 
     <TextView

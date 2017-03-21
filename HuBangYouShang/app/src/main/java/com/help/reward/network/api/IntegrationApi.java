@@ -1,5 +1,6 @@
 package com.help.reward.network.api;
 
+import com.help.reward.bean.Response.AdInfoResponse;
 import com.help.reward.bean.Response.AdvertisementResponse;
 
 import retrofit2.http.Field;
@@ -32,6 +33,14 @@ public interface IntegrationApi {
             @Field("type") String type
     );
 
+    // 广告看完点赞 -- 详情页  ?act=advertisement&op=info
+    @FormUrlEncoded
+    @POST("mobile/index.php")
+    Observable<AdInfoResponse> getAdInfoResponse(
+            @Query("act") String act,
+            @Query("op") String curpage,
+            @Field("id") String id
+    );
 
 
 }
