@@ -42,4 +42,17 @@ public class GlideUtils {
         }
     }
 
+    public static void loadCircleImage(String imgUrl, ImageView imageView) {
+        if (!TextUtils.isEmpty(imgUrl)) {
+            Glide.with(imageView.getContext())
+                    .load(imgUrl)
+                    .transform(new GlideCircleTransform(imageView.getContext()))
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .error(R.mipmap.img_default)
+                    .placeholder(R.mipmap.img_default)
+                    .into(imageView);
+        }
+    }
+
+
 }

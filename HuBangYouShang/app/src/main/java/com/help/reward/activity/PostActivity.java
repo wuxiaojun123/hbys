@@ -18,12 +18,12 @@ import com.help.reward.R;
 import com.help.reward.adapter.MessageAdapter;
 import com.help.reward.bean.MessageBean;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.DeleteMessageResponse;
 import com.help.reward.bean.Response.MessageResponse;
 import com.help.reward.network.MessageNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.MyProcessDialog;
-import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -81,19 +81,6 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
     private void initRecycler() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MessageAdapter(this, type);
-//        for (int i = 0; i < 10; i++) {
-//            MessageBean m = new MessageBean();
-//            m.message_body = "body" + i;
-//            m.message_title = "title" + i;
-//            if (i == 3) {
-//                m.message_title = "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle" + i;
-//            }
-//            m.message_id = "11111111";
-//            m.message_orderid = "orderid" + i;
-//            m.message_time = System.currentTimeMillis() + i * 10000;
-//            m.message_image = "http://icon.2008php.com/2013_da/13-05-25/20130525172315.jpg";
-//            mDatas.add(m);
-//        }
         adapter.setDatas(mDatas);
         LRecyclerViewAdapter ladapter = new LRecyclerViewAdapter(adapter);
         lRecyclerview.setAdapter(ladapter);
@@ -104,6 +91,7 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
         lRecyclerview.setItemAnimator(new DefaultItemAnimator());
         initRefreshListener();
         initLoadMoreListener();
+        MyProcessDialog.showDialog(mContext);
         requestData();
     }
 
@@ -112,7 +100,6 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() { // 如果集合中没有数据，则进行刷新，否则不刷新
-                LogUtils.e("执行下拉刷新的方法");
                 curpage = 1;
                 requestData();
             }
@@ -152,7 +139,7 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
             ActivitySlideAnim.slideInAnim(this);
         } else if ("5".equals(type)) {
             Intent intent = new Intent(mContext, OrderDetailsActivity.class);
-            intent.putExtra("orderid", adapter.getDataList().get(position).message_orderid);
+            intent.putExtra("orderid", adapter.getDataList().get(position).remark.order_sn);
             startActivity(intent);
             ActivitySlideAnim.slideInAnim(this);
         } else if ("6".equals(type)) {
@@ -176,7 +163,7 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
                     .deleteMessageBean(App.APP_CLIENT_KEY, bean.message_id, "dropcommonmsg")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new BaseSubscriber<BaseResponse>() {
+                    .subscribe(new BaseSubscriber<DeleteMessageResponse>() {
                         @Override
                         public void onError(Throwable e) {
                             MyProcessDialog.closeDialog();
@@ -185,10 +172,11 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
                         }
 
                         @Override
-                        public void onNext(BaseResponse response) {
+                        public void onNext(DeleteMessageResponse response) {
                             MyProcessDialog.closeDialog();
                             if (response.code == 200) { // 删除成功
                                 adapter.removeData(position);
+                                ToastUtils.show(mContext, response.data);
                             } else {
                                 ToastUtils.show(mContext, response.msg);
                             }
@@ -214,6 +202,7 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        MyProcessDialog.closeDialog();
                         lRecyclerview.refreshComplete(numSize);
                         ToastUtils.show(mContext, R.string.string_error);
                         if (curpage != 1) {
@@ -221,9 +210,11 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
                         }
                     }
 
+
                     @Override
                     public void onNext(MessageResponse response) {
                         lRecyclerview.refreshComplete(numSize);
+                        MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             if (response.data != null) {
                                 if (curpage == 1) {

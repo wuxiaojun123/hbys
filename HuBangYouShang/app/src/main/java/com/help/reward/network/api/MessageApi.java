@@ -1,6 +1,7 @@
 package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.DeleteMessageResponse;
 import com.help.reward.bean.Response.MessageReadResponse;
 import com.help.reward.bean.Response.MessageResponse;
 import com.help.reward.utils.Constant;
@@ -48,10 +49,11 @@ public interface MessageApi {
     // 删除消息op=dropcommonmsg
     @FormUrlEncoded
     @POST(Constant.URL_MESSAGE)
-    Observable<BaseResponse> deleteMessageBean(
+    Observable<DeleteMessageResponse> deleteMessageBean(
             @Field("key") String key,
             @Field("message_id") String message_id,
             @Query("op") String op
+
     );
 
 }

@@ -3,7 +3,7 @@ package com.help.reward.utils;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -67,7 +67,7 @@ public class ChooseCameraPopuUtils {
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
         // 这里注意 必须要有一个背景 ，有了背景后
         // 当你点击对话框外部的时候或者按了返回键的时候对话框就会消失，当然前提是使用的构造函数中Focusable为true
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x7f000000));
         return popupWindow;
     }
 

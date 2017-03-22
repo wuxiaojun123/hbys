@@ -288,6 +288,26 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <!--投票详情-->
+        <activity
+            android:name="com.help.reward.activity.HelpVoteInfoActivity"
+            android:screenOrientation="portrait" />
+        <!--求助详情-->
+        <activity
+            android:name="com.help.reward.activity.HelpSeekInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+            android:screenOrientation="portrait" />
+        <!--提交投诉-->
+        <activity
+            android:name="com.help.reward.activity.HelpComplainedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.help.reward.activity.HelpSeekCommentDetailActivity"
+            android:screenOrientation="portrait" />
+
         <!-- 开机自启动服务 -->
         <receiver android:name="com.help.reward.chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">

@@ -21,6 +21,7 @@ public class App extends Application {
 
     private static App mApp;
     public static String APP_CLIENT_KEY = null;
+    public static String APP_USER_ID = null;
     public static String APP_CLIENT_COOKIE = null;
 
     @Override

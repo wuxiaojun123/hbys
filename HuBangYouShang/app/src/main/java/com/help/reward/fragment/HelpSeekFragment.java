@@ -16,7 +16,7 @@ import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.activity.HelpInfoActivity;
+import com.help.reward.activity.HelpSeekInfoActivity;
 import com.help.reward.adapter.HelpSeekAdapter;
 import com.help.reward.bean.HelpSeekBean;
 import com.help.reward.bean.Response.HelpSeekResponse;
@@ -99,7 +99,7 @@ public class HelpSeekFragment extends BaseFragment {
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(mContext, HelpInfoActivity.class);
+                Intent intent = new Intent(mContext, HelpSeekInfoActivity.class);
                 intent.putExtra("id",adapter.getDataList().get(position).id);
                 startActivity(intent);
                 ActivitySlideAnim.slideInAnim(getActivity());

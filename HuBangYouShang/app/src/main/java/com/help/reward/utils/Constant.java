@@ -62,8 +62,12 @@ public class Constant {
     public static final String URL_AREA = "mobile/index.php?act=area&op=post_area_list";
     public static final String URL_SUBREWARD = "mobile/index.php?act=get_reward&op=release";
     //发布求助帖
-    public static final String URL_SUBSEEKHELP = "mobile/index.php?act=seek_help&op=release_post";
+    public static final String URL_SUBSEEKHELP = "mobile/index.php?act=seek_help";
     public static final String URL_UPLOADIMAGE = "mobile/index.php?act=upload_file&op=upload_img";
+    public static final String URL_SUBVOTE = "mobile/index.php?act=member_vote&op=vote";
 
+    public static final String URL_COMPLAIN = "mobile/index.php?act=member_p_complain";
+
+    public static final String URL_FAVORITESADD = "mobile/index.php?act=member_favorites_post";
 
 }
