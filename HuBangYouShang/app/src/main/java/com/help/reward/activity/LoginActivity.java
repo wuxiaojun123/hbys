@@ -7,8 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
-import com.idotools.utils.LogUtils;
-import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.Response.LoginResponse;
@@ -18,6 +16,8 @@ import com.help.reward.rxbus.RxBus;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.LogUtils;
+import com.idotools.utils.ToastUtils;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -124,6 +124,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         if (res.code == 200) {
                             LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
                             App.APP_CLIENT_KEY = res.data.key;
+                            App.APP_USER_ID = res.data.userid;
+
                             RxBus.getDefault().post("loginSuccess");
 
                             finish();

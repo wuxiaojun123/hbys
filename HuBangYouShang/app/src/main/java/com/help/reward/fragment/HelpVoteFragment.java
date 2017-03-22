@@ -16,7 +16,7 @@ import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.activity.HelpInfoActivity;
+import com.help.reward.activity.HelpVoteInfoActivity;
 import com.help.reward.adapter.HelpVoteAdapter;
 import com.help.reward.bean.HelpVoteBean;
 import com.help.reward.bean.Response.HelpVoteResponse;
@@ -102,7 +102,7 @@ public class HelpVoteFragment extends BaseFragment {
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(mContext, HelpInfoActivity.class);
+                Intent intent = new Intent(mContext, HelpVoteInfoActivity.class);
                 intent.putExtra("id",adapter.getDataList().get(position).post_id);
                 startActivity(intent);
                 ActivitySlideAnim.slideInAnim(getActivity());

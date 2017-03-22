@@ -183,7 +183,7 @@ public class ReleaseHelpActivity extends BaseActivity implements DealChoosePicUt
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
                 .getHelpApi()
-                .subHelpSeekBean(App.APP_CLIENT_KEY, board_id, title, content, area_id, end_time, score, "")
+                .subHelpSeekBean(App.APP_CLIENT_KEY,"release_post", board_id, title, content, area_id, end_time, score, "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HelpSubResponse>() {
