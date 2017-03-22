@@ -64,7 +64,7 @@
                 android:id="@+id/iv_img_ad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/test_img_watch_ad" />
+                android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/tv_time"
@@ -88,7 +88,7 @@
         android:layout_height="50dp"
         android:background="@color/color_dc"
         android:gravity="center"
-        android:text="看完点赞(100/99)"
+        android:text="看完点赞"
         android:textColor="@color/color_8a"
         android:textSize="@dimen/dimen_15"
         />

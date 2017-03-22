@@ -4,6 +4,7 @@ import com.help.reward.bean.AdInfoBean;
 
 /**
  * <p>
+ *     会员看广告
  * Created by wuxiaojun on 2017/3/21.
  */
 

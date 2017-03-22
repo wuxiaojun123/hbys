@@ -49,6 +49,7 @@ public class IntegrationWatchPraiseAdapter extends BaseRecyclerAdapter {
             public void onClick(View v) {
                 Intent mIntent = new Intent();
                 mIntent.putExtra("ad_id",bean.id);
+                mIntent.putExtra("ad_type",bean.type);
                 mIntent.setClassName(mContext.getPackageName(), WatchAdActivity.class.getName());
                 mContext.startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim((MainActivity)mContext);

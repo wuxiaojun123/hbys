@@ -258,6 +258,10 @@
         <activity
             android:name="com.help.reward.activity.WatchAdActivity"
             android:screenOrientation="portrait" />
+        <!--搜索广告-->
+        <activity
+            android:name="com.help.reward.activity.SearchAdvertisementActivity"
+            android:screenOrientation="portrait" />
 
 
         <!-- 群组聊天-->
