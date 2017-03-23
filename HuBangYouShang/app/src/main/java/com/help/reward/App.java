@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
 
+import com.help.reward.bean.MemberInfoBean;
+import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.chat.DemoHelper;
 
 import java.util.Iterator;
@@ -20,9 +22,11 @@ import java.util.List;
 public class App extends Application {
 
     private static App mApp;
-    public static String APP_CLIENT_KEY = null;
-    public static String APP_USER_ID = null;
-    public static String APP_CLIENT_COOKIE = null;
+    public static String APP_CLIENT_KEY = null; // key
+    public static String APP_USER_ID = null; // user_id
+    public static String APP_CLIENT_COOKIE = null; // cookie
+    public static LoginResponse mLoginReponse; // 会员信息
+
 
     @Override
     public void onCreate() {

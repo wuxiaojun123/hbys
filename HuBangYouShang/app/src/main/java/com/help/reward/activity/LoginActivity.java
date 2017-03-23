@@ -125,9 +125,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
                             App.APP_CLIENT_KEY = res.data.key;
                             App.APP_USER_ID = res.data.userid;
-
+                            // 请求会员信息
+                            App.mLoginReponse = res.data;
                             RxBus.getDefault().post("loginSuccess");
-
                             finish();
                             ActivitySlideAnim.slideOutAnim(LoginActivity.this);
                         } else {

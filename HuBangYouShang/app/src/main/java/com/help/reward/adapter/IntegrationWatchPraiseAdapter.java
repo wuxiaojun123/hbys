@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.help.reward.R;
+import com.help.reward.activity.BaseActivity;
 import com.help.reward.activity.MainActivity;
 import com.help.reward.activity.WatchAdActivity;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
@@ -52,7 +53,7 @@ public class IntegrationWatchPraiseAdapter extends BaseRecyclerAdapter {
                 mIntent.putExtra("ad_type",bean.type);
                 mIntent.setClassName(mContext.getPackageName(), WatchAdActivity.class.getName());
                 mContext.startActivity(mIntent);
-                ActivitySlideAnim.slideInAnim((MainActivity)mContext);
+                ActivitySlideAnim.slideInAnim((BaseActivity)mContext);
             }
         });
     }

@@ -73,6 +73,12 @@ public class SearchAdvertisementActivity extends BaseActivity implements View.On
         iv_email.setVisibility(View.GONE);
         tv_text.setVisibility(View.VISIBLE);
         tv_text.setText("取消");
+        et_search.setOnKeyListener(new SearchEditTextView.onKeyListener() {
+            @Override
+            public void onKey() {
+                search();
+            }
+        });
     }
 
     private void initRecycler() {
@@ -91,13 +97,7 @@ public class SearchAdvertisementActivity extends BaseActivity implements View.On
         int id = v.getId();
         switch (id) {
             case R.id.iv_search:
-                searchStr = et_search.getText().toString().trim();
-                if (!TextUtils.isEmpty(searchStr)) {
-                    initNetwor();
-                    InputWindowUtils.closeInputWindow(v, mContext);
-                } else {
-                    ToastUtils.show(mContext, "请输入搜索内容");
-                }
+                search();
 
                 break;
             case R.id.tv_text:
@@ -106,6 +106,16 @@ public class SearchAdvertisementActivity extends BaseActivity implements View.On
 
                 break;
 
+        }
+    }
+
+    private void search() {
+        searchStr = et_search.getText().toString().trim();
+        if (!TextUtils.isEmpty(searchStr)) {
+            initNetwor();
+            InputWindowUtils.closeInputWindow(et_search, mContext);
+        } else {
+            ToastUtils.show(mContext, "请输入搜索内容");
         }
     }
 
@@ -128,17 +138,16 @@ public class SearchAdvertisementActivity extends BaseActivity implements View.On
                     public void onNext(AdvertisementResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
-                            LogUtils.e("返回结果是："+response.data.adv_list);
                             if (response.data != null) {
                                 if (response.data.adv_list != null) {
-                                    LogUtils.e("返回结果是："+response.data.adv_list.size());
-                                    mIntegrationWatchPraiseAdapter.clear();
-                                    mIntegrationWatchPraiseAdapter.addAll(response.data.adv_list);
+                                    mIntegrationWatchPraiseAdapter.setDataList(response.data.adv_list);
                                 } else {
                                     mIntegrationWatchPraiseAdapter.clear();
+                                    ToastUtils.show(mContext,"没有找到符合条件的广告");
                                 }
                             } else { // 显示无搜索结果
                                 mIntegrationWatchPraiseAdapter.clear();
+                                ToastUtils.show(mContext,"没有找到符合条件的广告");
                             }
                             if (!response.hasmore) { // 是否有更多数据
                                 lRecyclerview.setLoadMoreEnabled(false);

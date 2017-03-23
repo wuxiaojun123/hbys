@@ -18,6 +18,7 @@ import com.help.reward.R;
 import com.help.reward.activity.SearchAdvertisementActivity;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.SearchEditTextView;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -53,10 +54,10 @@ public class IntegrationFragment extends BaseFragment implements View.OnClickLis
         viewPager.setAdapter(new MyPagerAdapter(getActivity().getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
 
-        et_search.setOnKeyListener(new View.OnKeyListener() {
+        et_search.setOnKeyListener(new SearchEditTextView.onKeyListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                return false;
+            public void onKey() {
+                search();
             }
         });
     }
@@ -68,20 +69,22 @@ public class IntegrationFragment extends BaseFragment implements View.OnClickLis
         switch (id) {
             case R.id.iv_search:
                 // 点击搜索
-                String searchStr = et_search.getText().toString().trim();
-                if (!TextUtils.isEmpty(searchStr)) {
-                    Intent mIntent = new Intent(getActivity(), SearchAdvertisementActivity.class);
-                    mIntent.putExtra("keyword", searchStr);
-                    getActivity().startActivity(mIntent);
-                    ActivitySlideAnim.slideInAnim(getActivity());
-                } else {
-                    ToastUtils.show(mContext, "请输入搜索内容");
-                }
-
+                search();
                 break;
-
         }
 
+    }
+
+    private void search() {
+        String searchStr = et_search.getText().toString().trim();
+        if (!TextUtils.isEmpty(searchStr)) {
+            Intent mIntent = new Intent(getActivity(), SearchAdvertisementActivity.class);
+            mIntent.putExtra("keyword", searchStr);
+            getActivity().startActivity(mIntent);
+            ActivitySlideAnim.slideInAnim(getActivity());
+        } else {
+            ToastUtils.show(mContext, "请输入搜索内容");
+        }
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

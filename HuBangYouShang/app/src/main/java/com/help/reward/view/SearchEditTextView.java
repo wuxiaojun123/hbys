@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -17,7 +18,7 @@ import com.idotools.utils.InputWindowUtils;
  * Created by wuxiaojun on 2017/3/22.
  */
 
-public class SearchEditTextView extends EditText implements TextWatcher, View.OnFocusChangeListener {
+public class SearchEditTextView extends EditText implements TextWatcher, View.OnFocusChangeListener, View.OnKeyListener {
 
     private Drawable rightDrawable;
 
@@ -42,6 +43,7 @@ public class SearchEditTextView extends EditText implements TextWatcher, View.On
         setFocusableInTouchMode(true);
         addTextChangedListener(this);
         setOnFocusChangeListener(this);
+        setOnKeyListener(this);
     }
 
     @Override
@@ -80,8 +82,30 @@ public class SearchEditTextView extends EditText implements TextWatcher, View.On
         if (hasFocus) {
             setCursorVisible(true);
         } else {
-            InputWindowUtils.closeInputWindow(v,getContext());
+            InputWindowUtils.closeInputWindow(v, getContext());
         }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                if (monKeyListener != null) {
+                    monKeyListener.onKey();
+                }
+            }
+        }
+        return false;
+    }
+
+    private onKeyListener monKeyListener;
+
+    public void setOnKeyListener(onKeyListener monKeyListener) {
+        this.monKeyListener = monKeyListener;
+    }
+
+    public interface onKeyListener {
+        void onKey();
     }
 
 }

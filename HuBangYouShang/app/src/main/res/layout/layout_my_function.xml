@@ -60,6 +60,7 @@
         <LinearLayout style="@style/style_my_function_linear_layout">
 
             <TextView
+                android:id="@+id/tv_available_predeposit"
                 style="@style/style_my_function_quantity"
                 android:text="0" />
 
@@ -72,6 +73,7 @@
         <LinearLayout style="@style/style_my_function_linear_layout">
 
             <TextView
+                android:id="@+id/tv_voucher"
                 style="@style/style_my_function_quantity"
                 android:text="0" />
 
@@ -84,6 +86,7 @@
         <LinearLayout style="@style/style_my_function_linear_layout">
 
             <TextView
+                android:id="@+id/tv_general_voucher"
                 style="@style/style_my_function_quantity"
                 android:text="0" />
 
@@ -96,6 +99,7 @@
         <LinearLayout style="@style/style_my_function_linear_layout">
 
             <TextView
+                android:id="@+id/tv_discount_level"
                 style="@style/style_my_function_quantity"
                 android:text="0" />
 

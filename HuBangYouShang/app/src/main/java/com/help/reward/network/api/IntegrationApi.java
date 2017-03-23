@@ -49,10 +49,11 @@ public interface IntegrationApi {
     Observable<WatchAdGetScroeResponse> getWatchAdGetScroeResponse(
             @Query("act") String act,
             @Query("op") String curpage,
+            @Field("key") String key,
             @Field("id") String id
     );
 
-    // 会员看广告  mobile/index.php?act=advertisement&op=search
+    // 搜索广告  mobile/index.php?act=advertisement&op=search
     @FormUrlEncoded
     @POST("mobile/index.php")
     Observable<AdvertisementResponse> getSearchAdvertisementResponse(

@@ -1,5 +1,7 @@
 package com.help.reward.utils;
 
+import android.os.Environment;
+
 /**
  * Created by wuxiaojun on 2017/2/23.
  */
@@ -7,6 +9,8 @@ package com.help.reward.utils;
 public class Constant {
 
     public static final String PLATFORM_CLIENT = "android"; // 平台是安卓
+    public static final String ROOT = Environment.getExternalStorageDirectory()
+            .getPath() + "/hbzs/";
 
     // 210.72.13.135
     public static final String BASE_URL = "http://210.72.13.135/";

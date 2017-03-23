@@ -63,7 +63,7 @@
             <ImageView
                 android:id="@+id/iv_img_ad"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="400dp"
                 android:scaleType="fitXY" />
 
             <TextView
@@ -100,7 +100,7 @@
         android:background="@drawable/selector_watch_ad_buy_bg"
         android:gravity="center"
         android:text="加群购买(100/99)"
-        android:textColor="@color/color_8a"
+        android:textColor="@color/color_3a"
         android:textSize="@dimen/dimen_15"
         android:visibility="gone"
         />
