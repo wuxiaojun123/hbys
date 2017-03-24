@@ -341,6 +341,15 @@
         <activity
             android:name="com.help.reward.activity.HelpSeekCommentDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.help.reward.activity.HelpRewardInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.help.reward.activity.HelpRewardChatDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.help.reward.activity.HelpRewardCommentActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 开机自启动服务 -->
         <receiver android:name="com.help.reward.chat.receiver.StartServiceReceiver">

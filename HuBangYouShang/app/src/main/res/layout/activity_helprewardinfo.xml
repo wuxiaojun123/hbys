@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_reward" />
+
+    <com.base.recyclerview.LRecyclerView
+        android:id="@+id/lv_helprewardinfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+    <LinearLayout
+        android:id="@+id/comment_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_rewardcomment"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="#766e7d"
+            android:gravity="center"
+            android:text="写评论"
+            android:textColor="@color/color_while"
+            android:textSize="@dimen/dimen_15"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="#eb6a5b"
+            android:gravity="center"
+            android:text="继续跟帖"
+            android:textColor="@color/color_while"
+            android:textSize="@dimen/dimen_15"
+            android:visibility="visible" />
+    </LinearLayout>
+
+
+</LinearLayout>
