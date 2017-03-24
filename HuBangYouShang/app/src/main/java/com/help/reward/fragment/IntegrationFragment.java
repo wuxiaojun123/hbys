@@ -1,30 +1,39 @@
 package com.help.reward.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
+import com.help.reward.activity.SearchAdvertisementActivity;
+import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.view.SearchEditTextView;
+import com.idotools.utils.LogUtils;
+import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 首页-积分
- *
+ * <p>
  * item_ad.xml  看广告的item
- *
+ * <p>
  * Created by wuxiaojun on 2017/1/8.
  */
 
-public class IntegrationFragment extends BaseFragment {
+public class IntegrationFragment extends BaseFragment implements View.OnClickListener {
 
     private View contentView;
     @BindView(R.id.id_viewpager)
@@ -32,18 +41,50 @@ public class IntegrationFragment extends BaseFragment {
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(contentView == null){
-            contentView = inflater.inflate(R.layout.fragment_integration,null);
-        }
-        ButterKnife.bind(this,contentView);
+    @BindView(R.id.et_search)
+    SearchEditTextView et_search; // 搜索内容
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_integration;
+    }
+
+    @Override
+    protected void init() {
         viewPager.setAdapter(new MyPagerAdapter(getActivity().getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
 
-        return contentView;
+        et_search.setOnKeyListener(new SearchEditTextView.onKeyListener() {
+            @Override
+            public void onKey() {
+                search();
+            }
+        });
+    }
+
+    @OnClick({R.id.iv_search})
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.iv_search:
+                // 点击搜索
+                search();
+                break;
+        }
+
+    }
+
+    private void search() {
+        String searchStr = et_search.getText().toString().trim();
+        if (!TextUtils.isEmpty(searchStr)) {
+            Intent mIntent = new Intent(getActivity(), SearchAdvertisementActivity.class);
+            mIntent.putExtra("keyword", searchStr);
+            getActivity().startActivity(mIntent);
+            ActivitySlideAnim.slideInAnim(getActivity());
+        } else {
+            ToastUtils.show(mContext, "请输入搜索内容");
+        }
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -64,9 +105,9 @@ public class IntegrationFragment extends BaseFragment {
         @Override
         public Fragment getItem(int position) {
             // 下面两个fragment是个人中心里的
-            if(position == 0){
+            if (position == 0) {
                 return new IntegrationWatchPraiseFragment();
-            }else{
+            } else {
                 return new IntegrationGroupBuyingFragment();
             }
         }

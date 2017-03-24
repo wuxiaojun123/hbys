@@ -22,6 +22,7 @@
             android:src="@mipmap/img_person_setting" />
 
         <ImageView
+            android:id="@+id/tv_msg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -38,7 +39,7 @@
 
         <ImageView
             android:id="@+id/iv_photo"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:src="@mipmap/img_my_default_photo" />
@@ -77,6 +78,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_user_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -112,6 +114,7 @@
         <LinearLayout style="@style/style_my_account_ll">
 
             <TextView
+                android:id="@+id/tv_help_num"
                 style="@style/style_my_account_text_balance"
                 android:text="0" />
 
@@ -124,6 +127,7 @@
         <LinearLayout style="@style/style_my_account_ll">
 
             <TextView
+                android:id="@+id/tv_account_help_reward"
                 style="@style/style_my_account_text_balance"
                 android:text="0" />
 
@@ -138,6 +142,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tv_number_of_complaints"
                 style="@style/style_my_account_text_balance"
                 android:text="0" />
 
@@ -150,6 +155,7 @@
         <LinearLayout style="@style/style_my_account_ll">
 
             <TextView
+                android:id="@+id/tv_number_of_complaints2"
                 style="@style/style_my_account_text_balance"
                 android:text="0" />
 

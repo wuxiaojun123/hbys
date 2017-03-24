@@ -6,11 +6,15 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.help.reward.App;
 import com.help.reward.activity.AccountManagerActivity;
+import com.help.reward.utils.GlideUtils;
 import com.idotools.utils.MetricsUtils;
 import com.help.reward.R;
 import com.help.reward.activity.LoginActivity;
@@ -45,6 +49,32 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     RelativeLayout rl_user_info;
     @BindView(R.id.ll_logined)
     LinearLayout ll_logined;
+
+    @BindView(R.id.iv_photo)
+    ImageView iv_photo; // 个人信息
+    @BindView(R.id.tv_login)
+    TextView tv_login;
+    @BindView(R.id.tv_register)
+    TextView tv_register;
+    @BindView(R.id.tv_user_level)
+    TextView tv_user_level;
+    @BindView(R.id.tv_help_num)
+    TextView tv_help_num; // 帮助人数
+    @BindView(R.id.tv_account_help_reward)
+    TextView tv_account_help_reward; // 帮赏分
+    @BindView(R.id.tv_number_of_complaints)
+    TextView tv_number_of_complaints; // 投诉人数
+    @BindView(R.id.tv_number_of_complaints2)
+    TextView tv_number_of_complaints2; // 被投诉人数
+
+    @BindView(R.id.tv_available_predeposit)
+    TextView tv_available_predeposit; // 余额
+    @BindView(R.id.tv_voucher)
+    TextView tv_voucher; // 优惠劵
+    @BindView(R.id.tv_general_voucher)
+    TextView tv_general_voucher; // 通用卷
+    @BindView(R.id.tv_discount_level)
+    TextView tv_discount_level; // 优惠百分比
 
 
     @Nullable
@@ -131,6 +161,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+    /***
+     */
     private void login(){
         RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
             @Override
@@ -141,6 +173,22 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                         lp.height = MetricsUtils.dipToPx(210);
                         ll_login_height.requestLayout();
                         ll_logined.setVisibility(View.VISIBLE);
+                        // 设置会员信息
+                        if(App.mLoginReponse != null){
+                            GlideUtils.loadCircleImage(App.mLoginReponse.avator,iv_photo);
+                            tv_register.setVisibility(View.GONE);
+                            tv_login.setText(App.mLoginReponse.username);
+                            tv_user_level.setText("用户等级："+App.mLoginReponse.level_name);
+                            tv_help_num.setText(App.mLoginReponse.people_help);
+                            tv_account_help_reward.setText(App.mLoginReponse.point);
+                            tv_number_of_complaints.setText(App.mLoginReponse.complaint);
+                            tv_number_of_complaints2.setText(App.mLoginReponse.complained);
+
+                            tv_available_predeposit.setText(App.mLoginReponse.available_predeposit);
+                            tv_voucher.setText(App.mLoginReponse.voucher);
+                            tv_general_voucher.setText(App.mLoginReponse.general_voucher);
+                            tv_discount_level.setText(App.mLoginReponse.discount_level);
+                        }
                     }
                 }
             }

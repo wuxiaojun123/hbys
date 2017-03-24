@@ -11,6 +11,7 @@ import com.help.reward.bean.Response.GeneralExchangeVolumeResponse;
 import com.help.reward.bean.Response.GeneralVolumeResponse;
 import com.help.reward.bean.Response.HelpCenterResponse;
 import com.help.reward.bean.Response.HelpRewardResponse;
+import com.help.reward.bean.Response.MemberInfoResponse;
 import com.help.reward.bean.Response.MyBalanceResponse;
 import com.help.reward.bean.Response.MyCollectionGoodsResponse;
 import com.help.reward.bean.Response.MyCollectionPostResponse;
@@ -21,11 +22,17 @@ import com.help.reward.bean.Response.MyHelpPostResponse;
 import com.help.reward.bean.Response.MyRewardCommentResponse;
 import com.help.reward.bean.Response.MyRewardPostResponse;
 import com.help.reward.bean.Response.MyVoteResponse;
+import com.help.reward.bean.Response.PersonInfoResponse;
+import com.help.reward.bean.Response.UploadHeadImageReponse;
 import com.help.reward.utils.Constant;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -37,6 +44,56 @@ import rx.Observable;
 
 public interface PersonalApi {
 
+    // 个人信息--已登陆
+    /*@FormUrlEncoded
+    @POST("mobile/index.php?act=member_index&op=index")
+    Observable<MemberInfoResponse> getMemberInfoResponse(
+            @Field("key") String key
+    );*/
+
+    // 我的个人信息
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_index&op=member_info")
+    Observable<PersonInfoResponse> getPersonInfoResponse(
+            @Field("key") String key
+    );
+
+    // 我的个人信息--提交sex 0/1/2；business;position;description;avatar(上传后的url);province;city;area(省市区id);name
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_index&op=edit_member_info")
+    Observable<BaseResponse<String>> getUpdatePersonInfoResponse(
+            @Field("key") String key,
+            @Field("sex") String sex,
+            @Field("business") String business,
+            @Field("position") String position,
+            @Field("description") String description,
+            @Field("avatar") String avatar,
+            @Field("province") String province,
+            @Field("city") String city,
+            @Field("area") String area,
+            @Field("name") String name
+    );
+
+    // 上传头像
+    /*@Multipart
+    @POST("mobile/index.php?act=upload_file&op=upload_img")
+    Observable<UploadHeadImageReponse> getUploadHeadImageReponse(
+            // @Part("description") RequestBody description,
+            @Part MultipartBody.Part file,
+            @Part("type") String type,
+            @Part("key") String key
+    );*/
+
+    // 上传头像
+    @Multipart
+    @POST("mobile/index.php?act=upload_file&op=upload_img")
+    Observable<UploadHeadImageReponse> getUploadHeadImageReponse(
+            // @Part("description") RequestBody description,
+            @Part RequestBody file,
+            @Query("type") String type,
+            @Query("key") String key
+    );
+
 
     // 我的求助--发帖
     @FormUrlEncoded
@@ -44,7 +101,6 @@ public interface PersonalApi {
     Observable<AddressResponse> getAddressResponse(
             @Field("key") String key
     );
-
 
 
     // 我的求助--发帖

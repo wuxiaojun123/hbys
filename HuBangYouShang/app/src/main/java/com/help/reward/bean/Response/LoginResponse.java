@@ -4,18 +4,20 @@ package com.help.reward.bean.Response;
  * Created by wuxiaojun on 2017/2/23.
  */
 
-public class LoginResponse extends BaseResponse<LoginResponse>{
+public class LoginResponse extends BaseResponse<LoginResponse> {
 
     public String username;
     public String userid;
     public String key;
-
-    /*public LoginBean data;
-
-    public class LoginBean{
-        public String username;
-        public String userid;
-        public String key;
-    }*/
+    public String avator;
+    public String point;
+    public String level_name;
+    public String people_help;
+    public String complaint;
+    public String complained;
+    public String available_predeposit;
+    public String discount_level;
+    public String general_voucher;
+    public String voucher;
 
 }

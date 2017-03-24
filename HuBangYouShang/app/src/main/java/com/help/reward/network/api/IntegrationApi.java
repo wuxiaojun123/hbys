@@ -2,6 +2,7 @@ package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.AdInfoResponse;
 import com.help.reward.bean.Response.AdvertisementResponse;
+import com.help.reward.bean.Response.WatchAdGetScroeResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -40,6 +41,26 @@ public interface IntegrationApi {
             @Query("act") String act,
             @Query("op") String curpage,
             @Field("id") String id
+    );
+
+    // 会员看广告  mobile/index.php?act=advertisement&op=watch
+    @FormUrlEncoded
+    @POST("mobile/index.php")
+    Observable<WatchAdGetScroeResponse> getWatchAdGetScroeResponse(
+            @Query("act") String act,
+            @Query("op") String curpage,
+            @Field("key") String key,
+            @Field("id") String id
+    );
+
+    // 搜索广告  mobile/index.php?act=advertisement&op=search
+    @FormUrlEncoded
+    @POST("mobile/index.php")
+    Observable<AdvertisementResponse> getSearchAdvertisementResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("keyword") String keyword
     );
 
 

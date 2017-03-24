@@ -56,6 +56,6 @@
         android:id="@+id/iv_img_ad"
         android:layout_width="match_parent"
         android:layout_height="175dp"
-        android:src="@mipmap/test_img_ad" />
+        android:scaleType="fitXY" />
 
 </LinearLayout>
