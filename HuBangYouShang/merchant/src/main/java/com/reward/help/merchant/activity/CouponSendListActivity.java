@@ -11,24 +11,33 @@ import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.MetricsUtils;
+import com.idotools.utils.ToastUtils;
+import com.reward.help.merchant.App;
 import com.reward.help.merchant.R;
 import com.reward.help.merchant.adapter.CouponListAdapter;
 import com.reward.help.merchant.bean.CouponListBean;
+import com.reward.help.merchant.bean.Response.CouponListResponse;
 import com.reward.help.merchant.chat.ui.BaseActivity;
+import com.reward.help.merchant.network.CouponPointsNetwork;
+import com.reward.help.merchant.network.base.BaseSubscriber;
+import com.reward.help.merchant.rxbus.RxBus;
+import com.reward.help.merchant.view.MyProcessDialog;
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-/**
- * Created by fanjunqing on 21/03/2017.
- */
-
-public class CouponSendListActivity extends BaseActivity {
+public class CouponSendListActivity extends BaseActivity implements View.OnClickListener{
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -58,11 +67,7 @@ public class CouponSendListActivity extends BaseActivity {
     }
 
     private void initData() {
-        mList = new ArrayList<CouponListBean>();
-        for(int i = 0;i < 20;i++) {
-            CouponListBean couponListBean = new CouponListBean();
-            mList.add(couponListBean);
-        }
+       getCouponListRequest();
     }
 
     private void initView() {
@@ -88,5 +93,50 @@ public class CouponSendListActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+
+    private void getCouponListRequest() {
+        MyProcessDialog.showDialog(CouponSendListActivity.this);
+        subscribe = CouponPointsNetwork.getCouponListApi().getCouponList(App.APP_CLIENT_KEY)
+                .subscribeOn(Schedulers.io()) // 请求放在io线程中
+                .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
+                .subscribe(new BaseSubscriber<CouponListResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        if (e instanceof UnknownHostException) {
+                            ToastUtils.show(mContext, "请求到错误服务器");
+                        } else if (e instanceof SocketTimeoutException) {
+                            ToastUtils.show(mContext, "请求超时");
+                        }
+                    }
+
+                    @Override
+                    public void onNext(CouponListResponse couponListResponse) {
+                        if (couponListResponse.code == 200) {
+
+                            //finish();
+                            //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                        } else {
+                            ToastUtils.show(mContext, couponListResponse.msg);
+                        }
+                    }
+                });
+    }
+
+    @OnClick({R.id.iv_title_back,R.id.tv_right})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_title_back:
+                CouponSendListActivity.this.finish();
+                break;
+            case R.id.tv_right:
+                //TODO
+                break;
+        }
+
     }
 }

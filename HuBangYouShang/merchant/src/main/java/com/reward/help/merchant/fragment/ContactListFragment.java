@@ -120,7 +120,7 @@ public class ContactListFragment extends EaseBaseFragment {
         super.onResume();
     }
 
-    private void refresh(){
+    public void refresh(){
         grouplist = EMClient.getInstance().groupManager().getAllGroups();
         groupAdapter = new GroupAdapter(getActivity(), 1, grouplist);
         groupListView.setAdapter(groupAdapter);

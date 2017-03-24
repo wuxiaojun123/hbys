@@ -266,7 +266,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     }
                 } else if (currentTabIndex == 1) {
                     if(contactListFragment != null) {
- //                       contactListFragment.refresh();
+                        contactListFragment.refresh();
                     }
                 }
                 String action = intent.getAction();

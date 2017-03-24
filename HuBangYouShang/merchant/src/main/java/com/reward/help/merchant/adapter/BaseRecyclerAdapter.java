@@ -67,9 +67,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SuperV
     }
 
     public void setDataList(Collection<T> list) {
-        this.mDataList.clear();
-        this.mDataList.addAll(list);
-        notifyDataSetChanged();
+        if (list != null) {
+            this.mDataList.clear();
+            this.mDataList.addAll(list);
+            notifyDataSetChanged();
+        }
     }
 
     public void addAll(Collection<T> list) {

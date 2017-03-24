@@ -2,12 +2,14 @@ package com.reward.help.merchant.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.util.EasyUtils;
+import com.reward.help.merchant.App;
 import com.reward.help.merchant.R;
 import com.reward.help.merchant.chat.DemoHelper;
 import com.reward.help.merchant.chat.ui.BaseActivity;
@@ -40,7 +42,7 @@ public class SplashActivity extends BaseActivity {
 
 		new Thread(new Runnable() {
 			public void run() {
-				if (DemoHelper.getInstance().isLoggedIn()) {
+				if (!TextUtils.isEmpty(App.getApplication().APP_CLIENT_KEY) && DemoHelper.getInstance().isLoggedIn()) {
 					// auto login mode, make sure all group and conversation is loaed before enter the main screen
 					long start = System.currentTimeMillis();
 					EMClient.getInstance().chatManager().loadAllConversations();
