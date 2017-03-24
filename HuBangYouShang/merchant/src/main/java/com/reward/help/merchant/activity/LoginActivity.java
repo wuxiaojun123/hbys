@@ -31,11 +31,26 @@ import android.widget.Toast;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.idotools.utils.LogUtils;
+import com.idotools.utils.ToastUtils;
 import com.reward.help.merchant.App;
 import com.reward.help.merchant.R;
+import com.reward.help.merchant.bean.Response.LoginResponse;
 import com.reward.help.merchant.chat.DemoHelper;
 import com.reward.help.merchant.chat.db.DemoDBManager;
 import com.reward.help.merchant.chat.ui.BaseActivity;
+import com.reward.help.merchant.network.PersonalNetwork;
+import com.reward.help.merchant.network.base.BaseSubscriber;
+import com.reward.help.merchant.rxbus.RxBus;
+import com.reward.help.merchant.utils.ActivitySlideAnim;
+import com.reward.help.merchant.utils.Constant;
+import com.reward.help.merchant.view.MyProcessDialog;
+
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Login screen
@@ -106,6 +121,47 @@ public class LoginActivity extends BaseActivity {
 		});
 	}
 
+
+	/***
+	 * 登录逻辑
+	 */
+	private void loginRequest(final String username, final String password) {
+
+		MyProcessDialog.showDialog(LoginActivity.this);
+		subscribe = PersonalNetwork
+				.getLoginApi()
+				.getLoginBean(username, password, Constant.PLATFORM_CLIENT).subscribeOn(Schedulers.io()) // 请求放在io线程中
+				.observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
+				.subscribe(new BaseSubscriber<LoginResponse>() {
+					@Override
+					public void onError(Throwable e) {
+						MyProcessDialog.closeDialog();
+						e.printStackTrace();
+						if (e instanceof UnknownHostException) {
+							ToastUtils.show(mContext, "请求到错误服务器");
+						} else if (e instanceof SocketTimeoutException) {
+							ToastUtils.show(mContext, "请求超时");
+						}
+					}
+
+					@Override
+					public void onNext(LoginResponse res) {
+						//MyProcessDialog.closeDialog();
+						if (res.code == 200) {
+							LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
+							App.APP_CLIENT_KEY = res.data.key;
+							RxBus.getDefault().post("loginSuccess");
+
+							loginToHuanxin(username,password);
+							//finish();
+							//ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+						} else {
+							ToastUtils.show(mContext, res.msg);
+						}
+					}
+				});
+	}
+
 	/**
 	 * login
 	 * 
@@ -128,27 +184,33 @@ public class LoginActivity extends BaseActivity {
 			return;
 		}
 
-		progressShow = true;
-		final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
-		pd.setCanceledOnTouchOutside(false);
-		pd.setOnCancelListener(new OnCancelListener() {
+		loginRequest(currentUsername,currentPassword);
 
-			@Override
-			public void onCancel(DialogInterface dialog) {
-				Log.d(TAG, "EMClient.getInstance().onCancel");
-				progressShow = false;
-			}
-		});
-		pd.setMessage(getString(R.string.Is_landing));
-		pd.show();
+//		progressShow = true;
+//		final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+//		pd.setCanceledOnTouchOutside(false);
+//		pd.setOnCancelListener(new OnCancelListener() {
+//
+//			@Override
+//			public void onCancel(DialogInterface dialog) {
+//				Log.d(TAG, "EMClient.getInstance().onCancel");
+//				progressShow = false;
+//			}
+//		});
+//		pd.setMessage(getString(R.string.Is_landing));
+//		pd.show();
 
 		// After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
 		// close it before login to make sure DemoDB not overlap
-        DemoDBManager.getInstance().closeDB();
+		loginToHuanxin(currentUsername, currentPassword);
+	}
 
-        // reset current user name before login
-        DemoHelper.getInstance().setCurrentUserName(currentUsername);
-        
+	private void loginToHuanxin(String currentUsername, String currentPassword) {
+		DemoDBManager.getInstance().closeDB();
+
+		// reset current user name before login
+		DemoHelper.getInstance().setCurrentUserName(currentUsername);
+
 		final long start = System.currentTimeMillis();
 		// call login method
 		Log.d(TAG, "EMClient.getInstance().login");
@@ -157,6 +219,7 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onSuccess() {
 				Log.d(TAG, "login: onSuccess");
+				MyProcessDialog.closeDialog();
 
 
 				// ** manually load all local groups and conversation
@@ -170,9 +233,9 @@ public class LoginActivity extends BaseActivity {
 					Log.e("LoginActivity", "update current user nick fail");
 				}
 
-				if (!LoginActivity.this.isFinishing() && pd.isShowing()) {
-				    pd.dismiss();
-				}
+//				if (!LoginActivity.this.isFinishing() && pd.isShowing()) {
+//				    pd.dismiss();
+//				}
 				// get user's info (this should be get from App's server or 3rd party service)
 				DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
 
@@ -191,12 +254,12 @@ public class LoginActivity extends BaseActivity {
 			@Override
 			public void onError(final int code, final String message) {
 				Log.d(TAG, "login: onError: " + code);
-				if (!progressShow) {
-					return;
-				}
+				//if (!progressShow) {
+				//	return;
+				//}
 				runOnUiThread(new Runnable() {
 					public void run() {
-						pd.dismiss();
+						MyProcessDialog.closeDialog();
 						Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
 								Toast.LENGTH_SHORT).show();
 					}

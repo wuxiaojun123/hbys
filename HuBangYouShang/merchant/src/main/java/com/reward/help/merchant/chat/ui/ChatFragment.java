@@ -37,6 +37,7 @@ import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
 import com.hyphenate.util.EasyUtils;
 import com.hyphenate.util.PathUtil;
 import com.reward.help.merchant.R;
+import com.reward.help.merchant.activity.CouponSendListActivity;
 import com.reward.help.merchant.activity.MainActivity;
 import com.reward.help.merchant.chat.Constant;
 import com.reward.help.merchant.chat.DemoHelper;
@@ -347,9 +348,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 startVideoCall();
                 break;
             case ITEM_COUPON:
-                intent = new Intent();
-                intent.putExtra(CouponPointsConstant.EXTRA_GREETING,"满500减20");
-                sendMessage(CouponPointsUtils.createCouponMessage(getActivity(), intent, toChatUsername));
+                //intent = new Intent();
+                //intent.putExtra(CouponPointsConstant.EXTRA_GREETING,"满500减20");
+                //sendMessage(CouponPointsUtils.createCouponMessage(getActivity(), intent, toChatUsername));
+                startActivity(new Intent(getActivity(), CouponSendListActivity.class));
                 break;
             case ITEM_POINTS:
                 intent = new Intent();

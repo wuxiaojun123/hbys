@@ -15,17 +15,25 @@
 package com.reward.help.merchant.chat.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.reward.help.merchant.utils.ActivitySlideAnim;
 
+import rx.Subscription;
+
 @SuppressLint("Registered")
 public class BaseActivity extends EaseBaseActivity {
+
+    protected Subscription subscribe;
+    protected Context mContext;
+
 
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
+        mContext = this;
     }
 
     @Override
@@ -45,5 +53,13 @@ public class BaseActivity extends EaseBaseActivity {
         finish();
         ActivitySlideAnim.slideOutAnim(this);
 //        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (subscribe != null && !subscribe.isUnsubscribed()) {
+            subscribe.unsubscribe();
+        }
+        super.onDestroy();
     }
 }
