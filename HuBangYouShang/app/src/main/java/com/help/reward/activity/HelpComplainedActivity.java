@@ -158,7 +158,7 @@ public class HelpComplainedActivity extends BaseActivity implements DealChoosePi
                     public void onNext(BaseResponse response) {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
-                            DialogUtil.showConfirmCancleDialog(HelpComplainedActivity.this, "系统提示", "您的投诉内容已提交\n待被投诉人回复", "", "确定", new DialogUtil.OnDialogUtilClickListener() {
+                            DialogUtil.showConfirmCancleDialog(HelpComplainedActivity.this, "系统提示", "您的投诉内容已提交\n待被投诉人申诉", "", "确定", new DialogUtil.OnDialogUtilClickListener() {
                                 @Override
                                 public void onClick(boolean isLeft) {
                                   finish();

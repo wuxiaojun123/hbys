@@ -2,6 +2,10 @@ package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.AreaResponse;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.HelpRewardChatDetailResponse;
+import com.help.reward.bean.Response.HelpRewardChatResponse;
+import com.help.reward.bean.Response.HelpRewardCommentResponse;
+import com.help.reward.bean.Response.HelpRewardInfoResponse;
 import com.help.reward.bean.Response.HelpRewardsResponse;
 import com.help.reward.bean.Response.HelpSeekCommentDetailResponse;
 import com.help.reward.bean.Response.HelpSeekInfoResponse;
@@ -62,6 +66,70 @@ public interface HelpApi {
             @Field("curpage") int curpage
     );
 
+    /**
+     * 获赏贴详情
+     * /mobile/index.php?act=index&op=get_reward_detail
+     * 参数[post]：id页数参数此处分别为curpage(评论的) 和curpage2(私聊的)，
+     * 返回：
+     * "hasmore": false,"page_total": 1,//评论分页
+     * "hasmore2": false,"page_total2": 1,//私聊分页。
+     * ,”data”:{‘info’:’admiration_list是赞赏名单，暂最多16人，admiration为全部赞人数’,’chat_list’:’私聊，有分页’,’message_list’:’评论，有分页。’}
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_HELP)
+    Observable<HelpRewardInfoResponse> getHelpRewardInfoBean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("id") String id
+    );
+
+    /**
+     * 获赏贴详情 评论列表
+     * /mobile/index.php?act=index&op=reward_comment
+     * 参数[post]：id
+     * 返回：
+     * "hasmore": false,"page_total": 1,//评论分页
+     * message_list  type=2 avatar content id u_name creat_time
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_HELP)
+    Observable<HelpRewardCommentResponse> getHelpRewardCommentBean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("id") String id,
+            @Field("curpage") int curpage
+    );
+
+    /**
+     * 获赏贴详情 私聊列表
+     * /mobile/index.php?act=index&op=reward_prvChat
+     * 参数[post]：id
+     * 返回：
+     * "hasmore": false,"page_total": 1,//评论分页
+     * message_list  type=2 avatar content id u_name creat_time
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_HELP)
+    Observable<HelpRewardChatResponse> getHelpRewardChatBean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("id") String id,
+            @Field("curpage") int curpage
+    );
+
+    /**
+     * 打赏 获赏帖
+     * /mobile/index.php?act=get_reward&op=reward_post
+     * 参数[get]：获赏贴id
+     * 打赏成功失败以code200/201为准
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_GETREWARD)
+    Observable<StringResponse> getGiveRewardPoints10Bean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("post_id") String post_id
+    );
 
     // 投票帖子详情op=vote_info
     @FormUrlEncoded
@@ -247,5 +315,65 @@ public interface HelpApi {
             @Field("key") String key,
             @Query("op") String op,
             @Field("id") String id
+    );
+
+    /**
+     * 获赏评论展开
+     * /mobile/index.php?act=index&op=reward_commment_expand
+     * 参数[post]：id 私聊id
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_HELP)
+    Observable<HelpRewardChatDetailResponse> getRewardCommentDetailBean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("id") String id
+    );
+
+
+    /**
+     * 获赏贴私聊提交
+     * /mobile/index.php?act=get_reward&op=private_chat
+     * 参数[post]：content 内容；post_id 帖子id；
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_GETREWARD)
+    Observable<StringResponse> getSubRewardChatBean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("post_id") String post_id,
+            @Field("parent_id") String parent_id,
+            @Field("content") String content
+
+    );
+
+
+    /**
+     * 获赏贴评论
+     * /mobile/index.php?act=get_reward&op=comment
+     * 参数[post]：content 内容；post_id 帖子id；
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_GETREWARD)
+    Observable<StringResponse> getSubRewardCommentBean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("post_id") String post_id,
+            @Field("content") String content
+    );
+
+
+    /**
+     * 获赏贴单独给赏分
+     * /mobile/index.php?act=get_reward&op=give_points
+     * 参数[post]：points 分数；post_id;
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_GETREWARD)
+    Observable<StringResponse> getGiveRewardPointsBean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("post_id") String post_id,
+            @Field("points") String points
     );
 }

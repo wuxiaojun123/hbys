@@ -20,4 +20,5 @@ public class HelpRewardsBean {
     public long create_time;
     public String comment;
     public String admiration;
+    public String admiration_all;
 }

@@ -20,6 +20,8 @@ public class GlideUtils {
             Glide.with(imageView.getContext())
                     .load(imgUrl)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .error(R.mipmap.img_default)
+                    .placeholder(R.mipmap.img_default)
                     .crossFade()
                     .into(imageView);
         }

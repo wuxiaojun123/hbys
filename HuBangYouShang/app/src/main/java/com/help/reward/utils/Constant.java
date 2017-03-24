@@ -63,6 +63,8 @@ public class Constant {
     public static final String URL_SUBREWARD = "mobile/index.php?act=get_reward&op=release";
     //发布求助帖
     public static final String URL_SUBSEEKHELP = "mobile/index.php?act=seek_help";
+
+    public static final String URL_GETREWARD = "mobile/index.php?act=get_reward";
     public static final String URL_UPLOADIMAGE = "mobile/index.php?act=upload_file&op=upload_img";
     public static final String URL_SUBVOTE = "mobile/index.php?act=member_vote&op=vote";
 

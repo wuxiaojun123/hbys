@@ -34,7 +34,7 @@ public class HelpRewardsAdapter extends BaseRecyclerAdapter<HelpRewardsBean> {
         TextView item_help1_date = holder.getView(R.id.item_help1_date);
         item_help1_date.setText(DateUtil.getDateToString(item.create_time*1000));
         TextView item_help1_score = holder.getView(R.id.item_help1_score);
-        item_help1_score.setText("悬赏 " + item.admiration);
+        item_help1_score.setText("获赏 " + item.admiration_all);
         TextView item_help1_count = holder.getView(R.id.item_help1_count);
         item_help1_count.setText("跟帖 " + item.comment);
         TextView item_help1_des = holder.getView(R.id.item_help1_des);
