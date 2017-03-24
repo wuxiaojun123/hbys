@@ -21,7 +21,7 @@
          >
 
         <TextView
-            android:text="滑动开关"
+            android:text="消息设置"
             style="@style/style_setting_text"
             android:drawableRight="@null"
             />
@@ -47,6 +47,7 @@
         android:layout_height="15dp" />
 
     <TextView
+        android:id="@+id/tv_clean_cache"
         style="@style/style_setting_text"
         android:text="清除缓存"
         />
@@ -56,6 +57,7 @@
         android:layout_height="15dp" />
 
     <TextView
+        android:id="@+id/tv_call"
         style="@style/style_setting_text"
         android:text="客服中心"
         />
@@ -83,6 +85,7 @@
         android:layout_height="15dp" />
 
     <TextView
+        android:id="@+id/tv_logout"
         style="@style/style_setting_text"
         android:text="退出当前账号"
         />

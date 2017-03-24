@@ -6,7 +6,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.cache.DiskLruCacheFactory;
 import com.help.reward.R;
+
+import java.io.File;
 
 /**
  * Created by wuxiaojun on 17-3-2.
@@ -52,5 +55,11 @@ public class GlideUtils {
         }
     }
 
+    /*public static void setCacheDir(){
+        File cacheDir = context.getExternalCacheDir();//指定的是数据的缓存地址
+        int diskCacheSize = 1024 * 1024 * 30;//最多可以缓存多少字节的数据
+        //设置磁盘缓存大小
+        Glide.with(imageView.getContext()).setDiskCache(new DiskLruCacheFactory(cacheDir.getPath(), "glide", diskCacheSize));
+    }*/
 
 }
