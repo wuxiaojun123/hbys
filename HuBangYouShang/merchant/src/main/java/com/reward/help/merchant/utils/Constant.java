@@ -34,4 +34,6 @@ public class Constant {
     public static final String URL_GET_POINTS = "/mobile/index.php?act=seller_points&op=sellerPoints";
 
 
+    public static final String URL_GET_STORE = "/mobile/index.php?act=seller_store&op=store_joinin_info";
+
 }

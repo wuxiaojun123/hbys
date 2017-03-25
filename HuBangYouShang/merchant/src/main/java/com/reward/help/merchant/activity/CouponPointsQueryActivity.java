@@ -119,6 +119,13 @@ public class CouponPointsQueryActivity extends BaseActivity {
             }
         });
 
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CouponPointsQueryActivity.this.finish();
+            }
+        });
+
     }
 
 

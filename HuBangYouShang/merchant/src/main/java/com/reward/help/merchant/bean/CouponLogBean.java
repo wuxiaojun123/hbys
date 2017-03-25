@@ -2,10 +2,6 @@ package com.reward.help.merchant.bean;
 
 import java.util.List;
 
-/**
- * Created by fanjunqing on 25/03/2017.
- */
-
 public class CouponLogBean {
 
     public List<Member> receive_log_list;

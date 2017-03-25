@@ -34,5 +34,4 @@ public interface LoginApi {
             @Field("phone") String phone,
             @Field("type") String type
     );
-
 }

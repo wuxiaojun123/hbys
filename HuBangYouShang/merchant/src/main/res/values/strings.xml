@@ -79,4 +79,15 @@
 
     <string name="send_points_per_num_result">可用营销积分</string>
 
+
+
+    <string name="store_check_pass">您的入驻申请已通过审核</string>
+    <string name="store_check_wait">您的入驻申请正在审核</string>
+    <string name="store_check_unpass">您的入驻申请审核不通过</string>
+    <string name="store_check_unpass_des" >请登录网页端重新提交申请信息</string>
+    <string name="store_name">店铺名称</string>
+    <string name="store_type">店铺分类</string>
+    <string name="store_type2">经营类目</string>
+    <string name="store_main">经营主体</string>
+    <string name="store_owner">联系人</string>
 </resources>

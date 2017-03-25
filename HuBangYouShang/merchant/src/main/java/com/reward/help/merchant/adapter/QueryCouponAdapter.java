@@ -9,10 +9,6 @@ import com.reward.help.merchant.R;
 import com.reward.help.merchant.adapter.viewholder.SuperViewHolder;
 import com.reward.help.merchant.bean.CouponLogBean;
 
-/**
- * Created by fanjunqing on 25/03/2017.
- */
-
 public class QueryCouponAdapter extends BaseRecyclerAdapter<CouponLogBean.Member> {
 
     private String des;

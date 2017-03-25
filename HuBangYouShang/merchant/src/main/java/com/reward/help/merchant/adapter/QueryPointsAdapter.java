@@ -10,10 +10,6 @@ import com.reward.help.merchant.adapter.viewholder.SuperViewHolder;
 import com.reward.help.merchant.bean.CouponLogBean;
 import com.reward.help.merchant.bean.PointsLogBean;
 
-/**
- * Created by fanjunqing on 25/03/2017.
- */
-
 public class QueryPointsAdapter extends BaseRecyclerAdapter<PointsLogBean.Member> {
 
     public QueryPointsAdapter(Context context) {

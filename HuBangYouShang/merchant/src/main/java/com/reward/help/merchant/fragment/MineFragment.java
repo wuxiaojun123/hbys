@@ -22,6 +22,7 @@ import com.reward.help.merchant.R;
 import com.reward.help.merchant.activity.LoginActivity;
 import com.reward.help.merchant.activity.MainActivity;
 import com.reward.help.merchant.activity.ProfileActivity;
+import com.reward.help.merchant.activity.StoreInfoActivity;
 import com.reward.help.merchant.chat.DemoHelper;
 import com.reward.help.merchant.utils.GlideUtils;
 
@@ -89,11 +90,10 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_my_info:
-                //TODO edit my info
                 startActivity(new Intent(getActivity(), ProfileActivity.class));
                 break;
             case R.id.rl_my_store_info:
-                //TODO edit my store info
+                startActivity(new Intent(getActivity(), StoreInfoActivity.class));
                 break;
             case R.id.tv_mine_modify_password:
                 //TODO modify password

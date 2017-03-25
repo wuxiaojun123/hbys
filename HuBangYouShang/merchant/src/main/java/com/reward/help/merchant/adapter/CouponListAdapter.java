@@ -13,10 +13,6 @@ import com.reward.help.merchant.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by fanjunqing on 21/03/2017.
- */
-
 public class CouponListAdapter extends BaseRecyclerAdapter<CouponListBean>{
 
     private List<CouponListBean> mCheckList;

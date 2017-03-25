@@ -4,10 +4,6 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by fanjunqing on 25/03/2017.
- */
-
 public class DateUtils {
 
     final static String patten = "yyyy.MM.dd";

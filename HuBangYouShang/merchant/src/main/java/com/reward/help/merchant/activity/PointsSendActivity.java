@@ -28,9 +28,6 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by fanjunqing on 25/03/2017.
- */
 
 public class PointsSendActivity extends BaseActivity implements View.OnClickListener {
 

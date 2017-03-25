@@ -9,10 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-/**
- * Created by fanjunqing on 25/03/2017.
- */
-
 public class SpUtils {
 
     /**

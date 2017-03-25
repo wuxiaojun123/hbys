@@ -6,10 +6,6 @@ import android.content.Intent;
 import com.hbys.chatlibrary.R;
 import com.hyphenate.chat.EMMessage;
 
-/**
- * Created by fanjunqing on 18/03/2017.
- */
-
 public class CouponPointsUtils {
 
     /**

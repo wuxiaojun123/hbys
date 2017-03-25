@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="@string/send_points_num"
             android:textColor="@color/color_3a"
-            android:textSize="@dimen/dimen_18"
+            android:textSize="@dimen/dimen_15"
             android:padding="@dimen/dimen_10"/>
 
         <EditText
@@ -50,7 +50,7 @@
             android:hint="@string/send_coupon_count_hint"
             android:layout_marginLeft="@dimen/dimen_13"
             android:inputType="number"
-            android:textSize="@dimen/dimen_18"/>
+            android:textSize="@dimen/dimen_15"/>
 
     </RelativeLayout>
 
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:text="@string/send_points_per_num"
             android:textColor="@color/color_3a"
-            android:textSize="@dimen/dimen_18"
+            android:textSize="@dimen/dimen_15"
             android:padding="@dimen/dimen_10"/>
 
         <EditText
@@ -90,7 +90,7 @@
             android:hint="@string/send_points_per_num_hint"
             android:layout_marginLeft="@dimen/dimen_13"
             android:inputType="number"
-            android:textSize="@dimen/dimen_18"/>
+            android:textSize="@dimen/dimen_15"/>
 
     </RelativeLayout>
 
