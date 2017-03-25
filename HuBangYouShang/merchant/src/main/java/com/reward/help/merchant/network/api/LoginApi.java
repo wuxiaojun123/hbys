@@ -20,9 +20,9 @@ public interface LoginApi {
 
     // 登录
     @FormUrlEncoded
-    @POST(Constant.URL_LOGIN)
+    @POST(Constant.URL_SELLER_LOGIN)
     Observable<LoginResponse> getLoginBean(
-            @Field("username") String username,
+            @Field("phone") String username,
             @Field("password") String password,
             @Field("client") String client
     );

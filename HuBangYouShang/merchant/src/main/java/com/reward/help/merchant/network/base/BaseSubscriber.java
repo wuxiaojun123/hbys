@@ -27,12 +27,12 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         // 关闭进度条
     }
 
-    /*@Override
+    @Override
     public void onError(Throwable e) {
     }
     @Override
     public void onNext(T t) {
 
-    }*/
+    }
 
 }

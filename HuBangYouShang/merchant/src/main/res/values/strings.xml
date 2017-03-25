@@ -59,4 +59,13 @@
 
     <string name="no_coupon">暂无可发放的优惠券</string>
     <string name="send_coupon">发优惠券</string>
+    <string name="send_coupon_count">发放个数</string>
+    <string name="send_coupon_count_hint">请输入发放的优惠券个数</string>
+    <string name="send_btn">发送</string>
+    <string name="group_num">本群共%1$s人</string>
+    <string name="format_discount_money">¥ %1$s</string>
+    <string name="format_limit_money">满%1$s元可用</string>
+    <string name="format_left_count">剩余</string>
+    <string name="format_greeting">满%2$s元减%1$s</string>
+
 </resources>

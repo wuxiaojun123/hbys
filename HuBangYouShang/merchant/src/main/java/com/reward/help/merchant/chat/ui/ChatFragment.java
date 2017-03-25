@@ -233,6 +233,13 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                     inputAtUsername(username, false);
                 }
                 break;
+
+
+            case REQUEST_CODE_SEND_COUPON:
+                if (data != null) {
+                    sendMessage(CouponPointsUtils.createCouponMessage(getActivity(), data, toChatUsername));
+                }
+                break;
             //red packet code : 发送红包消息到聊天界面
 //            case REQUEST_CODE_SEND_RED_PACKET:
 //                if (data != null){
@@ -351,7 +358,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 //intent = new Intent();
                 //intent.putExtra(CouponPointsConstant.EXTRA_GREETING,"满500减20");
                 //sendMessage(CouponPointsUtils.createCouponMessage(getActivity(), intent, toChatUsername));
-                startActivity(new Intent(getActivity(), CouponSendListActivity.class));
+                CouponSendListActivity.startActivityForResult(this,new Intent(getActivity(), CouponSendListActivity.class),REQUEST_CODE_SEND_COUPON);
                 break;
             case ITEM_POINTS:
                 intent = new Intent();

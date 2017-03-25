@@ -5,9 +5,11 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 
 
 import com.reward.help.merchant.chat.DemoHelper;
+import com.reward.help.merchant.utils.SpUtils;
 
 import java.util.Iterator;
 import java.util.List;
@@ -21,9 +23,33 @@ import java.util.List;
 public class App extends Application {
 
     private static App mApp;
-    public static String APP_CLIENT_KEY = null;
-    public static String APP_CLIENT_COOKIE = null;
+    private static String APP_CLIENT_KEY = null;
+    private static String APP_CLIENT_COOKIE = null;
     public static String currentUserNick = "";
+
+    public static String getAppClientKey() {
+        if (TextUtils.isEmpty(APP_CLIENT_KEY)) {
+            APP_CLIENT_KEY = (String) SpUtils.get(SpUtils.SP_KEY,"String");
+        }
+        return APP_CLIENT_KEY;
+    }
+
+    public static void setAppClientKey(String appClientKey) {
+        APP_CLIENT_KEY = appClientKey;
+        SpUtils.put(SpUtils.SP_KEY,appClientKey);
+    }
+
+    public static String getAppClientCookie() {
+        if (TextUtils.isEmpty(APP_CLIENT_COOKIE)) {
+            APP_CLIENT_COOKIE = (String) SpUtils.get(SpUtils.SP_COOKIE,"String");
+        }
+        return APP_CLIENT_COOKIE;
+    }
+
+    public static void setAppClientCookie(String appClientCookie) {
+        APP_CLIENT_COOKIE = appClientCookie;
+        SpUtils.put(SpUtils.SP_COOKIE,appClientCookie);
+    }
 
 
     @Override

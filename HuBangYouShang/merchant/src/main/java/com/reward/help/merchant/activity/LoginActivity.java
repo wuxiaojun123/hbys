@@ -148,8 +148,8 @@ public class LoginActivity extends BaseActivity {
 					public void onNext(LoginResponse res) {
 						//MyProcessDialog.closeDialog();
 						if (res.code == 200) {
-							LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
-							App.APP_CLIENT_KEY = res.data.key;
+							LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.key);
+							App.setAppClientKey(res.data.key);
 							RxBus.getDefault().post("loginSuccess");
 
 							loginToHuanxin(username,password);

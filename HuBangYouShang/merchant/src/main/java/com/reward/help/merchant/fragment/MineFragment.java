@@ -17,6 +17,7 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseBaseFragment;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.reward.help.merchant.App;
 import com.reward.help.merchant.R;
 import com.reward.help.merchant.activity.LoginActivity;
 import com.reward.help.merchant.activity.MainActivity;
@@ -135,6 +136,8 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
                      // show login screen
                      ((MainActivity) getActivity()).finish();
                      startActivity(new Intent(getActivity(), LoginActivity.class));
+                     App.setAppClientCookie("");
+                     App.setAppClientKey("");
 
                  }
              });

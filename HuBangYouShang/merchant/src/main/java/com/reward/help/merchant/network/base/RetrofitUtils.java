@@ -1,6 +1,7 @@
 package com.reward.help.merchant.network.base;
 
 
+import com.idotools.utils.LogUtils;
 import com.reward.help.merchant.App;
 import com.reward.help.merchant.utils.Constant;
 
@@ -59,8 +60,9 @@ public class RetrofitUtils {
                     .addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
-                            if(App.APP_CLIENT_COOKIE != null){
-                                Request request = chain.request().newBuilder().addHeader("Cookie", App.APP_CLIENT_COOKIE).build();
+                            if(App.getAppClientCookie() != null){
+
+                                Request request = chain.request().newBuilder().addHeader("Cookie", App.getAppClientCookie()).build();
                                 return chain.proceed(request);
                             }else{
                                 return null;
