@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@color/color_while">
+
+
+
+    <ImageView
+        android:id="@+id/iv_member_photo"
+        android:layout_width="@dimen/dimen_44"
+        android:layout_height="@dimen/dimen_44"
+        android:layout_margin="@dimen/dimen_10"/>
+
+    <LinearLayout
+        android:layout_toRightOf="@+id/iv_member_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_member_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/dimen_15"
+            android:textColor="@color/color_3a"/>
+
+        <TextView
+            android:id="@+id/tv_member_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/dimen_12"
+            android:textColor="@color/color_8a"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_coupon_point_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text=""
+        android:textSize="@dimen/dimen_13"
+        android:textColor="@color/color_e8"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

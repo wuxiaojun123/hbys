@@ -364,6 +364,9 @@
         <string name="get_coupon">领取优惠券</string>
         <string name="get_points">领取帮赏分</string>
 
+        <string name="get_coupon_title">优惠券领取</string>
+        <string name="get_points_title">营销积分领取</string>
+
         <string name="item_coupon">优惠券</string>
         <string name="item_points">积分</string>
 </resources>

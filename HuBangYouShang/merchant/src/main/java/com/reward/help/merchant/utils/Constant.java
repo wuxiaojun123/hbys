@@ -21,5 +21,14 @@ public class Constant {
     public static final String URL_UPLOADIMAGE = "mobile/index.php?act=upload_file&op=upload_img";
 
     public static final String URL_GET_COUPON_LIST = "/mobile/index.php?act=seller_voucher&op=listVoucher";
+    //发送优惠券
     public static final String URL_SEND_COUPON = "/mobile/index.php?act=seller_voucher&op=giveVoucher";
+
+    public static final String URL_QUERY_COUPON = "/mobile/index.php?act=seller_voucher&op=logReceive";
+
+    //发送营销积分
+    public static final String URL_SEND_POINTS = "/mobile/index.php?act=seller_points&op=givePoints";
+
+    public static final String URL_QUERY_POINTS = "/mobile/index.php?act=seller_points&op=logReceive";
+
 }

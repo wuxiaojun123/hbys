@@ -34,11 +34,14 @@ import com.hyphenate.easeui.ui.EaseChatFragment.EaseChatFragmentHelper;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
+import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EasyUtils;
 import com.hyphenate.util.PathUtil;
 import com.reward.help.merchant.R;
+import com.reward.help.merchant.activity.CouponPointsQueryActivity;
 import com.reward.help.merchant.activity.CouponSendListActivity;
 import com.reward.help.merchant.activity.MainActivity;
+import com.reward.help.merchant.activity.PointsSendActivity;
 import com.reward.help.merchant.chat.Constant;
 import com.reward.help.merchant.chat.DemoHelper;
 import com.reward.help.merchant.chat.domain.EmojiconExampleGroupData;
@@ -240,6 +243,11 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                     sendMessage(CouponPointsUtils.createCouponMessage(getActivity(), data, toChatUsername));
                 }
                 break;
+             case REQUEST_CODE_SEND_POINT:
+                 if (data != null) {
+                     sendMessage(CouponPointsUtils.createPointsMessage(getActivity(), data, toChatUsername));
+                 }
+                 break;
             //red packet code : 发送红包消息到聊天界面
 //            case REQUEST_CODE_SEND_RED_PACKET:
 //                if (data != null){
@@ -309,10 +317,22 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         //red packet code : 拆红包页面
         if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_COUPON, false)){
             //TODO 获取优惠券
-
+            try {
+                String giveId = message.getStringAttribute(CouponPointsConstant.EXTRA_COUPON_POINTS_RECEIVER_ID);
+                startActivity(new Intent(getActivity(), CouponPointsQueryActivity.class).putExtra(CouponPointsQueryActivity.Extra_GiveId,giveId).putExtra(CouponPointsQueryActivity.Extra,CouponPointsQueryActivity.Extra_Coupon));
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
             return true;
         } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_POINTS, false)) {
             //TODO 获取积分
+            //TODO 获取优惠券
+            try {
+                String giveId = message.getStringAttribute(CouponPointsConstant.EXTRA_COUPON_POINTS_RECEIVER_ID);
+                startActivity(new Intent(getActivity(), CouponPointsQueryActivity.class).putExtra(CouponPointsQueryActivity.Extra_GiveId,giveId).putExtra(CouponPointsQueryActivity.Extra,CouponPointsQueryActivity.Extra_Points));
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
             return true;
         }
         //end of red packet code
@@ -362,7 +382,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 break;
             case ITEM_POINTS:
                 intent = new Intent();
-                sendMessage(CouponPointsUtils.createPointsMessage(getActivity(), intent, toChatUsername));
+                //sendMessage(CouponPointsUtils.createPointsMessage(getActivity(), intent, toChatUsername));
+                startActivityForResult(new Intent(getActivity(), PointsSendActivity.class),REQUEST_CODE_SEND_POINT);
                 break;
 
         //red packet code : 进入发红包页面
