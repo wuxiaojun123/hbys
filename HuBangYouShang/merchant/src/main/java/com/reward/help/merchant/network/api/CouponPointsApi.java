@@ -3,6 +3,7 @@ package com.reward.help.merchant.network.api;
 import com.reward.help.merchant.bean.Response.BaseResponse;
 import com.reward.help.merchant.bean.Response.CouponListResponse;
 import com.reward.help.merchant.bean.Response.QueryCouponResponse;
+import com.reward.help.merchant.bean.Response.QueryMyPointsResponse;
 import com.reward.help.merchant.bean.Response.QueryPointsResponse;
 import com.reward.help.merchant.utils.Constant;
 
@@ -52,5 +53,11 @@ public interface CouponPointsApi {
     Observable<QueryPointsResponse> queryPoints(
             @Field("key") String key,
             @Field("give_log_id") String give_log_id
+    );
+
+    @FormUrlEncoded
+    @POST(Constant.URL_GET_POINTS)
+    Observable<QueryMyPointsResponse> getPoints(
+            @Field("key") String key
     );
 }

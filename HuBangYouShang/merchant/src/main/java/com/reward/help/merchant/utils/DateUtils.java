@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class DateUtils {
 
-    final static String patten = "yyyy-MM-dd";
+    final static String patten = "yyyy.MM.dd";
     /**
      * 将长时间格式字符串转换为时间 yyyy-MM-dd HH:mm:ss
      *

@@ -44,7 +44,7 @@ public class CouponListAdapter extends BaseRecyclerAdapter<CouponListBean>{
         mTvLimit.setText(String.format(mContext.getString(R.string.format_limit_money),item.getVoucher_t_limit()));
         mTvStore.setText(item.getVoucher_t_storename());
         mTvDate.setText(DateUtils.strDateToStr(item.getVoucher_t_start_date()) + "-" + DateUtils.strDateToStr(item.getVoucher_t_end_date()));
-        mTvCount.setText(item.getVoucher_t_total());
+        mTvCount.setText("剩余" +item.getVoucher_t_total());
 
         for (CouponListBean mCoupon: mCheckList){
             if (item.getVoucher_t_id().equals(mCoupon.getVoucher_t_id())) {

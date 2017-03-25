@@ -31,4 +31,7 @@ public class Constant {
 
     public static final String URL_QUERY_POINTS = "/mobile/index.php?act=seller_points&op=logReceive";
 
+    public static final String URL_GET_POINTS = "/mobile/index.php?act=seller_points&op=sellerPoints";
+
+
 }

@@ -93,6 +93,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
      * if it is chatBot 
      */
     private boolean isRobot;
+
+    private int member;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -127,6 +129,22 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         });
         ((EaseEmojiconMenu)inputMenu.getEmojiconMenu()).addEmojiconGroup(EmojiconExampleGroupData.getData());
         if(chatType == EaseConstant.CHATTYPE_GROUP){
+
+
+            new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        EMGroup group = EMClient.getInstance().groupManager().getGroupFromServer(toChatUsername);
+                        //EMGroup group = EMClient.getInstance().groupManager().getGroup(toChatUsername);
+                        member = group.getMemberCount();
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
             inputMenu.getPrimaryMenu().getEditText().addTextChangedListener(new TextWatcher() {
                 
                 @Override
@@ -378,12 +396,12 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 //intent = new Intent();
                 //intent.putExtra(CouponPointsConstant.EXTRA_GREETING,"满500减20");
                 //sendMessage(CouponPointsUtils.createCouponMessage(getActivity(), intent, toChatUsername));
-                CouponSendListActivity.startActivityForResult(this,new Intent(getActivity(), CouponSendListActivity.class),REQUEST_CODE_SEND_COUPON);
+                CouponSendListActivity.startActivityForResult(this,new Intent(getActivity(), CouponSendListActivity.class).putExtra("num",member),REQUEST_CODE_SEND_COUPON);
                 break;
             case ITEM_POINTS:
                 intent = new Intent();
                 //sendMessage(CouponPointsUtils.createPointsMessage(getActivity(), intent, toChatUsername));
-                startActivityForResult(new Intent(getActivity(), PointsSendActivity.class),REQUEST_CODE_SEND_POINT);
+                startActivityForResult(new Intent(getActivity(), PointsSendActivity.class).putExtra("num",member),REQUEST_CODE_SEND_POINT);
                 break;
 
         //red packet code : 进入发红包页面

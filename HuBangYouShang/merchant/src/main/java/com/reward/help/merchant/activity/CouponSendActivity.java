@@ -77,7 +77,7 @@ public class CouponSendActivity extends BaseActivity implements View.OnClickList
 
     private void initView() {
         mTvTitle.setText(getText(R.string.send_coupon));
-
+        int groupNum = intent.getIntExtra("num",0);
         if (coupon != null) {
             mTvStore.setText(coupon.getVoucher_t_storename());
             mTvDate.setText(DateUtils.strDateToStr(coupon.getVoucher_t_start_date()) + "-" + DateUtils.strDateToStr(coupon.getVoucher_t_end_date()));
@@ -87,6 +87,8 @@ public class CouponSendActivity extends BaseActivity implements View.OnClickList
             mLeftCount.setText(getString(R.string.format_left_count) + coupon.getVoucher_t_total());
 
             greeting = String.format(getString(R.string.format_greeting),new String[]{coupon.getVoucher_t_price(),coupon.getVoucher_t_limit()});
+
+            mTvGroupNum.setText(String.format(getString(R.string.group_num),groupNum+""));
         }
     }
 

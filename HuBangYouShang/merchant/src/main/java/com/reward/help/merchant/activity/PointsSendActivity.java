@@ -13,6 +13,7 @@ import com.idotools.utils.ToastUtils;
 import com.reward.help.merchant.App;
 import com.reward.help.merchant.R;
 import com.reward.help.merchant.bean.Response.BaseResponse;
+import com.reward.help.merchant.bean.Response.QueryMyPointsResponse;
 import com.reward.help.merchant.chat.ui.BaseActivity;
 import com.reward.help.merchant.network.CouponPointsNetwork;
 import com.reward.help.merchant.network.base.BaseSubscriber;
@@ -55,7 +56,20 @@ public class PointsSendActivity extends BaseActivity implements View.OnClickList
         super.onCreate(arg0);
         setContentView(R.layout.activity_points_send);
         ButterKnife.bind(this);
+        initView();
+
+        initData();
     }
+
+    private void initData() {
+        getPointRequest();
+    }
+
+    private void initView() {
+        int groupNum = getIntent().getIntExtra("num",0);
+        mTvGroupNum.setText(String.format(getString(R.string.group_num),groupNum+""));
+    }
+
 
     @OnClick({R.id.iv_title_back,R.id.btn_send_points})
     @Override
@@ -79,6 +93,40 @@ public class PointsSendActivity extends BaseActivity implements View.OnClickList
                 sendPointsRequest();
                 break;
         }
+    }
+
+
+    private void getPointRequest() {
+        subscribe = CouponPointsNetwork.getCouponListApi().getPoints(App.getAppClientKey())
+                .subscribeOn(Schedulers.io()) // 请求放在io线程中
+                .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
+                .subscribe(new BaseSubscriber<QueryMyPointsResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        if (e instanceof UnknownHostException) {
+                            ToastUtils.show(mContext, "请求到错误服务器");
+                        } else if (e instanceof SocketTimeoutException) {
+                            ToastUtils.show(mContext, "请求超时");
+                        }
+                    }
+
+                    @Override
+                    public void onNext(QueryMyPointsResponse response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            String points = response.data.points;
+                            if(!TextUtils.isEmpty(points)) {
+                                mTvMyPoints.setText(points);
+                            }
+                            //finish();
+                            //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
     }
 
 
