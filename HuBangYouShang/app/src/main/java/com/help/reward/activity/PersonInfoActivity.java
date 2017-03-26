@@ -178,7 +178,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
         PersonalNetwork
                 .getResponseApi()
-                .getBusinessResponse(App.APP_CLIENT_KEY, "business")
+                .getBusinessResponse("business")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BusinessResponse>() {
@@ -194,7 +194,6 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                             if (response.data != null) {
                                 // 设置用户属性
                                 ArrayList<String> list = response.data.business;
-                                LogUtils.e("返回的集合是：" + list.size());
                                 for (String business : list) {
                                     businessList.add(new BusinessBean(business));
                                 }
@@ -229,6 +228,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
                 break;
             case R.id.ll_area: // 地区
+                LogUtils.e("点击地区选择...");
                 selectArea();
 
                 break;
@@ -279,12 +279,14 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
     private void selectArea() {
         String areaJson = FileUtils.getAssetsFile(mContext);
-        LogUtils.e("点击选择地区。。。" + areaJson);
         if (!TextUtils.isEmpty(areaJson)) {
             try { // 解析json
+                LogUtils.e("citiesList.size()集合长度是：" + citiesList.size());
                 if (citiesList.size() == 0) {
                     initArea();
                 }
+                LogUtils.e("citiesList.size()   222222集合长度是：" + citiesList.size());
+
                 OptionsPickerView<AssetsAreaBean.AreaBean> mAreaPickerView = new OptionsPickerView<>(this);
                 LogUtils.e("身份，城市，县区的集合长度是：" + provincesList.size() + "====" + citiesList.size() + "==" + areasList.size());
                 mAreaPickerView.setPicker(provincesList, citiesList, areasList, true);
@@ -309,6 +311,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                 provincesList = bean.provinces;
                 ArrayList<AssetsAreaBean.AreaBean> citiesList1 = bean.cities;
                 ArrayList<AssetsAreaBean.AreaBean> areasList1 = bean.areas;
+                LogUtils.e("省份的集合是：" + provincesList.size() + "  " + citiesList1.size() + "   " + areasList1.size());
 
                 for (AssetsAreaBean.AreaBean provincesBean : provincesList) { // 省份循环
                     ArrayList citySonArrayList = new ArrayList<AssetsAreaBean.AreaBean>(); // 某省份的城市集合
@@ -347,7 +350,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         PickerUtils.alertBottomWheelOption(PersonInfoActivity.this, businessList, new PickerUtils.OnWheelViewClick() {
             @Override
             public void onClick(View view, int postion) {
-                tv_work.setText(businessList.get(postion).toString());
+                tv_work.setText(businessList.get(postion).business_name);
             }
         });
     }

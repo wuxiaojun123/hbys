@@ -75,7 +75,7 @@ public class GoodFragment extends BaseFragment {
 
     private void initNetwork(String goodsId) {
         ShopMallNetwork
-                .getShopMallMainApi()
+                .getShopOtherApi()
                 .getGoodResponse("goods", "goods_detail", goodsId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
