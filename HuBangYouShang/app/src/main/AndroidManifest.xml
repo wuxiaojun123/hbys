@@ -358,6 +358,10 @@
             android:name="com.help.reward.activity.SearchHelpActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.help.reward.activity.ShopcartActivity"
+            android:screenOrientation="portrait" />
+
         <!-- 开机自启动服务 -->
         <receiver android:name="com.help.reward.chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">

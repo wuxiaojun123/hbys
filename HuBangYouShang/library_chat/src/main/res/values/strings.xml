@@ -364,4 +364,9 @@
         <string name="get_coupon">领取优惠券</string>
         <string name="get_points">领取帮赏分</string>
 
+
+        <string name="shop_cart_result">结算</string>
+        <string name="shop_cart_total">合计： ¥ 0.00</string>
+        <string name="shop_cart_total_tip">不含运费</string>
+
 </resources>
