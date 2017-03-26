@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.help.reward.chat.db.UserDao;
 import com.help.reward.chat.ui.GroupActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMContactListener;
@@ -97,30 +98,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
      * 初始化聊天设置
      */
     private void initChat() {
+
+        inviteMessgeDao = new InviteMessgeDao(this);
+        UserDao userDao = new UserDao(this);
         registerBroadcastReceiver();
         EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
         //debug purpose only
         registerInternalDebugReceiver();
-        String userName = "hbys4";
-        String password = "123456";
-        EMClient.getInstance().login(userName,password,new EMCallBack() {//回调
-            @Override
-            public void onSuccess() {
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-                Log.d("main", "登录聊天服务器成功！");
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                Log.d("main", "登录聊天服务器失败！");
-            }
-        });
     }
 
     private void initData() {

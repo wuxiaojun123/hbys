@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -16,6 +17,8 @@ import com.help.reward.rxbus.RxBus;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.view.MyProcessDialog;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
@@ -90,12 +93,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 登录逻辑
      */
     private void login() {
-        String username = et_login_phone_number.getText().toString().trim();
+        final String username = et_login_phone_number.getText().toString().trim();
         if (TextUtils.isEmpty(username)) {
             ToastUtils.show(mContext, "请输入用户名");
             return;
         }
-        String password = et_login_pwd.getText().toString().trim();
+        final String password = et_login_pwd.getText().toString().trim();
         if (TextUtils.isEmpty(password)) {
             ToastUtils.show(mContext, "请输入密码");
             return;
@@ -120,7 +123,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     @Override
                     public void onNext(LoginResponse res) {
-                        MyProcessDialog.closeDialog();
+                        //MyProcessDialog.closeDialog();
                         if (res.code == 200) {
                             LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
                             App.APP_CLIENT_KEY = res.data.key;
@@ -128,13 +131,47 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             // 请求会员信息
                             App.mLoginReponse = res.data;
                             RxBus.getDefault().post("loginSuccess");
-                            finish();
-                            ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                            LoginToHuanxin(username,password);
+                            //finish();
+                            //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
                         } else {
+                            MyProcessDialog.closeDialog();
                             ToastUtils.show(mContext, res.msg);
                         }
                     }
                 });
+    }
+
+
+    private void LoginToHuanxin(String username, String password){
+        //String userName = "hbys3";
+        //String password = "123456";
+        EMClient.getInstance().login(username,password,new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                MyProcessDialog.closeDialog();
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+                Log.d("main", "登录聊天服务器成功！");
+
+                finish();
+                ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                MyProcessDialog.closeDialog();
+                ToastUtils.show(LoginActivity.this,"登录聊天服务器失败！");
+
+                finish();
+                ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+            }
+        });
     }
 
     @Override
