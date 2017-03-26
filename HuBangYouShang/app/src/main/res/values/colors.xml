@@ -17,6 +17,8 @@
     <color name="color_dc">#dcdcdc</color>
     <color name="color_e4">#e4e4e4</color>
     <color name="color_text_ad_score">#ff503f</color>
+
+
     
     <color name="color_next_bg">#ec6a5c</color>
     <color name="color_eb6">#eb6a5b</color>
@@ -32,6 +34,8 @@
     <color name="color_f6b258">#f6b258</color>
 
     <color name="color_fa">#fa372d</color>
+
+    <color name="color_ffb258">#ffb258</color>
 
     <color name="color_spiline">#cdcdcd</color>
     <color name="color_allbg">#f8f8f8</color>

@@ -44,6 +44,7 @@ public class SearchEditTextView extends EditText implements TextWatcher, View.On
         addTextChangedListener(this);
         setOnFocusChangeListener(this);
         setOnKeyListener(this);
+        setMaxLines(1);
     }
 
     @Override
@@ -92,6 +93,7 @@ public class SearchEditTextView extends EditText implements TextWatcher, View.On
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 if (monKeyListener != null) {
                     monKeyListener.onKey();
+                    return true;
                 }
             }
         }

@@ -72,11 +72,12 @@
             android:text="1"/>
     </LinearLayout>
 
-    <EditText
+    <com.help.reward.view.SearchEditTextView
         android:id="@+id/et_help_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:gravity="center_vertical"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:drawablePadding="6dp"
@@ -84,7 +85,9 @@
         android:drawableLeft="@mipmap/img_search"
         android:drawableRight="@mipmap/img_search_close"
         android:hint="@string/help_lable2"
+        android:imeOptions="actionSearch"
         android:textColor="@color/color_while"
+        android:maxLines="1"
         android:textSize="@dimen/dimen_13"
         android:textColorHint="@color/color_while"
         android:layout_toLeftOf="@+id/layout_help_title_sms"

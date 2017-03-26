@@ -3,8 +3,13 @@ package com.help.reward.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.base.recyclerview.LRecyclerView;
+import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.adapter.MyHelpPostAdapter;
+import com.help.reward.adapter.MyOrderAdapter;
+import com.help.reward.bean.Response.MyOrderResponse;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
 import com.help.reward.R;
@@ -23,10 +28,11 @@ import rx.schedulers.Schedulers;
 public class MyOrderAllFragment extends BaseFragment {
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
-//    private MyHelpPostAdapter mHelpPostAdapter;
+    private MyOrderAdapter mOrderAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -42,10 +48,10 @@ public class MyOrderAllFragment extends BaseFragment {
     private void initNetwork() {
         PersonalNetwork
                 .getResponseApi()
-                .getMyHelpPostResponse("post", App.APP_CLIENT_KEY)
+                .getMyOrderResponse("member_order", "order_list", currentPage + "","", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<MyHelpPostResponse>() {
+                .subscribe(new BaseSubscriber<MyOrderResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
@@ -54,13 +60,22 @@ public class MyOrderAllFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onNext(MyHelpPostResponse response) {
+                    public void onNext(MyOrderResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-//                                mHelpPostAdapter.addAll(response.data);
+                                if(response.data.order_group_list != null){
+                                    LogUtils.e("返回订单集合是："+response.data.order_group_list.size());
+                                    mOrderAdapter.addAll(response.data.order_group_list);
+                                }
                             }
                             lRecyclerview.setPullRefreshEnabled(false);
+
+                            if (!response.hasmore) { // 是否有更多数据
+                                lRecyclerview.setLoadMoreEnabled(false);
+                            } else {
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -70,9 +85,9 @@ public class MyOrderAllFragment extends BaseFragment {
 
     private void initRecyclerView() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
-//        mHelpPostAdapter = new MyHelpPostAdapter(mContext);
-//        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
-//        lRecyclerview.setAdapter(mLRecyclerViewAdapter);
+        mOrderAdapter = new MyOrderAdapter(mContext);
+        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mOrderAdapter);
+        lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
         initLoadMoreListener();
     }

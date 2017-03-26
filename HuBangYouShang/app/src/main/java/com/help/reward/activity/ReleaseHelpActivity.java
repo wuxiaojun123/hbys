@@ -13,7 +13,8 @@ import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.AreaBean;
 import com.help.reward.bean.Response.AreaResponse;
-import com.help.reward.bean.HelpBoardeBean;
+import com.help.reward.bean.HelpBoardBean;
+import com.help.reward.bean.Response.HelpBoardResponse;
 import com.help.reward.bean.Response.HelpSubResponse;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -68,7 +69,7 @@ public class ReleaseHelpActivity extends BaseActivity implements DealChoosePicUt
     ImageView ivReleaseAddphoto;
     DealChoosePicUtils dealChoosePicUtils;
     ArrayList<AreaBean> cityList = new ArrayList<>();
-    ArrayList<HelpBoardeBean> boardList = new ArrayList<>();
+    ArrayList<HelpBoardBean> boardList = new ArrayList<>();
     String area_id;
     String board_id;
     UploadImageUtils uploadImagUtils;
@@ -101,20 +102,21 @@ public class ReleaseHelpActivity extends BaseActivity implements DealChoosePicUt
                 getAreaData();
                 break;
             case R.id.tv_release_help_type:
+                getBoardData();
                 // 单项选择
-                for (int i = 0; i <= 10; i++) {
-                    HelpBoardeBean h = new HelpBoardeBean();
-                    h.board_id = i + "";
-                    h.board_name = "fenlei" + i;
-                    boardList.add(h);
-                }
-                PickerUtils.alertBottomWheelOption(this, boardList, new PickerUtils.OnWheelViewClick() {
-                    @Override
-                    public void onClick(View view, int postion) {
-                        tvReleaseHelpType.setText(boardList.get(postion).board_name);
-                        board_id = boardList.get(postion).board_id;
-                    }
-                });
+//                for (int i = 0; i <= 10; i++) {
+//                    HelpBoardBean h = new HelpBoardBean();
+//                    h.board_id = i + "";
+//                    h.board_name = "fenlei" + i;
+//                    boardList.add(h);
+//                }
+//                PickerUtils.alertBottomWheelOption(this, boardList, new PickerUtils.OnWheelViewClick() {
+//                    @Override
+//                    public void onClick(View view, int postion) {
+//                        tvReleaseHelpType.setText(boardList.get(postion).board_name);
+//                        board_id = boardList.get(postion).board_id;
+//                    }
+//                });
                 break;
             case tv_release_help_data:
                 PickerUtils.alertTimerPicker(this, TimePickerView.Type.YEAR_MONTH_DAY, "yyyy-MM-dd", new PickerUtils.TimerPickerCallBack() {
@@ -229,7 +231,7 @@ public class ReleaseHelpActivity extends BaseActivity implements DealChoosePicUt
 
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
-                .getHelpApi()
+                .getHelpNoCookieApi()
                 .getAreaBean(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -246,7 +248,54 @@ public class ReleaseHelpActivity extends BaseActivity implements DealChoosePicUt
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             cityList.addAll(response.data.area_list);
-                            ToastUtils.show(mContext, cityList.get(1).area_name);
+                            PickerUtils.alertBottomWheelOption(mContext, cityList, new PickerUtils.OnWheelViewClick() {
+                                @Override
+                                public void onClick(View view, int postion) {
+                                    tvReleaseHelpAddress.setText(cityList.get(postion).area_name);
+                                    area_id = cityList.get(postion).area_id;
+                                }
+                            });
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 获取分类
+     */
+    private void getBoardData() {
+        if (boardList.size() != 0) {
+            PickerUtils.alertBottomWheelOption(this, boardList, new PickerUtils.OnWheelViewClick() {
+                @Override
+                public void onClick(View view, int postion) {
+                    tvReleaseHelpType.setText(boardList.get(postion).board_name);
+                    board_id = boardList.get(postion).board_id;
+                }
+            });
+            return;
+        }
+
+        MyProcessDialog.showDialog(mContext);
+        subscribe = HelpNetwork
+                .getHelpNoCookieApi()
+                .getBoardBean(App.APP_CLIENT_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<HelpBoardResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        MyProcessDialog.closeDialog();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(HelpBoardResponse response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            boardList.addAll(response.data.board_list);
                             PickerUtils.alertBottomWheelOption(mContext, cityList, new PickerUtils.OnWheelViewClick() {
                                 @Override
                                 public void onClick(View view, int postion) {

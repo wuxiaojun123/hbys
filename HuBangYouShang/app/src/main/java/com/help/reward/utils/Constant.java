@@ -64,6 +64,9 @@ public class Constant {
     public static final String URL_HELP = "mobile/index.php?act=index";
 
     public static final String URL_AREA = "mobile/index.php?act=area&op=post_area_list";
+
+    public static final String URL_BOARD = "mobile/index.php?act=index&op=get_board";
+
     public static final String URL_SUBREWARD = "mobile/index.php?act=get_reward&op=release";
     //发布求助帖
     public static final String URL_SUBSEEKHELP = "mobile/index.php?act=seek_help";

@@ -2,6 +2,7 @@ package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.AddressResponse;
 import com.help.reward.bean.Response.AdvertisementResponse;
+import com.help.reward.bean.Response.AeraResponse;
 import com.help.reward.bean.Response.BalanceExchangeResponse;
 import com.help.reward.bean.Response.BalanceExchangeVolumeResponse;
 import com.help.reward.bean.Response.BaseResponse;
@@ -19,12 +20,15 @@ import com.help.reward.bean.Response.MyCollectionStoreResponse;
 import com.help.reward.bean.Response.MyCouponResponse;
 import com.help.reward.bean.Response.MyHelpCommentResponse;
 import com.help.reward.bean.Response.MyHelpPostResponse;
+import com.help.reward.bean.Response.MyOrderResponse;
 import com.help.reward.bean.Response.MyRewardCommentResponse;
 import com.help.reward.bean.Response.MyRewardPostResponse;
 import com.help.reward.bean.Response.MyVoteResponse;
 import com.help.reward.bean.Response.PersonInfoResponse;
 import com.help.reward.bean.Response.UploadHeadImageReponse;
 import com.help.reward.utils.Constant;
+
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -33,6 +37,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -44,12 +49,16 @@ import rx.Observable;
 
 public interface PersonalApi {
 
-    // 个人信息--已登陆
-    /*@FormUrlEncoded
-    @POST("mobile/index.php?act=member_index&op=index")
-    Observable<MemberInfoResponse> getMemberInfoResponse(
+    // mobile/index.php?act=logout 退出登录 post传client
+
+
+
+    // 个人信息--获取地区
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=area")
+    Observable<AeraResponse> getAeraResponse(
             @Field("key") String key
-    );*/
+    );
 
     // 我的个人信息
     @FormUrlEncoded
@@ -75,16 +84,6 @@ public interface PersonalApi {
     );
 
     // 上传头像
-    /*@Multipart
-    @POST("mobile/index.php?act=upload_file&op=upload_img")
-    Observable<UploadHeadImageReponse> getUploadHeadImageReponse(
-            // @Part("description") RequestBody description,
-            @Part MultipartBody.Part file,
-            @Part("type") String type,
-            @Part("key") String key
-    );*/
-
-    // 上传头像
     @Multipart
     @POST("mobile/index.php?act=upload_file&op=upload_img")
     Observable<UploadHeadImageReponse> getUploadHeadImageReponse(
@@ -93,6 +92,15 @@ public interface PersonalApi {
             @Query("type") String type,
             @Query("key") String key
     );
+
+    /**
+     * 上传图片
+     * @return
+     */
+    @Multipart
+    @POST("mobile/index.php?act=upload_file&op=upload_img")
+    Observable<UploadHeadImageReponse> uploadImage(
+                             @PartMap Map<String,RequestBody> params,@Part MultipartBody.Part part);
 
 
     // 我的求助--发帖
@@ -281,6 +289,18 @@ public interface PersonalApi {
             @Field("key") String key,
             @Field("exchange") String exchange
     );
+
+    // 我的订单-- ?act=member_order&op=order_list
+    @FormUrlEncoded
+    @POST("mobile/index.php")
+    Observable<MyOrderResponse> getMyOrderResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("state_type") String state_type,
+            @Field("key") String key
+    );
+
 
     // 帮助中心
     @FormUrlEncoded

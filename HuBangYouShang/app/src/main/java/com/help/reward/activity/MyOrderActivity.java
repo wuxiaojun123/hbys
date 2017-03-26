@@ -43,7 +43,6 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
     PagerSlidingTabStrip tabStrip;
 
 
-    private MyFragmentPageAdapter mAdapter;
     private List<BaseFragment> fragmentList;
 
     @Override
@@ -63,7 +62,7 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initData() {
-        fragmentList = new ArrayList<>(5);
+        fragmentList = new ArrayList<>(1);
         fragmentList.add(new MyOrderAllFragment());
         fragmentList.add(new MyOrderAllFragment());
         fragmentList.add(new MyOrderAllFragment());

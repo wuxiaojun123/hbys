@@ -1,6 +1,7 @@
 package com.help.reward.activity;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -19,22 +21,36 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.AssetsAreaBean;
+import com.help.reward.bean.Response.AeraResponse;
 import com.help.reward.bean.Response.MyCollectionStoreResponse;
 import com.help.reward.bean.Response.PersonInfoResponse;
 import com.help.reward.bean.Response.UploadHeadImageReponse;
+import com.help.reward.bean.SexBean;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.utils.JsonUtils;
+import com.help.reward.utils.PickerUtils;
 import com.help.reward.view.ActionSheetDialog;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.FileUtils;
 import com.idotools.utils.ImageFormatUtils;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.SharedPreferencesHelper;
 import com.idotools.utils.ToastUtils;
+import com.lvfq.pickerview.OptionsPickerView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,6 +95,9 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.et_sign)
     EditText et_sign; // 个性签名
 
+    private ArrayList<SexBean> sexList = new ArrayList<>(3);
+    private File mFile;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,6 +111,9 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     private void initView() {
         tv_title.setText(R.string.string_person_info_title);
         tv_title_right.setText("提交");
+        sexList.add(new SexBean("0","保密"));
+        sexList.add(new SexBean("1","男"));
+        sexList.add(new SexBean("2","女"));
     }
 
     private void initNetwork() {
@@ -148,7 +170,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
                 break;
             case R.id.tv_title_right: // 提交
-
+                commitPersonInfo();
 
                 break;
             case R.id.rl_head: // 点击出现拍照，相册，取消
@@ -156,11 +178,11 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
                 break;
             case R.id.ll_sex: // 性别
-
+                selectSex();
 
                 break;
             case R.id.ll_area: // 地区
-
+                selectArea();
 
                 break;
             case R.id.ll_work: // 行业
@@ -170,7 +192,70 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    private File mFile;
+    /***
+     * 更新个人信息
+     */
+    private void commitPersonInfo() {
+
+
+
+    }
+
+    private ArrayList<AssetsAreaBean.AreaBean> provincesList;
+    private ArrayList<ArrayList<AssetsAreaBean.AreaBean>> citiesList = new ArrayList<>();
+    private ArrayList<ArrayList<ArrayList<AssetsAreaBean.AreaBean>>> areasList = new ArrayList<>();
+
+    private void selectArea() {
+        String areaJson = FileUtils.getAssetsFile(mContext);
+        if(!TextUtils.isEmpty(areaJson)){
+            try { // 解析json
+                AssetsAreaBean bean = (AssetsAreaBean) JsonUtils.fromJsonArray(areaJson, AssetsAreaBean.class);
+                provincesList = bean.provinces;
+                ArrayList<AssetsAreaBean.AreaBean> citiesList1 = bean.cities;
+                ArrayList<AssetsAreaBean.AreaBean> areasList1 = bean.areas;
+
+                for (AssetsAreaBean.AreaBean provincesBean:provincesList){
+
+                    ArrayList citySonArrayList = new ArrayList<AssetsAreaBean.AreaBean>();
+
+                    citiesList.add(citySonArrayList);
+
+                    for (AssetsAreaBean.AreaBean citiesbean:citiesList1){
+
+                        if(citiesbean.area_parent_id.equals(provincesBean.area_id)){ // 如果城市的父类id等于省份的id，那么需要添加
+                            citySonArrayList.add(citiesbean);
+
+                            ArrayList areasSonArrayList = new ArrayList<AssetsAreaBean.AreaBean>();
+
+                            for (AssetsAreaBean.AreaBean areasbean:areasList1){
+
+
+                            }
+                        }
+                    }
+
+                }
+
+                OptionsPickerView<AssetsAreaBean.AreaBean> mAreaPickerView = new OptionsPickerView<>(this);
+                mAreaPickerView.setPicker(provincesList,citiesList,areasList,true);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private void selectSex() {
+        PickerUtils.alertBottomWheelOption(this, sexList, new PickerUtils.OnWheelViewClick() {
+            @Override
+            public void onClick(View view, int postion) {
+                tv_sex.setText(sexList.get(postion).sex_name);
+            }
+        });
+    }
+
+
 
     private void headPhoto() {
         // 点击选择照片和拍照上传
@@ -259,12 +344,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
     private Bitmap mBitmap;
 
-
-
-    /**
-     * 上传头像
-     */
-    public void uploadHeadPhoto() {
+    public void uploadHeadPhoto(){
         if(mFile == null){
             if(mBitmap != null){
                 String fileName = System.currentTimeMillis()+"";
@@ -276,25 +356,20 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
             ToastUtils.show(mContext,"请选择图片");
             return;
         }
-        // 创建 RequestBody，用于封装构建RequestBody
-        RequestBody requestFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), mFile);
-        // MultipartBody.Part  和后端约定好Key，这里的partName是用image
-        MultipartBody.Part body =
-                MultipartBody.Part.createFormData("file", mFile.getName(), requestFile);
-        /*// key
-        String keyStr = "key="+App.APP_CLIENT_KEY;
-        RequestBody key =
-                RequestBody.create(
-                        MediaType.parse("multipart/form-data"), keyStr);
-        String typeStr = "type="+App.APP_CLIENT_KEY;
-        RequestBody type =
-                RequestBody.create(
-                        MediaType.parse("multipart/form-data"), typeStr);*/
-        // avatar
+        // 请求携带的参数
+        Map<String,RequestBody> params = new HashMap<>();
+        params.put("type",toRequestBody("avatar"));
+        params.put("key",toRequestBody(App.APP_CLIENT_KEY));
+
+        // 上传的图片
+        //设置Content-Type:application/octet-stream
+        RequestBody photoRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), mFile);
+        //设置Content-Disposition:form-data; name="photo"; filename="xuezhiqian.png"
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("file", mFile.getName(), photoRequestBody);
+
         MyProcessDialog.showDialog(PersonInfoActivity.this,"正在上传...");
         PersonalNetwork.getResponseApi()
-                .getUploadHeadImageReponse(requestFile,"avatar",App.APP_CLIENT_KEY)
+                .uploadImage(params,photo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<UploadHeadImageReponse>() {
@@ -310,9 +385,10 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             resetFileAndBitmap();
-                            LogUtils.e("获取数据成功。。。" + response.data);
                             if (response.data != null) {
-                                LogUtils.e("返回上传图片的数据是："+response.data.default_dir);
+                                LogUtils.e("返回上传图片的数据是："+response.data.url+"===="+response.data.file_name);
+                                // 发送更新到个人首页
+                                GlideUtils.loadCircleImage(response.data.url,iv_head);
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
@@ -322,6 +398,11 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
     }
 
+    public RequestBody toRequestBody(String value){
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain"),value);
+        return body;
+    }
+
     private void resetFileAndBitmap(){
         mFile = null;
         if(mBitmap != null && !mBitmap.isRecycled()){
@@ -329,26 +410,5 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
             mBitmap = null;
         }
     }
-
-    /***
-     * 压缩图片
-     *
-     * @return
-     */
-    /*private Bitmap compressBitmap() {
-        try {
-            // 获得图片的宽和高，并不把图片加载到内存中
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(mFile.getAbsolutePath(), options);
-            options.inSampleSize = ImageUtil.calculateInSampleSize(options, iv_head.getWidth(), iv_head.getHeight());
-            // 使用获得到的InSampleSize再次解析图片
-            options.inJustDecodeBounds = false;
-            Bitmap bm = BitmapFactory.decodeFile(mFile.getAbsolutePath(), options);
-            return bm;
-        } catch (Exception e) {
-        }
-        return null;
-    }*/
 
 }

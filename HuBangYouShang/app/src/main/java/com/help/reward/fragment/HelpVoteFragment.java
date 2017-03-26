@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
@@ -23,6 +24,7 @@ import com.help.reward.bean.Response.HelpVoteResponse;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
@@ -36,7 +38,6 @@ import rx.schedulers.Schedulers;
 
 /**
  * 投票
- *
  */
 
 public class HelpVoteFragment extends BaseFragment {
@@ -48,7 +49,17 @@ public class HelpVoteFragment extends BaseFragment {
     private int numSize = 15;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     List<HelpVoteBean> mDatas = new ArrayList<>();
-    int curpage =1;
+    int curpage = 1;
+
+    @BindView(R.id.ll_empty)
+    View ll_empty;
+    @BindView(R.id.tv_no_result)
+    TextView tv_no_result;
+    String searchStr;
+    String type;
+    String board_id="";
+    String area_id="";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,12 +67,22 @@ public class HelpVoteFragment extends BaseFragment {
             contentView = inflater.inflate(R.layout.fragment_help3, null);
         }
         ButterKnife.bind(this, contentView);
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.containsKey("type")) {
+            type = bundle.getString("type");
+        }
+        if (bundle != null && bundle.containsKey("keyword")) {
+            searchStr = bundle.getString("keyword");
+        }
         initData();
         return contentView;
     }
 
     private void initData() {
-
+        tv_no_result.setText("抱歉没有找到符合条件的帖子");
+        if ("search".equalsIgnoreCase(type)) {
+            lRecyclerview.setEmptyView(ll_empty);
+        }
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new HelpVoteAdapter(mContext);
         adapter.setDataList(mDatas);
@@ -75,6 +96,28 @@ public class HelpVoteFragment extends BaseFragment {
         initRefreshListener();
         initLoadMoreListener();
         initItemClickListener();
+        requestData();
+    }
+
+    public void searchData(String searchStr) {
+        if (this.searchStr.equals(searchStr)) {
+            return;
+        }
+        this.searchStr = searchStr;
+        MyProcessDialog.showDialog(mContext);
+        requestData();
+    }
+
+    /**
+     * 设置筛选条件
+     */
+    public void setSelectInfo(String boardId, String areaId) {
+        if (boardId.equals(board_id) && areaId.equals(area_id)) {
+            return;
+        }
+        board_id = boardId;
+        area_id = areaId;
+        MyProcessDialog.showDialog(mContext);
         requestData();
     }
 
@@ -98,12 +141,13 @@ public class HelpVoteFragment extends BaseFragment {
             }
         });
     }
+
     private void initItemClickListener() {
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(mContext, HelpVoteInfoActivity.class);
-                intent.putExtra("id",adapter.getDataList().get(position).post_id);
+                intent.putExtra("id", adapter.getDataList().get(position).post_id);
                 startActivity(intent);
                 ActivitySlideAnim.slideInAnim(getActivity());
             }
@@ -116,13 +160,14 @@ public class HelpVoteFragment extends BaseFragment {
 
         subscribe = HelpNetwork
                 .getHelpApi()
-                .getHelpVoteBean(App.APP_CLIENT_KEY, "complaint", curpage)
+                .getHelpVoteBean(App.APP_CLIENT_KEY, "complaint", searchStr, board_id, area_id, curpage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HelpVoteResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        MyProcessDialog.closeDialog();
                         lRecyclerview.refreshComplete(numSize);
                         ToastUtils.show(mContext, R.string.string_error);
                         if (curpage != 1) {
@@ -133,13 +178,13 @@ public class HelpVoteFragment extends BaseFragment {
                     @Override
                     public void onNext(HelpVoteResponse response) {
                         lRecyclerview.refreshComplete(numSize);
+                        MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             if (response.data != null) {
                                 if (curpage == 1) {
-                                    adapter.clear();
-                                    adapter.addAll(response.data.post_list);
+                                    adapter.setDataList(response.data.post_list);
                                     if (adapter.getDataList().size() == 0) {
-                                        ToastUtils.show(mContext, "暂无数据");
+//                                        ToastUtils.show(mContext, "暂无数据");
                                     }
                                 } else {
                                     adapter.addAll(response.data.post_list);

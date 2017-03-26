@@ -16,12 +16,27 @@ android {
         multiDexEnabled true
 
     }
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    signingConfigs {
+        myConfig {
+            storeFile file("hbys.jks")
+            storePassword "123456"
+            keyAlias "hbys"
+            keyPassword "123456"
         }
     }
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            debuggable false
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.myConfig
+        }
+    }
+
     sourceSets{
         main{
             assets.srcDirs = ['assets']
@@ -37,14 +52,17 @@ android {
         javaMaxHeapSize = "2g"
     }
 
-
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     /*compile 'com.android.support:appcompat-v7:22.1.0'
-                compile 'com.android.support:recyclerview-v7:22.1.0'
-                compile 'com.android.support:design:22.2.0'//design风格*/
+                    compile 'com.android.support:recyclerview-v7:22.1.0'
+                    compile 'com.android.support:design:22.2.0'//design风格*/
     //butterknife
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
@@ -57,16 +75,20 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     //这是添加retrofit对rxjava的支持
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    // umeng统计
+    compile 'com.umeng.analytics:analytics:latest.integration'
     //基本工具类
     //
     //    compile project(':library_pagerSlidingTabStrip')
     // recyclerview
     //    compile project(':library_recycler')
-//    debugCompile 'com.antfortune.freeline:runtime:0.8.4'
-//    releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
-//    testCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
+    //    debugCompile 'com.antfortune.freeline:runtime:0.8.4'
+    //    releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
+    //    testCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
     //广告位banner
     compile 'com.bigkoo:convenientbanner:2.0.5'
     compile project(':library_chat')
-	compile project(':pickerview')
+    compile project(':pickerview')
+    //    compile project(':libqrcode')
+    compile files('libs/zxing.jar')
 }
