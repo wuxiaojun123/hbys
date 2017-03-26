@@ -50,7 +50,7 @@ public class GlideUtils {
             Glide.with(imageView.getContext())
                     .load(imgUrl)
                     .transform(new GlideCircleTransform(imageView.getContext()))
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .error(R.mipmap.img_default)
                     .placeholder(R.mipmap.img_default)
                     .into(imageView);

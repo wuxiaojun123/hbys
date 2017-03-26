@@ -9,7 +9,7 @@ public class LoginResponse extends BaseResponse<LoginResponse> {
     public String username;
     public String userid;
     public String key;
-    public String avator;
+    public String avator; // 头像
     public String point;
     public String level_name;
     public String people_help;

@@ -48,7 +48,7 @@
     <string name="string_stay_goods_receipt">待收货</string>
     <string name="string_stay_evaluate">待评价</string>
     <string name="string_refund">退款/退货</string>
-
+    <string name="string_order_details">订单详情</string>
 
     <!--消息中心-->
     <string name="msgcenter_lable1">帖子动态</string>

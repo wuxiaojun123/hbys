@@ -30,6 +30,14 @@ import butterknife.OnClick;
  */
 
 public class MyOrderActivity extends BaseActivity implements View.OnClickListener {
+
+    public static final String STATE_TYPE = "state_type";
+    public static final String STATE_TYPE_DEFAULT = "";
+    public static final String STATE_TYPE_NEW = "state_new"; // 未付款
+    public static final String STATE_TYPE_SEND = "state_send"; // 待收货
+    public static final String STATE_TYPE_NOEVAL = "state_noeval"; // 待评价
+    public static final String STATE_TYPE_NOTAKES = "state_notakes"; // 退款、收货
+
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -62,12 +70,37 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initData() {
-        fragmentList = new ArrayList<>(1);
-        fragmentList.add(new MyOrderAllFragment());
-        fragmentList.add(new MyOrderAllFragment());
-        fragmentList.add(new MyOrderAllFragment());
-        fragmentList.add(new MyOrderAllFragment());
-        fragmentList.add(new MyOrderAllFragment());
+        fragmentList = new ArrayList<>(5);
+        MyOrderAllFragment allFragment = new MyOrderAllFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putString(STATE_TYPE, STATE_TYPE_DEFAULT);
+        allFragment.setArguments(bundle1);
+
+        MyOrderAllFragment fragment2 = new MyOrderAllFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putString(STATE_TYPE, STATE_TYPE_NEW);
+        fragment2.setArguments(bundle2);
+
+        MyOrderAllFragment fragment3 = new MyOrderAllFragment();
+        Bundle bundle3 = new Bundle();
+        bundle3.putString(STATE_TYPE, STATE_TYPE_SEND);
+        fragment3.setArguments(bundle3);
+
+        MyOrderAllFragment fragment4 = new MyOrderAllFragment();
+        Bundle bundle4 = new Bundle();
+        bundle4.putString(STATE_TYPE, STATE_TYPE_NOEVAL);
+        fragment4.setArguments(bundle4);
+
+        MyOrderAllFragment fragment5 = new MyOrderAllFragment();
+        Bundle bundle5 = new Bundle();
+        bundle5.putString(STATE_TYPE, STATE_TYPE_NOTAKES);
+        fragment5.setArguments(bundle5);
+
+        fragmentList.add(allFragment);
+        fragmentList.add(fragment2);
+        fragmentList.add(fragment3);
+        fragmentList.add(fragment4);
+        fragmentList.add(fragment5);
         viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
         viewPager.setOffscreenPageLimit(5);
