@@ -3,7 +3,6 @@ package com.help.reward.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,12 +16,14 @@ import com.help.reward.bean.Response.HelpComplainedDetailResponse;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ChooseCameraPopuUtils;
-import com.help.reward.utils.DealChoosePicUtils;
 import com.help.reward.utils.DialogUtil;
+import com.help.reward.utils.GlideUtils;
 import com.help.reward.utils.StringUtils;
-import com.help.reward.utils.UploadImageUtils;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.ToastUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +37,7 @@ import rx.schedulers.Schedulers;
  * Created by MXY on 2017/2/19.
  */
 
-public class HelpComplainedDetailActivity extends BaseActivity implements DealChoosePicUtils.DealChoosePicListener, UploadImageUtils.OnUploadImageListener {
+public class HelpComplainedDetailActivity extends BaseActivity {
 
     @BindView(R.id.iv_title_back)
     ImageView ivTitleBack;
@@ -85,11 +86,25 @@ public class HelpComplainedDetailActivity extends BaseActivity implements DealCh
 
     @BindView(R.id.iv_release_addphoto)
     ImageView ivReleaseAddphoto;
-    DealChoosePicUtils dealChoosePicUtils;
-    UploadImageUtils uploadImagUtils;
-
+    @BindView(R.id.iv_photo1)
+    ImageView iv_photo1;
+    @BindView(R.id.iv_delete1)
+    ImageView iv_delete1;
+    @BindView(R.id.iv_photo2)
+    ImageView iv_photo2;
+    @BindView(R.id.iv_delete2)
+    ImageView iv_delete2;
+    @BindView(R.id.iv_photo3)
+    ImageView iv_photo3;
+    @BindView(R.id.iv_delete3)
+    ImageView iv_delete3;
+    @BindView(R.id.iv_photo4)
+    ImageView iv_photo4;
+    @BindView(R.id.iv_delete4)
+    ImageView iv_delete4;
+    List<String> photoUrl = new ArrayList<>();
     String complaint_id;
-
+    ChooseCameraPopuUtils chooseCameraPopuUtils;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,10 +119,53 @@ public class HelpComplainedDetailActivity extends BaseActivity implements DealCh
     private void initView() {
         tvTitle.setText("申诉");
         tvTitleRight.setText("提交");
+        chooseCameraPopuUtils = new ChooseCameraPopuUtils(this, "p_complaint");
+        chooseCameraPopuUtils.setOnUploadImageListener(new ChooseCameraPopuUtils.OnUploadImageListener() {
+            @Override
+            public void onLoadError() {
+
+            }
+
+            @Override
+            public void onLoadSucced(String url) {
+                photoUrl.add(url);
+                showPhoto();
+            }
+        });
+    }
+    void showPhoto() {
+        iv_photo1.setVisibility(View.GONE);
+        iv_delete1.setVisibility(View.GONE);
+        iv_photo2.setVisibility(View.GONE);
+        iv_delete2.setVisibility(View.GONE);
+        iv_photo3.setVisibility(View.GONE);
+        iv_delete3.setVisibility(View.GONE);
+        iv_photo4.setVisibility(View.GONE);
+        iv_delete4.setVisibility(View.GONE);
+        ivReleaseAddphoto.setVisibility(View.VISIBLE);
+        switch (photoUrl.size()) {
+            case 4:
+                ivReleaseAddphoto.setVisibility(View.GONE);
+                iv_photo4.setVisibility(View.VISIBLE);
+                iv_delete4.setVisibility(View.VISIBLE);
+                GlideUtils.loadImage(photoUrl.get(3),iv_photo4);
+            case 3:
+                iv_photo3.setVisibility(View.VISIBLE);
+                iv_delete3.setVisibility(View.VISIBLE);
+                GlideUtils.loadImage(photoUrl.get(2),iv_photo3);
+            case 2:
+                iv_photo2.setVisibility(View.VISIBLE);
+                iv_delete2.setVisibility(View.VISIBLE);
+                GlideUtils.loadImage(photoUrl.get(1),iv_photo2);
+            case 1:
+                iv_photo1.setVisibility(View.VISIBLE);
+                iv_delete1.setVisibility(View.VISIBLE);
+                GlideUtils.loadImage(photoUrl.get(0),iv_photo1);
+                break;
+        }
     }
 
-
-    @OnClick({R.id.iv_title_back, R.id.tv_title_right, R.id.iv_release_addphoto})
+    @OnClick({R.id.iv_title_back, R.id.tv_title_right, R.id.iv_release_addphoto,R.id.iv_delete1,R.id.iv_delete2,R.id.iv_delete3,R.id.iv_delete4})
     void click(View v) {
         switch (v.getId()) {
             case R.id.iv_title_back:
@@ -117,11 +175,23 @@ public class HelpComplainedDetailActivity extends BaseActivity implements DealCh
                 subComplained();
                 break;
             case R.id.iv_release_addphoto:
-                ChooseCameraPopuUtils.showPopupWindow(this, v);
-                if (dealChoosePicUtils == null) {
-                    dealChoosePicUtils = new DealChoosePicUtils(this);
-                    dealChoosePicUtils.setDealChoosePicListener(this);
-                }
+                chooseCameraPopuUtils.showPopupWindow();
+                break;
+            case R.id.iv_delete1:
+                photoUrl.remove(0);
+                showPhoto();
+                break;
+            case R.id.iv_delete2:
+                photoUrl.remove(1);
+                showPhoto();
+                break;
+            case R.id.iv_delete3:
+                photoUrl.remove(2);
+                showPhoto();
+                break;
+            case R.id.iv_delete4:
+                photoUrl.remove(3);
+                showPhoto();
                 break;
         }
     }
@@ -129,21 +199,11 @@ public class HelpComplainedDetailActivity extends BaseActivity implements DealCh
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
-        if (dealChoosePicUtils != null)
-            dealChoosePicUtils.onActivityResult(requestCode, resultCode, data);
+        if (chooseCameraPopuUtils != null)
+            chooseCameraPopuUtils.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void finishDeal(String path, int type) {
-        // TODO Auto-generated method stub
-        ToastUtils.show(this, path);
-        if (uploadImagUtils == null) {
-            uploadImagUtils = new UploadImageUtils(mContext);
-            uploadImagUtils.setOnUploadImageListener(this);
-        }
-//        uploadImagUtils.upImage(path,"seek_help");
-    }
 
     private void subComplained() {
         String content = et_content.getText().toString().trim();
@@ -164,7 +224,7 @@ public class HelpComplainedDetailActivity extends BaseActivity implements DealCh
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
                 .getHelpApi()
-                .getSubComplainedBean(App.APP_CLIENT_KEY, op, complaint_id, content)
+                .getSubComplainedBean(App.APP_CLIENT_KEY, op, complaint_id, content,(String[]) photoUrl.toArray(new String[photoUrl.size()]))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -314,14 +374,4 @@ public class HelpComplainedDetailActivity extends BaseActivity implements DealCh
         super.onDestroy();
     }
 
-    @Override
-    public void onLoadError() {
-        //图片上传失败
-    }
-
-    @Override
-    public void onLoadSucced(String default_dir, String file_name) {
-        //图片上传成功
-        Log.e("onLoadSucced", default_dir + "===" + file_name);
-    }
 }

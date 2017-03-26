@@ -1,163 +1,214 @@
 package com.help.reward.utils;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.PopupWindow;
-import android.widget.Toast;
 
+import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.Response.UploadHeadImageReponse;
+import com.help.reward.network.PersonalNetwork;
+import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.view.ActionSheetDialog;
+import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.ImageFormatUtils;
+import com.idotools.utils.LogUtils;
+import com.idotools.utils.ToastUtils;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static android.app.Activity.RESULT_OK;
 
 /*
  * 图片选择弹出框
  */
 public class ChooseCameraPopuUtils {
+    Activity activity;
 
-    private static final String TAG = "PopupShareMenuUtil";
-    public static final int TYPE_OPEN_IMAGE = 0;
-    public static final String PIC_CAMERA_IMG_DIR = "helprewardupImg";
-    public static final String PIC_CAMERA_IMG_NAME = "camera.png";
-    /**
-     * 调用摄像头或从相册选取照片
-     */
-    public static final int PIC_RROM_CAMERA = 13;
-    public static final int PIC_RROM_PHONO = 14;
+    private File mFile;
+    private Bitmap mBitmap;
+    String type;
+    public ChooseCameraPopuUtils(Activity activity,String type){
+        this.activity=activity;
+        this.type=type;
+    }
 
-    public static void showPopupWindow(
-            Activity activity, View root) {
-        final PopupWindow poup = initPopuptWindow(activity);
-        poup.setWidth(LayoutParams.MATCH_PARENT);
-        poup.setHeight(LayoutParams.MATCH_PARENT);
-        poup.showAtLocation(root, Gravity.BOTTOM, 0, 0);
-        setClickListener(activity, poup);
+    public void showPopupWindow() {
+        // 点击选择照片和拍照上传
+        new ActionSheetDialog(activity)
+                .builder()
+                .setCancelable(false)
+                .setCanceledOnTouchOutside(false)
+                .addSheetItem("拍照", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                try {
+                                    // 调用系统摄像头，进行拍照
+                                    String state = Environment.getExternalStorageState();
+                                    if (state.equals(Environment.MEDIA_MOUNTED)) {
+                                        Intent phoneIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                        String saveDir = Constant.ROOT;
+                                        File dir = new File(saveDir);
+                                        if (!dir.exists()) {
+                                            dir.mkdir();
+                                        }
+                                        mFile = new File(saveDir, System.currentTimeMillis() + ".png");
+                                        phoneIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mFile));
+                                        activity.startActivityForResult(phoneIntent, 3);
+                                    }
+                                } catch (Exception e) {
+                                    LogUtils.e(e);
+                                }
+                            }
+                        })
+                .addSheetItem("从相册选择", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                try {
+                                    // 选择本地文件
+                                    Intent fileIntent = new Intent(
+                                            Intent.ACTION_PICK,
+                                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                            /* 取得相片后返回本画面 */
+                                    activity.startActivityForResult(fileIntent, 2);
+                                } catch (Exception e) {
+                                    LogUtils.e(e);
+                                }
+                            }
+                        }).show();
+    }
 
-        final OnClickListener l = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (poup.isShowing())
-                    poup.dismiss();
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 2 && resultCode == RESULT_OK) {
+            // 获取选择本地的图片
+            Uri uri = data.getData();
+            if (mFile != null) {
+                mFile = null;
             }
-        };
-
-        poup.getContentView().setOnClickListener(l);
-        poup.getContentView().findViewById(R.id.cancle_query)
-                .setOnClickListener(l);
-    }
-
-
-    private static PopupWindow initPopuptWindow(Activity activity) {
-        // 获取自定义布局文件dialog.xml的视图
-        View popupWindow_view = LayoutInflater.from(activity).inflate(
-                R.layout.choose_camera_pic_way, null);
-
-
-        // 使用下面的构造方法
-        PopupWindow popupWindow = new PopupWindow(popupWindow_view,
-                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
-        // 这里注意 必须要有一个背景 ，有了背景后
-        // 当你点击对话框外部的时候或者按了返回键的时候对话框就会消失，当然前提是使用的构造函数中Focusable为true
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x7f000000));
-        return popupWindow;
-    }
-
-    private static void setClickListener(
-            Activity activity, PopupWindow poup) {
-        View view = poup.getContentView();
-        view.findViewById(R.id.camera_pic).setOnClickListener(
-                new ClickListener(activity, poup));
-        view.findViewById(R.id.galler_pic).setOnClickListener(
-                new ClickListener(activity, poup));
-    }
-
-    private static class ClickListener implements OnClickListener {
-        Activity mActivity;
-        PopupWindow mPopupWindow;
-
-        ClickListener(Activity activity,
-                      PopupWindow poup) {
-            mPopupWindow = poup;
-            mActivity = activity;
+            if (uri != null) {
+                String[] proj = {
+                        MediaStore.Images.Media.DATA
+                };
+                Cursor actualimagecursor = activity.managedQuery(uri, proj, null, null, null);
+                int actual_image_column_index = actualimagecursor
+                        .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                actualimagecursor.moveToFirst();
+                String img_path = actualimagecursor
+                        .getString(actual_image_column_index);
+                mFile = new File(img_path);
+                if (Build.VERSION.SDK_INT < 14) {
+                    actualimagecursor.close();
+                }
+                uploadHeadPhoto();
+            } else {
+                // 获取图片
+                Bundle extras = data.getExtras();
+                mBitmap = (Bitmap) extras.get("data");
+                uploadHeadPhoto();
+            }
+        } else if (requestCode == 3 && resultCode == RESULT_OK) {
+            // 获取拍照的图片
+            if (mFile != null) {
+                // 上传图片
+                uploadHeadPhoto();
+            }
         }
+    }
 
-        @Override
-        public void onClick(View view) {
-            dissPoup(mPopupWindow);
-            switch (view.getId()) {
-                case R.id.camera_pic:
-                    String status = Environment.getExternalStorageState();
-                    if (status.equals(Environment.MEDIA_MOUNTED)) {
-                        try {
-                            File dir = new File(
-                                    Environment.getExternalStorageDirectory() + "/"
-                                            + PIC_CAMERA_IMG_DIR);
-                            if (!dir.exists())
-                                dir.mkdirs();
-                            File f = new File(dir, PIC_CAMERA_IMG_NAME);// localTempImgDir和localTempImageFileName是自己定义的名字
-                            Uri u = Uri.fromFile(f);
-                            Intent intent = new Intent(
-                                    MediaStore.ACTION_IMAGE_CAPTURE);
 
-                            intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
-                            mActivity.startActivityForResult(intent,
-                                    PIC_RROM_CAMERA);
-                        } catch (ActivityNotFoundException e) {
-                            // TODO Auto-generated catch block
-                            Toast.makeText(mActivity, "没有找到储存目录", Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    } else {
-                        Toast.makeText(mActivity, "没有储存卡", Toast.LENGTH_LONG)
-                                .show();
+    public void uploadHeadPhoto(){
+        if(mFile == null){
+            if(mBitmap != null){
+                String fileName = System.currentTimeMillis()+"";
+                ImageFormatUtils.saveBitmapFile(mBitmap,fileName);
+                mFile = new File(fileName);
+            }
+        }
+        if(mFile == null){
+            ToastUtils.show(activity,"请选择图片");
+            return;
+        }
+        // 请求携带的参数
+        Map<String,RequestBody> params = new HashMap<>();
+        params.put("type",toRequestBody(type));
+        params.put("key",toRequestBody(App.APP_CLIENT_KEY));
+
+        // 上传的图片
+        //设置Content-Type:application/octet-stream
+        RequestBody photoRequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), mFile);
+        //设置Content-Disposition:form-data; name="photo"; filename="xuezhiqian.png"
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("file", mFile.getName(), photoRequestBody);
+
+        MyProcessDialog.showDialog(activity,"正在上传...");
+        PersonalNetwork.getResponseApi()
+                .uploadImage(params,photo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<UploadHeadImageReponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        ToastUtils.show(activity, R.string.string_error);
                     }
 
-                    break;
-                case R.id.galler_pic:
-                    openImage(TYPE_OPEN_IMAGE);
-                    break;
-                default:
-                    break;
-            }
-        }
+                    @Override
+                    public void onNext(UploadHeadImageReponse response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            resetFileAndBitmap();
+                            if (response.data != null) {
+                                LogUtils.e("返回上传图片的数据是："+response.data.url+"===="+response.data.file_name);
+                                // 发送更新到个人首页
+                                if (onUploadImageListener != null) {
+                                    onUploadImageListener.onLoadSucced(response.data.url);
+                                }
+                            }
+                        } else {
+                            ToastUtils.show(activity, response.msg);
+                        }
+                    }
+                });
 
+    }
 
-        private void openImage(int type) {
-            try {
-//				Uri uri =  Uri.parse("content://media/external/images/media/*");
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    public RequestBody toRequestBody(String value){
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain"),value);
+        return body;
+    }
 
-                mActivity.startActivityForResult(intent,
-                        PIC_RROM_PHONO);
-
-            } catch (Exception e) {
-                // TODO: handle exception
-                e.printStackTrace();
-
-                Intent localIntent = new Intent();
-                localIntent.setType("image/*");
-                localIntent.setAction("android.intent.action.GET_CONTENT");
-                Intent localIntent2 = Intent.createChooser(localIntent, "选择图片");
-                mActivity.startActivityForResult(localIntent2,
-                        PIC_RROM_PHONO);
-            }
+    private void resetFileAndBitmap(){
+        mFile = null;
+        if(mBitmap != null && !mBitmap.isRecycled()){
+            mBitmap.recycle();
+            mBitmap = null;
         }
     }
 
-    private static void dissPoup(PopupWindow poup) {
-        if (null != poup && poup.isShowing())
-            poup.dismiss();
+    public interface OnUploadImageListener {
+        void onLoadError();
+
+        void onLoadSucced(String url);
     }
-
-
+    OnUploadImageListener onUploadImageListener;
+    public void setOnUploadImageListener(OnUploadImageListener onUploadImageListener) {
+        this.onUploadImageListener = onUploadImageListener;
+    }
 }

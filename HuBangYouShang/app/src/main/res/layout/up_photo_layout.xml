@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_44">
+
+    <LinearLayout
+        android:id="@+id/photo_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_photo1"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/add_gray"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_delete1"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignRight="@+id/iv_photo1"
+                android:layout_alignTop="@+id/iv_photo1"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="-5dp"
+                android:src="@mipmap/close"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_photo2"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/add_gray"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_delete2"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignRight="@+id/iv_photo2"
+                android:layout_alignTop="@+id/iv_photo2"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="-5dp"
+                android:src="@mipmap/close"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_photo3"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/add_gray"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_delete3"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignRight="@+id/iv_photo3"
+                android:layout_alignTop="@+id/iv_photo3"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="-5dp"
+                android:src="@mipmap/close"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_photo4"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/add_gray"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_delete4"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignRight="@+id/iv_photo4"
+                android:layout_alignTop="@+id/iv_photo4"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="-5dp"
+                android:src="@mipmap/close"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_release_addphoto"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/photo_layout"
+        android:src="@mipmap/add_gray" />
+
+    <TextView
+        style="@style/style_text_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:text="@string/release_hint7" />
+</RelativeLayout>
