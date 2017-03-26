@@ -21,8 +21,6 @@ import com.idotools.utils.DateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.id;
-
 
 /**
  *
@@ -121,7 +119,7 @@ public class HelpRewardnfoCommentAdapter extends BaseRecyclerAdapter<HelpRewardC
                 //继续跟帖
                 Intent intentDetail = new Intent(mActivity, HelpRewardChatDetailActivity.class);
                 intentDetail.putExtra("id", item.id);
-                intentDetail.putExtra("post_id", id);
+                intentDetail.putExtra("post_id", item.post_id);
                 mActivity.startActivity(intentDetail);
                 ActivitySlideAnim.slideInAnim(mActivity);
 

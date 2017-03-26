@@ -9,4 +9,5 @@ package com.help.reward.bean.Response;
 public class UploadImageResponse extends BaseResponse<UploadImageResponse> {
     public String file_name;
     public String default_dir;
+    public String url;
 }

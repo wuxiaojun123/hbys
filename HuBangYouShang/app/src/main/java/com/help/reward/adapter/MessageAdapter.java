@@ -56,11 +56,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         holder.tv_title.setText(mDatas.get(position).message_title);
         holder.tv_body.setText(mDatas.get(position).message_body);
         holder.tv_time.setText(DateUtil.getDateToString(mDatas.get(position).message_time*1000));
-        if (holder.tv_order != null) {
-            holder.tv_order.setText(mDatas.get(position).remark.order_sn);
+        if (holder.tv_order != null&&mDatas.get(position).noteObject!=null) {
+            holder.tv_order.setText(mDatas.get(position).noteObject.order_sn);
         }
-        if (holder.iv_icon != null) {
-            GlideUtils.loadImage(mDatas.get(position).remark.goods_image, holder.iv_icon);
+        if (holder.iv_icon != null&&mDatas.get(position).noteObject!=null) {
+            GlideUtils.loadImage(mDatas.get(position).noteObject.goods_image, holder.iv_icon);
         }
         holder.layout_content.setOnClickListener(new OnClickListener() {
             @Override

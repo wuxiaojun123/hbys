@@ -5,8 +5,8 @@ package com.help.reward.bean;
  * 分类
  */
 
-public class HelpBoardeBean {
-    public String board_id;
+public class HelpBoardBean {
+    public String id;
     public String board_name;
 
     //这个用来显示在PickerView上面的字符串,PickerView会通过反射获取getPickerViewText方法显示出来。

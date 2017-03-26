@@ -72,8 +72,9 @@ public class HelpRewardChatDetailActivity extends BaseActivity {
         post_id = getIntent().getExtras().getString("post_id");
         initView();
         initRecycler();
-        MyProcessDialog.showDialog(mContext);
+
         if (StringUtils.checkStr(id)) {
+            MyProcessDialog.showDialog(mContext);
             requestData();
         }
 
