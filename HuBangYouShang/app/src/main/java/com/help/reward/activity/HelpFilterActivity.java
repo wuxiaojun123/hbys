@@ -68,7 +68,7 @@ public class HelpFilterActivity extends BaseActivity {
         cityList.add(a);
         HelpBoardBean h = new HelpBoardBean();
         h.board_name = "全部";
-        h.board_id = "";
+        h.id = "";
         boardList.add(h);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -114,12 +114,14 @@ public class HelpFilterActivity extends BaseActivity {
     void itemClick(int position) {
         tvFilterType1.setText(cityList.get(position).area_name);
         area_id = cityList.get(position).area_id;
+        area_name=cityList.get(position).area_name;
     }
 
     @OnItemClick(R.id.gv_filter_type)
     void itemClick_type(int position) {
         tvFilterType2.setText(boardList.get(position).board_name);
-        board_id = boardList.get(position).board_id;
+        board_id = boardList.get(position).id;
+        board_name = boardList.get(position).board_name;
     }
 
 

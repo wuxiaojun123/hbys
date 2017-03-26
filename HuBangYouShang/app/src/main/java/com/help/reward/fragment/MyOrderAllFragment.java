@@ -1,13 +1,16 @@
 package com.help.reward.fragment;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.activity.MyOrderActivity;
 import com.help.reward.adapter.MyHelpPostAdapter;
 import com.help.reward.adapter.MyOrderAdapter;
+import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.Response.MyOrderResponse;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
@@ -16,6 +19,9 @@ import com.help.reward.R;
 import com.help.reward.bean.Response.MyHelpPostResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,7 +38,10 @@ public class MyOrderAllFragment extends BaseFragment {
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
+
+    private String state_type; // 订单状态
     private MyOrderAdapter mOrderAdapter;
+
 
     @Override
     protected int getLayoutId() {
@@ -42,13 +51,17 @@ public class MyOrderAllFragment extends BaseFragment {
     @Override
     protected void init() {
         initRecyclerView();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            state_type = bundle.getString(MyOrderActivity.STATE_TYPE);
+        }
         initNetwork();
     }
 
     private void initNetwork() {
         PersonalNetwork
                 .getResponseApi()
-                .getMyOrderResponse("member_order", "order_list", currentPage + "","", App.APP_CLIENT_KEY)
+                .getMyOrderResponse("member_order", "order_list", currentPage + "", state_type, App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyOrderResponse>() {
@@ -64,13 +77,18 @@ public class MyOrderAllFragment extends BaseFragment {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                if(response.data.order_group_list != null){
-                                    LogUtils.e("返回订单集合是："+response.data.order_group_list.size());
-                                    mOrderAdapter.addAll(response.data.order_group_list);
+                                if (response.data.order_group_list != null) {
+                                    List<MyOrderListBean.OrderList> list = new ArrayList<MyOrderListBean.OrderList>();
+                                    List<MyOrderListBean> order_group_list = response.data.order_group_list;
+                                    for (MyOrderListBean orderListBean:order_group_list){
+                                        List<MyOrderListBean.OrderList> order_list = orderListBean.order_list;
+                                        for (MyOrderListBean.OrderList bean:order_list){
+                                            list.add(bean);
+                                        }
+                                    }
+                                    mOrderAdapter.addAll(list);
                                 }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
-
                             if (!response.hasmore) { // 是否有更多数据
                                 lRecyclerview.setLoadMoreEnabled(false);
                             } else {
@@ -95,8 +113,8 @@ public class MyOrderAllFragment extends BaseFragment {
     private void initLoadMoreListener() {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore() {
-
+            public void onLoadMore() { // 请求更多
+                initNetwork();
             }
         });
     }
@@ -104,8 +122,9 @@ public class MyOrderAllFragment extends BaseFragment {
     private void initRefreshListener() {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-
+            public void onRefresh() { // 刷新
+                currentPage = 1;
+                initNetwork();
             }
         });
     }

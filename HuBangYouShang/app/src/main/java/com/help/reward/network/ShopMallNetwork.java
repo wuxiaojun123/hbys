@@ -14,4 +14,8 @@ public class ShopMallNetwork {
         return RetrofitUtils.getRetrofit().create(ShopMallApi.class);
     }
 
+
+    public static ShopMallApi getShopOtherApi() {
+        return RetrofitUtils.getRetrofitCookie().create(ShopMallApi.class);
+    }
 }

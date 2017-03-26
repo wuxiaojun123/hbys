@@ -6,6 +6,7 @@ import com.help.reward.bean.Response.AeraResponse;
 import com.help.reward.bean.Response.BalanceExchangeResponse;
 import com.help.reward.bean.Response.BalanceExchangeVolumeResponse;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.BusinessResponse;
 import com.help.reward.bean.Response.CouponTradingResponse;
 import com.help.reward.bean.Response.DiscountAmountResponse;
 import com.help.reward.bean.Response.GeneralExchangeVolumeResponse;
@@ -57,6 +58,14 @@ public interface PersonalApi {
     @FormUrlEncoded
     @POST("mobile/index.php?act=area")
     Observable<AeraResponse> getAeraResponse(
+            @Field("key") String key
+    );
+
+    // 个人信息---行业
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=index&op=get_config")
+    Observable<BusinessResponse> getBusinessResponse(
+            @Field("config_name") String config_name,
             @Field("key") String key
     );
 
