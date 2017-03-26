@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.bean.AreaBean;
-import com.help.reward.bean.HelpBoardeBean;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -23,8 +21,6 @@ import com.help.reward.utils.StringUtils;
 import com.help.reward.utils.UploadImageUtils;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.ToastUtils;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,8 +55,6 @@ public class HelpComplainedActivity extends BaseActivity implements DealChoosePi
     @BindView(R.id.iv_release_addphoto)
     ImageView ivReleaseAddphoto;
     DealChoosePicUtils dealChoosePicUtils;
-    ArrayList<AreaBean> cityList = new ArrayList<>();
-    ArrayList<HelpBoardeBean> boardList = new ArrayList<>();
     UploadImageUtils uploadImagUtils;
 
     String post_id;

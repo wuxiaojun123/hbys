@@ -18,8 +18,10 @@ import com.help.reward.R;
 import com.help.reward.adapter.MessageAdapter;
 import com.help.reward.bean.MessageBean;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.ComplaintStatusResponse;
 import com.help.reward.bean.Response.DeleteMessageResponse;
 import com.help.reward.bean.Response.MessageResponse;
+import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.MessageNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
@@ -132,18 +134,26 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
 
     @Override
     public void onItemClick(View view, int position) {
+        position=position-1;
         if ("3".equals(type)) {
-            Intent intent = new Intent(mContext, HelpInfoActivity.class);
-            intent.putExtra("message_id", adapter.getDataList().get(position).message_id);
+            Intent intent = null;
+            if("help".equalsIgnoreCase(adapter.getDataList().get(position).noteString)){
+                intent = new Intent(mContext, HelpSeekInfoActivity.class);
+            }else{
+                intent = new Intent(mContext, HelpRewardInfoActivity.class);
+            }
+            intent.putExtra("id", adapter.getDataList().get(position).related_id);
             startActivity(intent);
             ActivitySlideAnim.slideInAnim(this);
         } else if ("5".equals(type)) {
             Intent intent = new Intent(mContext, OrderDetailsActivity.class);
-            intent.putExtra("orderid", adapter.getDataList().get(position).remark.order_sn);
+            intent.putExtra("orderid", adapter.getDataList().get(position).noteObject.order_sn);
             startActivity(intent);
             ActivitySlideAnim.slideInAnim(this);
         } else if ("6".equals(type)) {
-            tvTitle.setText("投诉信息");
+
+            getComplaintStatus(adapter.getDataList().get(position).related_id);
+
         } else if ("1".equals(type)) {
 
         }
@@ -265,6 +275,45 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
                     }
                 });
     }
+
+    public void getComplaintStatus(final String id) {
+        MyProcessDialog.showDialog(mContext);
+        HelpNetwork
+                .getHelpApi()
+                .getComplaintStatusBean(App.APP_CLIENT_KEY, "complaint_status",id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<ComplaintStatusResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(ComplaintStatusResponse response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            if("待申诉".equalsIgnoreCase(response.data.status)||"已申诉".equalsIgnoreCase(response.data.status)){
+                                Intent intent = new Intent(mContext, HelpComplainedDetailActivity.class);
+                                intent.putExtra("complaint_id", id);
+                                startActivity(intent);
+
+                            }else{
+                                Intent intent = new Intent(mContext, HelpVoteInfoActivity.class);
+                                intent.putExtra("id", id);
+                                startActivity(intent);
+                            }
+                            ActivitySlideAnim.slideInAnim(PostActivity.this);
+
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
 
     private Subscription subscribe;
 

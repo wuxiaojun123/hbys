@@ -13,7 +13,8 @@ public class MessageBean {
     public String related_id;
     public String message_open;
     public String message_type;
-    public Remark remark;
+    public Remark noteObject;
+    public String noteString;//help,admiration
     public class Remark{
         public String goods_image;
         public String goods_name;

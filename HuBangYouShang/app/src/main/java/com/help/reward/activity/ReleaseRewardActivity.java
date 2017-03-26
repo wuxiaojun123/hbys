@@ -14,7 +14,7 @@ import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.AreaBean;
 import com.help.reward.bean.Response.AreaResponse;
-import com.help.reward.bean.HelpBoardeBean;
+import com.help.reward.bean.HelpBoardBean;
 import com.help.reward.bean.Response.HelpSubResponse;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -74,7 +74,7 @@ public class ReleaseRewardActivity extends BaseActivity implements DealChoosePic
     protected Subscription subscribe;
     DealChoosePicUtils dealChoosePicUtils;
     ArrayList<AreaBean> cityList = new ArrayList<>();
-    ArrayList<HelpBoardeBean> boardList = new ArrayList<>();
+    ArrayList<HelpBoardBean> boardList = new ArrayList<>();
     String area_id;
     String board_id;
     UploadImageUtils uploadImagUtils;
@@ -116,7 +116,7 @@ public class ReleaseRewardActivity extends BaseActivity implements DealChoosePic
             case R.id.tv_release_help_type:
                 // 单项选择
                 for (int i = 0; i <= 10; i++) {
-                    HelpBoardeBean h = new HelpBoardeBean();
+                    HelpBoardBean h = new HelpBoardBean();
                     h.board_id = i + "";
                     h.board_name = "fenlei" + i;
                     boardList.add(h);

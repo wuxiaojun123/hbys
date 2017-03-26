@@ -13,4 +13,8 @@ public class HelpNetwork {
         return RetrofitUtils.getRetrofitCookie().create(HelpApi.class);
     }
 
+    public static HelpApi getHelpNoCookieApi() {
+        return RetrofitUtils.getRetrofit().create(HelpApi.class);
+    }
+
 }

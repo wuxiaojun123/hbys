@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/title_layout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_44"
     android:background="@color/color_title_background"
@@ -34,8 +35,8 @@
             android:gravity="center_vertical"
             android:hint="@string/string_search_hint"
             android:maxLines="1"
+            android:imeOptions="actionSearch"
             android:selectAllOnFocus="true"
-            android:singleLine="true"
             android:textColor="@color/color_while"
             android:textColorHint="@color/color_while"
             android:textSize="@dimen/dimen_13" />

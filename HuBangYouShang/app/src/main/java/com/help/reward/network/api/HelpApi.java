@@ -2,6 +2,9 @@ package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.AreaResponse;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.ComplaintStatusResponse;
+import com.help.reward.bean.Response.HelpBoardResponse;
+import com.help.reward.bean.Response.HelpComplainedDetailResponse;
 import com.help.reward.bean.Response.HelpRewardChatDetailResponse;
 import com.help.reward.bean.Response.HelpRewardChatResponse;
 import com.help.reward.bean.Response.HelpRewardCommentResponse;
@@ -35,6 +38,9 @@ public interface HelpApi {
     Observable<HelpSeekResponse> getHelpSeekBean(
             @Field("key") String key,
             @Query("op") String op,
+            @Field("title") String title,
+            @Field("board_id") String board_id,
+            @Field("area_id") String area_id,
             @Query("curpage") int curpage
     );
 
@@ -44,6 +50,9 @@ public interface HelpApi {
     Observable<HelpRewardsResponse> getHelpRewardsBean(
             @Field("key") String key,
             @Query("op") String op,
+            @Field("title") String title,
+            @Field("board_id") String board_id,
+            @Field("area_id") String area_id,
             @Query("curpage") int curpage
     );
 
@@ -53,6 +62,9 @@ public interface HelpApi {
     Observable<HelpVoteResponse> getHelpVoteBean(
             @Field("key") String key,
             @Query("op") String op,
+            @Field("title") String title,
+            @Field("board_id") String board_id,
+            @Field("area_id") String area_id,
             @Query("curpage") int curpage
     );
 
@@ -128,7 +140,7 @@ public interface HelpApi {
     Observable<StringResponse> getGiveRewardPoints10Bean(
             @Field("key") String key,
             @Query("op") String op,
-            @Field("post_id") String post_id
+            @Query("id") String id
     );
 
     // 投票帖子详情op=vote_info
@@ -154,6 +166,24 @@ public interface HelpApi {
     @FormUrlEncoded
     @POST(Constant.URL_AREA)
     Observable<AreaResponse> getAreaBean(
+            @Field("key") String key
+
+    );
+
+    /**
+     * 获取板块列表
+     * /mobile/index.php?act=index&op=get_board
+     * "data": {
+     * "board_list": [
+     * {
+     * "id": "1",
+     * "board_name": "创新创业"
+     * },
+     * …]}
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_BOARD)
+    Observable<HelpBoardResponse> getBoardBean(
             @Field("key") String key
 
     );
@@ -376,4 +406,80 @@ public interface HelpApi {
             @Field("post_id") String post_id,
             @Field("points") String points
     );
+
+
+    /**
+     * 投诉信息页
+     * 需要登录，申诉和解释时
+     * /mobile/index.php?act=member_p_complain&op=info
+     * 参数[post]：complaint_id 投诉id
+     * "data": {
+     * "id": "2",
+     * "complainant_id": "1",//原告、投诉人id
+     * "complainant_name": "mahuateng",//投诉人姓名
+     * "complainant_vote": "0",
+     * "respondent_id": "1",	//被投诉者id
+     * "respondent_name": "mahuateng",//被投诉者姓名
+     * "respondent_vote": "0",
+     * "post_id": "1",//关联帖子id
+     * "post_type": "help",//关联帖子类型
+     * "post_title": "",//关联帖子标题
+     * "post_board": "创新创业",
+     * "create_time": "1484731833",
+     * "content": "我疯啦，我投诉自己啦",//投诉理由
+     * "appeal": "阳光在手指尖。",//申诉理由
+     * "appeal_time": "1484793515",
+     * "complainant_explain": null,//投诉人解释
+     * "com_explain_time": null,
+     * "respondent_explain": "大家好，我是MC子龙。",//被投诉者解释
+     * "respondent_time": "1484796441",
+     * "update_time": "1484796441",
+     * "status": "已申诉",//状态'和解','已结束','投票中','待申诉','已申诉'
+     * "result": null
+     * }
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_COMPLAIN)
+    Observable<HelpComplainedDetailResponse> getComplainedDetailBean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("complaint_id") String complaint_id
+    );
+
+    /**
+     * 申诉提交
+     * 需要登录
+     * /mobile/index.php?act=member_p_complain&op=appeal
+     * 参数[post]：complaint_id投诉id；content 申诉内容
+     * 解释提交
+     * 需要登录
+     * /mobile/index.php?act=member_p_complain&op=explain
+     * 参数[post]：complaint_id投诉id；content 申诉内容
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_COMPLAIN)
+    Observable<BaseResponse> getSubComplainedBean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("complaint_id") String complaint_id,
+            @Field("content") String content
+    );
+
+
+    /**
+     * 投诉信息页
+     * 需要登录，申诉和解释时
+     * /mobile/index.php?act=index&op=complaint_status
+     * 参数[post]：id 投诉id
+     * "status": '和解','已结束','投票中' 挑投票     待申诉','已申诉'跳填东西
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_HELP)
+    Observable<ComplaintStatusResponse> getComplaintStatusBean(
+            @Field("key") String key,
+            @Query("op") String op,
+            @Field("id") String id
+    );
+
+
 }

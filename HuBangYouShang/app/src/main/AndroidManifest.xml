@@ -327,6 +327,13 @@
             android:name="com.help.reward.activity.HelpRewardCommentActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.help.reward.activity.HelpComplainedDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.help.reward.activity.SearchHelpActivity"
+            android:screenOrientation="portrait" />
+
         <!-- 开机自启动服务 -->
         <receiver android:name="com.help.reward.chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">

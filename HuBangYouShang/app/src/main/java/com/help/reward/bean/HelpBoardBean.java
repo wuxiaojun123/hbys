@@ -5,7 +5,7 @@ package com.help.reward.bean;
  * 分类
  */
 
-public class HelpBoardeBean {
+public class HelpBoardBean {
     public String board_id;
     public String board_name;
 
