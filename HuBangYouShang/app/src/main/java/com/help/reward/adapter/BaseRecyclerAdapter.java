@@ -20,7 +20,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SuperV
 
 
     protected Context mContext;
-    private LayoutInflater mInflater;
+    protected LayoutInflater mInflater;
 
     protected List<T> mDataList = new ArrayList<>();
 

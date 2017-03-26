@@ -76,8 +76,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.tv_discount_level)
     TextView tv_discount_level; // 优惠百分比
 
-
-    @Nullable
+    /*@Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (contentView == null) {
@@ -85,6 +84,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
         ButterKnife.bind(this, contentView);
         return contentView;
+    }*/
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_my;
     }
 
     @OnClick({R.id.rl_user_info, R.id.iv_setting, R.id.tv_login, R.id.tv_register, R.id.tv_account,

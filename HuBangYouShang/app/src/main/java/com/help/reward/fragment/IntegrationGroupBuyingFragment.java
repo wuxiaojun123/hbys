@@ -88,7 +88,6 @@ public class IntegrationGroupBuyingFragment extends BaseFragment {
                     public void onNext(AdvertisementResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
-                            LogUtils.e("返回结果是：" + response.hasmore);
                             if (response.data != null) {
                                 mIntegrationWatchPraiseAdapter.addAll(response.data.adv_list);
                             }

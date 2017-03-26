@@ -20,6 +20,7 @@ import com.help.reward.bean.Response.MyCollectionStoreResponse;
 import com.help.reward.bean.Response.MyCouponResponse;
 import com.help.reward.bean.Response.MyHelpCommentResponse;
 import com.help.reward.bean.Response.MyHelpPostResponse;
+import com.help.reward.bean.Response.MyOrderResponse;
 import com.help.reward.bean.Response.MyRewardCommentResponse;
 import com.help.reward.bean.Response.MyRewardPostResponse;
 import com.help.reward.bean.Response.MyVoteResponse;
@@ -47,6 +48,10 @@ import rx.Observable;
  */
 
 public interface PersonalApi {
+
+    // mobile/index.php?act=logout 退出登录 post传client
+
+
 
     // 个人信息--获取地区
     @FormUrlEncoded
@@ -284,6 +289,18 @@ public interface PersonalApi {
             @Field("key") String key,
             @Field("exchange") String exchange
     );
+
+    // 我的订单-- ?act=member_order&op=order_list
+    @FormUrlEncoded
+    @POST("mobile/index.php")
+    Observable<MyOrderResponse> getMyOrderResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("state_type") String state_type,
+            @Field("key") String key
+    );
+
 
     // 帮助中心
     @FormUrlEncoded
