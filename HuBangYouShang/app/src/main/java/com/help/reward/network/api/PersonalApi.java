@@ -65,8 +65,7 @@ public interface PersonalApi {
     @FormUrlEncoded
     @POST("mobile/index.php?act=index&op=get_config")
     Observable<BusinessResponse> getBusinessResponse(
-            @Field("config_name") String config_name,
-            @Field("key") String key
+            @Field("config_name") String config_name
     );
 
     // 我的个人信息
