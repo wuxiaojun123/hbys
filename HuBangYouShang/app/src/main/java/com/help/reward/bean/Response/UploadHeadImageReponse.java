@@ -9,5 +9,6 @@ public class UploadHeadImageReponse extends BaseResponse<UploadHeadImageReponse>
 
     public String file_name;
     public String default_dir;
+    public String url;
 
 }

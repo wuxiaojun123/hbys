@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.help.reward.R;
+import com.help.reward.chat.Constant;
 import com.hyphenate.EMGroupChangeListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -52,6 +53,8 @@ import com.hyphenate.util.NetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.hbys.chatlibrary.R.id.message;
 
 public class GroupDetailsActivity extends BaseActivity implements OnClickListener {
 	private static final String TAG = "GroupDetailsActivity";
@@ -735,6 +738,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							deleteMembersFromGroup(username);
 						} else {
 							// 正常情况下点击user，可以进入用户详情或者聊天页面等等
+							if (!EMClient.getInstance().getCurrentUser().equals(username) && username.equals(group.getOwner())) {
+								Intent intent = new Intent(GroupDetailsActivity.this, ChatActivity.class);
+								intent.putExtra("userId", username);
+								intent.putExtra("chatType", Constant.CHATTYPE_SINGLE);
+								startActivity(intent);
+							}
 
 						}
 					}
