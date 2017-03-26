@@ -79,4 +79,17 @@ public class Constant {
 
     public static final String URL_FAVORITESADD = "mobile/index.php?act=member_favorites_post";
 
+    public static final String URL_RECEIVE_COUPON = "mobile/index.php?act=member_voucher&op=receiveVoucher";
+
+    public static final String URL_RECEIVE_POINTS = "mobile/index.php?act=member_points&op=receivePoints";
+
+
+    // 购物车
+    public static final String URL_SHOPCART_ADD = "mobile/index.php?act=member_cart&op=cart_add";
+
+    public static final String URL_SHOPCART_QUERY = "mobile/index.php?act=member_cart&op=cart_list";
+
+    public static final String URL_SHOPCART_DELETE = "mobile/index.php?act=member_cart&op=cart_del";
+
+
 }
