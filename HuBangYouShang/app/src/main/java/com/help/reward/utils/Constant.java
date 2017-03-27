@@ -12,6 +12,9 @@ public class Constant {
     public static final String ROOT = Environment.getExternalStorageDirectory()
             .getPath() + "/hbzs/";
 
+    public static final String SMS_APPKEY = "1bebf93388e20"; // sms短信验证
+    public static final String SMS_APPSECRET = "007b9903829fa24053dd4386a2019e4b"; // sms短信验证
+
     // 210.72.13.135
     public static final String BASE_URL = "http://210.72.13.135/";
     // 登录

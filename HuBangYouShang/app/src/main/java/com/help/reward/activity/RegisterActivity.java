@@ -31,6 +31,9 @@ import java.net.UnknownHostException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.smssdk.EventHandler;
+import cn.smssdk.OnSendMessageHandler;
+import cn.smssdk.SMSSDK;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -77,11 +80,40 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void initData() {
         initTimer();
+        sms();
+    }
+
+    private EventHandler eh;
+
+    private void sms() {
+        SMSSDK.initSDK(this, Constant.SMS_APPKEY, Constant.SMS_APPSECRET);
+        eh = new EventHandler() {
+            @Override
+            public void afterEvent(int event, int result, Object data) {
+
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    //回调完成
+                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                        //提交验证码成功
+                        LogUtils.e("提交验证码成功");
+                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                        //获取验证码成功
+                        LogUtils.e("获取验证码成功");
+                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
+                        //返回支持发送验证码的国家列表
+                        LogUtils.e("返回支持发送验证码的国家列表");
+                    }
+                } else {
+                    ((Throwable) data).printStackTrace();
+                }
+            }
+        };
+        SMSSDK.registerEventHandler(eh); //注册短信回调
 
     }
 
     private void initTimer() {
-        mTimer = new CountDownTimeUtils(CountDownTimeUtils.millisInFuture,CountDownTimeUtils.countDownInterval);
+        mTimer = new CountDownTimeUtils(CountDownTimeUtils.millisInFuture, CountDownTimeUtils.countDownInterval);
         mTimer.setOnCountDownTimeListener(new CountDownTimeUtils.OnCountDownTimeListener() {
             @Override
             public void onTick(long millisUntilFinished) { // 计时开始
@@ -115,9 +147,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String registerUserName = et_phone_number.getText().toString().trim();
                 if (!TextUtils.isEmpty(registerUserName)) {
                     if (ValidateUtil.isMobile(registerUserName)) {
-                        LogUtils.e("点击获取code");
-                        tv_code.setClickable(false);
-                        requestVerificationCode(registerUserName);
+                        LogUtils.e("点击获取code  获取支持的国家");
+
+//                        tv_code.setClickable(false);
+//                        requestVerificationCode(registerUserName);
                     } else {
                         ToastUtils.show(mContext, "手机号格式不正确");
                     }
@@ -216,7 +249,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         MyProcessDialog.showDialog(mContext);
         PersonalNetwork
                 .getLoginApi()
-                .getRegisterBean(registerUserName,registerCode,registerPwd, Constant.PLATFORM_CLIENT)
+                .getRegisterBean(registerUserName, registerCode, registerPwd, Constant.PLATFORM_CLIENT)
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<RegisterResponse>() {
@@ -236,7 +269,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         MyProcessDialog.closeDialog();
                         if (res.code == 200) { // 获取验证code成功
                             App.APP_CLIENT_KEY = res.data.key;
-                            LogUtils.e("注册成功。。。"+res.data.username);
+                            LogUtils.e("注册成功。。。" + res.data.username);
                         } else {
                             ToastUtils.show(mContext, res.msg);
                         }
@@ -250,6 +283,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             mTimer.cancel();
             mTimer = null;
         }
+        SMSSDK.unregisterEventHandler(eh); //注册短信回调
         super.onDestroy();
     }
 }
