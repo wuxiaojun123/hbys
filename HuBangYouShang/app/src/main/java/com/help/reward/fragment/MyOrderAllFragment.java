@@ -2,6 +2,8 @@ package com.help.reward.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
@@ -38,6 +40,8 @@ public class MyOrderAllFragment extends BaseFragment {
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
+    @BindView(R.id.ll_empty)
+    LinearLayout ll_empty;
 
     private String state_type; // 订单状态
     private MyOrderAdapter mOrderAdapter;
@@ -80,13 +84,18 @@ public class MyOrderAllFragment extends BaseFragment {
                                 if (response.data.order_group_list != null) {
                                     List<MyOrderListBean.OrderList> list = new ArrayList<MyOrderListBean.OrderList>();
                                     List<MyOrderListBean> order_group_list = response.data.order_group_list;
-                                    for (MyOrderListBean orderListBean:order_group_list){
+                                    for (MyOrderListBean orderListBean : order_group_list) {
                                         List<MyOrderListBean.OrderList> order_list = orderListBean.order_list;
-                                        for (MyOrderListBean.OrderList bean:order_list){
+                                        for (MyOrderListBean.OrderList bean : order_list) {
                                             list.add(bean);
                                         }
                                     }
-                                    mOrderAdapter.addAll(list);
+                                    LogUtils.e("返回数据集合石：" + list.size());
+                                    if(currentPage == 1){
+                                        mOrderAdapter.setDataList(list);
+                                    }else{
+                                        mOrderAdapter.addAll(list);
+                                    }
                                 }
                             }
                             if (!response.hasmore) { // 是否有更多数据
@@ -102,6 +111,7 @@ public class MyOrderAllFragment extends BaseFragment {
     }
 
     private void initRecyclerView() {
+        lRecyclerview.setEmptyView(ll_empty);
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         mOrderAdapter = new MyOrderAdapter(mContext);
         LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mOrderAdapter);

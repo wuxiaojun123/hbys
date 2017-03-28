@@ -8,14 +8,21 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/img_search_no_search_results" />
+        android:src="@mipmap/img_no_my_order" />
 
     <TextView
-        android:id="@+id/tv_no_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="抱歉，没有找到符合条件的广告"
+        android:text="您还没有相关的订单"
+        android:textColor="@color/color_no_search_results_text"
+        android:textSize="@dimen/dimen_15" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="可以去看看有哪些想买的"
         android:textColor="@color/color_no_search_results_text"
         android:textSize="@dimen/dimen_12" />
 

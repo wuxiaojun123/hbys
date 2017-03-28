@@ -13,6 +13,7 @@
         <include layout="@layout/layout_title" />
 
         <LinearLayout
+            android:id="@+id/ll_order_info"
             android:layout_width="match_parent"
             android:layout_height="63dp"
             android:orientation="vertical"
@@ -24,28 +25,30 @@
                 android:layout_height="35dp">
 
                 <TextView
+                    android:id="@+id/tv_order_number"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="订单号:20161212002"
+                    android:text="订单号:"
                     android:textColor="@color/color_3a"
                     android:textSize="@dimen/dimen_14" />
 
                 <TextView
+                    android:id="@+id/tv_order_state"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:text="待收货"
                     android:textColor="@color/color_f6b258" />
 
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_order_start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="下单时间：2017-02-17"
+                android:text="下单时间："
                 android:textColor="@color/color_bf"
                 android:textSize="@dimen/dimen_14" />
 
@@ -63,10 +66,11 @@
             android:paddingRight="10dp">
 
             <TextView
+                android:id="@+id/tv_express"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="申请快递:20161212002"
+                android:text="某某快递:快递单号"
                 android:textColor="@color/color_3a"
                 android:textSize="@dimen/dimen_14" />
 
@@ -80,14 +84,16 @@
                 android:layout_height="35dp">
 
                 <TextView
+                    android:id="@+id/tv_receiver_person"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="收货人:张小三"
+                    android:text="收货人:"
                     android:textColor="@color/color_3a"
                     android:textSize="@dimen/dimen_13" />
 
                 <TextView
+                    android:id="@+id/tv_receiver_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
@@ -99,6 +105,7 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_receiver_address"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -124,6 +131,7 @@
                 android:layout_height="35dp">
 
                 <TextView
+                    android:id="@+id/tv_seller_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -134,6 +142,7 @@
                     android:textSize="@dimen/dimen_14" />
 
                 <TextView
+                    android:id="@+id/tv_complaint"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
@@ -146,9 +155,22 @@
 
             </RelativeLayout>
 
-            <ListView
+            <LinearLayout
+                android:id="@+id/ll_shop"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:divider="@drawable/shape_divider_line"
+                android:dividerPadding="5dp"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:showDividers="middle">
+
+                <!--<include layout="@layout/layout_my_order_shop" />
+                <include layout="@layout/layout_my_order_shop" />
+                <include layout="@layout/layout_my_order_shop" />-->
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -178,11 +200,12 @@
                     android:textSize="@dimen/dimen_14" />
 
                 <TextView
+                    android:id="@+id/tv_pay_way"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:text="微信支付"
+                    android:text="某某支付"
                     android:textColor="@color/color_bf"
                     android:textSize="@dimen/dimen_12" />
 
@@ -206,6 +229,7 @@
                     android:textSize="@dimen/dimen_14" />
 
                 <TextView
+                    android:id="@+id/tv_shop_total_price"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
@@ -229,6 +253,7 @@
                     android:textSize="@dimen/dimen_14" />
 
                 <TextView
+                    android:id="@+id/tv_free"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
@@ -252,6 +277,7 @@
                     android:textSize="@dimen/dimen_14" />
 
                 <TextView
+                    android:id="@+id/tv_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
@@ -275,11 +301,11 @@
                     android:textSize="@dimen/dimen_14" />
 
                 <TextView
+                    android:id="@+id/tv_full_cut"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:text="10"
                     android:textColor="@color/color_bf"
                     android:textSize="@dimen/dimen_14" />
 
@@ -298,11 +324,11 @@
                     android:textSize="@dimen/dimen_14" />
 
                 <TextView
+                    android:id="@+id/tv_real_price"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:text="235"
                     android:textColor="@color/color_fa"
                     android:textSize="@dimen/dimen_14" />
 
@@ -315,6 +341,7 @@
             android:layout_height="10dp" />
 
         <TextView
+            android:id="@+id/tv_contact_seller"
             android:layout_width="300dp"
             android:layout_height="35dp"
             android:paddingLeft="100dp"

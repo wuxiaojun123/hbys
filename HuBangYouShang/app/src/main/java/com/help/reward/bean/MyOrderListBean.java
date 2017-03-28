@@ -17,6 +17,7 @@ public class MyOrderListBean {
         public String shipping_fee; // 运费
         public String evaluation_state;// 评价状态 0未评价，1已评价，2已过期未评价
         public String order_state; // 订单状态
+        public String lock_state; // 0是正常,大于0是锁定,默认是0，锁定为有退款
 
         public String store_name; // 店铺名称
         public List<MyOrderShopBean> extend_order_goods; // 商品集合

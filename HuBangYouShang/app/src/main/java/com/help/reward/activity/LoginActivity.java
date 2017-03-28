@@ -166,7 +166,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onError(int code, String message) {
                 MyProcessDialog.closeDialog();
-                ToastUtils.show(LoginActivity.this,"登录聊天服务器失败！");
+//                ToastUtils.show(LoginActivity.this,"登录聊天服务器失败！");
+                Log.d("main", "登录聊天服务器失败！");
 
                 finish();
                 ActivitySlideAnim.slideOutAnim(LoginActivity.this);
