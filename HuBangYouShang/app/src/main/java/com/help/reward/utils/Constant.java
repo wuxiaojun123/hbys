@@ -13,7 +13,7 @@ public class Constant {
             .getPath() + "/hbzs/";
 
     // 210.72.13.135
-    public static final String BASE_URL = "http://210.72.13.135/";
+    public static final String BASE_URL = "http://192.168.3.2/";
     // 登录
     public static final String URL_LOGIN = "mobile/index.php?act=login";
     // 注册获取验证码
