@@ -30,7 +30,7 @@
                 android:layout_alignTop="@+id/iv_photo1"
                 android:layout_marginRight="0dp"
                 android:layout_marginTop="-5dp"
-                android:src="@mipmap/close"
+                android:src="@mipmap/delete_photo"
                 android:visibility="gone" />
         </RelativeLayout>
 
@@ -54,7 +54,7 @@
                 android:layout_alignTop="@+id/iv_photo2"
                 android:layout_marginRight="0dp"
                 android:layout_marginTop="-5dp"
-                android:src="@mipmap/close"
+                android:src="@mipmap/delete_photo"
                 android:visibility="gone" />
         </RelativeLayout>
 
@@ -78,7 +78,7 @@
                 android:layout_alignTop="@+id/iv_photo3"
                 android:layout_marginRight="0dp"
                 android:layout_marginTop="-5dp"
-                android:src="@mipmap/close"
+                android:src="@mipmap/delete_photo"
                 android:visibility="gone" />
         </RelativeLayout>
 
@@ -102,7 +102,7 @@
                 android:layout_alignTop="@+id/iv_photo4"
                 android:layout_marginRight="0dp"
                 android:layout_marginTop="-5dp"
-                android:src="@mipmap/close"
+                android:src="@mipmap/delete_photo"
                 android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
@@ -116,6 +116,7 @@
         android:src="@mipmap/add_gray" />
 
     <TextView
+        android:id="@+id/tv_photonum"
         style="@style/style_text_content"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

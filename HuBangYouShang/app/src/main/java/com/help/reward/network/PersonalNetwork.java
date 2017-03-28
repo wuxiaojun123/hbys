@@ -12,7 +12,7 @@ public class PersonalNetwork {
 
     // 登录api
     public static LoginApi getLoginApi() {
-        return RetrofitUtils.getRetrofit().create(LoginApi.class);
+        return RetrofitUtils.getSetCookieRetrofit().create(LoginApi.class);
     }
 
     // 获取个人的信息

@@ -132,7 +132,7 @@ public class HelpFilterActivity extends BaseActivity {
 
         MyProcessDialog.showDialog(mContext);
         HelpNetwork
-                .getHelpNoCookieApi()
+                .getHelpApi()
                 .getAreaBean(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -164,7 +164,7 @@ public class HelpFilterActivity extends BaseActivity {
 
         MyProcessDialog.showDialog(mContext);
         HelpNetwork
-                .getHelpNoCookieApi()
+                .getHelpApi()
                 .getBoardBean(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

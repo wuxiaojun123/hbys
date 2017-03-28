@@ -23,7 +23,6 @@ import com.help.reward.utils.PickerUtils;
 import com.help.reward.utils.StringUtils;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.ToastUtils;
-import com.lvfq.pickerview.TimePickerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +67,7 @@ public class ReleaseHelpActivity extends BaseActivity {
     ImageView ivReleaseAddphoto;
     ArrayList<AreaBean> cityList = new ArrayList<>();
     ArrayList<HelpBoardBean> boardList = new ArrayList<>();
+    ArrayList<String> dateList = new ArrayList<>();
     String area_id;
     String board_id;
     ChooseCameraPopuUtils chooseCameraPopuUtils;
@@ -89,7 +89,12 @@ public class ReleaseHelpActivity extends BaseActivity {
     ImageView iv_photo4;
     @BindView(R.id.iv_delete4)
     ImageView iv_delete4;
+
+    @BindView(R.id.tv_photonum)
+    TextView tv_photonum;
+
     List<String> photoUrl = new ArrayList<>();
+    List<String> file_names = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,8 +115,9 @@ public class ReleaseHelpActivity extends BaseActivity {
             }
 
             @Override
-            public void onLoadSucced(String url) {
+            public void onLoadSucced(String file_name,String url) {
                 photoUrl.add(url);
+                file_names.add(file_name);
                 showPhoto();
             }
         });
@@ -129,28 +135,29 @@ public class ReleaseHelpActivity extends BaseActivity {
         ivReleaseAddphoto.setVisibility(View.VISIBLE);
         switch (photoUrl.size()) {
             case 4:
-                ivReleaseAddphoto.setVisibility(View.GONE );
+                ivReleaseAddphoto.setVisibility(View.GONE);
                 iv_photo4.setVisibility(View.VISIBLE);
                 iv_delete4.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(photoUrl.get(3),iv_photo4);
+                GlideUtils.loadImage(photoUrl.get(3), iv_photo4);
             case 3:
                 iv_photo3.setVisibility(View.VISIBLE);
                 iv_delete3.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(photoUrl.get(2),iv_photo3);
+                GlideUtils.loadImage(photoUrl.get(2), iv_photo3);
             case 2:
                 iv_photo2.setVisibility(View.VISIBLE);
                 iv_delete2.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(photoUrl.get(1),iv_photo2);
+                GlideUtils.loadImage(photoUrl.get(1), iv_photo2);
             case 1:
                 iv_photo1.setVisibility(View.VISIBLE);
                 iv_delete1.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(photoUrl.get(0),iv_photo1);
+                GlideUtils.loadImage(photoUrl.get(0), iv_photo1);
                 break;
         }
+        tv_photonum.setText("还可上传（"+(4-photoUrl.size())+"）张");
     }
 
     @OnClick({R.id.iv_title_back, R.id.tv_title_right, R.id.tv_release_help_address, R.id.tv_release_help_type,
-            tv_release_help_data, R.id.iv_release_addphoto,R.id.iv_delete1,R.id.iv_delete2,R.id.iv_delete3,R.id.iv_delete4})
+            tv_release_help_data, R.id.iv_release_addphoto, R.id.iv_delete1, R.id.iv_delete2, R.id.iv_delete3, R.id.iv_delete4})
     void click(View v) {
         switch (v.getId()) {
             case R.id.iv_title_back:
@@ -166,10 +173,16 @@ public class ReleaseHelpActivity extends BaseActivity {
                 getBoardData();
                 break;
             case tv_release_help_data:
-                PickerUtils.alertTimerPicker(this, TimePickerView.Type.YEAR_MONTH_DAY, "yyyy-MM-dd", new PickerUtils.TimerPickerCallBack() {
+                if(dateList.size()<=0){
+                    for (int i = 1; i <=15 ; i++) {
+                        dateList.add(String.valueOf(i));
+                    }
+                }
+
+                PickerUtils.alertBottomWheelOption(this, dateList, new PickerUtils.OnWheelViewClick() {
                     @Override
-                    public void onTimeSelect(String date) {
-                        tvReleaseHelpData.setText(date);
+                    public void onClick(View view, int postion) {
+                        tvReleaseHelpData.setText(dateList.get(postion));
                     }
                 });
                 break;
@@ -178,18 +191,22 @@ public class ReleaseHelpActivity extends BaseActivity {
                 break;
             case R.id.iv_delete1:
                 photoUrl.remove(0);
+                file_names.remove(0);
                 showPhoto();
                 break;
             case R.id.iv_delete2:
                 photoUrl.remove(1);
+                file_names.remove(1);
                 showPhoto();
                 break;
             case R.id.iv_delete3:
                 photoUrl.remove(2);
+                file_names.remove(2);
                 showPhoto();
                 break;
             case R.id.iv_delete4:
                 photoUrl.remove(3);
+                file_names.remove(3);
                 showPhoto();
                 break;
         }
@@ -234,7 +251,7 @@ public class ReleaseHelpActivity extends BaseActivity {
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
                 .getHelpApi()
-                .subHelpSeekBean(App.APP_CLIENT_KEY,"release_post", board_id, title, content, area_id, end_time, score, (String[]) photoUrl.toArray(new String[photoUrl.size()]))
+                .subHelpSeekBean(App.APP_CLIENT_KEY, "release_post", board_id, title, content, area_id, end_time, score, (String[]) file_names.toArray(new String[file_names.size()]))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HelpSubResponse>() {
@@ -249,8 +266,7 @@ public class ReleaseHelpActivity extends BaseActivity {
                     public void onNext(HelpSubResponse response) {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
-                            ToastUtils.show(mContext, response.data.id + "[[[[[[[");
-                            Intent intent = new Intent(mContext, HelpInfoActivity.class);
+                            Intent intent = new Intent(mContext, HelpSeekInfoActivity.class);
                             intent.putExtra("id", response.data.id);
                             startActivity(intent);
                             finish();
@@ -280,7 +296,7 @@ public class ReleaseHelpActivity extends BaseActivity {
 
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
-                .getHelpNoCookieApi()
+                .getHelpApi()
                 .getAreaBean(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -328,7 +344,7 @@ public class ReleaseHelpActivity extends BaseActivity {
 
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
-                .getHelpNoCookieApi()
+                .getHelpApi()
                 .getBoardBean(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -345,11 +361,11 @@ public class ReleaseHelpActivity extends BaseActivity {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             boardList.addAll(response.data.board_list);
-                            PickerUtils.alertBottomWheelOption(mContext, cityList, new PickerUtils.OnWheelViewClick() {
+                            PickerUtils.alertBottomWheelOption(ReleaseHelpActivity.this, boardList, new PickerUtils.OnWheelViewClick() {
                                 @Override
                                 public void onClick(View view, int postion) {
-                                    tvReleaseHelpAddress.setText(cityList.get(postion).area_name);
-                                    area_id = cityList.get(postion).area_id;
+                                    tvReleaseHelpType.setText(boardList.get(postion).board_name);
+                                    board_id = boardList.get(postion).id;
                                 }
                             });
                         } else {

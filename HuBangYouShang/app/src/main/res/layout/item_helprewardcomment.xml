@@ -102,7 +102,7 @@
                     android:layout_toLeftOf="@+id/iv_reply"
                     android:paddingLeft="15dp"
                     android:paddingTop="10dp"
-                    android:src="@mipmap/reply_normal" />
+                    android:src="@mipmap/complaint" />
 
             </RelativeLayout>
 

@@ -87,8 +87,11 @@ public class ReleaseRewardActivity extends BaseActivity {
     ImageView iv_photo4;
     @BindView(R.id.iv_delete4)
     ImageView iv_delete4;
-    List<String> photoUrl = new ArrayList<>();
+    @BindView(R.id.tv_photonum)
+    TextView tv_photonum;
 
+    List<String> photoUrl = new ArrayList<>();
+    List<String> file_names = new ArrayList<>();
 
     protected Subscription subscribe;
     ArrayList<AreaBean> cityList = new ArrayList<>();
@@ -122,8 +125,9 @@ public class ReleaseRewardActivity extends BaseActivity {
             }
 
             @Override
-            public void onLoadSucced(String url) {
+            public void onLoadSucced(String file_name,String url) {
                 photoUrl.add(url);
+                file_names.add(file_name);
                 showPhoto();
             }
         });
@@ -160,6 +164,7 @@ public class ReleaseRewardActivity extends BaseActivity {
                 GlideUtils.loadImage(photoUrl.get(0),iv_photo1);
                 break;
         }
+        tv_photonum.setText("还可上传（"+(4-photoUrl.size())+"）张");
     }
 
     @OnClick({R.id.iv_title_back, R.id.tv_title_right, R.id.tv_release_help_address, R.id.tv_release_help_type,
@@ -183,18 +188,22 @@ public class ReleaseRewardActivity extends BaseActivity {
                 break;
             case R.id.iv_delete1:
                 photoUrl.remove(0);
+                file_names.remove(0);
                 showPhoto();
                 break;
             case R.id.iv_delete2:
                 photoUrl.remove(1);
+                file_names.remove(1);
                 showPhoto();
                 break;
             case R.id.iv_delete3:
                 photoUrl.remove(2);
+                file_names.remove(2);
                 showPhoto();
                 break;
             case R.id.iv_delete4:
                 photoUrl.remove(3);
+                file_names.remove(3);
                 showPhoto();
                 break;
         }
@@ -237,7 +246,7 @@ public class ReleaseRewardActivity extends BaseActivity {
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
                 .getHelpApi()
-                .subHelpRewardBean(App.APP_CLIENT_KEY, board_id, title, content, area_id, score, (String[]) photoUrl.toArray(new String[photoUrl.size()]))
+                .subHelpRewardBean(App.APP_CLIENT_KEY, board_id, title, content, area_id, score, (String[]) file_names.toArray(new String[file_names.size()]))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HelpSubResponse>() {
@@ -252,7 +261,7 @@ public class ReleaseRewardActivity extends BaseActivity {
                     public void onNext(HelpSubResponse response) {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
-                            Intent intent = new Intent(mContext, HelpInfoActivity.class);
+                            Intent intent = new Intent(mContext, HelpRewardInfoActivity.class);
                             intent.putExtra("id", response.data.id);
                             startActivity(intent);
                             finish();
@@ -299,7 +308,6 @@ public class ReleaseRewardActivity extends BaseActivity {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             cityList.addAll(response.data.area_list);
-                            ToastUtils.show(mContext, cityList.get(1).area_name);
                             PickerUtils.alertBottomWheelOption(mContext, cityList, new PickerUtils.OnWheelViewClick() {
                                 @Override
                                 public void onClick(View view, int postion) {
@@ -331,7 +339,7 @@ public class ReleaseRewardActivity extends BaseActivity {
 
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
-                .getHelpNoCookieApi()
+                .getHelpApi()
                 .getBoardBean(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -348,11 +356,11 @@ public class ReleaseRewardActivity extends BaseActivity {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             boardList.addAll(response.data.board_list);
-                            PickerUtils.alertBottomWheelOption(mContext, cityList, new PickerUtils.OnWheelViewClick() {
+                            PickerUtils.alertBottomWheelOption(mContext, boardList, new PickerUtils.OnWheelViewClick() {
                                 @Override
                                 public void onClick(View view, int postion) {
-                                    tvReleaseHelpAddress.setText(cityList.get(postion).area_name);
-                                    area_id = cityList.get(postion).area_id;
+                                    tvReleaseHelpType.setText(boardList.get(postion).board_name);
+                                    board_id = boardList.get(postion).id;
                                 }
                             });
                         } else {

@@ -10,10 +10,6 @@ import com.help.reward.network.base.RetrofitUtils;
 public class HelpNetwork {
 
     public static HelpApi getHelpApi() {
-        return RetrofitUtils.getRetrofitCookie().create(HelpApi.class);
-    }
-
-    public static HelpApi getHelpNoCookieApi() {
         return RetrofitUtils.getRetrofit().create(HelpApi.class);
     }
 

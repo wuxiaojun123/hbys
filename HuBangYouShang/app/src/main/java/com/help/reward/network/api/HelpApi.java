@@ -202,7 +202,7 @@ public interface HelpApi {
             @Field("content") String content,
             @Field("area_id") String area_id,
             @Field("offer") String offer,
-            @Field("url") String[] url
+            @Field("url[]") String[] url
 
     );
 
@@ -224,7 +224,7 @@ public interface HelpApi {
             @Field("area_id") String area_id,
             @Field("end_time") String end_time,
             @Field("offer") String offer,
-            @Field("url") String[] url
+            @Field("url[]") String[] url
 
     );
 
@@ -330,7 +330,7 @@ public interface HelpApi {
             @Field("comment_id") String comment_id,
             @Field("type") String type,
             @Field("content") String content,
-            @Field("url") String[] url
+            @Field("url[]") String[] url
     );
 
 
@@ -464,7 +464,7 @@ public interface HelpApi {
             @Query("op") String op,
             @Field("complaint_id") String complaint_id,
             @Field("content") String content,
-            @Field("url") String[] url
+            @Field("url[]") String[] url
     );
 
 

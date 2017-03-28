@@ -178,7 +178,7 @@ public class ChooseCameraPopuUtils {
                                 LogUtils.e("返回上传图片的数据是："+response.data.url+"===="+response.data.file_name);
                                 // 发送更新到个人首页
                                 if (onUploadImageListener != null) {
-                                    onUploadImageListener.onLoadSucced(response.data.url);
+                                    onUploadImageListener.onLoadSucced(response.data.file_name,response.data.url);
                                 }
                             }
                         } else {
@@ -205,10 +205,11 @@ public class ChooseCameraPopuUtils {
     public interface OnUploadImageListener {
         void onLoadError();
 
-        void onLoadSucced(String url);
+        void onLoadSucced(String file_name,String url);
     }
     OnUploadImageListener onUploadImageListener;
-    public void setOnUploadImageListener(OnUploadImageListener onUploadImageListener) {
+    public void
+    setOnUploadImageListener(OnUploadImageListener onUploadImageListener) {
         this.onUploadImageListener = onUploadImageListener;
     }
 }

@@ -102,7 +102,10 @@ public class HelpComplainedDetailActivity extends BaseActivity {
     ImageView iv_photo4;
     @BindView(R.id.iv_delete4)
     ImageView iv_delete4;
+    @BindView(R.id.tv_photonum)
+    TextView tv_photonum;
     List<String> photoUrl = new ArrayList<>();
+    List<String> file_names = new ArrayList<>();
     String complaint_id;
     ChooseCameraPopuUtils chooseCameraPopuUtils;
     @Override
@@ -127,8 +130,9 @@ public class HelpComplainedDetailActivity extends BaseActivity {
             }
 
             @Override
-            public void onLoadSucced(String url) {
+            public void onLoadSucced(String file_name,String url) {
                 photoUrl.add(url);
+                file_names.add(file_name);
                 showPhoto();
             }
         });
@@ -163,6 +167,7 @@ public class HelpComplainedDetailActivity extends BaseActivity {
                 GlideUtils.loadImage(photoUrl.get(0),iv_photo1);
                 break;
         }
+        tv_photonum.setText("还可上传（"+(4-photoUrl.size())+"）张");
     }
 
     @OnClick({R.id.iv_title_back, R.id.tv_title_right, R.id.iv_release_addphoto,R.id.iv_delete1,R.id.iv_delete2,R.id.iv_delete3,R.id.iv_delete4})
@@ -179,18 +184,22 @@ public class HelpComplainedDetailActivity extends BaseActivity {
                 break;
             case R.id.iv_delete1:
                 photoUrl.remove(0);
+                file_names.remove(0);
                 showPhoto();
                 break;
             case R.id.iv_delete2:
                 photoUrl.remove(1);
+                file_names.remove(1);
                 showPhoto();
                 break;
             case R.id.iv_delete3:
                 photoUrl.remove(2);
+                file_names.remove(2);
                 showPhoto();
                 break;
             case R.id.iv_delete4:
                 photoUrl.remove(3);
+                file_names.remove(3);
                 showPhoto();
                 break;
         }
@@ -224,7 +233,7 @@ public class HelpComplainedDetailActivity extends BaseActivity {
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
                 .getHelpApi()
-                .getSubComplainedBean(App.APP_CLIENT_KEY, op, complaint_id, content,(String[]) photoUrl.toArray(new String[photoUrl.size()]))
+                .getSubComplainedBean(App.APP_CLIENT_KEY, op, complaint_id, content,(String[]) file_names.toArray(new String[file_names.size()]))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
