@@ -9,9 +9,12 @@ import android.support.multidex.MultiDex;
 import com.help.reward.bean.MemberInfoBean;
 import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.chat.DemoHelper;
+import com.help.reward.utils.Constant;
 
 import java.util.Iterator;
 import java.util.List;
+
+import cn.smssdk.SMSSDK;
 
 /**
  * 更新一下,加了个注释
@@ -34,7 +37,8 @@ public class App extends Application {
         super.onCreate();
 //        FreelineCore.init(this);
         mApp = this;
-        
+        SMSSDK.initSDK(this, Constant.SMS_APPKEY, Constant.SMS_APPSECRET);
+
         int pid = android.os.Process.myPid();
         String processAppName = getAppName(pid);
         // 如果APP启用了远程的service，此application:onCreate会被调用2次

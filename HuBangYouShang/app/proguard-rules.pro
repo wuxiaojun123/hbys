@@ -112,4 +112,10 @@
 
 ################### retrofit end ###################
 
+################## sms ############################
+-keep class cn.smssdk.**{*;}
+-keep class com.mob.**{*;}
 
+-dontwarn com.mob.**
+-dontwarn cn.smssdk.**
+################## sms ############################
