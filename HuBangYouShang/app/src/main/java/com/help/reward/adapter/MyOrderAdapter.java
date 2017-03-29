@@ -49,7 +49,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
 
         LinearLayout ll_shop = holder.getView(R.id.ll_shop); // 商品列表
 
-        MyOrderListBean.OrderList bean = (MyOrderListBean.OrderList) mDataList.get(position);
+        final MyOrderListBean.OrderList bean = (MyOrderListBean.OrderList) mDataList.get(position);
 
         int size = 0;
         if (ll_shop.getTag() == null && bean.extend_order_goods != null) {
@@ -71,6 +71,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
             @Override
             public void onClick(View v) { // 跳往订单详情
                 Intent mIntent = new Intent(mContext, OrderDetailsActivity.class);
+                mIntent.putExtra("order_id",bean.order_id);
                 mContext.startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim((BaseActivity) mContext);
             }

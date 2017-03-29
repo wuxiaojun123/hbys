@@ -25,6 +25,7 @@ import com.help.reward.bean.Response.MyOrderResponse;
 import com.help.reward.bean.Response.MyRewardCommentResponse;
 import com.help.reward.bean.Response.MyRewardPostResponse;
 import com.help.reward.bean.Response.MyVoteResponse;
+import com.help.reward.bean.Response.OrderInfoResponse;
 import com.help.reward.bean.Response.PersonInfoResponse;
 import com.help.reward.bean.Response.UploadHeadImageReponse;
 import com.help.reward.utils.Constant;
@@ -35,6 +36,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -307,6 +309,15 @@ public interface PersonalApi {
             @Query("curpage") String curpage,
             @Field("state_type") String state_type,
             @Field("key") String key
+    );
+
+    // 订单详情-- ?act=member_order&op=order_info
+    @GET("mobile/index.php")
+    Observable<OrderInfoResponse> getMyOrderDetailsResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("order_id") String order_id,
+            @Query("key") String key
     );
 
 

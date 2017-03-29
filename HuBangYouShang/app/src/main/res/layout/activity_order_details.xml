@@ -365,20 +365,21 @@
             android:gravity="center_vertical"
             >
 
-            <TextView
-                android:id="@+id/tv_evaluate"
+            <!--<TextView
+                android:id="@+id/tv_evaluate_order"
                 style="@style/style_order_details_bottom_tv"
                 android:text="评价"
+                android:background="@drawable/shape_bg_order_evaluate"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"
                 />
 
             <TextView
-                android:id="@+id/tv_refund"
+                android:id="@+id/tv_cancel_order"
                 style="@style/style_order_details_bottom_tv"
-                android:text="退款/退货"
-                android:layout_toLeftOf="@id/tv_evaluate"
+                android:text="取消订单"
+                android:layout_toLeftOf="@id/tv_evaluate_order"
                 android:layout_marginLeft="15dp"
                 />
 
@@ -386,8 +387,52 @@
                 android:id="@+id/tv_remove_order"
                 style="@style/style_order_details_bottom_tv"
                 android:text="删除订单"
-                android:layout_toLeftOf="@id/tv_refund"
-                />
+                android:layout_toLeftOf="@id/tv_cancel_order"
+                />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/tv_cancel_order"
+                    android:layout_width="90dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/shape_bg_prepaid_balance_tv"
+                    android:gravity="center"
+                    android:text="取消订单"
+                    android:textColor="@color/color_3a"
+                    android:textSize="@dimen/dimen_13" />
+
+                <TextView
+                    android:id="@+id/tv_remove_order"
+                    android:layout_width="90dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/shape_bg_prepaid_balance_tv"
+                    android:gravity="center"
+                    android:text="删除订单"
+                    android:textColor="@color/color_3a"
+                    android:textSize="@dimen/dimen_13" />
+
+                <TextView
+                    android:id="@+id/tv_evaluate_order"
+                    android:layout_width="90dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/shape_bg_order_evaluate"
+                    android:gravity="center"
+                    android:text="评价"
+                    android:textColor="@color/color_next_bg"
+                    android:textSize="@dimen/dimen_13" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
