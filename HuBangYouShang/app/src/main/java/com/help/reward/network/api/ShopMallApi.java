@@ -4,6 +4,7 @@ import com.help.reward.bean.Response.GoodResponse;
 import com.help.reward.bean.Response.GoodsSecondTypeResponse;
 import com.help.reward.bean.Response.GoodsTypeResponse;
 import com.help.reward.bean.Response.ShopMallMainResponse;
+import com.help.reward.bean.Response.ShopSearchResponse;
 import com.help.reward.utils.Constant;
 
 import retrofit2.http.GET;
@@ -28,6 +29,13 @@ public interface ShopMallApi {
             @Query("op") String op,
             @Query("goods_id") String goods_id
     );
+
+    // 获取商城信息的数据 ?act=goods&op=goods_detail&goods_id=42
+    @GET("mobile/index.php?act=index&op=search_key_list")
+    Observable<ShopSearchResponse> getShopSearchResponse(
+    );
+
+
 
     /**
      * 类别列表

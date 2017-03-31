@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.help.reward.activity.MyAccountActivity;
+import com.help.reward.activity.MyOrderActivity;
 import com.help.reward.activity.SearchShopActivity;
 import com.help.reward.view.SearchEditTextView;
+import com.idotools.utils.InputWindowUtils;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.R;
@@ -132,6 +135,12 @@ public class ConsumptionFragment extends BaseFragment {
     private void initView() {
         iv_email.setVisibility(View.VISIBLE);
         tv_text.setVisibility(View.GONE);
+        et_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                goToSearchActivity();
+            }
+        });
     }
 
 
@@ -273,11 +282,13 @@ public class ConsumptionFragment extends BaseFragment {
     void click(View v) {
         switch (v.getId()) {
             case R.id.layout_shop_myaccount: // 我的账户
-
+                startActivity(new Intent(mContext, MyAccountActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.layout_shop_myorder: // 我的订单
-
+                startActivity(new Intent(mContext, MyOrderActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.layout_shop_coupon: // 优惠劵
@@ -305,6 +316,7 @@ public class ConsumptionFragment extends BaseFragment {
         Intent mIntent = new Intent(mContext, SearchShopActivity.class);
         mContext.startActivity(mIntent);
         ActivitySlideAnim.slideInAnim(getActivity());
+        InputWindowUtils.closeInputWindow(et_search, mContext);
     }
 
 }

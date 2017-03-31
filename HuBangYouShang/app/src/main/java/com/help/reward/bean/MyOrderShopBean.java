@@ -39,5 +39,6 @@ public class MyOrderShopBean {
     public String commis_rate;
     public String gc_id;
     public String goods_image_url; // 图片路径
+    public String image_url; // 图片路径
 
 }

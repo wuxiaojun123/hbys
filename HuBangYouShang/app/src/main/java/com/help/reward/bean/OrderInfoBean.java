@@ -21,10 +21,11 @@ public class OrderInfoBean {
     public String real_pay_amount; // 实际付款
     public String goods_amount; // 商品总价
     public String order_amount; // 订单总价
-
+    public String store_phone; // 商家电话
 
     public Extend_order_common extend_order_common; //
     public List<MyOrderShopBean> goods_list; // 商品列表
+//    public Extend_store extend_store; // 商家信息
 
     public class Extend_order_common{
         public String reciver_name; // 收货人姓名
@@ -39,6 +40,8 @@ public class OrderInfoBean {
         public String address;
     }
 
-
+//    public class Extend_store{
+//        public String live_store_tel; // 商家电话
+//    }
 
 }

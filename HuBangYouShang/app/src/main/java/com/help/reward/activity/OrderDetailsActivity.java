@@ -1,5 +1,7 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -18,6 +20,7 @@ import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.view.AlertDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
@@ -81,6 +84,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.tv_remove_order)
     TextView tv_remove_order;
 
+    private String sellerPhoneNumber;  // 商家电话
     private LayoutInflater mInflater;
 
     @Override
@@ -119,11 +123,9 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
                     @Override
                     public void onNext(OrderInfoResponse response) {
-                        LogUtils.e("获取数据成功：" + response.code);
                         if (response.code == 200) {
                             if (response.data != null) { // 显示数据
-                                LogUtils.e("数据是：" + response.data);
-                                OrderInfoBean bean = response.data;
+                                OrderInfoBean bean = response.data.order_info;
                                 bindData(bean);
                                 setShopText(bean);
                                 setOrderState(bean);
@@ -135,8 +137,43 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
+    @OnClick({R.id.iv_title_back, R.id.tv_complaint, R.id.tv_contact_seller})
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.iv_title_back:
+                finish();
+                ActivitySlideAnim.slideOutAnim(OrderDetailsActivity.this);
+
+                break;
+            case R.id.tv_complaint: // 投诉
+
+                break;
+            case R.id.tv_contact_seller: // 联系买家
+                showDialogContactSeller();
+
+                break;
+        }
+    }
+
+    private void showDialogContactSeller() { // 联系买家--拨打电话
+        if(TextUtils.isEmpty(sellerPhoneNumber)){
+            return;
+        }
+        new AlertDialog(OrderDetailsActivity.this)
+                .builder().setMsg(sellerPhoneNumber)
+                .setNegativeButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) { // 拨打电话
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:025-58840881"));
+                        startActivity(intent);
+                    }
+        }).show();
+    }
+
     private void bindData(OrderInfoBean bean) {
-        tv_order_number.setText(bean.order_sn);
+        tv_order_number.setText("订单号:" + bean.order_sn);
         tv_order_state.setText(bean.state_desc);
         tv_order_start_time.setText(bean.add_time);
 
@@ -152,7 +189,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         tv_discount.setText("暂无字段");
         tv_full_cut.setText("￥" + bean.extend_order_common.voucher_price);
         tv_real_price.setText("￥" + bean.real_pay_amount);
-
+        sellerPhoneNumber = bean.store_phone;
     }
 
 
@@ -162,32 +199,16 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             View shopView = mInflater.inflate(R.layout.layout_my_order_shop, ll_shop, false);
             ImageView iv_shop_img = (ImageView) shopView.findViewById(R.id.iv_shop_img); // 商品图片
             TextView tv_shop_name = (TextView) shopView.findViewById(R.id.tv_shop_name); // 商品名称
-//            TextView tv_shop_atrribute = (TextView) shopView.findViewById(R.id.tv_shop_atrribute); // 商品属性:属性值
             TextView tv_single_shop_price = (TextView) shopView.findViewById(R.id.tv_single_shop_price); // 单个商品价格 ￥200.0
             TextView tv_shop_num = (TextView) shopView.findViewById(R.id.tv_shop_num); // 商品数量 x1
 
             MyOrderShopBean myOrderShopBean = bean.goods_list.get(i);
-
-            GlideUtils.loadImage(myOrderShopBean.goods_image_url, iv_shop_img);
+            GlideUtils.loadImage(myOrderShopBean.image_url, iv_shop_img);
             tv_shop_name.setText(myOrderShopBean.goods_name);
-//            tv_shop_atrribute.setText("商品属性:");
             tv_single_shop_price.setText(myOrderShopBean.goods_price);
             tv_shop_num.setText("x" + myOrderShopBean.goods_num);
 
             ll_shop.addView(shopView);
-        }
-    }
-
-    @OnClick({R.id.iv_title_back})
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.iv_title_back:
-                finish();
-                ActivitySlideAnim.slideOutAnim(OrderDetailsActivity.this);
-
-                break;
         }
     }
 

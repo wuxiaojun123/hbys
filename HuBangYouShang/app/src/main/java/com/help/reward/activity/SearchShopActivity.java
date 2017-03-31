@@ -10,15 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.OrderInfoBean;
+import com.help.reward.bean.Response.OrderInfoResponse;
+import com.help.reward.bean.Response.ShopSearchResponse;
+import com.help.reward.network.PersonalNetwork;
+import com.help.reward.network.ShopMallNetwork;
+import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.FluidLayout;
 import com.help.reward.view.SearchEditTextView;
 import com.idotools.utils.ToastUtils;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 搜索商品页面
@@ -39,16 +50,49 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
     FluidLayout fl_hot; // 热门搜索的viewgroup
 
     private int colorTextBg;
-    private String[] tags = new String[]{
-            "倩女幽魂", "单机斗地主", "天堂战记", "妖精的尾巴", "极限挑战", "我们相爱吧", "倚天屠龙记"};
+    private String[] hotList;
+    private String[] historyList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_shop);
         ButterKnife.bind(this);
+        initView();
+        initNetwork();
+    }
+
+    private void initNetwork() {
+        ShopMallNetwork
+                .getShopOtherApi()
+                .getShopSearchResponse()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<ShopSearchResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(ShopSearchResponse response) {
+                        if (response.code == 200) {
+                            if (response.data != null) { // 显示数据
+                                hotList = response.data.list;
+                                historyList = response.data.his_list;
+                                setHistory();
+                                setHot();
+                            }
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
+    private void initView() {
         colorTextBg = getResources().getColor(R.color.color_3a);
-        setHistory();
         et_search.setOnKeyListener(new SearchEditTextView.onKeyListener() {
             @Override
             public void onKey() {
@@ -72,25 +116,50 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
         ActivitySlideAnim.slideOutAnim(SearchShopActivity.this);
     }
 
+
     private void setHistory() {
+        if(historyList == null){
+            return;
+        }
         fl_history.removeAllViews();
         fl_history.setGravity(Gravity.CENTER);
-        for (int i = 0; i < tags.length; i++) {
+        int size = historyList.length;
+        for (int i = 0; i < size; i++) {
             TextView tv = new TextView(this);
-            tv.setText(tags[i]);
+            tv.setText(historyList[i]);
             tv.setTextSize(13);
-//            tv.setHeight(100);
             tv.setGravity(Gravity.CENTER);
             tv.setBackgroundResource(R.drawable.bg_search_shop_fluid_text);
-
             tv.setTextColor(colorTextBg); //
-
             FluidLayout.LayoutParams params = new FluidLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
             params.setMargins(12, 12, 12, 12);
             fl_history.addView(tv, params);
+        }
+    }
+
+    private void setHot() {
+        if(hotList == null){
+            return;
+        }
+        fl_hot.removeAllViews();
+        fl_hot.setGravity(Gravity.CENTER);
+        int size = hotList.length;
+        for (int i = 0; i < size; i++) {
+            TextView tv = new TextView(this);
+            tv.setText(hotList[i]);
+            tv.setTextSize(13);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundResource(R.drawable.bg_search_shop_fluid_text);
+            tv.setTextColor(colorTextBg); //
+            FluidLayout.LayoutParams params = new FluidLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(12, 12, 12, 12);
+            fl_hot.addView(tv, params);
         }
     }
 
