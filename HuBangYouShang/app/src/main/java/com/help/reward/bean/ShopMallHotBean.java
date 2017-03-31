@@ -26,5 +26,5 @@ public class ShopMallHotBean {
     public String goods_image;
     public String store_id;
     public String goods_image_url;
-
+    public String goods_jingle;
 }

@@ -1,6 +1,8 @@
 package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.GoodResponse;
+import com.help.reward.bean.Response.GoodsSecondTypeResponse;
+import com.help.reward.bean.Response.GoodsTypeResponse;
 import com.help.reward.bean.Response.ShopMallMainResponse;
 import com.help.reward.utils.Constant;
 
@@ -27,4 +29,24 @@ public interface ShopMallApi {
             @Query("goods_id") String goods_id
     );
 
+    /**
+     * 类别列表
+     * /mobile/index.php?act=goods_class&op=index
+     * 参数[get]：gc_id 不填或填错取根类别，正确返回其子类别。
+     * data: {class_list: [{
+     */
+    @GET(Constant.URL_GOODSCLASS)
+    Observable<GoodsTypeResponse> getGoodClassResponse(
+    );
+
+    /**
+     * 二级类别列表
+     * /mobile/index.php?act=goods_class&op=index
+     * 参数[get]：gc_id 不填或填错取根类别，正确返回其子类别。
+     * data: {class_list: [{
+     */
+    @GET(Constant.URL_GOODSCLASS)
+    Observable<GoodsSecondTypeResponse> getGoodSecondClassResponse(
+            @Query("gc_id") String gc_id
+    );
 }

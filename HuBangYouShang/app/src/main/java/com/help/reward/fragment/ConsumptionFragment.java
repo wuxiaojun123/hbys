@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
-import com.idotools.utils.LogUtils;
-import com.idotools.utils.ToastUtils;
 import com.help.reward.R;
 import com.help.reward.activity.GoodInfoActivity;
+import com.help.reward.activity.GoodsTypeActivity;
+import com.help.reward.activity.MsgCenterActivity;
 import com.help.reward.activity.StoreInfoActivity;
 import com.help.reward.adapter.ShopHotAdapter;
 import com.help.reward.adapter.StoreRecommandAdapter;
@@ -27,6 +27,8 @@ import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.view.MyGridView;
+import com.idotools.utils.LogUtils;
+import com.idotools.utils.ToastUtils;
 
 import java.util.List;
 
@@ -34,6 +36,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static com.help.reward.R.id.layout_help_title_sms;
 
 /**
  * 首页-消费
@@ -44,7 +48,7 @@ public class ConsumptionFragment extends BaseFragment {
 
     @BindView(R.id.tv_title_help_msgcount)
     TextView tvTitleHelpMsgcount;
-    @BindView(R.id.layout_help_title_sms)
+    @BindView(layout_help_title_sms)
     LinearLayout layoutHelpTitleSms;
     @BindView(R.id.et_shop_search)
     EditText etShopSearch;
@@ -157,7 +161,7 @@ public class ConsumptionFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 LogUtils.e("点击的position=" + position + "  good_id=" + hot_goods_list.get(position).goods_id);
                 Intent mIntent = new Intent(mContext, GoodInfoActivity.class);
-                mIntent.putExtra("goods_id",hot_goods_list.get(position).goods_id);
+                mIntent.putExtra("goods_id", hot_goods_list.get(position).goods_id);
                 startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim(getActivity());
             }
@@ -169,13 +173,15 @@ public class ConsumptionFragment extends BaseFragment {
      *
      * @param rec_store_list
      */
-    private void initStore(List<ShopMallStoreBean> rec_store_list) {
+    private void initStore(final List<ShopMallStoreBean> rec_store_list) {
         mStoreRecommandAdapter = new StoreRecommandAdapter(mContext, rec_store_list, R.layout.item_store_recommand);
         gvShopRecommand.setAdapter(mStoreRecommandAdapter);
         gvShopRecommand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(mContext, StoreInfoActivity.class));
+                Intent intent = new Intent(mContext, StoreInfoActivity.class);
+                intent.putExtra("store_id", rec_store_list.get(position).store_id);
+                startActivity(intent);
                 ActivitySlideAnim.slideInAnim(getActivity());
             }
         });
@@ -245,7 +251,7 @@ public class ConsumptionFragment extends BaseFragment {
 
     @OnClick({R.id.layout_shop_myaccount, R.id.layout_shop_myorder, R.id.layout_shop_coupon,
             R.id.layout_shop_type, R.id.rl_hot_shop, R.id.rl_hot_shop2, R.id.ll_hot_shop3,
-            R.id.ll_hot_shop4, R.id.ll_hot_shop5})
+            R.id.ll_hot_shop4, R.id.ll_hot_shop5, layout_help_title_sms})
     void click(View v) {
         switch (v.getId()) {
             case R.id.layout_shop_myaccount: // 我的账户
@@ -261,8 +267,12 @@ public class ConsumptionFragment extends BaseFragment {
 
                 break;
             case R.id.layout_shop_type: // 分类
-
-
+                startActivity(new Intent(mContext, GoodsTypeActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+                break;
+            case R.id.layout_help_title_sms:
+                startActivity(new Intent(mContext, MsgCenterActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
                 break;
         }
     }

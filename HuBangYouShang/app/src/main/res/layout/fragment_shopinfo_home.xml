@@ -1,62 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.base.recyclerview.LRecyclerView
+        android:id="@+id/id_stickynavlayout_innerscrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_allbg"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
 
-        <com.bigkoo.convenientbanner.ConvenientBanner
-            android:id="@+id/banner_shopinfo_home"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:canLoop="true" />
-
-        <TextView
-            style="@style/style_text_lable"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@color/color_while"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:text="@string/shop_lable13" />
-
-        <com.help.reward.view.MyGridView
-            android:id="@+id/gv_shopinfo_hot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:horizontalSpacing="1dp"
-            android:numColumns="2" />
-
-        <com.help.reward.view.MyGridView
-            android:id="@+id/gv_shopinfo_hot2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:horizontalSpacing="1dp"
-            android:numColumns="3" />
-
-        <TextView
-            style="@style/style_text_lable"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="@dimen/layout_margin"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:text="@string/shop_lable14" />
-
-        <com.help.reward.view.MyGridView
-            android:id="@+id/gv_shopinfo_recommand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:horizontalSpacing="@dimen/layout_margin"
-            android:numColumns="2" />
-    </LinearLayout>
-</ScrollView>
+</FrameLayout>
