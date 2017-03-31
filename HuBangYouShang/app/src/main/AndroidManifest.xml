@@ -50,6 +50,7 @@
 
         <activity
             android:name="com.help.reward.activity.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -284,7 +285,8 @@
         <!--店铺详情-->
         <activity
             android:name="com.help.reward.activity.StoreInfoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!--商品详情-->
         <activity
             android:name="com.help.reward.activity.GoodInfoActivity"
@@ -382,6 +384,15 @@
         <activity
             android:name="com.help.reward.activity.ShopcartActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.help.reward.activity.StoreKindsListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.help.reward.activity.GoodsTypeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <!--sms的短信验证-->
         <activity
