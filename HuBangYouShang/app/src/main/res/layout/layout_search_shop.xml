@@ -79,7 +79,7 @@
         android:maxLines="1"
         />-->
 
-    <!--<ImageView
+    <ImageView
         android:id="@+id/iv_email"
         android:layout_width="20dp"
         android:layout_height="match_parent"
@@ -87,7 +87,8 @@
         android:layout_marginRight="13dp"
         android:layout_marginTop="8dp"
         android:src="@mipmap/img_email"
-        android:visibility="visible" />-->
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/tv_text"

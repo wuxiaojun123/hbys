@@ -50,7 +50,7 @@ import static com.help.reward.R.id.layout_help_title_sms;
 
 public class ConsumptionFragment extends BaseFragment {
 
-//    @BindView(R.id.tv_title_help_msgcount)
+    //    @BindView(R.id.tv_title_help_msgcount)
 //    TextView tvTitleHelpMsgcount;
 //    @BindView(R.id.layout_help_title_sms)
 //    LinearLayout layoutHelpTitleSms;
@@ -110,6 +110,10 @@ public class ConsumptionFragment extends BaseFragment {
 
     @BindView(R.id.et_search)
     SearchEditTextView et_search;
+    @BindView(R.id.iv_email)
+    ImageView iv_email; // 消息中心
+    @BindView(R.id.tv_text)
+    TextView tv_text; // 标题取消
 
     StoreRecommandAdapter mStoreRecommandAdapter;
     ShopHotAdapter mShopHotAdapter;
@@ -121,9 +125,14 @@ public class ConsumptionFragment extends BaseFragment {
 
     @Override
     protected void init() {
+        initView();
         initNetwork();
     }
 
+    private void initView() {
+        iv_email.setVisibility(View.VISIBLE);
+        tv_text.setVisibility(View.GONE);
+    }
 
 
     private void initNetwork() {
@@ -260,7 +269,7 @@ public class ConsumptionFragment extends BaseFragment {
 
     @OnClick({R.id.layout_shop_myaccount, R.id.layout_shop_myorder, R.id.layout_shop_coupon,
             R.id.layout_shop_type, R.id.rl_hot_shop, R.id.rl_hot_shop2, R.id.ll_hot_shop3,
-            R.id.ll_hot_shop4, R.id.ll_hot_shop5,R.id.et_search,R.id.layout_help_title_sms})
+            R.id.ll_hot_shop4, R.id.ll_hot_shop5, R.id.et_search, R.id.iv_email})
     void click(View v) {
         switch (v.getId()) {
             case R.id.layout_shop_myaccount: // 我的账户
@@ -279,7 +288,7 @@ public class ConsumptionFragment extends BaseFragment {
                 startActivity(new Intent(mContext, GoodsTypeActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
                 break;
-            case R.id.layout_help_title_sms:
+            case R.id.iv_email: // 消息中心
                 startActivity(new Intent(mContext, MsgCenterActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
                 break;
