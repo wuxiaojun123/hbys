@@ -6,7 +6,6 @@ import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
-import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.R;
 import com.help.reward.adapter.IntegrationIntegrationBuyingAdapter;

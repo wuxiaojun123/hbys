@@ -2,7 +2,6 @@ package com.help.reward.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import com.base.recyclerview.LRecyclerView;
@@ -10,7 +9,6 @@ import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.activity.MyOrderActivity;
-import com.help.reward.adapter.MyHelpPostAdapter;
 import com.help.reward.adapter.MyOrderAdapter;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.Response.MyOrderResponse;
@@ -18,7 +16,6 @@ import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.bean.Response.MyHelpPostResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 

@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-    <include layout="@layout/layout_title" />
+    <include
+        android:id="@+id/id_layout_title"
+        layout="@layout/layout_title" />
+
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_layout_title" />
 
 
     <Button
+        android:id="@+id/id_commit_evaluate"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_next_bg"
         android:text="发表评价"
         android:textColor="@color/color_while"
-        android:textSize="@dimen/dimen_15"
-        android:background="@color/color_next_bg"
-        />
+        android:textSize="@dimen/dimen_15" />
 
-</LinearLayout>
+</RelativeLayout>

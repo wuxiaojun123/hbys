@@ -2,30 +2,16 @@ package com.help.reward.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.help.reward.R;
-import com.help.reward.bean.Response.VerificationCodeResponse;
-import com.help.reward.network.PersonalNetwork;
-import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
-import com.help.reward.utils.CountDownTimeUtils;
-import com.help.reward.utils.ValidateUtil;
-import com.idotools.utils.LogUtils;
-import com.idotools.utils.ToastUtils;
-
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * 重置密码

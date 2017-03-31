@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
 import com.help.reward.fragment.BaseFragment;
-import com.help.reward.fragment.MyAccountHelpRewardFragment;
 import com.help.reward.fragment.MyCouponFragment;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;

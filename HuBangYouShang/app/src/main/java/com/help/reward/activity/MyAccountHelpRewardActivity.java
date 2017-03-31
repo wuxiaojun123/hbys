@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -19,7 +18,6 @@ import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.LogUtils;
-import com.idotools.utils.MetricsUtils;
 
 import java.util.ArrayList;
 import java.util.List;

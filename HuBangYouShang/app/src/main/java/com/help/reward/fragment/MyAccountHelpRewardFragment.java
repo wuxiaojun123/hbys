@@ -3,9 +3,6 @@ package com.help.reward.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
@@ -14,18 +11,14 @@ import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.adapter.MyAccountHelpRewardAdapter;
-import com.help.reward.adapter.MyCollectionGoodsAdapter;
 import com.help.reward.bean.Response.HelpRewardResponse;
-import com.help.reward.bean.Response.MyCollectionGoodsResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;
-import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.bean.Response.BalanceExchangeResponse;
 import com.help.reward.bean.Response.BalanceExchangeVolumeResponse;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.network.PersonalNetwork;

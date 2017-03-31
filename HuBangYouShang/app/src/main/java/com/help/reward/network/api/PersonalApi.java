@@ -312,12 +312,13 @@ public interface PersonalApi {
     );
 
     // 订单详情-- ?act=member_order&op=order_info
-    @GET("mobile/index.php")
+    @FormUrlEncoded
+    @POST("mobile/index.php")
     Observable<OrderInfoResponse> getMyOrderDetailsResponse(
             @Query("act") String act,
             @Query("op") String op,
-            @Query("order_id") String order_id,
-            @Query("key") String key
+            @Field("order_id") String order_id,
+            @Field("key") String key
     );
 
 

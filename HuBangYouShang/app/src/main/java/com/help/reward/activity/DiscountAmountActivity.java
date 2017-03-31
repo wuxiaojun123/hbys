@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.bean.Response.BalanceExchangeResponse;
 import com.help.reward.bean.Response.DiscountAmountResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;

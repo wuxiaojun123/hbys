@@ -8,8 +8,6 @@ import android.widget.TextView;
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.AddressBean;
-import com.help.reward.bean.Response.MyHelpPostResponse;
-import com.idotools.utils.DateUtil;
 
 /**
  * 地址管理

@@ -37,7 +37,6 @@ public class App extends Application {
         super.onCreate();
 //        FreelineCore.init(this);
         mApp = this;
-        SMSSDK.initSDK(this, Constant.SMS_APPKEY, Constant.SMS_APPSECRET);
 
         int pid = android.os.Process.myPid();
         String processAppName = getAppName(pid);

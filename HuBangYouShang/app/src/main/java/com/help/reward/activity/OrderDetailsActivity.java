@@ -11,14 +11,10 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.OrderInfoBean;
-import com.help.reward.bean.Response.GoodResponse;
-import com.help.reward.bean.Response.MyOrderResponse;
 import com.help.reward.bean.Response.OrderInfoResponse;
 import com.help.reward.network.PersonalNetwork;
-import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
@@ -123,8 +119,10 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
                     @Override
                     public void onNext(OrderInfoResponse response) {
+                        LogUtils.e("获取数据成功：" + response.code);
                         if (response.code == 200) {
                             if (response.data != null) { // 显示数据
+                                LogUtils.e("数据是：" + response.data);
                                 OrderInfoBean bean = response.data;
                                 bindData(bean);
                                 setShopText(bean);

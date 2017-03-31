@@ -1,10 +1,8 @@
 package com.help.reward.activity;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +10,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,10 +20,8 @@ import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.AssetsAreaBean;
 import com.help.reward.bean.BusinessBean;
-import com.help.reward.bean.Response.AeraResponse;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.BusinessResponse;
-import com.help.reward.bean.Response.MyCollectionStoreResponse;
 import com.help.reward.bean.Response.PersonInfoResponse;
 import com.help.reward.bean.Response.UploadHeadImageReponse;
 import com.help.reward.bean.SexBean;
@@ -42,17 +37,12 @@ import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.FileUtils;
 import com.idotools.utils.ImageFormatUtils;
 import com.idotools.utils.LogUtils;
-import com.idotools.utils.SharedPreferencesHelper;
 import com.idotools.utils.ToastUtils;
 import com.lvfq.pickerview.OptionsPickerView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;

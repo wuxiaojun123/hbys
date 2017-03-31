@@ -27,7 +27,6 @@ import com.coupon.widget.ChatRowPoints;
 import com.help.reward.App;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.network.CouponPointsNetwork;
-import com.help.reward.network.api.CouponPointsApi;
 import com.help.reward.network.base.BaseSubscriber;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;

@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
-import com.help.reward.bean.HelpRewardBean;
 import com.help.reward.bean.MyCouponBean;
 import com.idotools.utils.DateUtil;
 

@@ -11,7 +11,6 @@ import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.adapter.MyOrderAdapter;
 import com.help.reward.adapter.ShopcartAdapter;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;

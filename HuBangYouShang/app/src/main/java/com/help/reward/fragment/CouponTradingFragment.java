@@ -11,14 +11,9 @@ import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.adapter.CouponTradingAdapter;
-import com.help.reward.adapter.MyAccountHelpRewardAdapter;
 import com.help.reward.bean.Response.CouponTradingResponse;
-import com.help.reward.bean.Response.HelpRewardResponse;
-import com.help.reward.bean.Response.MyCouponResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
-import com.help.reward.rxbus.RxBus;
-import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;

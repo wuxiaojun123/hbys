@@ -14,11 +14,8 @@ import com.help.reward.activity.OrderPulishedEvaluateActivity;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
-import com.help.reward.bean.Response.MyHelpPostResponse;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
-import com.idotools.utils.DateUtil;
-import com.idotools.utils.LogUtils;
 
 /**
  * 我的订单

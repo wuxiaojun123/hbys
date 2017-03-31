@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.help.reward.activity.SearchShopActivity;
+import com.help.reward.view.SearchEditTextView;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.R;
@@ -42,12 +44,12 @@ import rx.schedulers.Schedulers;
 
 public class ConsumptionFragment extends BaseFragment {
 
-    @BindView(R.id.tv_title_help_msgcount)
-    TextView tvTitleHelpMsgcount;
-    @BindView(R.id.layout_help_title_sms)
-    LinearLayout layoutHelpTitleSms;
-    @BindView(R.id.et_shop_search)
-    EditText etShopSearch;
+//    @BindView(R.id.tv_title_help_msgcount)
+//    TextView tvTitleHelpMsgcount;
+//    @BindView(R.id.layout_help_title_sms)
+//    LinearLayout layoutHelpTitleSms;
+//    @BindView(R.id.et_shop_search)
+//    EditText etShopSearch;
     @BindView(R.id.banner_shop)
     ConvenientBanner bannerShop;
     @BindView(R.id.layout_shop_myaccount)
@@ -100,6 +102,9 @@ public class ConsumptionFragment extends BaseFragment {
     @BindView(R.id.tv_hot_info5)
     TextView tv_hot_info5;
 
+    @BindView(R.id.et_search)
+    SearchEditTextView et_search;
+
     StoreRecommandAdapter mStoreRecommandAdapter;
     ShopHotAdapter mShopHotAdapter;
 
@@ -112,6 +117,8 @@ public class ConsumptionFragment extends BaseFragment {
     protected void init() {
         initNetwork();
     }
+
+
 
     private void initNetwork() {
         ShopMallNetwork
@@ -157,7 +164,7 @@ public class ConsumptionFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 LogUtils.e("点击的position=" + position + "  good_id=" + hot_goods_list.get(position).goods_id);
                 Intent mIntent = new Intent(mContext, GoodInfoActivity.class);
-                mIntent.putExtra("goods_id",hot_goods_list.get(position).goods_id);
+                mIntent.putExtra("goods_id", hot_goods_list.get(position).goods_id);
                 startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim(getActivity());
             }
@@ -245,7 +252,7 @@ public class ConsumptionFragment extends BaseFragment {
 
     @OnClick({R.id.layout_shop_myaccount, R.id.layout_shop_myorder, R.id.layout_shop_coupon,
             R.id.layout_shop_type, R.id.rl_hot_shop, R.id.rl_hot_shop2, R.id.ll_hot_shop3,
-            R.id.ll_hot_shop4, R.id.ll_hot_shop5})
+            R.id.ll_hot_shop4, R.id.ll_hot_shop5,R.id.et_search})
     void click(View v) {
         switch (v.getId()) {
             case R.id.layout_shop_myaccount: // 我的账户
@@ -264,7 +271,19 @@ public class ConsumptionFragment extends BaseFragment {
 
 
                 break;
+            case R.id.et_search:
+                goToSearchActivity();
+
+                break;
+
         }
+    }
+
+
+    private void goToSearchActivity() {
+        Intent mIntent = new Intent(mContext, SearchShopActivity.class);
+        mContext.startActivity(mIntent);
+        ActivitySlideAnim.slideInAnim(getActivity());
     }
 
 }

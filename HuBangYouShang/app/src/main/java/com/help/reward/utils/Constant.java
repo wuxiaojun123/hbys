@@ -15,7 +15,7 @@ public class Constant {
     public static final String SMS_APPKEY = "1bebf93388e20"; // sms短信验证
     public static final String SMS_APPSECRET = "007b9903829fa24053dd4386a2019e4b"; // sms短信验证
 
-    // 210.72.13.135
+    // 210.72.13.135  http://jyb.youdoidodo.com   http://192.168.3.2/
     public static final String BASE_URL = "http://192.168.3.2/";
     // 登录
     public static final String URL_LOGIN = "mobile/index.php?act=login";

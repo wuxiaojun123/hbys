@@ -16,7 +16,6 @@ import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.CountDownTimeUtils;
 import com.help.reward.utils.ValidateUtil;
-import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 

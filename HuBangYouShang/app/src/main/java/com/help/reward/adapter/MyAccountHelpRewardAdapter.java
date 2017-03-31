@@ -1,17 +1,11 @@
 package com.help.reward.adapter;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.HelpRewardBean;
-import com.help.reward.bean.MyCollectionGoodsBean;
-import com.help.reward.minterface.OnItemDeleteListener;
-import com.help.reward.utils.GlideUtils;
-import com.help.reward.view.SwipeMenuView;
 import com.idotools.utils.DateUtil;
 
 /**

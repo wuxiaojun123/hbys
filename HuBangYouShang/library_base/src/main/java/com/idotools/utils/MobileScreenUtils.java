@@ -1,17 +1,10 @@
 package com.idotools.utils;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.Surface;
-import android.view.ViewConfiguration;
-import android.view.Window;
 import android.view.WindowManager;
 
 import java.lang.reflect.Method;

@@ -50,6 +50,8 @@
     <string name="string_refund">退款/退货</string>
     <string name="string_order_details">订单详情</string>
 
+    <string name="string_order_evaluate_title">发表评价</string>
+
     <!--消息中心-->
     <string name="msgcenter_lable1">帖子动态</string>
     <string name="msgcenter_lable2">交易信息</string>

@@ -2,14 +2,11 @@ package com.help.reward.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.CouponTradingBean;
-import com.help.reward.bean.HelpRewardBean;
-import com.help.reward.bean.MyCouponBean;
 import com.idotools.utils.DateUtil;
 import com.idotools.utils.LogUtils;
 

@@ -4,16 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
-import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.R;
 import com.help.reward.adapter.IntegrationWatchPraiseAdapter;
 import com.help.reward.bean.Response.AdvertisementResponse;
@@ -22,7 +19,6 @@ import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.SearchEditTextView;
 import com.idotools.utils.InputWindowUtils;
-import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;

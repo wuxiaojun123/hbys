@@ -1,6 +1,8 @@
 package com.help.reward.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,17 +13,16 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.bean.Response.RegisterResponse;
 import com.help.reward.bean.Response.VerificationCodeResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
-import com.help.reward.rxbus.RxBus;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.utils.CountDownTimeUtils;
 import com.help.reward.utils.ValidateUtil;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.JudgeNetWork;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
@@ -68,6 +69,39 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private CountDownTimeUtils mTimer;
     public String verificationCode; // 请求到的code
+    private EventHandler eh;
+
+
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            int event = msg.arg1;
+            int result = msg.arg2;
+            Object data = msg.obj;
+            if (result == SMSSDK.RESULT_COMPLETE) {
+                LogUtils.e("data：" + data);
+                //回调完成
+                if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                    //提交验证码成功
+                    LogUtils.e("提交验证码成功");
+                } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                    //获取验证码成功  开始计时
+                    LogUtils.e("获取验证码成功");
+                    tv_code.setClickable(false);
+                    mTimer.start();
+
+                } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
+                    //返回支持发送验证码的国家列表
+                    LogUtils.e("返回支持发送验证码的国家列表");
+                }
+            } else {
+                ((Throwable) data).printStackTrace();
+                ToastUtils.show(mContext,"发送验证码失败!请稍后重试");
+            }
+
+        }
+    };
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,33 +117,21 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         sms();
     }
 
-    private EventHandler eh;
 
     private void sms() {
         SMSSDK.initSDK(this, Constant.SMS_APPKEY, Constant.SMS_APPSECRET);
         eh = new EventHandler() {
             @Override
             public void afterEvent(int event, int result, Object data) {
+                Message msg = new Message();
+                msg.arg1 = event;
+                msg.arg2 = result;
+                msg.obj = data;
+                handler.sendMessage(msg);
 
-                if (result == SMSSDK.RESULT_COMPLETE) {
-                    //回调完成
-                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                        //提交验证码成功
-                        LogUtils.e("提交验证码成功");
-                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                        //获取验证码成功
-                        LogUtils.e("获取验证码成功");
-                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
-                        //返回支持发送验证码的国家列表
-                        LogUtils.e("返回支持发送验证码的国家列表");
-                    }
-                } else {
-                    ((Throwable) data).printStackTrace();
-                }
             }
         };
         SMSSDK.registerEventHandler(eh); //注册短信回调
-
     }
 
     private void initTimer() {
@@ -147,10 +169,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String registerUserName = et_phone_number.getText().toString().trim();
                 if (!TextUtils.isEmpty(registerUserName)) {
                     if (ValidateUtil.isMobile(registerUserName)) {
-                        LogUtils.e("点击获取code  获取支持的国家");
+                        if(JudgeNetWork.isNetAvailable(mContext)){
+                            SMSSDK.getVerificationCode("86", registerUserName, new OnSendMessageHandler() {
+                                @Override
+                                public boolean onSendMessage(String s, String s1) {
+                                    LogUtils.e("OnSendMessageHandler中s=" + s + "==s1=" + s1);
+                                    return false;
+                                }
+                            });
+                            // 验证 验证码是否正确
+//                            SMSSDK.submitVerificationCode(); // s：86 s1:手机好 s2：验证码
 
-//                        tv_code.setClickable(false);
-//                        requestVerificationCode(registerUserName);
+                        }else{
+                            ToastUtils.show(mContext,"请检查网络设置");
+                        }
                     } else {
                         ToastUtils.show(mContext, "手机号格式不正确");
                     }
@@ -245,11 +277,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void requestRegister(String registerUserName, String registerPwd, String registerCode, String registerInvitationCode) {
+    private void requestRegister(String phone, String registerPwd, String registerCode, String registerInvitationCode) {
         MyProcessDialog.showDialog(mContext);
         PersonalNetwork
                 .getLoginApi()
-                .getRegisterBean(registerUserName, registerCode, registerPwd, Constant.PLATFORM_CLIENT)
+                .getRegisterBean(phone, registerCode, registerPwd, Constant.PLATFORM_CLIENT)
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<RegisterResponse>() {
@@ -269,6 +301,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         MyProcessDialog.closeDialog();
                         if (res.code == 200) { // 获取验证code成功
                             App.APP_CLIENT_KEY = res.data.key;
+
+                            finish();
+                            ActivitySlideAnim.slideOutAnim(RegisterActivity.this);
                             LogUtils.e("注册成功。。。" + res.data.username);
                         } else {
                             ToastUtils.show(mContext, res.msg);

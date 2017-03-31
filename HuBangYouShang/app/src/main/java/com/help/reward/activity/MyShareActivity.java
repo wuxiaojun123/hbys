@@ -9,13 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.EncodingUtils;
-import com.idotools.utils.DeviceUtil;
 import com.idotools.utils.MetricsUtils;
-import com.idotools.utils.MobileScreenUtils;
 
 
 import butterknife.BindView;
