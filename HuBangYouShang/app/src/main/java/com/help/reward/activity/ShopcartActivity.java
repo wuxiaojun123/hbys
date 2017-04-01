@@ -2,16 +2,14 @@ package com.help.reward.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.base.recyclerview.LRecyclerView;
-import com.base.recyclerview.LRecyclerViewAdapter;
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.adapter.ShopcartAdapter;
+import com.help.reward.adapter.ExpandShopcartAdapter;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.Response.MyOrderResponse;
@@ -43,9 +41,9 @@ public class ShopcartActivity extends BaseActivity {
     TextView tv_title_right;
 
     @BindView(R.id.id_recycler_view)
-    LRecyclerView lRecyclerview;
+    ExpandableListView lRecyclerview;
 
-    private ShopcartAdapter mAdapter;
+    private ExpandShopcartAdapter mAdapter;
 
     private List<MyOrderShopBean> mSelected = new ArrayList<MyOrderShopBean>();
 
@@ -62,16 +60,39 @@ public class ShopcartActivity extends BaseActivity {
         load();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private void expandChild(){
+        for (int i = 0; i < mAdapter.getGroupCount(); i++) {
+            lRecyclerview.expandGroup(i);
+        }
+    }
+
     private void initview() {
 
         tv_title.setText("购物车");
         tv_title_right.setVisibility(View.GONE);
 
+        mAdapter = new ExpandShopcartAdapter(mSelected,this,lRecyclerview);
+        lRecyclerview.setAdapter(mAdapter);
+
+        lRecyclerview.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return true;
+            }
+        });
+
+        /*
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new ShopcartAdapter(mContext);
         LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
-        lRecyclerview.setLoadMoreEnabled(false);
+        lRecyclerview.setLoadMoreEnabled(false);*/
     }
 
     private void load() {
@@ -100,7 +121,8 @@ public class ShopcartActivity extends BaseActivity {
                                             list.add(bean);
                                         }
                                     }
-                                    mAdapter.addAll(list);
+                                    mAdapter.setDataList(list);
+                                    //expandChild();
                                 }
                             }
 

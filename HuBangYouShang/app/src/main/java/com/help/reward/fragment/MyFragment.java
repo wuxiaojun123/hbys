@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.activity.AccountManagerActivity;
+import com.help.reward.activity.ShopcartActivity;
 import com.help.reward.utils.GlideUtils;
 import com.idotools.utils.MetricsUtils;
 import com.help.reward.R;
@@ -127,7 +128,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.tv_account:
                 // 我的账户
-                startActivity(new Intent(mContext, MyAccountActivity.class));
+                startActivity(new Intent(mContext, ShopcartActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
