@@ -25,8 +25,7 @@ public class HelpRewardsAdapter extends BaseRecyclerAdapter<HelpRewardsBean> {
 
     @Override
     public void onBindItemHolder(SuperViewHolder holder, int position) {
-        HelpRewardsBean item = mDataList.get(position);
-
+        HelpRewardsBean item =mDataList.get(position);
         TextView item_help1_title = holder.getView(R.id.item_help1_title);
         item_help1_title.setText(item.title);
         TextView item_help1_type = holder.getView(R.id.item_help1_type);

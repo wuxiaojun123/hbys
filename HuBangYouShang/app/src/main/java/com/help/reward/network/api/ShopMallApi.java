@@ -5,6 +5,7 @@ import com.help.reward.bean.Response.GoodsSecondTypeResponse;
 import com.help.reward.bean.Response.GoodsTypeResponse;
 import com.help.reward.bean.Response.ShopMallMainResponse;
 import com.help.reward.bean.Response.ShopSearchResponse;
+import com.help.reward.bean.Response.StoreDetailAllResponse;
 import com.help.reward.utils.Constant;
 
 import retrofit2.http.GET;
@@ -36,7 +37,6 @@ public interface ShopMallApi {
     );
 
 
-
     /**
      * 类别列表
      * /mobile/index.php?act=goods_class&op=index
@@ -56,5 +56,36 @@ public interface ShopMallApi {
     @GET(Constant.URL_GOODSCLASS)
     Observable<GoodsSecondTypeResponse> getGoodSecondClassResponse(
             @Query("gc_id") String gc_id
+    );
+
+    /**
+     * 全部商品-搜索
+     * mobile/index.php?act=goods&op=goods_list
+     * 参数[get]：
+     * key不填或填错默认综合排序；
+     * salenum 销量
+     * clicknum 人气
+     * price 价格
+     * order desc降序asc升序；默认降序
+     * price_from price_to价格区间
+     * b_id 品牌id
+     * keyword 关键字会计入cookie，显示在历史搜索里。
+     * service：
+     * freight 包邮
+     * COD 货到付款
+     * refund 急速退款
+     * protection 消费者保障quality
+     * 正品保障 sevenDay 7天无理由退货
+     */
+    @GET(Constant.URL_SEARCHGOODS)
+    Observable<StoreDetailAllResponse> getSearchGoodsResponse(
+            @Query("key") String key,
+            @Query("order") String order,
+            @Query("price_from") String price_from,
+            @Query("price_to") String price_to,
+            @Query("b_id") String b_id,
+            @Query("service[]") String[] service,
+            @Query("keyword") String keyword,
+            @Query("curpage") int curpage
     );
 }

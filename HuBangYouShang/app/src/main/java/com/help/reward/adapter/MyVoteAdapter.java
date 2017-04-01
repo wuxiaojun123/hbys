@@ -37,7 +37,7 @@ public class MyVoteAdapter extends BaseRecyclerAdapter {
 
         tv_content.setText(bean.content);
         tv_title.setText(bean.post_board);
-        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time)));
+        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time)*1000));
 //        tv_state.setText(bean.status);
         tv_help.setText(bean.post_title);
         tv_state.setText(bean.status);

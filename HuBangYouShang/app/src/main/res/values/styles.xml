@@ -423,6 +423,10 @@
         <item name="colorControlActivated">@color/color_black</item>
     </style>
 
-
+    <!-- ActionSheet进出动画 -->
+    <style name="goodsfeileiAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_slide_right_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_slide_right_out</item>
+    </style>
 
 </resources>
