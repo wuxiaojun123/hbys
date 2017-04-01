@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_allbg">
+    android:background="@color/color_allbg"
+    android:paddingTop="@dimen/dimen_10">
 
 
     <LinearLayout
@@ -11,7 +12,6 @@
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginTop="@dimen/dimen_10"
         android:background="@color/color_while">
 
     <ImageView
@@ -39,14 +39,4 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/shape_divider_line"></ImageView>
-
-    <LinearLayout
-        android:id="@+id/ll_shop_cart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@drawable/shape_divider_line"
-        android:dividerPadding="5dp"
-        android:orientation="vertical"
-        android:showDividers="middle"/>
-
 </LinearLayout>

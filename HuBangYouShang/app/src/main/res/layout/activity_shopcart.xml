@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg">
 
     <include
         android:id="@+id/title"
         layout="@layout/layout_title" />
 
-    <com.base.recyclerview.LRecyclerView
+    <ExpandableListView
         android:id="@+id/id_recycler_view"
         android:layout_width="match_parent"
         android:layout_below="@+id/title"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:childDivider="@null"
+        android:groupIndicator="@null"
+        android:divider="@null"/>
 
 
     
