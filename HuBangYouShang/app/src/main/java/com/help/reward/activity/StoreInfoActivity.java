@@ -153,7 +153,8 @@ public class StoreInfoActivity extends BaseActivity implements ShopInfoHomeFragm
         });
     }
 
-    @OnClick({R.id.iv_shopinfo_title_back, R.id.iv_shopinfo_title_type, R.id.iv_shopinfo_title_more, R.id.tv_collect, R.id.tv_zonghe, R.id.tv_salenum, R.id.tv_price, R.id.iv_style})
+    @OnClick({R.id.iv_shopinfo_title_back, R.id.iv_shopinfo_title_type, R.id.iv_shopinfo_title_more,
+            R.id.tv_collect, R.id.tv_zonghe, R.id.tv_salenum, R.id.tv_price, R.id.iv_style})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_shopinfo_title_back:
