@@ -1,7 +1,6 @@
 package com.help.reward.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -10,20 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.bean.OrderInfoBean;
-import com.help.reward.bean.Response.OrderInfoResponse;
 import com.help.reward.bean.Response.ShopSearchResponse;
-import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.FluidLayout;
 import com.help.reward.view.SearchEditTextView;
 import com.idotools.utils.ToastUtils;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -106,19 +99,19 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
      */
     private void search() {
         String searchStr = et_search.getText().toString().trim();
-        if(TextUtils.isEmpty(searchStr)){
-            ToastUtils.show(mContext,"请输入搜索内容");
+        if (TextUtils.isEmpty(searchStr)) {
+            ToastUtils.show(mContext, "请输入搜索内容");
             return;
         }
-        Intent mIntent = new Intent(this,SearchShopResultActivity.class);
-        mIntent.putExtra("search_test",searchStr);
+        Intent mIntent = new Intent(this, SearchShopResultActivity.class);
+        mIntent.putExtra("keyword", searchStr);
         startActivity(mIntent);
         ActivitySlideAnim.slideOutAnim(SearchShopActivity.this);
     }
 
 
     private void setHistory() {
-        if(historyList == null){
+        if (historyList == null) {
             return;
         }
         fl_history.removeAllViews();
@@ -141,7 +134,7 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
     }
 
     private void setHot() {
-        if(hotList == null){
+        if (hotList == null) {
             return;
         }
         fl_hot.removeAllViews();

@@ -101,5 +101,5 @@ public class Constant {
     public static final String URL_STORE_ADD = "mobile/index.php?act=member_favorites_store&op=favorites_add";
 
     public static final String URL_GOODSCLASS = "mobile/index.php?act=goods_class&op=index";
-
+    public static final String URL_SEARCHGOODS = "mobile/index.php?act=goods&op=goods_list";
 }

@@ -60,7 +60,7 @@ public class GoodsSecondTypeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHolder vh = null;
         if (null == convertView) {
-            convertView = mInflater.inflate(R.layout.item_goodssecondtype, null);
+            convertView = mInflater.inflate(R.layout.item_goodssearchpinpai, null);
             vh = new ViewHolder();
             vh.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             vh.gridView = (MyGridView) convertView.findViewById(R.id.myGridView);

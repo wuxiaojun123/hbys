@@ -38,7 +38,7 @@ public class MyHelpCommentAdapter extends BaseRecyclerAdapter {
 
         tv_content.setText(bean.title);
         tv_title.setText(bean.board_name);
-        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time)));
+        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time)*1000));
         tv_state.setText(bean.status);
         tv_post.setText(bean.comment);
         tv_reward.setText(bean.offer);
