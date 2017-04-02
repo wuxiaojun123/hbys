@@ -1,6 +1,7 @@
 package com.help.reward.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -12,6 +13,8 @@ import com.help.reward.R;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.view.NumSetDialog;
+import com.help.reward.view.SwipeMenuView;
 import com.idotools.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
     private List<MyOrderShopBean> mCheckList;
 
     private Context context;
+    NumSetDialog numSetDialog;
 
     protected List<MyOrderListBean.OrderList> mDataList = new ArrayList<MyOrderListBean.OrderList>();
 
@@ -127,10 +131,10 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        ViewHolderChild holderChild = null;
-
+        final ViewHolderChild holderChild;
+        final View closeView;
         if (convertView == null) {
             holderChild = new ViewHolderChild();
             convertView = View.inflate(context,R.layout.item_shop_cart_info,null);
@@ -140,11 +144,19 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
             holderChild.tv_shop_atrribute = (TextView) convertView.findViewById(R.id.tv_shop_atrribute); // 商品属性:属性值
             holderChild.tv_single_shop_price = (TextView) convertView.findViewById(R.id.tv_single_shop_price); // 单个商品价格 ￥200.0
             holderChild.mTvDelete = (TextView) convertView.findViewById(R.id.tv_delete);
+
+            holderChild.mNumAdd = (ImageView) convertView.findViewById(R.id.iv_add);
+            holderChild.mNumDes = (ImageView) convertView.findViewById(R.id.iv_sub);
+            holderChild.mNumShow = (TextView) convertView.findViewById(R.id.tv_num_show);
+
             convertView.setTag(holderChild);
         } else {
             holderChild = (ViewHolderChild) convertView.getTag();
+            ((SwipeMenuView) convertView).quickClose();
         }
+
         holderChild.iv_check.setImageResource(R.mipmap.img_address_checkbox);
+        ((SwipeMenuView) convertView).setIos(false).setLeftSwipe(true);
 
         final MyOrderShopBean myOrderShopBean = mDataList.get(groupPosition).extend_order_goods.get(childPosition);
 
@@ -171,12 +183,127 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
             }
         });
 
+        final View finalConvertView = convertView;
         holderChild.mTvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                //TODO 删除
+
+                List<MyOrderShopBean> extend_order_goods = mDataList.get(groupPosition).extend_order_goods;
+
+                if (extend_order_goods.size() > 1){
+                    mDataList.get(groupPosition).extend_order_goods.remove(childPosition);
+                } else {
+                    mDataList.remove(groupPosition);
+                }
+                notifyDataSetChanged();
             }
         });
+
+
+        holderChild.mNumAdd.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                String num = holderChild.mNumShow.getText().toString().trim();
+                if (!TextUtils.isEmpty(num)) {
+                    int newNum = Integer.parseInt(num) + 1;
+                    if (newNum > 99) {
+                        holderChild.mNumAdd.setEnabled(false);
+                        holderChild.mNumShow.setText("99");
+                        //TODO
+                    } else {
+                        holderChild.mNumDes.setEnabled(true);
+                        holderChild.mNumShow.setText(newNum + "");
+                    }
+                }
+            }
+        });
+
+        holderChild.mNumDes.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String num = holderChild.mNumShow.getText().toString().trim();
+                if (!TextUtils.isEmpty(num)) {
+                    int newNum = Integer.parseInt(num) - 1;
+                    if (newNum <= 1) {
+                        holderChild.mNumDes.setEnabled(false);
+                        holderChild.mNumShow.setText("1");
+                    } else {
+                        holderChild.mNumAdd.setEnabled(true);
+                        holderChild.mNumShow.setText(newNum + "");
+                    }
+                }
+            }
+        });
+
+        holderChild.mNumShow.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (numSetDialog == null) {
+                    numSetDialog = new NumSetDialog(context, R.style.MyDialogStyle);
+                }
+
+                numSetDialog.setCancleBtn(
+                        context.getResources().getString(R.string.canclebtn),
+                       -1,
+                        new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View arg0) {
+                                numSetDialog.dismiss();
+                            }
+                        });
+                numSetDialog.setOKbtn(
+                        context.getResources().getString(R.string.surebtn),
+                        -1,
+                        new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View arg0) {
+                                int num = numSetDialog.getNumShow();
+                                if (num != -1) {
+                                    if (num == 1) {
+                                        holderChild.mNumDes.setEnabled(false);
+                                        holderChild.mNumAdd.setEnabled(true);
+                                    } else {
+                                        if (num == 99) {
+                                            holderChild.mNumDes.setEnabled(true);
+                                            holderChild.mNumAdd
+                                                    .setEnabled(false);
+                                        } else {
+                                            holderChild.mNumDes.setEnabled(true);
+                                            holderChild.mNumAdd.setEnabled(true);
+                                        }
+                                    }
+                                    holderChild.mNumShow.setText(num + "");
+                                    //TODO 赋值
+                                }
+                                numSetDialog.dismiss();
+                            }
+                        });
+
+//                if (list.get(position) != null
+//                        && !TextUtils.isEmpty(list.get(position).getProdName())) {
+//                    String brandName = UnitUtils.getBrandName(list
+//                            .get(position).getDrugBrand());
+//                    numSetDialog.setTitleText(brandName
+//                            + list.get(position).getProdName());
+//                }
+                String num = holderChild.mNumShow.getText().toString().trim();
+                if (!TextUtils.isEmpty(num)) {
+                    numSetDialog.setNumShow(Integer.parseInt(num));
+                }
+
+                if (!numSetDialog.isShowing()) {
+                    numSetDialog.show();
+                }
+            }
+        });
+
 
 
         return convertView;
@@ -272,5 +399,9 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
         public TextView tv_shop_atrribute;
         public TextView tv_single_shop_price;
         public TextView mTvDelete;
+        public ImageView mNumAdd;
+        public TextView mNumShow;
+        public ImageView mNumDes;
+
     }
 }
