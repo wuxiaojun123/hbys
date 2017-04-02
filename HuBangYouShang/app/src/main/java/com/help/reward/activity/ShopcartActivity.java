@@ -12,17 +12,23 @@ import com.help.reward.R;
 import com.help.reward.adapter.ExpandShopcartAdapter;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
+import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.CartInfoBean;
 import com.help.reward.bean.Response.MyOrderResponse;
+import com.help.reward.bean.Response.ShopCartResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.idotools.utils.ToastUtils;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,7 +36,7 @@ import rx.schedulers.Schedulers;
  * Created by ADBrian on 26/03/2017.
  */
 
-public class ShopcartActivity extends BaseActivity {
+public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdapter.ShopCartOperateListener,View.OnClickListener {
 
 
     @BindView(R.id.iv_title_back)
@@ -43,9 +49,17 @@ public class ShopcartActivity extends BaseActivity {
     @BindView(R.id.id_recycler_view)
     ExpandableListView lRecyclerview;
 
+    @BindView(R.id.iv_all_check)
+    ImageView mIvAll;
+    @BindView(R.id.tv_total)
+    TextView mTvtotal;
+
     private ExpandShopcartAdapter mAdapter;
 
-    private List<MyOrderShopBean> mSelected = new ArrayList<MyOrderShopBean>();
+    private List<CartInfoBean.GoodInfoBean> mSelected = new ArrayList<CartInfoBean.GoodInfoBean>();
+    private List<CartInfoBean> cart_list = new ArrayList<CartInfoBean>();
+
+    boolean isAll = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +71,7 @@ public class ShopcartActivity extends BaseActivity {
 
         //initNetwork();
 
-        load();
+        initNetwork();
     }
 
     @Override
@@ -77,7 +91,7 @@ public class ShopcartActivity extends BaseActivity {
         tv_title.setText("购物车");
         tv_title_right.setVisibility(View.GONE);
 
-        mAdapter = new ExpandShopcartAdapter(mSelected,this,lRecyclerview);
+        mAdapter = new ExpandShopcartAdapter(mSelected,this,cart_list,lRecyclerview,this);
         lRecyclerview.setAdapter(mAdapter);
 
         lRecyclerview.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -95,13 +109,13 @@ public class ShopcartActivity extends BaseActivity {
         lRecyclerview.setLoadMoreEnabled(false);*/
     }
 
-    private void load() {
-        PersonalNetwork
-                .getResponseApi()
-                .getMyOrderResponse("member_order", "order_list", 0 + "", 1+"", App.APP_CLIENT_KEY)
+
+    private void initNetwork() {
+
+        ShopcartNetwork.getShopcartCookieApi().getShopcartList(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<MyOrderResponse>() {
+                .subscribe(new BaseSubscriber<ShopCartResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
@@ -109,19 +123,12 @@ public class ShopcartActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(MyOrderResponse response) {
+                    public void onNext(ShopCartResponse response) {
                         if (response.code == 200) {
                             if (response.data != null) {
-                                if (response.data.order_group_list != null) {
-                                    List<MyOrderListBean.OrderList> list = new ArrayList<MyOrderListBean.OrderList>();
-                                    List<MyOrderListBean> order_group_list = response.data.order_group_list;
-                                    for (MyOrderListBean orderListBean:order_group_list){
-                                        List<MyOrderListBean.OrderList> order_list = orderListBean.order_list;
-                                        for (MyOrderListBean.OrderList bean:order_list){
-                                            list.add(bean);
-                                        }
-                                    }
-                                    mAdapter.setDataList(list);
+                                if (response.data.cart_list != null) {
+                                    cart_list.addAll(response.data.cart_list);
+                                    mAdapter.notifyDataSetChanged();
                                     //expandChild();
                                 }
                             }
@@ -131,15 +138,149 @@ public class ShopcartActivity extends BaseActivity {
                         }
                     }
                 });
+
     }
 
+    @Override
+    public void operate(CartInfoBean.GoodInfoBean goodInfo, int action) {
 
-    private void initNetwork() {
+        if (action == ExpandShopcartAdapter.SHOPCART_DELETED) {
+            if (goodInfo != null) {
+                deleteRequest(goodInfo);
+            }
 
-        ShopcartNetwork.getShopcartCookieApi().getShopcartList(App.APP_CLIENT_KEY)
+
+        } else if (action == ExpandShopcartAdapter.SHOPCART_SELECTED) {
+            if(judgeIsAll()){
+                isAll = true;
+                mIvAll.setImageResource(R.mipmap.img_address_checkbox_checked);
+            } else {
+                isAll = false;
+                mIvAll.setImageResource(R.mipmap.img_address_checkbox);
+            }
+        }
+        calculate();
+    }
+
+    private void deleteRequest(final CartInfoBean.GoodInfoBean good_info) {
+        ShopcartNetwork.getShopcartCookieApi().getShopcartDelete(App.APP_CLIENT_KEY,good_info.cart_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
 
+                    @Override
+                    public void onNext(BaseResponse response) {
+                        if (response.code == 200) {
+
+                            for (int i = 0; i< cart_list.size();i++) {
+                                CartInfoBean cartInfo = cart_list.get(i);
+                                if (cartInfo.goods!= null) {
+                                    if (cartInfo.goods.contains(good_info)) {
+                                        if (cartInfo.goods.size() > 1) {
+                                            cartInfo.goods.remove(good_info);
+                                        } else {
+                                            cart_list.remove(cartInfo);
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (mSelected.contains(good_info)) {
+                                mSelected.remove(good_info);
+                            }
+                            calculate();
+                            mAdapter.notifyDataSetChanged();
+
+                            //if (extend_order_goods.size() > 1){
+                            //    mDataList.get(groupPosition).goods.remove(childPosition);
+                            //} else {
+                            //    mDataList.remove(groupPosition);
+                            //}
+
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
+    private boolean judgeIsAll() {
+        if (cart_list.isEmpty()){
+            return false;
+        }
+
+        if (mSelected.isEmpty()) {
+            return false;
+        }
+
+        for (CartInfoBean cartInfo:cart_list) {
+            if (cartInfo.goods!= null) {
+                for (CartInfoBean.GoodInfoBean goodBean:
+                     cartInfo.goods) {
+                    if (!mSelected.contains(goodBean)) {
+                        return  false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private  void  addAll(){
+        mSelected.clear();
+        for (CartInfoBean cartInfo:cart_list) {
+            if (cartInfo.goods!= null) {
+               mSelected.addAll(cartInfo.goods);
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public static String formatPrice2BlankToBlank ( String str ){
+        DecimalFormat df = new DecimalFormat ( "###,##0.00" ) ;
+        return df.format ( Double.parseDouble( str ) ) ;
+    }
+
+    private void calculate() {
+        String result = "0";
+        if (!mSelected.isEmpty()) {
+            for (CartInfoBean.GoodInfoBean goodInfo:
+            mSelected) {
+                try {
+                    result = new BigDecimal(result).add(new BigDecimal(goodInfo.goods_price).multiply(new BigDecimal(goodInfo.goods_num))).toString();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    ToastUtils.show(ShopcartActivity.this,"error num");
+                }
+            }
+        }
+        mTvtotal.setText("合计： ¥ "+formatPrice2BlankToBlank(result));
+    }
+
+    @OnClick({R.id.ll_select_all})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ll_select_all:
+
+                if (isAll) {
+                    isAll = false;
+                    mIvAll.setImageResource(R.mipmap.img_address_checkbox);
+                    mSelected.clear();
+                }else {
+                    isAll = true;
+                    mIvAll.setImageResource(R.mipmap.img_address_checkbox_checked);
+                    addAll();
+                }
+                calculate();
+                mAdapter.notifyDataSetChanged();
+
+            break;
+        }
     }
 }

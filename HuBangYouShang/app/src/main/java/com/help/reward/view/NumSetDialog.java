@@ -40,15 +40,17 @@ public class NumSetDialog extends Dialog implements
 	private int mCancleResid;
 	private String titleText;
 	private View.OnClickListener mCancleListener;
+	private  int Max_num = 99;
 
 	public NumSetDialog(Context context) {
 		super(context);
 		this.context = context;
 	}
 
-	public NumSetDialog(Context context, int theme) {
+	public NumSetDialog(Context context, int theme,int Max_num) {
 		super(context, theme);
 		this.context = context;
+		this.Max_num = Max_num;
 	}
 
 	public NumSetDialog(Context context, int theme, String title) {
@@ -197,8 +199,8 @@ public class NumSetDialog extends Dialog implements
 		case R.id.ib_dialog_number_add:
 			if (numShow != -1) {
 				int newNum = numShow + 1;
-				if (newNum > 99) {
-					mEtNum.setText("99");
+				if (newNum > Max_num) {
+					mEtNum.setText(Max_num+"");
 					mEtNum.setSelection(2);
 				} else {
 					mEtNum.setText(newNum + "");

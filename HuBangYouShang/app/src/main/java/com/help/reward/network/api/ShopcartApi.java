@@ -1,6 +1,7 @@
 package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.ShopCartResponse;
 import com.help.reward.utils.Constant;
 
 import retrofit2.http.Field;
@@ -16,7 +17,7 @@ public interface ShopcartApi {
 
     @FormUrlEncoded
     @POST(Constant.URL_SHOPCART_QUERY)
-    Observable<BaseResponse> getShopcartList(
+    Observable<ShopCartResponse> getShopcartList(
             @Field("key") String key
     );
 
