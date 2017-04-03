@@ -52,6 +52,7 @@
                 android:paddingLeft="20dip"
                 android:singleLine="true"
                 android:textColor="#000"
+                android:inputType="phone"
                 android:textSize="15sp" />
         </RelativeLayout>
 
@@ -90,7 +91,7 @@
                 android:layout_toRightOf="@+id/tv_password_tip"
                 android:background="@null"
                 android:hint="@string/forget_password_input_checkcode"
-                android:inputType="textPassword"
+                android:inputType="number"
                 android:paddingLeft="20dip"
                 android:singleLine="true"
                 android:textSize="15sp" />
