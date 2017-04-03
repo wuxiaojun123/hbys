@@ -95,6 +95,8 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
         if (userInfo != null && !TextUtils.isEmpty(userInfo.store_name)) {
             mTvMyStoreName.setText(String.format(getString(R.string.mine_store_info_tip), userInfo.store_name));
         }
+
+        GlideUtils.loadBoundImage("",mIvMyStorePhoto);
     }
 
 

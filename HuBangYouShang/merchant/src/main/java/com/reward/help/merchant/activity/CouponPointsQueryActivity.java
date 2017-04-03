@@ -26,6 +26,7 @@ import com.reward.help.merchant.bean.Response.QueryPointsResponse;
 import com.reward.help.merchant.chat.ui.BaseActivity;
 import com.reward.help.merchant.network.CouponPointsNetwork;
 import com.reward.help.merchant.network.base.BaseSubscriber;
+import com.reward.help.merchant.utils.GlideUtils;
 import com.reward.help.merchant.view.MyProcessDialog;
 
 import java.net.SocketTimeoutException;
@@ -185,6 +186,9 @@ public class CouponPointsQueryActivity extends BaseActivity {
                 String[] showNum = new String[]{peoplelimit,numlimit};
                 String num = String.format(getString(R.string.format_query_points_get_num),showNum);
                 mTvNum.setText(num);
+
+                GlideUtils.loadBoundImage(voucher_info.member_avatar,mIvStorePic);
+
 
             }catch (Exception e){}
         }

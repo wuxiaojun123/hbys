@@ -72,6 +72,18 @@ public class GlideUtils {
         }
     }
 
+    public static void loadBoundImage(String imgUrl, ImageView imageView) {
+        if (!TextUtils.isEmpty(imgUrl)) {
+            Glide.with(imageView.getContext())
+                    .load(imgUrl)
+                    .transform(new GlideRoundTransform(imageView.getContext(),imageView.getWidth()))
+//                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .error(R.drawable.ease_default_avatar)
+                    .placeholder(R.drawable.ease_default_avatar)
+                    .into(imageView);
+        }
+    }
+
     /*public static void setCacheDir(){
         File cacheDir = context.getExternalCacheDir();//指定的是数据的缓存地址
         int diskCacheSize = 1024 * 1024 * 30;//最多可以缓存多少字节的数据

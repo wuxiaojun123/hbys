@@ -45,5 +45,8 @@ public class Constant {
 
     public static final String URL_GET_STORE = "/mobile/index.php?act=seller_store&op=store_joinin_info";
 
+    public static final String URL_GROUP_APPLY = "/mobile/index.php?act=seller_group&op=groupApply";
+
+
     public static final String ROOT = Environment.getExternalStorageDirectory().getPath() + "/hbzsmerchant/";;
 }

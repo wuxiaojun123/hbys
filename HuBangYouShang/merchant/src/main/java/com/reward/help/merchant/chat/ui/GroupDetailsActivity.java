@@ -48,7 +48,9 @@ import com.hyphenate.easeui.widget.EaseSwitchButton;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.NetUtils;
+import com.idotools.utils.ToastUtils;
 import com.reward.help.merchant.R;
+import com.reward.help.merchant.chat.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -632,13 +634,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			}
 			final LinearLayout button = (LinearLayout) convertView.findViewById(R.id.button_avatar);
 
-			/*
+
 
 			// 最后一个item，减人按钮
 			if (position == getCount() - 1) {
 			    holder.textView.setText("");
 				// 设置成删除按钮
-			    holder.imageView.setImageResource(R.mipmap.more);
+			    holder.imageView.setImageResource(R.mipmap.more);/*
 //				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_minus_btn, 0, 0);
 				// 如果不是创建者或者没有相应权限，不提供加减人按钮
 				if (!group.getOwner().equals(EMClient.getInstance().getCurrentUser())) {
@@ -654,21 +656,23 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
 					}
 					final String st10 = getResources().getString(R.string.The_delete_button_is_clicked);
+					*/
 					button.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							EMLog.d(TAG, st10);
-							isInDeleteMode = true;
-							notifyDataSetChanged();
+							//isInDeleteMode = true;
+							//notifyDataSetChanged();
+							ToastUtils.show(mContext,"删除界面");
 						}
 					});
 
 					//TODO 隐藏掉
-					convertView.setClickable(false);
-					convertView.setVisibility(View.INVISIBLE);
+					convertView.setClickable(true);
+					convertView.setVisibility(View.VISIBLE);
 
-				}
-			} else if (position == getCount() - 2) { // 添加群组成员按钮
+				//}
+			//}
+			/*else if (position == getCount() - 2) { // 添加群组成员按钮
 			    holder.textView.setText("");
 			    holder.imageView.setImageResource(R.mipmap.more);
 //				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_add_btn, 0, 0);
@@ -698,8 +702,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				}
 				//TODO 隐藏掉
 				convertView.setClickable(false);
-				convertView.setVisibility(View.INVISIBLE);
-			} else { // 普通item，显示群组成员 */
+				convertView.setVisibility(View.INVISIBLE);*/
+			} else { // 普通item，显示群组成员
 				final String username = getItem(position);
 				convertView.setVisibility(View.VISIBLE);
 				button.setVisibility(View.VISIBLE);
@@ -735,6 +739,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							deleteMembersFromGroup(username);
 						} else {
 							// 正常情况下点击user，可以进入用户详情或者聊天页面等等
+							if (!EMClient.getInstance().getCurrentUser().equals(username) ) {
+								Intent intent = new Intent(GroupDetailsActivity.this, ChatActivity.class);
+								intent.putExtra("userId", username);
+								intent.putExtra("chatType", Constant.CHATTYPE_SINGLE);
+								startActivity(intent);
+							}
 
 						}
 					}
@@ -802,14 +812,14 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						return false;
 					}
 				});
-			/*}*/
+			}
 			return convertView;
 		}
 
 		@Override
 		public int getCount() {
 			//return super.getCount() + 2;
-			return  super.getCount();
+			return  super.getCount() + 1;
 		}
 	}
 
