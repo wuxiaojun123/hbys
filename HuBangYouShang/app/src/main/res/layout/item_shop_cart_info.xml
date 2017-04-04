@@ -93,8 +93,8 @@
                     android:layout_width="@dimen/dimen_24"
                     android:layout_height="@dimen/dimen_24"
                     android:src="@mipmap/shopcart_sub"/>
-                <EditText
-                    android:id="@+id/et_num"
+                <TextView
+                    android:id="@+id/tv_num_show"
                     android:layout_width="@dimen/dimen_50"
                     android:layout_height="@dimen/dimen_24"
                     android:text="1"

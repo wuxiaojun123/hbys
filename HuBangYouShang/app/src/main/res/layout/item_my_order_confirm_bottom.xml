@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_while">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:background="@drawable/shape_divider_line"
+        android:visibility="gone"></RelativeLayout>
+
+    <TextView
+        android:padding="@dimen/dimen_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/style_setting_text"
+        android:drawableRight="@null"
+        android:text="商家设置的通用券抵扣比例为:"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:background="@drawable/shape_divider_line"></RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:background="@color/color_while"
+        >
+
+        <TextView
+            android:text=""
+            style="@style/style_setting_text"
+            android:drawableRight="@null"
+            />
+
+        <ToggleButton
+            android:id="@+id/btn_switch"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            android:background="@null"
+            android:button="@drawable/switch_button_ios"
+            android:checked="false"
+            android:gravity="center_vertical|right"
+            android:textOff=""
+            android:textOn=""
+            android:layout_marginRight="10dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/shape_divider_line"></RelativeLayout>
+
+</LinearLayout>

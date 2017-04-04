@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
+    android:divider="@drawable/shape_divider_line"
+    android:orientation="vertical"
+    android:showDividers="end|beginning|middle"
+    android:background="@color/color_while">
+
+
+    <LinearLayout
+        android:id="@+id/ll_shop_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/tv_store_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="10dp"
+            android:drawableRight="@mipmap/img_goods_detail_allow_right"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="这里是商家名称"
+            android:textColor="@color/color_3a"
+            android:textSize="@dimen/dimen_15" />
+
+        <TextView
+            android:id="@+id/tv_shop_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right"
+            android:text="商品状态"
+            android:textColor="@color/color_ffb258"
+            android:textSize="@dimen/dimen_12"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/shape_divider_line"
+        android:dividerPadding="5dp"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:showDividers="middle">
+
+        <!--<include layout="@layout/layout_my_order_shop" />
+        <include layout="@layout/layout_my_order_shop" />
+        <include layout="@layout/layout_my_order_shop" />-->
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="配送方式"
+            android:textSize="@dimen/dimen_14"
+            android:textColor="@color/color_3a"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="包邮"
+            android:textSize="@dimen/dimen_14"
+            android:textColor="@color/color_8a"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="留言备注:"
+            android:textSize="@dimen/dimen_14"
+            android:textColor="@color/color_3a"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="这里可以给买家留言"
+            android:textSize="@dimen/dimen_14"
+            android:textColor="@color/color_8a"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="优惠券"
+            android:textSize="@dimen/dimen_14"
+            android:textColor="@color/color_3a"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="无可用"
+            android:textSize="@dimen/dimen_14"
+            android:textColor="@color/color_8a"
+            android:drawablePadding="@dimen/dimen_4"
+            android:drawableRight="@mipmap/img_goods_detail_allow_right"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_total_shop_and_money"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="right|center_vertical"
+        android:paddingRight="10dp"
+        android:text="共计：4件商品  合计：￥235元(含运费12元)"
+        android:textColor="@color/color_3a"
+        android:textSize="@dimen/dimen_13" />
+
+</LinearLayout>

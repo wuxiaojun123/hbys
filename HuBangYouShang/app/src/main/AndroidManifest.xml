@@ -394,6 +394,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name="com.help.reward.activity.ConfirmOrderActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="com.help.reward.activity.GoodsTypeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />

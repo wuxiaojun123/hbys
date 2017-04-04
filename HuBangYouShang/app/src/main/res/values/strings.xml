@@ -209,6 +209,9 @@
     <!--弹窗-->
     <string name="string_system_prompt">系统提示</string>
     <string name="string_watch_ad_get_scroe">恭喜您获得5帮赏分</string>
+    <string name="num_dialog_show">购买数量</string>
+    <string name="canclebtn">取消</string>
+    <string name="surebtn">确定</string>
 
     <drawable name="string_watch_ad_group_bug_normal">#ec6a5c</drawable>
     <drawable name="string_watch_ad_group_bug_pressed">#af4034</drawable>
