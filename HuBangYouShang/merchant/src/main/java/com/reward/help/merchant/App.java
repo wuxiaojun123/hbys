@@ -9,6 +9,7 @@ import android.text.TextUtils;
 
 
 import com.reward.help.merchant.chat.DemoHelper;
+import com.reward.help.merchant.utils.CrashHandler;
 import com.reward.help.merchant.utils.SpUtils;
 
 import java.util.Iterator;
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by wuxiaojun on 2017/1/4.
  */
 
-public class App extends Application {
+public class App extends Application{
 
     private static App mApp;
     private static String APP_CLIENT_KEY = null;
@@ -51,14 +52,16 @@ public class App extends Application {
         SpUtils.put(SpUtils.SP_COOKIE,appClientCookie);
     }
 
-
     @Override
     public void onCreate() {
         MultiDex.install(this);
         super.onCreate();
 //        FreelineCore.init(this);
         mApp = this;
-        
+
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(getApplicationContext());
+
         int pid = android.os.Process.myPid();
         String processAppName = getAppName(pid);
         // 如果APP启用了远程的service，此application:onCreate会被调用2次
@@ -79,6 +82,7 @@ public class App extends Application {
 //        EMClient.getInstance().setDebugMode(true);
 //        EaseUI.getInstance().init(this,options);
         DemoHelper.getInstance().init(mApp);
+
 
     }
 
@@ -111,5 +115,4 @@ public class App extends Application {
         }
         return processName;
     }
-
 }

@@ -10,10 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.idotools.utils.ToastUtils;
-import com.reward.help.merchant.App;
 import com.reward.help.merchant.R;
 import com.reward.help.merchant.bean.Response.BaseResponse;
-import com.reward.help.merchant.bean.Response.StoreInfoResponse;
 import com.reward.help.merchant.chat.ui.BaseActivity;
 import com.reward.help.merchant.network.PersonalNetwork;
 import com.reward.help.merchant.network.base.BaseSubscriber;
@@ -38,7 +36,7 @@ public class CheckPhoneNumberActivity extends BaseActivity implements View.OnCli
 
     @BindView(R.id.btn_get_checkcode)
     Button mBtnGetCode;
-    @BindView(R.id.tv_phonenumber_tip)
+    @BindView(R.id.username)
     EditText mEtPhoneNum;
     @BindView(R.id.password)
     EditText mEtCheckCode;
@@ -46,12 +44,12 @@ public class CheckPhoneNumberActivity extends BaseActivity implements View.OnCli
     String phone;
 
 
+
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.activity_check_phonenumber);
         ButterKnife.bind(this);
-
         initView();
     }
 
@@ -60,7 +58,7 @@ public class CheckPhoneNumberActivity extends BaseActivity implements View.OnCli
         mTvTitle.setText(getText(R.string.forget_password_get));
     }
 
-    @OnClick({R.id.btn_next})
+    @OnClick({R.id.iv_title_back,R.id.btn_next,R.id.btn_get_checkcode})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
