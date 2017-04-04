@@ -1,5 +1,6 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -262,7 +263,7 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
         mTvtotal.setText("合计： ¥ "+formatPrice2BlankToBlank(result));
     }
 
-    @OnClick({R.id.ll_select_all})
+    @OnClick({R.id.ll_select_all,R.id.commit,R.id.iv_title_back})
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -281,6 +282,12 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
                 mAdapter.notifyDataSetChanged();
 
             break;
+            case R.id.commit:
+                startActivity(new Intent(ShopcartActivity.this,ConfirmOrderActivity.class));
+                break;
+            case R.id.iv_title_back:
+                finish();
+                break;
         }
     }
 }
