@@ -111,12 +111,10 @@ public class ConsumptionFragment extends BaseFragment {
     @BindView(R.id.tv_hot_info5)
     TextView tv_hot_info5;
 
-    @BindView(R.id.et_search)
-    SearchEditTextView et_search;
+//    @BindView(R.id.et_search)
+//    SearchEditTextView et_search;
     @BindView(R.id.iv_email)
     ImageView iv_email; // 消息中心
-    @BindView(R.id.tv_text)
-    TextView tv_text; // 标题取消
 
     StoreRecommandAdapter mStoreRecommandAdapter;
     ShopHotAdapter mShopHotAdapter;
@@ -133,14 +131,6 @@ public class ConsumptionFragment extends BaseFragment {
     }
 
     private void initView() {
-        iv_email.setVisibility(View.VISIBLE);
-        tv_text.setVisibility(View.GONE);
-        et_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                goToSearchActivity();
-            }
-        });
     }
 
 
@@ -278,7 +268,7 @@ public class ConsumptionFragment extends BaseFragment {
 
     @OnClick({R.id.layout_shop_myaccount, R.id.layout_shop_myorder, R.id.layout_shop_coupon,
             R.id.layout_shop_type, R.id.rl_hot_shop, R.id.rl_hot_shop2, R.id.ll_hot_shop3,
-            R.id.ll_hot_shop4, R.id.ll_hot_shop5, R.id.et_search, R.id.iv_email})
+            R.id.ll_hot_shop4, R.id.ll_hot_shop5, R.id.tv_search, R.id.iv_email})
     void click(View v) {
         switch (v.getId()) {
             case R.id.layout_shop_myaccount: // 我的账户
@@ -303,20 +293,17 @@ public class ConsumptionFragment extends BaseFragment {
                 startActivity(new Intent(mContext, MsgCenterActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
                 break;
-            case R.id.et_search:
+            case R.id.tv_search:
                 goToSearchActivity();
 
                 break;
-
         }
     }
-
 
     private void goToSearchActivity() {
         Intent mIntent = new Intent(mContext, SearchShopActivity.class);
         mContext.startActivity(mIntent);
         ActivitySlideAnim.slideInAnim(getActivity());
-        InputWindowUtils.closeInputWindow(et_search, mContext);
     }
 
 }

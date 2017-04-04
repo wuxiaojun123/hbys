@@ -106,7 +106,7 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
         Intent mIntent = new Intent(this, SearchShopResultActivity.class);
         mIntent.putExtra("keyword", searchStr);
         startActivity(mIntent);
-        ActivitySlideAnim.slideOutAnim(SearchShopActivity.this);
+        ActivitySlideAnim.slideInAnim(SearchShopActivity.this);
     }
 
 

@@ -54,7 +54,6 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_my_coupon);
         ButterKnife.bind(this);
 
-        initEvent();
         initData();
         getRxBusData();
     }
@@ -85,10 +84,6 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
         tabStrip.setViewPager(viewPager);
     }
 
-    private void initEvent() {
-
-    }
-
     /**
      * 获取rxbus传递过来的数据
      */
@@ -114,7 +109,7 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.tv_exchange:
                 // 交易大厅
-                startActivity(new Intent(MyCouponActivity.this, CouponTradingActivity.class));
+                startActivity(new Intent(MyCouponActivity.this, CouponTradingSearchResultActivity.class));
                 ActivitySlideAnim.slideInAnim(MyCouponActivity.this);
 
                 break;

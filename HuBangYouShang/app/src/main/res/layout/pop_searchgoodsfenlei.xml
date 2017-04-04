@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
     android:layout_height="match_parent"
     android:background="@color/color_while"
+    android:clickable="true"
+    android:gravity="right"
     android:orientation="vertical"
     android:paddingTop="10dp">
 
@@ -229,7 +231,11 @@
                         android:textColor="#3a4a6b"
                         android:textSize="13sp" />
                 </LinearLayout>
+
             </LinearLayout>
+
         </ScrollView>
+
     </RelativeLayout>
+
 </LinearLayout>

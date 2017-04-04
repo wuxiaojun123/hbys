@@ -3,9 +3,11 @@ package com.help.reward.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,6 +49,8 @@ import rx.schedulers.Schedulers;
 
 public class SearchShopResultActivity extends BaseActivity {
 
+    @BindView(R.id.id_drawerlayout)
+    DrawerLayout mDrawerlayout;
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.iv_search_type)
@@ -111,7 +115,6 @@ public class SearchShopResultActivity extends BaseActivity {
         iv_title_back.setVisibility(View.VISIBLE);
         tv_text.setVisibility(View.GONE);
         et_search.setHint("搜索关键字相关商品");
-
     }
 
     private void initData() {
@@ -132,11 +135,15 @@ public class SearchShopResultActivity extends BaseActivity {
         requestData();
     }
 
-    @OnClick({R.id.iv_title_back, R.id.iv_search_type, R.id.tv_zonghe, R.id.tv_salenum, R.id.tv_xinyong, R.id.tv_shaixuan, R.id.iv_style})
+    @OnClick({R.id.iv_title_back, R.id.iv_search_type, R.id.ll_zonghe,
+            R.id.tv_salenum, R.id.tv_xinyong, R.id.ll_shaixuan, R.id.ll_style,
+            R.id.tv_ok})
     void click(View v) {
         switch (v.getId()) {
             case R.id.iv_title_back:
                 finish();
+                ActivitySlideAnim.slideOutAnim(SearchShopResultActivity.this);
+
                 break;
             case R.id.iv_search_type:
                 new GoodsTypeSearchPop().showPopupWindow(this, iv_search_type).setOnTypeChooseListener(new GoodsTypeSearchPop.OnTypeChooseListener() {
@@ -153,7 +160,7 @@ public class SearchShopResultActivity extends BaseActivity {
                     }
                 });
                 break;
-            case R.id.tv_zonghe:
+            case R.id.ll_zonghe:
                 new SearchGoodsZonghePop().showPopupWindow(this, layout_alltitle, zongheType).setOnTypeChooseListener(new SearchGoodsZonghePop.OnTypeChooseListener() {
                     @Override
                     public void onType(String type) {
@@ -196,19 +203,22 @@ public class SearchShopResultActivity extends BaseActivity {
                 }
                 requestData();
                 break;
-            case R.id.tv_shaixuan:
-                new SearchGoodsFenleiPop().showPopupWindow(this, tv_shaixuan, b_id, price_from, price_to, service, pinpaiList).setOnTypeChooseListener(new SearchGoodsFenleiPop.OnTypeChooseListener() {
-                    @Override
-                    public void onType(String b_id, String price_from, String price_to, List<String> service) {
-                        SearchShopResultActivity.this.b_id = b_id;
-                        SearchShopResultActivity.this.price_from = price_from;
-                        SearchShopResultActivity.this.price_to = price_to;
-                        SearchShopResultActivity.this.service = service;
-                    }
-                });
-                requestData();
+            case R.id.ll_shaixuan:
+                mDrawerlayout.openDrawer(Gravity.RIGHT);
+                /*new SearchGoodsFenleiPop().showPopupWindow(this, tv_shaixuan, b_id, price_from, price_to, service, pinpaiList)
+                        .setOnTypeChooseListener(new SearchGoodsFenleiPop.OnTypeChooseListener() {
+                            @Override
+                            public void onType(String b_id, String price_from, String price_to, List<String> service) {
+                                SearchShopResultActivity.this.b_id = b_id;
+                                SearchShopResultActivity.this.price_from = price_from;
+                                SearchShopResultActivity.this.price_to = price_to;
+                                SearchShopResultActivity.this.service = service;
+                            }
+                });*/
+//                requestData();
+
                 break;
-            case R.id.iv_style:
+            case R.id.ll_style:
                 if ("list".equals(type)) {
                     type = "gird";
                     iv_style.setImageResource(R.mipmap.list_piece);
@@ -218,6 +228,10 @@ public class SearchShopResultActivity extends BaseActivity {
                     iv_style.setImageResource(R.mipmap.list_grid);
                     setListAdapter();
                 }
+                break;
+            case R.id.tv_ok: // 点击筛选完成
+                mDrawerlayout.closeDrawer(Gravity.RIGHT);
+
                 break;
 
         }
@@ -316,6 +330,15 @@ public class SearchShopResultActivity extends BaseActivity {
                     }
                 });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mDrawerlayout.isDrawerOpen(Gravity.RIGHT)){
+            mDrawerlayout.closeDrawer(Gravity.RIGHT);
+        }else{
+            super.onBackPressed();
+        }
     }
 
     @Override

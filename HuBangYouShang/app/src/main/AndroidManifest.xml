@@ -222,9 +222,13 @@
         <activity
             android:name="com.help.reward.activity.GeneralExchangeVolumeActivity"
             android:screenOrientation="portrait" />
-        <!--交易大厅-->
+        <!--优惠劵交易大厅-->
         <activity
             android:name="com.help.reward.activity.CouponTradingActivity"
+            android:screenOrientation="portrait" />
+        <!--优惠劵搜索结果展示-->
+        <activity
+            android:name="com.help.reward.activity.CouponTradingSearchResultActivity"
             android:screenOrientation="portrait" />
         <!--我的订单-->
         <activity

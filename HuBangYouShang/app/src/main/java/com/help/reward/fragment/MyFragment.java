@@ -71,16 +71,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.tv_discount_level)
     TextView tv_discount_level; // 优惠百分比
 
-    /*@Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (contentView == null) {
-            contentView = inflater.inflate(R.layout.fragment_my, null);
-        }
-        ButterKnife.bind(this, contentView);
-        return contentView;
-    }*/
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_my;
@@ -128,7 +118,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.tv_account:
                 // 我的账户
-                startActivity(new Intent(mContext, ShopcartActivity.class));
+                startActivity(new Intent(mContext, MyAccountActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
