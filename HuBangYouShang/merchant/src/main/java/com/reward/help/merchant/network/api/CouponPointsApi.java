@@ -60,4 +60,11 @@ public interface CouponPointsApi {
     Observable<QueryMyPointsResponse> getPoints(
             @Field("key") String key
     );
+
+    @FormUrlEncoded
+    @POST(Constant.URL_GROUP_APPLY)
+    Observable<BaseResponse> apply(
+            @Field("key") String key,
+            @Field("content") String content
+    );
 }

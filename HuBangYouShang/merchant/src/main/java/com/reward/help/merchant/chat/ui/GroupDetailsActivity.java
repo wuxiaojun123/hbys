@@ -640,7 +640,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			if (position == getCount() - 1) {
 			    holder.textView.setText("");
 				// 设置成删除按钮
-			    holder.imageView.setImageResource(R.mipmap.more);/*
+			    holder.imageView.setImageResource(R.drawable.em_smiley_minus_btn);/*
 //				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_minus_btn, 0, 0);
 				// 如果不是创建者或者没有相应权限，不提供加减人按钮
 				if (!group.getOwner().equals(EMClient.getInstance().getCurrentUser())) {
@@ -662,7 +662,11 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						public void onClick(View v) {
 							//isInDeleteMode = true;
 							//notifyDataSetChanged();
-							ToastUtils.show(mContext,"删除界面");
+							if (!group.getOwner().equals(EMClient.getInstance().getCurrentUser())) {
+								ToastUtils.show(GroupDetailsActivity.this,"您不是群主，无法进行此操作！");
+							} else {
+								startActivity(new Intent(GroupDetailsActivity.this, GroupDeleteActivity.class).putExtra("groupId", groupId));
+							}
 						}
 					});
 
@@ -893,7 +897,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		super.onDestroy();
 		instance = null;
 	}
-	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		refreshMembers();
+	}
+
 	private static class ViewHolder{
 	    ImageView imageView;
 	    TextView textView;
