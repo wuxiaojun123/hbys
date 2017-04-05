@@ -5,7 +5,7 @@
     android:divider="@drawable/shape_divider_line"
     android:orientation="horizontal"
     android:showDividers="end"
-    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
     android:background="@color/color_while"
     >
 
@@ -63,7 +63,7 @@
 
             <TextView
                 android:id="@+id/tv_date"
-                android:layout_width="150dp"
+                android:layout_width="190dp"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:maxLines="1"

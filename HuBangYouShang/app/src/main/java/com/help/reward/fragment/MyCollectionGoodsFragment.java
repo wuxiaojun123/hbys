@@ -6,6 +6,7 @@ import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.bean.MyCollectionGoodsBean;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
@@ -61,11 +62,11 @@ public class MyCollectionGoodsFragment extends BaseFragment {
         mCollectionGoodsAdapter.setOnItemDeleteListener(new OnItemDeleteListener() {
             @Override
             public void deleteItem(final int position) {
-                MyCollectionPostBean bean = (MyCollectionPostBean) mCollectionGoodsAdapter.getDataList().get(position);
+                MyCollectionGoodsBean bean = (MyCollectionGoodsBean) mCollectionGoodsAdapter.getDataList().get(position);
                 if(bean != null){
                     PersonalNetwork
                             .getResponseApi()
-                            .getDeleteMyCollectionPostResponse(App.APP_CLIENT_KEY,bean.fav_id,bean.log_msg)
+                            .getDeleteMyCollectionGoodsResponse(App.APP_CLIENT_KEY,bean.fav_id)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -77,7 +78,7 @@ public class MyCollectionGoodsFragment extends BaseFragment {
 
                                 @Override
                                 public void onNext(BaseResponse response) {
-                                    LogUtils.e("删除我的收藏中的帖子："+response.toString());
+                                    LogUtils.e("删除我的收藏中的商品："+response.toString());
                                     if (response.code == 200) { // 删除成功
                                         mCollectionGoodsAdapter.remove(position);
                                     } else {

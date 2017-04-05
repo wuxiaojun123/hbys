@@ -54,8 +54,6 @@ public interface PersonalApi {
 
     // mobile/index.php?act=logout 退出登录 post传client
 
-
-
     // 个人信息--获取地区
     @FormUrlEncoded
     @POST("mobile/index.php?act=area")
@@ -176,6 +174,22 @@ public interface PersonalApi {
             @Field("type") String type
     );
 
+    // 我的收藏--删除商品
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_favorites&op=favorites_del")
+    Observable<BaseResponse> getDeleteMyCollectionGoodsResponse(
+            @Field("key") String key,
+            @Field("fav_id") String post_id
+    );
+
+    // 我的收藏--删除店铺
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_favorites_store&op=favorites_del")
+    Observable<BaseResponse> getDeleteMyCollectionStoreResponse(
+            @Field("key") String key,
+            @Field("store_id") String post_id
+    );
+
     // 我的收藏--商品
     @FormUrlEncoded
     @POST("/mobile/index.php?act=member_favorites&op=favorites_list")
@@ -244,14 +258,28 @@ public interface PersonalApi {
 
     // 我的账户--优惠劵交易  mobile/index.php?act=voucher&op=voucher_list
     @FormUrlEncoded
-    @POST("mobile/index.php?act=voucher&op=voucher_list")
+    @POST("mobile/index.php")
     Observable<CouponTradingResponse> getCouponTradingResponse(
             @Query("act") String act,
             @Query("op") String op,
             @Query("curpage") String curpage,
             @Field("key") String key,
             @Field("storename") String storename,
+            @Field("goodsname") String goodsname,
             @Field("order") String order
+    );
+
+    // 我的账户--优惠劵交易，查询优惠劵交易的结果展示
+    @FormUrlEncoded
+    @POST("mobile/index.php")
+    Observable<CouponTradingResponse> getCouponTradingResultResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("key") String key,
+            @Field("storename") String storename,
+            @Field("order") String order,
+            @Field("goodsname") String goodsname
     );
 
     // 余额兑换帮赏分

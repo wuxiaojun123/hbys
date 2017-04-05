@@ -347,7 +347,6 @@ public class SearchShopResultActivity extends BaseActivity {
             case R.id.tv_sevenDay:
                 clickService(tv_sevenDay, "sevenDay");
                 break;
-
         }
     }
 

@@ -14,6 +14,7 @@
         android:layout_height="10dp" />
 
     <EditText
+        android:id="@+id/et_content"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@null"
@@ -30,11 +31,15 @@
         android:layout_height="10dp" />
 
     <EditText
+        android:id="@+id/et_mobile"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@null"
-        android:hint="请留下您的宝贵意见"
+        android:hint="请留下您的联系方式"
         android:textColor="@color/color_bf"
+        android:maxLines="1"
+        android:inputType="phone"
+        android:maxLength="11"
         android:textSize="@dimen/dimen_14"
         android:gravity="center_vertical"
         android:paddingLeft="8dp"
@@ -45,6 +50,7 @@
         android:layout_height="10dp" />-->
 
     <Button
+        android:id="@+id/btn_commit"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="20dp"

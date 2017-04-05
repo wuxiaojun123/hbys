@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.help.reward.R;
+import com.help.reward.network.PersonalNetwork;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.utils.SharedPreferenceConstant;
@@ -106,7 +107,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
             case R.id.tv_logout: // 登出
-                ToastUtils.show(mContext,"此接口还未开发");
+                logout();
 
                 break;
         }
@@ -156,5 +157,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }).show();
     }
 
+    private void logout(){
+    }
 
 }

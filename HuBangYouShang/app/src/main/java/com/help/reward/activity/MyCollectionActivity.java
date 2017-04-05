@@ -6,16 +6,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
+import com.help.reward.fragment.BaseFragment;
 import com.help.reward.fragment.MyCollectionGoodsFragment;
 import com.help.reward.fragment.MyCollectionPostFragment;
 import com.help.reward.fragment.MyCollectionStoreFragment;
 import com.help.reward.utils.ActivitySlideAnim;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,12 +45,19 @@ public class MyCollectionActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
+    private List<BaseFragment> fragmentList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_collection);
         ButterKnife.bind(this);
+
+        fragmentList = new ArrayList<>();
+        fragmentList.add(new MyCollectionPostFragment());
+        fragmentList.add(new MyCollectionGoodsFragment());
+        fragmentList.add(new MyCollectionStoreFragment());
+
         initView();
     }
 
@@ -92,13 +104,7 @@ public class MyCollectionActivity extends BaseActivity implements View.OnClickLi
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
-                return new MyCollectionPostFragment();
-            } else if (position == 1) {
-                return new MyCollectionGoodsFragment();
-            } else {
-                return new MyCollectionStoreFragment();
-            }
+            return fragmentList.get(position);
         }
 
         @Override

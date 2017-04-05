@@ -123,21 +123,25 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
                 break;
             case R.id.tv_my_help:
+                // 我的求助
                 startActivity(new Intent(mContext, MyHelpActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.tv_my_reward:
+                // 我的收藏
                 startActivity(new Intent(mContext, MyRewardActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.tv_my_vote:
+                // 我的投票
                 startActivity(new Intent(mContext, MyVoteActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.tv_my_collection:
+                // 我的收藏
                 startActivity(new Intent(mContext, MyCollectionActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
