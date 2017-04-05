@@ -1,5 +1,6 @@
 package com.help.reward.network.api;
 
+import com.help.reward.bean.Response.BrandResponse;
 import com.help.reward.bean.Response.GoodResponse;
 import com.help.reward.bean.Response.GoodsSecondTypeResponse;
 import com.help.reward.bean.Response.GoodsTypeResponse;
@@ -8,7 +9,10 @@ import com.help.reward.bean.Response.ShopSearchResponse;
 import com.help.reward.bean.Response.StoreDetailAllResponse;
 import com.help.reward.utils.Constant;
 
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -77,15 +81,27 @@ public interface ShopMallApi {
      * protection 消费者保障quality
      * 正品保障 sevenDay 7天无理由退货
      */
-    @GET(Constant.URL_SEARCHGOODS)
+    @FormUrlEncoded
+    @POST(Constant.URL_SEARCHGOODS)
     Observable<StoreDetailAllResponse> getSearchGoodsResponse(
-            @Query("key") String key,
-            @Query("order") String order,
-            @Query("price_from") String price_from,
-            @Query("price_to") String price_to,
-            @Query("b_id") String b_id,
-            @Query("service[]") String[] service,
-            @Query("keyword") String keyword,
-            @Query("curpage") int curpage
+            @Field("key") String key,
+            @Field("order") String order,
+            @Field("price_from") String price_from,
+            @Field("price_to") String price_to,
+            @Field("b_id") String b_id,
+            @Field("service[]") String[] service,
+            @Field("keyword") String keyword,
+            @Field("curpage") int curpage
     );
+    /**
+     * 品牌列表
+     * /mobile/index.php?act=goods_class&op=index
+     * 参数[get]：gc_id 不填或填错取根类别，正确返回其子类别。
+     * data: {class_list: [{
+     */
+    @GET(Constant.URL_BRANDLIST)
+    Observable<BrandResponse> getBrandBeanResponse(
+
+    );
+
 }

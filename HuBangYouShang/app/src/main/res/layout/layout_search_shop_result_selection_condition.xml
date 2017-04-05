@@ -40,16 +40,6 @@
         android:textColor="@color/color_3a"
         android:textSize="@dimen/sp_14" />
 
-    <TextView
-        android:id="@+id/tv_xinyong"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="信用"
-        android:textColor="@color/color_3a"
-        android:textSize="@dimen/sp_14" />
-
     <LinearLayout
         android:id="@+id/ll_shaixuan"
         android:layout_width="match_parent"

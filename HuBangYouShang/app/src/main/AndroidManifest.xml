@@ -302,7 +302,8 @@
         <!--搜索商品结果展示页面-->
         <activity
             android:name=".activity.SearchShopResultActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
 
 
         <!--看广告-->

@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.help.reward.R;
-import com.help.reward.bean.PinPaiBean;
+import com.help.reward.bean.BrandBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +19,14 @@ import java.util.List;
  * 搜索商品筛选品牌
  */
 
-public class GoodsSearchPinPaiAdapter extends BaseAdapter {
+public class GoodsSearchBrandAdapter extends BaseAdapter {
     Activity mActivity;
-    List<PinPaiBean> mDatas = new ArrayList<>();
+    List<BrandBean> mDatas = new ArrayList<>();
     private LayoutInflater mInflater;
     String b_id = "";
     boolean isShowAll = false;
 
-    public GoodsSearchPinPaiAdapter(Activity context) {
+    public GoodsSearchBrandAdapter(Activity context) {
         this.mActivity = context;
         mInflater = LayoutInflater.from(context);
 
@@ -37,7 +37,7 @@ public class GoodsSearchPinPaiAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setDatas(List<PinPaiBean> mDatas) {
+    public void setDatas(List<BrandBean> mDatas) {
         this.mDatas = mDatas;
         notifyDataSetChanged();
     }
@@ -79,9 +79,9 @@ public class GoodsSearchPinPaiAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        PinPaiBean item = mDatas.get(position);
-        vh.tv_name.setText(item.b_name);
-        if (b_id.equals(item.b_id)) {
+        BrandBean item = mDatas.get(position);
+        vh.tv_name.setText(item.brand_name);
+        if (b_id.equals(item.brand_id)) {
             vh.tv_name.setTextColor(Color.parseColor("#ffffff"));
             vh.tv_name.setBackgroundResource(R.drawable.fa372d_bg);
         } else {

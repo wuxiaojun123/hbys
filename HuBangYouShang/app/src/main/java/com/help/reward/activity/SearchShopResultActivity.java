@@ -1,6 +1,7 @@
 package com.help.reward.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
@@ -9,6 +10,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,17 +21,20 @@ import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnItemClickListener;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.help.reward.R;
+import com.help.reward.adapter.GoodsSearchBrandAdapter;
 import com.help.reward.adapter.StoreGoodsAdapter;
-import com.help.reward.bean.PinPaiBean;
+import com.help.reward.bean.BrandBean;
+import com.help.reward.bean.Response.BrandResponse;
 import com.help.reward.bean.Response.StoreDetailAllResponse;
 import com.help.reward.bean.ShopMallHotBean;
 import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.StringUtils;
 import com.help.reward.view.GoodsTypeSearchPop;
+import com.help.reward.view.MyGridView;
 import com.help.reward.view.MyProcessDialog;
 import com.help.reward.view.SearchEditTextView;
-import com.help.reward.view.SearchGoodsFenleiPop;
 import com.help.reward.view.SearchGoodsZonghePop;
 import com.idotools.utils.ToastUtils;
 
@@ -66,8 +72,6 @@ public class SearchShopResultActivity extends BaseActivity {
     TextView tv_zonghe;
     @BindView(R.id.tv_salenum)
     TextView tv_salenum;
-    @BindView(R.id.tv_xinyong)
-    TextView tv_xinyong;
     @BindView(R.id.tv_shaixuan)
     TextView tv_shaixuan;
     @BindView(R.id.iv_style)
@@ -75,6 +79,37 @@ public class SearchShopResultActivity extends BaseActivity {
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
+
+
+    @BindView(R.id.tv_reset)
+    TextView tv_reset;
+    @BindView(R.id.tv_ok)
+    TextView tv_ok;
+    @BindView(R.id.myGridView)
+    MyGridView myGridView;
+
+
+    @BindView(R.id.tv_freight)
+    TextView tv_freight;
+    @BindView(R.id.tv_cod)
+    TextView tv_cod;
+    @BindView(R.id.tv_refund)
+    TextView tv_refund;
+    @BindView(R.id.tv_protection)
+    TextView tv_protection;
+    @BindView(R.id.tv_quality)
+    TextView tv_quality;
+    @BindView(R.id.tv_sevenDay)
+    TextView tv_sevenDay;
+
+    @BindView(R.id.et_priceform)
+    EditText et_priceform;
+    @BindView(R.id.et_priceto)
+    EditText et_priceto;
+
+    GoodsSearchBrandAdapter brandAdapter;
+
+
     private StoreGoodsAdapter adapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     List<ShopMallHotBean> mDatas = new ArrayList<>();
@@ -87,13 +122,13 @@ public class SearchShopResultActivity extends BaseActivity {
     String searchType = "goods";
     String key;//salenum 销量 clicknum 人气 price 价格order desc降序asc升序；默认降序
     String price_from, price_to;
-    String b_id;// 品牌id
+    String b_id = "";// 品牌id
     List<String> service = new ArrayList<>();//freight 包邮 COD 货到付款 refund 急速退款 protection 消费者保障quality 正品保障 sevenDay 7天无理由退货
     String order;
     String type = "gird";
     String zongheType = "zonghe";
 
-    List<PinPaiBean> pinpaiList = new ArrayList<>();
+    List<BrandBean> brandList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,12 +136,6 @@ public class SearchShopResultActivity extends BaseActivity {
         setContentView(R.layout.activity_search_shop_result);
         ButterKnife.bind(this);
         keyword = getIntent().getExtras().getString("keyword");
-        for (int i = 0; i < 12; i++) {
-            PinPaiBean p = new PinPaiBean();
-            p.b_id = i + "";
-            p.b_name = "品牌" + i;
-            pinpaiList.add(p);
-        }
         initView();
         initData();
     }
@@ -115,9 +144,48 @@ public class SearchShopResultActivity extends BaseActivity {
         iv_title_back.setVisibility(View.VISIBLE);
         tv_text.setVisibility(View.GONE);
         et_search.setHint("搜索关键字相关商品");
+        et_search.setText(keyword);
+        et_search.setOnKeyListener(new SearchEditTextView.onKeyListener() {
+            @Override
+            public void onKey() {
+                if (!StringUtils.checkStr(et_search.getText().toString().trim())) {
+                    return;
+                }
+                keyword = et_search.getText().toString().trim();
+                if ("商品".equals(iv_search_type.getText().toString())) {
+                    key = "";
+                    order = "";
+                    zongheType = "zonghe";
+                    requestData(true);
+                } else {
+                    //搜索店铺
+
+                }
+            }
+        });
+        myGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i >= brandList.size()) {
+                    return;
+                }
+                if (b_id.equals(brandList.get(i).brand_id)) {
+                    b_id = "";
+                    brandAdapter.setB_id(b_id);
+                } else {
+                    b_id = brandList.get(i).brand_id;
+                    brandAdapter.setB_id(b_id);
+                }
+            }
+        });
     }
 
     private void initData() {
+        brandAdapter = new GoodsSearchBrandAdapter(this);
+        brandAdapter.setDatas(brandList);
+        myGridView.setAdapter(brandAdapter);
+
+
         linearLayoutManager = new LinearLayoutManager(mContext);
         gridLayoutManager = new GridLayoutManager(mContext, 2);
         lRecyclerview.setLayoutManager(gridLayoutManager);
@@ -132,12 +200,13 @@ public class SearchShopResultActivity extends BaseActivity {
         lRecyclerview.setItemAnimator(new DefaultItemAnimator());
         initLoadMoreListener();
         initItemClickListener();
-        requestData();
+        requestData(true);
+        initBrandData();
     }
 
     @OnClick({R.id.iv_title_back, R.id.iv_search_type, R.id.ll_zonghe,
-            R.id.tv_salenum, R.id.tv_xinyong, R.id.ll_shaixuan, R.id.ll_style,
-            R.id.tv_ok})
+            R.id.tv_salenum, R.id.ll_shaixuan, R.id.ll_style,
+            R.id.tv_ok, R.id.tv_reset, R.id.iv_showAll, R.id.tv_freight, R.id.tv_cod, R.id.tv_refund, R.id.tv_protection, R.id.tv_quality, R.id.tv_sevenDay})
     void click(View v) {
         switch (v.getId()) {
             case R.id.iv_title_back:
@@ -152,10 +221,14 @@ public class SearchShopResultActivity extends BaseActivity {
                         searchType = type;
                         if ("goods".equals(type)) {
                             et_search.setHint("搜索关键字相关商品");
-                            et_search.setText("商品");
+                            iv_search_type.setText("商品");
+                            layout_alltitle.setVisibility(View.VISIBLE);
+                            mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED); //打开手势滑动
                         } else {
                             et_search.setHint("搜索关键字相关店铺");
-                            et_search.setText("店铺");
+                            iv_search_type.setText("店铺");
+                            layout_alltitle.setVisibility(View.GONE);
+                            mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); //关闭手势滑动
                         }
                     }
                 });
@@ -171,51 +244,34 @@ public class SearchShopResultActivity extends BaseActivity {
                         if ("pricedesc".equals(type)) {
                             key = "price";
                             order = "desc";
-                        } else if ("pricedasc".equals(type)) {
+                        } else if ("priceasc".equals(type)) {
                             key = "price";
                             order = "asc";
                         } else if ("clicknum".equals(type)) {
-                            key = "clicknum ";
-                            order = "";
+                            key = "clicknum";
+                            order = "desc";
                         } else {
                             key = "";
                             order = "";
                         }
-                        requestData();
+                        requestData(true);
                     }
                 });
                 break;
             case R.id.tv_salenum:
-                if ("salenum".equals(key)) {
-                    order = "asc";
-                } else {
-                    key = "salenum";
+                key = "salenum";
+                if ("asc".equals(order)) {
                     order = "desc";
-                }
-                requestData();
-                break;
-            case R.id.tv_xinyong:
-                if ("salenum".equals(key)) {
-                    order = "asc";
                 } else {
-                    key = "salenum";
-                    order = "desc";
+                    order = "asc";
                 }
-                requestData();
+                requestData(true);
                 break;
             case R.id.ll_shaixuan:
+                if (brandList == null || brandList.size() == 0) {
+                    initBrandData();
+                }
                 mDrawerlayout.openDrawer(Gravity.RIGHT);
-                /*new SearchGoodsFenleiPop().showPopupWindow(this, tv_shaixuan, b_id, price_from, price_to, service, pinpaiList)
-                        .setOnTypeChooseListener(new SearchGoodsFenleiPop.OnTypeChooseListener() {
-                            @Override
-                            public void onType(String b_id, String price_from, String price_to, List<String> service) {
-                                SearchShopResultActivity.this.b_id = b_id;
-                                SearchShopResultActivity.this.price_from = price_from;
-                                SearchShopResultActivity.this.price_to = price_to;
-                                SearchShopResultActivity.this.service = service;
-                            }
-                });*/
-//                requestData();
 
                 break;
             case R.id.ll_style:
@@ -230,13 +286,89 @@ public class SearchShopResultActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_ok: // 点击筛选完成
+                String from = et_priceform.getText().toString().trim();
+                String to = et_priceto.getText().toString().trim();
+                if (StringUtils.checkStr(from) || StringUtils.checkStr(to)) {
+                    if (!StringUtils.checkStr(from)) {
+                        ToastUtils.show(this, "请输入最低价格");
+                        return;
+                    }
+                    if (!StringUtils.checkStr(to)) {
+                        ToastUtils.show(this, "请输入最高价格");
+                        return;
+                    }
+                    if (Integer.parseInt(to) <= Integer.parseInt(from)) {
+                        ToastUtils.show(this, "最高价格需大于最低价格");
+                        return;
+                    }
+                    price_from = from;
+                    price_to = to;
+                }
                 mDrawerlayout.closeDrawer(Gravity.RIGHT);
-
+                if (!StringUtils.checkStr(et_search.getText().toString().trim())) {
+                    return;
+                }
+                keyword = et_search.getText().toString().trim();
+                requestData(true);
+                break;
+            case R.id.tv_reset:
+                b_id = "";
+                price_from = "";
+                price_to = "";
+                service.clear();
+                brandAdapter.setB_id(b_id);
+                et_priceform.setText("");
+                et_priceto.setText("");
+                setSelected(tv_freight, service.contains("freight"));
+                setSelected(tv_cod, service.contains("COD"));
+                setSelected(tv_refund, service.contains("refund"));
+                setSelected(tv_protection, service.contains("protection"));
+                setSelected(tv_quality, service.contains("quality"));
+                setSelected(tv_sevenDay, service.contains("sevenDay"));
+                break;
+            case R.id.iv_showAll:
+                brandAdapter.setShowAll();
+                break;
+            case R.id.tv_freight:
+                clickService(tv_freight, "freight");
+                break;
+            case R.id.tv_cod:
+                clickService(tv_cod, "COD");
+                break;
+            case R.id.tv_refund:
+                clickService(tv_refund, "refund");
+                break;
+            case R.id.tv_protection:
+                clickService(tv_protection, "protection");
+                break;
+            case R.id.tv_quality:
+                clickService(tv_quality, "quality");
+                break;
+            case R.id.tv_sevenDay:
+                clickService(tv_sevenDay, "sevenDay");
                 break;
 
         }
     }
 
+    private void clickService(TextView textView, String type) {
+        if (service.contains(type)) {
+            service.remove(type);
+        } else {
+            service.add(type);
+        }
+        setSelected(textView, service.contains(type));
+    }
+
+    private void setSelected(TextView textView, boolean isSelected) {
+        if (isSelected) {
+            textView.setTextColor(Color.parseColor("#ffffff"));
+            textView.setBackgroundResource(R.drawable.fa372d_bg);
+        } else {
+            textView.setTextColor(Color.parseColor("#3a4a6b"));
+            textView.setBackgroundResource(R.drawable.dcdcdc_f8f8f9_bg);
+        }
+    }
 
     private void setGridAdapter() {
         int position = linearLayoutManager.findFirstVisibleItemPosition();
@@ -265,7 +397,7 @@ public class SearchShopResultActivity extends BaseActivity {
             @Override
             public void onLoadMore() {
                 curpage++;
-                requestData();
+                requestData(false);
             }
         });
     }
@@ -285,7 +417,11 @@ public class SearchShopResultActivity extends BaseActivity {
 
     Subscription subscribe;
 
-    private void requestData() {
+    private void requestData(boolean isFirst) {
+        if (isFirst) {
+            curpage = 1;
+            MyProcessDialog.showDialog(this);
+        }
 
         subscribe = ShopMallNetwork
                 .getShopMallMainApi()
@@ -332,11 +468,42 @@ public class SearchShopResultActivity extends BaseActivity {
 
     }
 
+
+    /**
+     * 品牌
+     */
+    private void initBrandData() {
+
+        subscribe = ShopMallNetwork
+                .getShopMallMainApi()
+                .getBrandBeanResponse()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BrandResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+
+                    }
+
+                    @Override
+                    public void onNext(BrandResponse response) {
+                        if (response.code == 200) {
+                            if (response.data != null) {
+                                brandList = response.data.brand_list;
+                                brandAdapter.setDatas(brandList);
+                            }
+                        }
+                    }
+                });
+
+    }
+
     @Override
     public void onBackPressed() {
-        if(mDrawerlayout.isDrawerOpen(Gravity.RIGHT)){
+        if (mDrawerlayout.isDrawerOpen(Gravity.RIGHT)) {
             mDrawerlayout.closeDrawer(Gravity.RIGHT);
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
