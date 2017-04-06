@@ -67,12 +67,15 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         vpGoodinfo.setOffscreenPageLimit(3);
     }
 
-    @OnClick({R.id.tv_goodinfo_shopcart_add})
+    @OnClick({R.id.iv_goodinfo_back,R.id.tv_goodinfo_shopcart_add})
     @Override
     public void onClick(View v) {
        switch (v.getId()){
            case R.id.tv_goodinfo_shopcart_add:
                addToShopcart();
+               break;
+           case R.id.iv_goodinfo_back:
+               this.finish();
                break;
        }
     }
@@ -141,7 +144,11 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                 goodImgInfoFragment.setArguments(bundle);
                 return goodImgInfoFragment;
             } else {
-                return new GoodRetedFragment();
+                GoodRetedFragment goodRetedFragment = new GoodRetedFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("goods_id", goodsId);
+                goodRetedFragment.setArguments(bundle);
+                return goodRetedFragment;
             }
         }
 

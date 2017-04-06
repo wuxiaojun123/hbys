@@ -33,6 +33,8 @@ public class Constant {
     // 商品详情信息
     public static final String URL_SHOP_MALL_INFO = "mobile/index.php";
 
+    //商品详情评价
+    public static final String URL_SHOP_MALL_INFO_EVALUATE = "mobile/index.php?act=goods&op=goods_evaluate";
 
     // 会员相关--余额明细  参数[post]：type=1/2 1-收入2-支出，不带参数为全部
     public static final String URL_MEMBER_BALANCE = "mobile/index.php";

@@ -12,6 +12,7 @@
         android:layout_marginLeft="@dimen/layout_margin"
         android:layout_marginRight="@dimen/layout_margin">
         <TextView
+            android:id="@+id/tv_evaluate_all"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1.0"
@@ -24,6 +25,7 @@
             android:layout_width="@dimen/layout_margin"
             android:layout_height="match_parent"/>
         <TextView
+            android:id="@+id/tv_evaluate_good"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1.0"
@@ -36,6 +38,7 @@
             android:layout_width="@dimen/layout_margin"
             android:layout_height="match_parent"/>
         <TextView
+            android:id="@+id/tv_evaluate_middle"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1.0"
@@ -48,6 +51,7 @@
             android:layout_width="@dimen/layout_margin"
             android:layout_height="match_parent"/>
         <TextView
+            android:id="@+id/tv_evaluate_bad"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1.0"
@@ -61,8 +65,10 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/color_spiline"/>
-    <ListView
+
+
+    <com.base.recyclerview.LRecyclerView
         android:id="@+id/lv_shopinfo_rated"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

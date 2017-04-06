@@ -2,6 +2,7 @@ package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.BrandResponse;
+import com.help.reward.bean.Response.GoodEvaluateResponse;
 import com.help.reward.bean.Response.GoodResponse;
 import com.help.reward.bean.Response.GoodsSecondTypeResponse;
 import com.help.reward.bean.Response.GoodsTypeResponse;
@@ -10,6 +11,8 @@ import com.help.reward.bean.Response.ShopSearchResponse;
 import com.help.reward.bean.Response.StoreDetailAllResponse;
 import com.help.reward.utils.Constant;
 
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -42,6 +45,21 @@ public interface ShopMallApi {
             @Query("act") String act,
             @Query("op") String op,
             @Query("goods_id") String goods_id
+    );
+
+    /**
+     *
+     * @param goods_id 商品id
+     * @param type 类型：1-好评，2-中评，3-差评，默认不填
+     * @param curpage 分页，从1开始
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_SHOP_MALL_INFO_EVALUATE)
+    Observable<GoodEvaluateResponse> getGoodDetailsEvaluateResponse(
+            @Field("goods_id") String goods_id,
+            @Field("type") String type,
+            @Field("curpage") int curpage
     );
 
     // 获取商城信息的数据 ?act=goods&op=goods_detail&goods_id=42
