@@ -66,7 +66,7 @@ public class GoodImgInfoFragment extends BaseFragment{
         setting.setSupportZoom(false);
         setting.setDisplayZoomControls(false);
         setting.setBuiltInZoomControls(false);
-        //setting.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+        setting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         setting.setUseWideViewPort(true);
         setting.setDatabaseEnabled(true);
         setting.setDomStorageEnabled(true);

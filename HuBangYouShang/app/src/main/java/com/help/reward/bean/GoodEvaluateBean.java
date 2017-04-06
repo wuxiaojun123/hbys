@@ -41,11 +41,11 @@ public class GoodEvaluateBean {
     public String geval_frommembername;
     public String member_avatar;
     public String geval_addtime_date;
-    /*
+
     public String[] geval_image_240;
     public String[] geval_image_1024;
 
-
+    /*
     public String geval_content_again;
     public String geval_addtime;
     public String geval_state;
