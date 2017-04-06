@@ -64,7 +64,7 @@ public class GoodEvaluateAdapter extends BaseRecyclerAdapter<GoodEvaluateBean> {
 
                     for (; i < LINE_NUMBERS; i++) {
                         ImageView iv = new ImageView(mContext);
-                        iv.setImageResource(R.mipmap.img_default);
+                        //iv.setImageResource(R.mipmap.img_default);
                         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DisplayUtil.dip2px(mContext,90),
                                 DisplayUtil.dip2px(mContext,90));
                         lp.leftMargin = 10;
@@ -82,7 +82,7 @@ public class GoodEvaluateAdapter extends BaseRecyclerAdapter<GoodEvaluateBean> {
 
                 for (; i < MaxLength; i++) {
                     ImageView iv = new ImageView(mContext);
-                    iv.setImageResource(R.mipmap.img_default);
+                    //iv.setImageResource(R.mipmap.img_default);
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DisplayUtil.dip2px(mContext,90),
                             DisplayUtil.dip2px(mContext,90));
                     lp.leftMargin = 10;
