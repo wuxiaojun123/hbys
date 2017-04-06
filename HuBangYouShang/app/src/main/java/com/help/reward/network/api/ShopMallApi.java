@@ -1,5 +1,6 @@
 package com.help.reward.network.api;
 
+import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.BrandResponse;
 import com.help.reward.bean.Response.GoodResponse;
 import com.help.reward.bean.Response.GoodsSecondTypeResponse;
@@ -30,6 +31,14 @@ public interface ShopMallApi {
     // 获取商城信息的数据 ?act=goods&op=goods_detail&goods_id=42
     @GET(Constant.URL_SHOP_MALL_INFO)
     Observable<GoodResponse> getGoodResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("goods_id") String goods_id
+    );
+
+
+    @GET(Constant.URL_SHOP_MALL_INFO)
+    Observable<BaseResponse> getGoodDetailsImgResponse(
             @Query("act") String act,
             @Query("op") String op,
             @Query("goods_id") String goods_id

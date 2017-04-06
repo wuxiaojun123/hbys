@@ -135,7 +135,11 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                 goodFragment.setArguments(bundle);
                 return goodFragment;
             } else if (position == 1) {
-                return new GoodImgInfoFragment();
+                GoodImgInfoFragment goodImgInfoFragment = new GoodImgInfoFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("goods_id", goodsId);
+                goodImgInfoFragment.setArguments(bundle);
+                return goodImgInfoFragment;
             } else {
                 return new GoodRetedFragment();
             }
