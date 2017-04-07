@@ -1,6 +1,8 @@
 package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.CommitOrderResponse;
+import com.help.reward.bean.Response.ConfirmOrderResponse;
 import com.help.reward.bean.Response.ShopCartResponse;
 import com.help.reward.utils.Constant;
 
@@ -36,6 +38,14 @@ public interface ShopcartApi {
                     @Field("cart_id") String cart_id
             );
 
+    @FormUrlEncoded
+    @POST(Constant.URL_SHOPCART_EDIT)
+    Observable<BaseResponse> getShopcartEdit(
+            @Field("key") String key,
+            @Field("cart_id") String cart_id,
+            @Field("quantity") int quantity
+    );
+
     /**
      *
      * @param key
@@ -46,21 +56,24 @@ public interface ShopcartApi {
      */
     @FormUrlEncoded
     @POST(Constant.URL_BUY_STEP_ONE)
-    Observable<BaseResponse> getComfirmOrderList(
+    Observable<ConfirmOrderResponse> getComfirmOrderList(
             @Field("key") String key,
             @Field("cart_id") String cart_id,
             @Field("ifcart") String ifcart,
             @Field("address_id") String address_id
             );
 
-
     @FormUrlEncoded
     @POST(Constant.URL_BUY_STEP_TWO)
-    Observable<BaseResponse> commitComfirmOrderList(
+    Observable<CommitOrderResponse> commitComfirmOrderList(
             @Field("key") String key,
             @Field("cart_id") String cart_id,
             @Field("ifcart") String ifcart,
-            @Field("address_id") String address_id
-    );
+            @Field("address_id") String address_id,
+            @Field("vat_hash") String vat_hash,
+            @Field("offpay_hash") String offpay_hash,
+            @Field("offpay_hash_batch") String offpay_hash_batch,
+            @Field("pay_name") String pay_name
+            );
 
 }
