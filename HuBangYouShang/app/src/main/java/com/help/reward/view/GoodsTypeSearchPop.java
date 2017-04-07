@@ -33,7 +33,7 @@ public class GoodsTypeSearchPop {
                 new ClickListener(activity, popupWindow));
 
         popupWindow_view.setOnClickListener(new ClickListener(activity, popupWindow));
-        popupWindow.showAsDropDown(root, 0 - DisplayUtil.dip2px(activity, 10), 0);
+        popupWindow.showAsDropDown(root, 0,0 - DisplayUtil.dip2px(activity, 5));
         return this;
     }
 

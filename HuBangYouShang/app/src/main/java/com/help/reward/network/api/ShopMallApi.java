@@ -11,8 +11,6 @@ import com.help.reward.bean.Response.ShopSearchResponse;
 import com.help.reward.bean.Response.StoreDetailAllResponse;
 import com.help.reward.utils.Constant;
 
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -131,4 +129,14 @@ public interface ShopMallApi {
 
     );
 
+
+    /**
+     * 支付成功的商品列表
+     * mobile/index.php?act=goods&op=goods_list
+     */
+    @FormUrlEncoded
+    @POST(Constant.URL_SEARCHGOODS)
+    Observable<StoreDetailAllResponse> getPayEndGoodsResponse(
+            @Field("curpage") int curpage
+    );
 }
