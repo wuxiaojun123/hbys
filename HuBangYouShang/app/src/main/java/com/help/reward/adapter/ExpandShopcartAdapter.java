@@ -125,7 +125,7 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
                 }
 
                 if (mListener != null) {
-                    mListener.operate(null,SHOPCART_SELECTED);
+                    mListener.operate(null,SHOPCART_SELECTED,-1);
                 }
                 notifyDataSetChanged();
             }
@@ -168,7 +168,7 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
         holderChild.tv_shop_name.setText(myOrderShopBean.goods_name);
 //            tv_shop_atrribute.setText("商品属性:");
         holderChild.tv_single_shop_price.setText(myOrderShopBean.goods_price);
-
+        holderChild.mNumShow.setText(myOrderShopBean.goods_num);
         if (isCurrentGoodSelect(myOrderShopBean)) {
             holderChild.iv_check.setImageResource(R.mipmap.img_address_checkbox_checked);
         } else {
@@ -185,7 +185,7 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
                 }
 
                 if (mListener != null) {
-                    mListener.operate(null,SHOPCART_SELECTED);
+                    mListener.operate(null,SHOPCART_SELECTED,-1);
                 }
                 notifyDataSetChanged();
             }
@@ -196,7 +196,7 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                //TODO 删除
                 if (mListener != null) {
-                    mListener.operate(myOrderShopBean,SHOPCART_DELETED);
+                    mListener.operate(myOrderShopBean,SHOPCART_DELETED,-1);
                 }
 
                 //if (extend_order_goods.size() > 1){
@@ -220,18 +220,19 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
                     if (newNum > MAX_NUM) {
                         newNum = MAX_NUM;
                         holderChild.mNumAdd.setEnabled(false);
-                        holderChild.mNumShow.setText(MAX_NUM+"");
+                        //holderChild.mNumShow.setText(MAX_NUM+"");
+                        newNum = MAX_NUM;
                         //TODO
                     } else {
                         holderChild.mNumDes.setEnabled(true);
-                        holderChild.mNumShow.setText(newNum + "");
+                        //holderChild.mNumShow.setText(newNum + "");
                     }
 
                     //mDataList.get(groupPosition).goods.get(childPosition).goods_num = newNum+"";
-                    myOrderShopBean.goods_num = newNum +"";
+                    //myOrderShopBean.goods_num = newNum +"";
 
                     if (mListener != null) {
-                        mListener.operate(null,SHOPCART_NUM_EDIT);
+                        mListener.operate(myOrderShopBean,SHOPCART_NUM_EDIT,newNum);
                     }
                 }
             }
@@ -247,15 +248,15 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
                     if (newNum <= 1) {
                         newNum = 1;
                         holderChild.mNumDes.setEnabled(false);
-                        holderChild.mNumShow.setText("1");
+                        //holderChild.mNumShow.setText("1");
                     } else {
                         holderChild.mNumAdd.setEnabled(true);
-                        holderChild.mNumShow.setText(newNum + "");
+                        //holderChild.mNumShow.setText(newNum + "");
                     }
 
-                    myOrderShopBean.goods_num = newNum +"";
+                    //myOrderShopBean.goods_num = newNum +"";
                     if (mListener != null) {
-                        mListener.operate(null,SHOPCART_NUM_EDIT);
+                        mListener.operate(myOrderShopBean,SHOPCART_NUM_EDIT,newNum);
                     }
 
                 }
@@ -293,7 +294,7 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
                                         holderChild.mNumDes.setEnabled(false);
                                         holderChild.mNumAdd.setEnabled(true);
                                     } else {
-                                        if (num == 99) {
+                                        if (num == MAX_NUM) {
                                             holderChild.mNumDes.setEnabled(true);
                                             holderChild.mNumAdd
                                                     .setEnabled(false);
@@ -302,11 +303,11 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
                                             holderChild.mNumAdd.setEnabled(true);
                                         }
                                     }
-                                    holderChild.mNumShow.setText(num + "");
+                                    //holderChild.mNumShow.setText(num + "");
                                     //TODO 赋值
-                                    myOrderShopBean.goods_num = num +"";
+                                    //myOrderShopBean.goods_num = num +"";
                                     if (mListener != null) {
-                                        mListener.operate(null,SHOPCART_NUM_EDIT);
+                                        mListener.operate(myOrderShopBean,SHOPCART_NUM_EDIT,num);
                                     }
 
                                 }
@@ -413,7 +414,7 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
 
 
     public interface ShopCartOperateListener{
-        void operate(CartInfoBean.GoodInfoBean goodInfo,int action);
+        void operate(CartInfoBean.GoodInfoBean goodInfo,int action,int num);
     }
 
 

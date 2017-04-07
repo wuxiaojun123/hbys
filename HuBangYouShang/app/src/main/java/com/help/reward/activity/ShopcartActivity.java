@@ -20,6 +20,7 @@ import com.help.reward.bean.Response.ShopCartResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.ToastUtils;
 
 import java.math.BigDecimal;
@@ -112,19 +113,21 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
 
 
     private void initNetwork() {
-
+        MyProcessDialog.showDialog(mContext);
         ShopcartNetwork.getShopcartCookieApi().getShopcartList(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<ShopCartResponse>() {
                     @Override
                     public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
                         e.printStackTrace();
                         ToastUtils.show(mContext, R.string.string_error);
                     }
 
                     @Override
                     public void onNext(ShopCartResponse response) {
+                        MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             if (response.data != null) {
                                 if (response.data.cart_list != null) {
@@ -142,8 +145,14 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
 
     }
 
+    /**
+     *
+     * @param goodInfo 删除和编辑数量必须传入
+     * @param action 操作
+     * @param num 编辑数量必须传入
+     */
     @Override
-    public void operate(CartInfoBean.GoodInfoBean goodInfo, int action) {
+    public void operate(CartInfoBean.GoodInfoBean goodInfo, int action,int num) {
 
         if (action == ExpandShopcartAdapter.SHOPCART_DELETED) {
             if (goodInfo != null) {
@@ -159,11 +168,48 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
                 isAll = false;
                 mIvAll.setImageResource(R.mipmap.img_address_checkbox);
             }
+        } else if (action == ExpandShopcartAdapter.SHOPCART_NUM_EDIT) {
+            editNumRequest(goodInfo,num);
         }
         calculate();
     }
 
+    private void editNumRequest(final CartInfoBean.GoodInfoBean goodInfo, final int num) {
+        MyProcessDialog.showDialog(mContext);
+        ShopcartNetwork.getShopcartCookieApi().getShopcartEdit(App.APP_CLIENT_KEY,goodInfo.cart_id,num)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            goodInfo.goods_num = num +"";
+                            calculate();
+                            mAdapter.notifyDataSetChanged();
+
+                            //if (extend_order_goods.size() > 1){
+                            //    mDataList.get(groupPosition).goods.remove(childPosition);
+                            //} else {
+                            //    mDataList.remove(groupPosition);
+                            //}
+
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
     private void deleteRequest(final CartInfoBean.GoodInfoBean good_info) {
+        MyProcessDialog.showDialog(mContext);
         ShopcartNetwork.getShopcartCookieApi().getShopcartDelete(App.APP_CLIENT_KEY,good_info.cart_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -171,13 +217,14 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        MyProcessDialog.closeDialog();
                         ToastUtils.show(mContext, R.string.string_error);
                     }
 
                     @Override
                     public void onNext(BaseResponse response) {
+                        MyProcessDialog.closeDialog();
                         if (response.code == 200) {
-
                             for (int i = 0; i< cart_list.size();i++) {
                                 CartInfoBean cartInfo = cart_list.get(i);
                                 if (cartInfo.goods!= null) {
@@ -283,7 +330,22 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
 
             break;
             case R.id.commit:
-                startActivity(new Intent(ShopcartActivity.this,ConfirmOrderActivity.class));
+                
+                if (!mSelected.isEmpty()) {
+                    StringBuffer sb = new StringBuffer();
+                    for (int i=0;i < mSelected.size();i++) {
+                        CartInfoBean.GoodInfoBean goodInfoBean = mSelected.get(i);
+                        sb.append(goodInfoBean.cart_id+"|"+goodInfoBean.goods_num);
+                        sb.append(",");
+                    }
+
+                    Intent intent = new Intent(ShopcartActivity.this, ConfirmOrderActivity.class);
+                    intent.putExtra("cart_id", sb.toString().substring(0,sb.length()-1));
+                    intent.putExtra("if_cart","1");
+                    startActivity(intent);
+                }
+                //startActivity(new Intent(ShopcartActivity.this,ConfirmOrderActivity.class));
+
                 break;
             case R.id.iv_title_back:
                 finish();
