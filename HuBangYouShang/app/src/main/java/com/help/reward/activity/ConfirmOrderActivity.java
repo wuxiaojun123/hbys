@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +50,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
+
+    @BindView(R.id.tv_total)
+    TextView mTvTotal;
 
     ConfirmOrderAdapter adapter;
 
@@ -165,6 +169,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                     store_cart_list.addAll(response.data.store_cart_list);
                                     adapter.setDataList(store_cart_list);
                                     lRecyclerview.setVisibility(View.VISIBLE);
+
+
+                                }
+
+                                if (!TextUtils.isEmpty(response.data.order_amount)) {
+                                    mTvTotal.setText("¥" + response.data.order_amount);
                                 }
                             }
 
