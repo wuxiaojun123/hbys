@@ -22,12 +22,11 @@ import android.widget.Toast;
 
 import com.help.reward.activity.MainActivity;
 import com.help.reward.chat.Constant;
+import com.help.reward.chat.adapter.EaseConversationAdapter;
 import com.help.reward.chat.db.InviteMessgeDao;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
-import com.hyphenate.easeui.adapter.EaseConversationAdapter;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
-import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.util.NetUtils;
 import com.help.reward.R;
 
@@ -176,6 +175,12 @@ public class ConversationListFragment extends EaseConversationListFragment{
 //        });
 //        super.setUpView();
 //        //end of red packet code
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
     }
 
     @Override

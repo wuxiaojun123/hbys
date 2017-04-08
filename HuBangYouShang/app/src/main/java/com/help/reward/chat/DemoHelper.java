@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.help.reward.chat.db.TopUser;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMContactListener;
@@ -1282,6 +1283,23 @@ public class DemoHelper {
 
     public void popActivity(Activity activity) {
         easeUI.popActivity(activity);
+    }
+
+    /**
+     * 设置置顶聊天
+     */
+
+    private Map<String, TopUser> topUserList;
+
+    public void setTopUserList(Map<String,TopUser> topUserList){
+        this.topUserList = topUserList;
+    };
+
+    public Map<String, TopUser> getTopUserList(){
+        if (topUserList == null) {
+            topUserList = getModel().getTopUserList();
+        }
+        return topUserList;
     }
 
 }

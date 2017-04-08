@@ -214,8 +214,6 @@
     <string name="canclebtn">取消</string>
     <string name="surebtn">确定</string>
 
-    <!--<string name="shop_commit_format">共%1s1件,合计: ¥%2s2</string>-->
-
     <drawable name="string_watch_ad_group_bug_normal">#ec6a5c</drawable>
     <drawable name="string_watch_ad_group_bug_pressed">#af4034</drawable>
 </resources>

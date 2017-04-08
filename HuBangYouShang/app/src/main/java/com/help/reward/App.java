@@ -6,13 +6,14 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
 
-import com.help.reward.bean.MemberInfoBean;
 import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.chat.DemoHelper;
+import com.help.reward.chat.db.TopUser;
 import com.help.reward.utils.Constant;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import cn.smssdk.SMSSDK;
 
@@ -89,6 +90,14 @@ public class App extends Application {
             }
         }
         return processName;
+    }
+
+    public Map<String,TopUser> getTopUserList(){
+        return DemoHelper.getInstance().getTopUserList();
+    }
+
+    public void setTopUserList(Map<String,TopUser> contactList){
+        DemoHelper.getInstance().setTopUserList(contactList);
     }
 
 }
