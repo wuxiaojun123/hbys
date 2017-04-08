@@ -130,14 +130,14 @@ public class GoodFragment extends BaseFragment {
     private void initStoreInfo(StoreInfoBean store_info) {
         if (store_info != null) {
             tv_goods_store_name.setText(store_info.store_name);
-            if (store_info.store_desccredit != null) {
-                tv_goodinfo_desccredit.setText(store_info.store_desccredit.text);
+            if (store_info.store_credit != null && store_info.store_credit.store_desccredit != null) {
+                tv_goodinfo_desccredit.setText(store_info.store_credit.store_desccredit.credit);
             }
-            if (store_info.store_deliverycredit != null) {
-                tv_goodinfo_deliverycredit.setText(store_info.store_deliverycredit.text);
+            if (store_info.store_credit != null && store_info.store_credit.store_deliverycredit != null) {
+                tv_goodinfo_deliverycredit.setText(store_info.store_credit.store_deliverycredit.credit);
             }
-            if (store_info.store_servicecredit != null) {
-                tv_goodinfo_servicecredit.setText(store_info.store_servicecredit.text);
+            if (store_info.store_credit != null && store_info.store_credit.store_servicecredit != null) {
+                tv_goodinfo_servicecredit.setText(store_info.store_credit.store_servicecredit.credit);
             }
         }
     }

@@ -44,9 +44,13 @@ public class StoreInfoBean {
 
     public String store_id;
     public String store_name;
-    public StoreCredit store_desccredit; // 描述
-    public StoreCredit store_servicecredit; // 服务
-    public StoreCredit store_deliverycredit; // 物流
+    public Storecre store_credit;
+
+    public class Storecre{
+        public StoreCredit store_desccredit; // 描述
+        public StoreCredit store_servicecredit; // 服务
+        public StoreCredit store_deliverycredit; // 物流
+    }
 
     public class StoreCredit{
         public String text;
