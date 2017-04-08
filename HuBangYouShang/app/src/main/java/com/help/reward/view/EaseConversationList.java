@@ -1,4 +1,4 @@
-package com.reward.help.merchant.view;
+package com.help.reward.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,15 +8,16 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ListView;
 
+import com.help.reward.chat.adapter.EaseConversationAdapter;
+import com.help.reward.chat.db.TopUser;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
-import com.reward.help.merchant.R;
-import com.reward.help.merchant.chat.adapter.EaseConversationAdapter;
-import com.reward.help.merchant.chat.db.TopUser;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import com.help.reward.R;
+
 
 public class EaseConversationList extends ListView{
     

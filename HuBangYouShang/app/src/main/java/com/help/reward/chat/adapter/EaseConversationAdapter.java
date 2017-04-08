@@ -1,4 +1,4 @@
-package com.reward.help.merchant.chat.adapter;
+package com.help.reward.chat.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
+import com.help.reward.chat.db.TopUser;
+import com.help.reward.view.EaseConversationList;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -29,8 +31,6 @@ import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.SwipeMenuView;
 import com.hyphenate.util.DateUtils;
-import com.reward.help.merchant.chat.db.TopUser;
-import com.reward.help.merchant.view.EaseConversationList;
 
 import java.util.ArrayList;
 import java.util.Date;

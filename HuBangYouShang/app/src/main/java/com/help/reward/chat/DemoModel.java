@@ -3,6 +3,8 @@ package com.help.reward.chat;
 import android.content.Context;
 
 
+import com.help.reward.chat.db.TopUser;
+import com.help.reward.chat.db.TopUserDao;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.help.reward.chat.db.UserDao;
@@ -299,5 +301,16 @@ public class DemoModel {
         SpakerOn,
         DisabledGroups,
         DisabledIds
+    }
+
+    public Map<String, TopUser> getTopUserList(){
+        TopUserDao dao = new TopUserDao(context);
+        return dao.getTopUserList();
+    }
+
+    public boolean saveTopUserList(List<TopUser> contactList){
+        TopUserDao dao = new TopUserDao(context);
+        dao.saveTopUserList(contactList);
+        return true;
     }
 }

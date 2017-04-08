@@ -1,4 +1,4 @@
-package com.reward.help.merchant.chat.db;
+package com.help.reward.chat.db;
 
 /**
  * Created by ADBrian on 08/04/2017.

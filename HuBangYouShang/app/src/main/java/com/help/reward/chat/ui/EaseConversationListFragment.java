@@ -1,4 +1,4 @@
-package com.reward.help.merchant.chat.ui;
+package com.help.reward.chat.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +16,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.help.reward.App;
+import com.help.reward.R;
+import com.help.reward.chat.db.TopUser;
+import com.help.reward.view.EaseConversationList;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
 import com.hyphenate.EMError;
@@ -23,10 +27,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.ui.EaseBaseFragment;
-import com.reward.help.merchant.App;
-import com.reward.help.merchant.R;
-import com.reward.help.merchant.chat.db.TopUser;
-import com.reward.help.merchant.view.EaseConversationList;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
