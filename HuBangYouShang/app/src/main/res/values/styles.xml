@@ -72,6 +72,16 @@
         <item name="android:layout_marginRight">10dp</item>
     </style>
 
+    <style name="style_person_info_text_right_area">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+        <item name="android:textColor">@color/color_bf</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
     <!--设置页面的样式-->
     <style name="style_setting_text">
         <item name="android:layout_width">match_parent</item>

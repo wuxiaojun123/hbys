@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:divider="@drawable/shape_divider_line"
     android:orientation="vertical"
-    android:showDividers="middle|end"
-    >
+    android:showDividers="middle|end">
 
     <Space
         android:layout_width="match_parent"
@@ -33,7 +32,8 @@
         <EditText
             android:id="@+id/et_card"
             style="@style/style_certification_edit"
-            android:hint="请输入身份证号" />
+            android:hint="请输入身份证号"
+            android:maxLength="18" />
 
     </LinearLayout>
 
@@ -43,23 +43,23 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/iv_photo"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@color/colorPrimary"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:visibility="gone"
-            />
+            android:background="@color/colorPrimary"
+            android:visibility="gone" />
 
         <ImageView
+            android:id="@+id/iv_upload"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:src="@mipmap/img_add_certification"
-            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="10dp"
-            />
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:src="@mipmap/img_add_certification" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -76,6 +76,7 @@
                 android:textSize="@dimen/dimen_15" />
 
             <TextView
+                android:id="@+id/tv_upload"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:drawableLeft="@mipmap/img_certification_pass"

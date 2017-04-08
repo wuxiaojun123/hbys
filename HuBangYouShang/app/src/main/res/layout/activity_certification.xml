@@ -2,66 +2,75 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
-    >
+    android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
 
     <TextView
+        android:id="@+id/tv_certification_failed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="10dp"
-        android:text="您的认证信息未通过一般有以下原因,请检查后重新上传\n1.手持身份证照片模糊无非辨认信息\n2.姓名,身份证号与手持身份证照片不一致"
+        android:layout_marginTop="15dp"
         android:lineSpacingExtra="8dp"
-        android:textSize="@dimen/dimen_14"
+        android:text="您的认证信息未通过一般有以下原因,请检查后重新上传\n1.手持身份证照片模糊无非辨认信息\n2.姓名,身份证号与手持身份证照片不一致"
         android:textColor="@color/color_3a"
-        android:visibility="gone"
-        />
+        android:textSize="@dimen/dimen_14"
+        android:visibility="gone" />
 
     <TextView
+        android:id="@+id/tv_certification_success"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="您已通过实名认证"
-        android:textSize="@dimen/dimen_14"
-        android:textColor="@color/color_3a"
+        android:layout_gravity="center"
+        android:layout_marginBottom="14dp"
+        android:layout_marginTop="33dp"
+        android:drawablePadding="25dp"
         android:drawableTop="@mipmap/img_already_passed_certification"
         android:gravity="center_horizontal"
-        android:layout_gravity="center"
-        android:drawablePadding="25dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginBottom="14dp"
-        />
+        android:text="您已通过实名认证"
+        android:textColor="@color/color_3a"
+        android:textSize="@dimen/dimen_14"
+        android:visibility="gone" />
 
-    <include layout="@layout/layout_certification_info"
-        android:visibility="visible"
-        />
-
-    <Button
+    <LinearLayout
+        android:id="@+id/ll_info"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_50"
-        android:layout_marginTop="27dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/shape_login_bg"
-        android:text="提交"
-        android:textColor="@color/color_while"
-        android:textSize="@dimen/dimen_15"
-        android:visibility="visible"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <include
+            layout="@layout/layout_certification_info"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/btn_commit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/shape_login_bg"
+            android:text="提交"
+            android:textColor="@color/color_while"
+            android:textSize="@dimen/dimen_15"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
 
     <TextView
+        android:id="@+id/tv_certification_audit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="您的实名信息正在审核"
-        android:drawableTop="@mipmap/img_certification_waiting"
-        android:drawablePadding="25dp"
-        android:gravity="center_horizontal"
         android:layout_gravity="center"
         android:layout_marginTop="150dp"
-        android:visibility="gone"
-        />
+        android:drawablePadding="25dp"
+        android:drawableTop="@mipmap/img_certification_waiting"
+        android:gravity="center_horizontal"
+        android:text="您的实名信息正在审核"
+        android:visibility="gone" />
 
 </LinearLayout>

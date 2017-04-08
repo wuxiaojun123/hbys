@@ -1,5 +1,6 @@
 package com.help.reward.network.api;
 
+import com.help.reward.bean.CertificationResponse;
 import com.help.reward.bean.Response.AddressResponse;
 import com.help.reward.bean.Response.AdvertisementResponse;
 import com.help.reward.bean.Response.AeraResponse;
@@ -109,6 +110,23 @@ public interface PersonalApi {
     @POST("mobile/index.php?act=upload_file&op=upload_img")
     Observable<UploadHeadImageReponse> uploadImage(
                              @PartMap Map<String,RequestBody> params,@Part MultipartBody.Part part);
+
+    // 认证--获取状态
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_index&op=certification")
+    Observable<CertificationResponse> getCertificationStateResponse(
+            @Field("key") String key
+    );
+
+    // 认证--提交
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_index&op=certification_post")
+    Observable<BaseResponse<String>> getCertificationPostResponse(
+            @Field("member_truename") String member_truename,
+            @Field("ID_card") String ID_card,
+            @Field("identity_img") String identity_img,
+            @Field("key") String key
+    );
 
 
     // 我的求助--发帖

@@ -1,5 +1,7 @@
 package com.help.reward.bean;
 
+import com.bigkoo.pickerview.model.IPickerViewData;
+
 import java.util.ArrayList;
 import java.util.List;
 
