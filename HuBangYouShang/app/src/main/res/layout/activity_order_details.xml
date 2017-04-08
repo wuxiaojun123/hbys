@@ -2,9 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:divider="@drawable/shape_divider_line"
-    android:orientation="vertical"
-    android:showDividers="middle|end">
+    >
 
     <include
         android:id="@+id/id_layout_title"
@@ -19,9 +17,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:divider="@drawable/shape_divider_line"
             android:orientation="vertical"
+            android:showDividers="middle"
             >
-
 
             <LinearLayout
                 android:id="@+id/ll_order_info"
@@ -373,18 +372,27 @@
 
     </ScrollView>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/shape_divider_line"
+            android:layout_alignParentTop="true"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:gravity="right"
             android:orientation="horizontal"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            >
 
             <TextView
                 android:id="@+id/tv_cancel_order"

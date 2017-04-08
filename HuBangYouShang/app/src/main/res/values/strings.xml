@@ -51,6 +51,7 @@
     <string name="string_order_details">订单详情</string>
 
     <string name="string_order_evaluate_title">发表评价</string>
+    <string name="string_order_complaints_merchant_title">投诉商家</string>
 
     <!--消息中心-->
     <string name="msgcenter_lable1">帖子动态</string>

@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wuxiaojun on 16-12-12.
@@ -46,7 +47,7 @@ public class JsonUtils {
     }
 
     /***
-     * 返回对象
+     * 将对象集合转成String
      * @param list
      * @return
      */
@@ -55,6 +56,30 @@ public class JsonUtils {
         Type type = new TypeToken<List<T>>() {
         }.getType(); // 指定集合对象属性
         String json = gson.toJson(list, type);
+        return json;
+    }
+
+    /***
+     * 将对象转成String
+     * @param object
+     * @return
+     */
+    public static <T> String toJsonFromObject(Object object) {
+        Gson gson = new Gson();
+//        Type type = new TypeToken<T>() {}.getType(); // 指定集合对象属性
+        String json = gson.toJson(object, Object.class);
+        return json;
+    }
+
+    /***
+     * 将对象转成String
+     * @param map
+     * @return
+     */
+    public static <T> String toJsonFromMap(Map<String,T> map) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<Map<String,T>>() {}.getType(); // 指定集合对象属性
+        String json = gson.toJson(map, type);
         return json;
     }
 

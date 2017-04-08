@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AssetsAreaBean {
 
-    public ArrayList<AreaBean> provinces;
+    public List<AreaBean> provinces;
     public ArrayList<AreaBean> cities;
     public ArrayList<AreaBean> areas;
 

@@ -70,8 +70,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 break;
             case R.id.tv_forget_pwd: // 忘记密码
-
-                startActivity(new Intent(LoginActivity.this, ForgetPwdActivity.class));
+                Intent mIntent = new Intent(LoginActivity.this, ForgetPwdActivity.class);
+                mIntent.putExtra("title","忘记密码");
+                startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim(LoginActivity.this);
 
                 break;

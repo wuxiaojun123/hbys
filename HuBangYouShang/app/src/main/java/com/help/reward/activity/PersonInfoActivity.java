@@ -263,7 +263,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                 });
     }
 
-    private ArrayList<AssetsAreaBean.AreaBean> provincesList;
+    private ArrayList<AssetsAreaBean.AreaBean> provincesList = new ArrayList<>();
     private ArrayList<ArrayList<AssetsAreaBean.AreaBean>> citiesList = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<AssetsAreaBean.AreaBean>>> areasList = new ArrayList<>();
 
@@ -279,13 +279,13 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
                 OptionsPickerView<AssetsAreaBean.AreaBean> mAreaPickerView = new OptionsPickerView<>(this);
                 LogUtils.e("身份，城市，县区的集合长度是：" + provincesList.size() + "====" + citiesList.size() + "==" + areasList.size());
-                mAreaPickerView.setPicker(provincesList, citiesList, areasList, true);
                 mAreaPickerView.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int option2, int options3) {
                         LogUtils.e("选择的地区是：" + options1 + "====" + option2 + "====" + options3);
                     }
                 });
+                mAreaPickerView.setPicker(provincesList, citiesList, areasList, true);
                 mAreaPickerView.show();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -297,8 +297,11 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         String areaJson = FileUtils.getAssetsFile(mContext);
         if (!TextUtils.isEmpty(areaJson)) {
             try { // 解析json
-                AssetsAreaBean bean = (AssetsAreaBean) JsonUtils.fromJsonArray(areaJson, AssetsAreaBean.class);
-                provincesList = bean.provinces;
+                LogUtils.e("解析省份的json");
+                AssetsAreaBean bean = (AssetsAreaBean) JsonUtils.toObject(areaJson, AssetsAreaBean.class);
+                if (provincesList.isEmpty()) {
+                    provincesList.addAll(bean.provinces);
+                }
                 ArrayList<AssetsAreaBean.AreaBean> citiesList1 = bean.cities;
                 ArrayList<AssetsAreaBean.AreaBean> areasList1 = bean.areas;
                 LogUtils.e("省份的集合是：" + provincesList.size() + "  " + citiesList1.size() + "   " + areasList1.size());

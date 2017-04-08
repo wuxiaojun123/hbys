@@ -20,6 +20,7 @@ import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.GoodResponse;
 import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -30,7 +31,7 @@ import rx.schedulers.Schedulers;
  * Created by MXY on 2017/2/26.
  */
 
-public class GoodImgInfoFragment extends BaseFragment{
+public class GoodImgInfoFragment extends BaseFragment {
 
     private View contentView;
 
@@ -63,10 +64,10 @@ public class GoodImgInfoFragment extends BaseFragment{
     private void initView() {
 
         WebSettings setting = webView.getSettings();
-        setting.setSupportZoom(false);
+        setting.setSupportZoom(true);
         setting.setDisplayZoomControls(false);
         setting.setBuiltInZoomControls(false);
-        //setting.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+//        setting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         setting.setUseWideViewPort(true);
         setting.setDatabaseEnabled(true);
         setting.setDomStorageEnabled(true);
@@ -84,6 +85,7 @@ public class GoodImgInfoFragment extends BaseFragment{
         // setting.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN); //支持内容重新布局
         setting.setJavaScriptEnabled(true);
         setting.setJavaScriptCanOpenWindowsAutomatically(true);
+
         chromeClient = new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {

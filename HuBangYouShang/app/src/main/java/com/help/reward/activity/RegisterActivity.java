@@ -75,6 +75,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            MyProcessDialog.closeDialog();
             int event = msg.arg1;
             int result = msg.arg2;
             Object data = msg.obj;
@@ -96,9 +97,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
             } else {
                 ((Throwable) data).printStackTrace();
+                LogUtils.e("注册接口中：data"+data);
                 ToastUtils.show(mContext,"发送验证码失败!请稍后重试");
             }
-
         }
     };
 
@@ -170,6 +171,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 if (!TextUtils.isEmpty(registerUserName)) {
                     if (ValidateUtil.isMobile(registerUserName)) {
                         if(JudgeNetWork.isNetAvailable(mContext)){
+                            MyProcessDialog.showDialog(mContext,"请稍等...",true,false);
                             SMSSDK.getVerificationCode("86", registerUserName, new OnSendMessageHandler() {
                                 @Override
                                 public boolean onSendMessage(String s, String s1) {
@@ -196,44 +198,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
                 break;
         }
-    }
-
-    /**
-     * 获取code
-     */
-    private void requestVerificationCode(String registerUserName) {
-//        MyProcessDialog.showDialog(mContext);
-        PersonalNetwork
-                .getLoginApi()
-                .getVerificationCodeBean(registerUserName, "1")
-                .subscribeOn(Schedulers.io()) // 请求放在io线程中
-                .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
-                .subscribe(new BaseSubscriber<VerificationCodeResponse>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        MyProcessDialog.closeDialog();
-                        e.printStackTrace();
-                        if (e instanceof UnknownHostException) {
-                            ToastUtils.show(mContext, "请求到错误服务器");
-                        } else if (e instanceof SocketTimeoutException) {
-                            ToastUtils.show(mContext, "请求超时");
-                        }
-                        tv_code.setClickable(true);
-                    }
-
-                    @Override
-                    public void onNext(VerificationCodeResponse res) {
-//                        MyProcessDialog.closeDialog();
-                        if (res.code == 200) { // 获取验证code成功
-                            mTimer.start();
-                            LogUtils.e("获取code成功" + res.data.sms_time);
-                            verificationCode = res.data.sms_time;
-                        } else {
-                            ToastUtils.show(mContext, res.msg);
-                            tv_code.setClickable(true);
-                        }
-                    }
-                });
     }
 
     /***

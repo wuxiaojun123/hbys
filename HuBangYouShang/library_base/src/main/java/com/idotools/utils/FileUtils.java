@@ -103,8 +103,8 @@ public class FileUtils {
                 bos.write(bytes, 0, len);
             }
             bos.close();
-            content = new String(bos.toByteArray());
-            return content;
+//            content = new String(bos.toByteArray());
+            return bos.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }

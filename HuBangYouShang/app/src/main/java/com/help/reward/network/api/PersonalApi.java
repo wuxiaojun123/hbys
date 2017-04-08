@@ -349,6 +349,44 @@ public interface PersonalApi {
             @Field("key") String key
     );
 
+    // 删除订单
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_order&op=order_del")
+    Observable<BaseResponse<String>> getRemoveOrderResponse(
+            @Field("order_id") String order_id,
+            @Field("key") String key
+    );
+
+    // 取消订单
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_order&op=order_cancel")
+    Observable<BaseResponse<String>> getCancelOrderResponse(
+            @Field("order_id") String order_id,
+            @Field("key") String key
+    );
+
+    // 订单评价提交-- mobile/index.php?act=member_evaluate&op=save
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_evaluate&op=save")
+    Observable<BaseResponse<String>> getEvaluateResponse(
+            @Field("order_id") String order_id,
+            @Field("evaluate") String evaluate,
+            @Field("key") String key
+    );
+
+    // 投诉商家-- mobile/index.php?act=member_complaint&op=complaint
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_complaint&op=complaint")
+    Observable<BaseResponse<String>> getComplaintResponse(
+            @Field("order_id") String order_id,
+            @Field("content") String content,
+            @Field("pic1") String pic1,
+            @Field("pic2") String pic2,
+            @Field("pic3") String pic3,
+            @Field("pic4") String pic4,
+            @Field("key") String key
+    );
+
 
     // 帮助中心
     @FormUrlEncoded

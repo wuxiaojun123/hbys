@@ -48,10 +48,9 @@
                 android:layout_toLeftOf="@id/tv_code"
                 android:layout_toRightOf="@id/tv_number"
                 android:hint="请输入新的手机号"
+                android:inputType="number"
                 android:maxLength="11"
-                android:paddingRight="60dp"
-                android:inputType="phone"
-                />
+                android:paddingRight="60dp" />
 
         </RelativeLayout>
 
@@ -70,7 +69,7 @@
                 style="@style/style_register_edit"
                 android:hint="请输入验证码"
                 android:inputType="number"
-                />
+                android:maxLines="1" />
 
         </LinearLayout>
 
@@ -84,6 +83,7 @@
                 android:id="@+id/et_pwd"
                 style="@style/style_register_edit"
                 android:hint="请输入您的密码(6-16位字母数字组合)"
+                android:inputType="textPassword"
                 android:maxLength="16" />
 
         </LinearLayout>
@@ -98,6 +98,7 @@
                 android:id="@+id/et_pwd_custom"
                 style="@style/style_register_edit"
                 android:hint="请输入您的密码(6-16位字母数字组合)"
+                android:inputType="textPassword"
                 android:maxLength="16" />
 
         </LinearLayout>

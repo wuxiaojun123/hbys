@@ -8,13 +8,12 @@
         android:id="@+id/id_layout_title"
         layout="@layout/layout_title" />
 
-
-    <android.support.v7.widget.RecyclerView
+    <com.base.recyclerview.LRecyclerView
         android:id="@+id/id_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/id_layout_title" />
-
+        android:layout_below="@id/id_layout_title"
+        android:layout_marginBottom="50dp" />
 
     <Button
         android:id="@+id/id_commit_evaluate"
@@ -25,5 +24,6 @@
         android:text="发表评价"
         android:textColor="@color/color_while"
         android:textSize="@dimen/dimen_15" />
+
 
 </RelativeLayout>

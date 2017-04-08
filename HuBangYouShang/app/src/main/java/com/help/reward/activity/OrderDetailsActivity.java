@@ -86,6 +86,8 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
     private String sellerPhoneNumber;  // 商家电话
     private LayoutInflater mInflater;
+    private String order_id;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initEvent() {
-        String order_id = getIntent().getStringExtra("order_id");
+        order_id = getIntent().getStringExtra("order_id");
         if (TextUtils.isEmpty(order_id)) {
             ToastUtils.show(mContext, "订单号不存在");
             return;
@@ -137,7 +139,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
-    @OnClick({R.id.iv_title_back, R.id.tv_complaint, R.id.tv_contact_seller})
+    @OnClick({R.id.iv_title_back, R.id.tv_complaint, R.id.tv_contact_seller,R.id.tv_evaluate_order})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -148,17 +150,27 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.tv_complaint: // 投诉
+                Intent mIntent = new Intent(OrderDetailsActivity.this,OrderComplaintsMerchantActivity.class);
+                mIntent.putExtra("seller_name",tv_seller_name.getText().toString());
+                mIntent.putExtra("order_id",order_id);
+                startActivity(mIntent);
+                ActivitySlideAnim.slideInAnim(OrderDetailsActivity.this);
 
                 break;
-            case R.id.tv_contact_seller: // 联系买家
+            case R.id.tv_contact_seller: // 联系卖家
                 showDialogContactSeller();
+
+                break;
+            case R.id.tv_evaluate_order:
+
 
                 break;
         }
     }
 
     private void showDialogContactSeller() { // 联系买家--拨打电话
-        if(TextUtils.isEmpty(sellerPhoneNumber)){
+        if (TextUtils.isEmpty(sellerPhoneNumber)) {
+            ToastUtils.show(mContext,"无卖家电话号码");
             return;
         }
         new AlertDialog(OrderDetailsActivity.this)
@@ -166,10 +178,10 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 .setNegativeButton("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) { // 拨打电话
-                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:025-58840881"));
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sellerPhoneNumber));
                         startActivity(intent);
                     }
-        }).show();
+                }).show();
     }
 
     private void bindData(OrderInfoBean bean) {

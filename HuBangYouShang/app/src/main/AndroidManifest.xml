@@ -241,7 +241,9 @@
         <!--发表评价-->
         <activity
             android:name="com.help.reward.activity.OrderPulishedEvaluateActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
         <!--投诉商家-->
         <activity
             android:name="com.help.reward.activity.OrderComplaintsMerchantActivity"

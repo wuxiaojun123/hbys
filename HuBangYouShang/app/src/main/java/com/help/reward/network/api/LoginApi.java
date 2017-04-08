@@ -45,4 +45,14 @@ public interface LoginApi {
             @Field("client") String client
     );
 
+    // 重设密码
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=connect&op=find_password_ww")
+    Observable<RegisterResponse> getFindPasswordBean(
+            @Field("phone") String phone,
+            @Field("captcha") String captcha,
+            @Field("password") String password,
+            @Field("client") String client
+    );
+    //mobile/index.php?act=connect&op=find_password_ww
 }

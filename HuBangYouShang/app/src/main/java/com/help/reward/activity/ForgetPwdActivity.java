@@ -64,7 +64,12 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initView() {
-        tv_title.setText(R.string.string_identity_title);
+        String title = getIntent().getStringExtra("title");
+        if(!TextUtils.isEmpty(title)){
+            tv_title.setText(title);
+        }else{
+            tv_title.setText(R.string.string_identity_title);
+        }
         tv_title_right.setVisibility(View.GONE);
     }
 

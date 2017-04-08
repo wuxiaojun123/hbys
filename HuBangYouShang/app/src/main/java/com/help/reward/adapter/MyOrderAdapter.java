@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.activity.BaseActivity;
 import com.help.reward.activity.OrderDetailsActivity;
@@ -14,8 +15,19 @@ import com.help.reward.activity.OrderPulishedEvaluateActivity;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
+import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.manager.OrderOperationManager;
+import com.help.reward.network.PersonalNetwork;
+import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.view.AlertDialog;
+import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.LogUtils;
+import com.idotools.utils.ToastUtils;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 我的订单
@@ -24,9 +36,11 @@ import com.help.reward.utils.GlideUtils;
 
 public class MyOrderAdapter extends BaseRecyclerAdapter {
 
+    private OrderOperationManager mOperationManager;
 
     public MyOrderAdapter(Context context) {
         super(context);
+        mOperationManager = new OrderOperationManager(context,this);
     }
 
     @Override
@@ -51,7 +65,11 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
         int size = 0;
         if (ll_shop.getTag() == null && bean.extend_order_goods != null) {
             size = bean.extend_order_goods.size();
-            setShopText(ll_shop, bean, size);
+            final String[] goods_id = new String[size];
+            final String[] goods_img = new String[size];
+            final String[] goods_name = new String[size];
+            setShopText(ll_shop, bean, size, goods_id, goods_img, goods_name);
+
             double shippingFee = Double.parseDouble(bean.shipping_fee);
             if (shippingFee > 0) {
                 tv_total_shop_and_money.setText("共计：" + size + "件商品  合计：￥" + bean.order_amount + "(含运费" + shippingFee + ")");
@@ -59,6 +77,42 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
                 tv_total_shop_and_money.setText("共计：" + size + "件商品  合计：￥" + bean.order_amount + "(免运费)");
             }
             ll_shop.setTag(bean.order_id);
+
+            setOrderState(tv_cancel_order, tv_remove_order, tv_evaluate_order, bean);
+            tv_remove_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { // 删除订单逻辑
+                    mOperationManager.showRemoveDialog(bean);
+                }
+            });
+            tv_cancel_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) { // 取消订单
+                    mOperationManager.showCancelDialog(bean);
+                }
+            });
+
+            tv_evaluate_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String tag = (String) tv_evaluate_order.getTag();
+                    if (tag != null) {
+                        if ("1".equals(tag)) { // 立即付款
+
+                        } else if ("2".equals(tag)) {// 确认收货
+
+                        } else if ("3".equals(tag)) {// 评价页面
+                            Intent mIntent = new Intent(mContext, OrderPulishedEvaluateActivity.class);
+                            mIntent.putExtra("order_id", bean.order_id);
+                            mIntent.putExtra("goods_id", goods_id);
+                            mIntent.putExtra("goods_img", goods_img);
+                            mIntent.putExtra("goods_name", goods_name);
+                            mContext.startActivity(mIntent);
+                            ActivitySlideAnim.slideInAnim((BaseActivity) mContext);
+                        }
+                    }
+                }
+            });
         }
 
         tv_store_name.setText(bean.store_name);
@@ -68,45 +122,13 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
             @Override
             public void onClick(View v) { // 跳往订单详情
                 Intent mIntent = new Intent(mContext, OrderDetailsActivity.class);
-                mIntent.putExtra("order_id",bean.order_id);
+                mIntent.putExtra("order_id", bean.order_id);
                 mContext.startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim((BaseActivity) mContext);
             }
         });
 
-        setOrderState(tv_cancel_order, tv_remove_order, tv_evaluate_order, bean);
-        tv_remove_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { // 删除订单逻辑
-
-            }
-        });
-        tv_cancel_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { // 取消订单
-
-            }
-        });
-
-        tv_evaluate_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String tag = (String) tv_evaluate_order.getTag();
-                if (tag != null) {
-                    if ("1".equals(tag)) { // 立即付款
-
-                    } else if ("2".equals(tag)) {// 确认收货
-
-                    } else if ("3".equals(tag)) {// 评价页面
-                        Intent mIntent = new Intent(mContext, OrderPulishedEvaluateActivity.class);
-                        mContext.startActivity(mIntent);
-                        ActivitySlideAnim.slideInAnim((BaseActivity) mContext);
-                    }
-                }
-            }
-        });
     }
-
 
     public interface OnItemRemoveOrderClickListener {
         void onItemRemoveOrderClickListener(String orderId);
@@ -141,6 +163,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
                 tv_remove_order.setVisibility(View.VISIBLE);
                 tv_cancel_order.setVisibility(View.GONE);
                 tv_evaluate_order.setVisibility(View.GONE);
+                tv_evaluate_order.setTag("0");
 
             } else if ("10".equals(order_state)) { // 待付款  立即付款/取消订单/删除订单
                 tv_remove_order.setVisibility(View.VISIBLE);
@@ -153,6 +176,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
                 tv_remove_order.setVisibility(View.VISIBLE);
                 tv_cancel_order.setVisibility(View.VISIBLE);
                 tv_evaluate_order.setVisibility(View.GONE);
+                tv_evaluate_order.setTag("0");
 
             } else if ("30".equals(order_state)) { // 待收货  确认收货/删除订单
                 tv_remove_order.setVisibility(View.VISIBLE);
@@ -188,8 +212,6 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
     private void setEvaluationState(TextView tv_shop_state, TextView tv_evaluate_order, MyOrderListBean.OrderList bean) {
         if (bean.evaluation_state.equals("0")) {//评价状态 0未评价，1已评价，2已过期未评价
             tv_shop_state.setText("未评价");
-            /*tv_evaluate_order.setVisibility(View.VISIBLE);
-            */
         } else if (bean.evaluation_state.equals("1")) {
             tv_shop_state.setText("已评价");
         } else {
@@ -204,17 +226,21 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
      * @param bean
      * @param size
      */
-    private void setShopText(LinearLayout ll_shop, MyOrderListBean.OrderList bean, int size) {
+    private void setShopText(LinearLayout ll_shop, MyOrderListBean.OrderList bean, int size, String[] goods_id, String[] goods_img, String[] goods_name) {
+        int length = goods_id.length;
         for (int i = 0; i < size; i++) {
             View shopView = mInflater.inflate(R.layout.layout_my_order_shop, ll_shop, false);
             ImageView iv_shop_img = (ImageView) shopView.findViewById(R.id.iv_shop_img); // 商品图片
             TextView tv_shop_name = (TextView) shopView.findViewById(R.id.tv_shop_name); // 商品名称
-//            TextView tv_shop_atrribute = (TextView) shopView.findViewById(R.id.tv_shop_atrribute); // 商品属性:属性值
             TextView tv_single_shop_price = (TextView) shopView.findViewById(R.id.tv_single_shop_price); // 单个商品价格 ￥200.0
             TextView tv_shop_num = (TextView) shopView.findViewById(R.id.tv_shop_num); // 商品数量 x1
 
             MyOrderShopBean myOrderShopBean = bean.extend_order_goods.get(i);
-
+            if (i < length) {
+                goods_id[i] = myOrderShopBean.goods_id;
+                goods_img[i] = myOrderShopBean.goods_image_url;
+                goods_name[i] = myOrderShopBean.goods_name;
+            }
             GlideUtils.loadImage(myOrderShopBean.goods_image_url, iv_shop_img);
             tv_shop_name.setText(myOrderShopBean.goods_name);
 //            tv_shop_atrribute.setText("商品属性:");

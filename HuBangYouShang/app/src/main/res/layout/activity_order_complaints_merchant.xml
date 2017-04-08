@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:divider="@drawable/shape_divider_line"
     android:orientation="vertical"
-    android:showDividers="middle|end">
+    android:showDividers="middle">
 
     <include layout="@layout/layout_title" />
 
@@ -27,10 +27,10 @@
             android:textSize="@dimen/dimen_15" />
 
         <TextView
+            android:id="@+id/tv_store_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="吾家有女初长成"
             android:textColor="@color/color_84"
             android:textSize="@dimen/dimen_15" />
 
@@ -61,24 +61,29 @@
             android:layout_height="1dp"
             android:background="@color/color_e4" />
 
-        <TextView
+        <EditText
+            android:id="@+id/et_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_height="100dp"
+            android:background="@null"
+            android:gravity="top|left"
             android:hint="请输入您的投诉内容至少50字以上!"
             android:paddingLeft="15dp"
             android:paddingTop="10dp"
+            android:maxLength="400"
+            android:minLines="3"
             android:textColor="@color/color_bf"
             android:textColorHint="@color/color_bf"
             android:textSize="@dimen/dimen_13" />
 
     </LinearLayout>
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
         <ImageView
+            android:id="@+id/iv_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -86,6 +91,7 @@
             android:src="@mipmap/img_order_evaluate_photo" />
 
         <TextView
+            android:id="@+id/tv_photonum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -95,19 +101,20 @@
             android:textColor="@color/color_bf"
             android:textSize="@dimen/dimen_13" />
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
+    <include layout="@layout/up_photo_layout" />
 
     <Button
+        android:id="@+id/btn_commit"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/shape_login_bg"
-        android:text="提交"
-        android:textSize="@dimen/dimen_15"
-        android:textColor="@color/color_while"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_login_bg"
+        android:text="提交"
+        android:textColor="@color/color_while"
+        android:textSize="@dimen/dimen_15" />
 
 </LinearLayout>

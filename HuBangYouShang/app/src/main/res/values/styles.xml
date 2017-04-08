@@ -319,7 +319,7 @@
 
 
     <style name="roomRatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@mipmap/img_order_evaluate_estimate</item>
+        <item name="android:progressDrawable">@drawable/ratingstars</item>
         <item name="android:minHeight">16dp</item>
         <item name="android:maxHeight">16dp</item>
     </style>

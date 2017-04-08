@@ -87,7 +87,7 @@ public class MyOrderAllFragment extends BaseFragment {
                                             list.add(bean);
                                         }
                                     }
-                                    LogUtils.e("返回数据集合石：" + list.size());
+                                    LogUtils.e("返回数据集合是：" + list.size());
                                     if(currentPage == 1){
                                         mOrderAdapter.setDataList(list);
                                     }else{
