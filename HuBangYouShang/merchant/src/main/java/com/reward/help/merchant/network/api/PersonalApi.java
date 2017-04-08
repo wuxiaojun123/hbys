@@ -3,6 +3,7 @@ package com.reward.help.merchant.network.api;
 
 import com.reward.help.merchant.bean.Response.BaseResponse;
 import com.reward.help.merchant.bean.Response.UploadHeadImageReponse;
+import com.reward.help.merchant.utils.Constant;
 
 import java.util.Map;
 
@@ -94,6 +95,15 @@ public interface PersonalApi {
             @Field("key") String key,
             @Field("content") String content,
             @Field("mobile") String mobile
+    );
+
+    // 意见反馈
+    @FormUrlEncoded
+    @POST(Constant.URL_PROFILE_COMMIT)
+    Observable<BaseResponse<String>> updateProfile(
+            @Field("key") String key,
+            @Field("avatar") String avatar,
+            @Field("member_name") String member_name
     );
 
 }

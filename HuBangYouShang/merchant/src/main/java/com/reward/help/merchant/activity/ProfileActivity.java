@@ -21,6 +21,7 @@ import com.idotools.utils.ToastUtils;
 import com.reward.help.merchant.App;
 import com.reward.help.merchant.R;
 import com.reward.help.merchant.bean.LoginBean;
+import com.reward.help.merchant.bean.Response.BaseResponse;
 import com.reward.help.merchant.bean.Response.UploadHeadImageReponse;
 import com.reward.help.merchant.chat.DemoHelper;
 import com.reward.help.merchant.chat.ui.BaseActivity;
@@ -35,6 +36,8 @@ import com.reward.help.merchant.view.ActionSheetDialog;
 import com.reward.help.merchant.view.MyProcessDialog;
 
 import java.io.File;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -104,8 +107,25 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             EaseUserUtils.setUserNick(username, mEtNickname);
         }
 
-        if (userInfo != null && !TextUtils.isEmpty(userInfo.store_name)) {
-            mTvStoreName.setText(userInfo.store_name);
+        if (userInfo != null) {
+            if (!TextUtils.isEmpty(userInfo.store_name)) {
+                mTvStoreName.setText(userInfo.store_name);
+            }
+
+            if (!TextUtils.isEmpty(userInfo.member_truename)) {
+                mTvRealName.setText(userInfo.member_truename);
+            }
+
+
+                if ("1".equals(userInfo.member_sex)) {
+                    mTvSex.setText("男");
+                } else if ("2".equals(userInfo.member_sex)) {
+                    mTvSex.setText("女");
+                } else {
+                    mTvSex.setText("保密");
+                }
+            avatar = userInfo.member_avatar;
+            GlideUtils.loadCircleImage(userInfo.member_avatar,mIvPhoto);
         }
     }
     @OnClick({R.id.rl_choose_photo,R.id.tv_right,R.id.iv_title_back})
@@ -126,6 +146,16 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
                 this.finish();
                 break;
             case R.id.tv_right:
+                if (TextUtils.isEmpty(avatar)) {
+                    ToastUtils.show(mContext,"请选择头像");
+                    return;
+                }
+                String name = mEtNickname.getText().toString();
+                if (TextUtils.isEmpty(name)) {
+                    ToastUtils.show(mContext,"请输入昵称");
+                    return;
+                }
+                commitInfo(avatar,name);
                 break;
         }
     }
@@ -286,5 +316,37 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void finishDeal(String path, int type) {
+    }
+
+
+    private void commitInfo(String url ,String name){
+        MyProcessDialog.showDialog(ProfileActivity.this);
+        subscribe = PersonalNetwork.getResponseApi().updateProfile(App.getAppClientKey(),url,name)
+                .subscribeOn(Schedulers.io()) // 请求放在io线程中
+                .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        if (e instanceof UnknownHostException) {
+                            ToastUtils.show(mContext, "请求到错误服务器");
+                        } else if (e instanceof SocketTimeoutException) {
+                            ToastUtils.show(mContext, "请求超时");
+                        }
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            ToastUtils.show(mContext, "提交成功");
+                            //finish();
+                            //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
     }
 }

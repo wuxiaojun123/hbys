@@ -47,6 +47,11 @@ public class Constant {
 
     public static final String URL_GROUP_APPLY = "/mobile/index.php?act=seller_group&op=groupApply";
 
+    public static final String URL_GROUP_PROGRESS = "/mobile/index.php?act=seller_group&op=groupApplyList";
+
+
+    public static final String URL_PROFILE_COMMIT = "/mobile/index.php?act=seller_index&op=edit_seller_info";
+
 
     public static final String ROOT = Environment.getExternalStorageDirectory().getPath() + "/hbzsmerchant/";;
 }

@@ -92,10 +92,15 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
             EaseUserUtils.setUserNick(username, mTvName);
         }
 
-        if (userInfo != null && !TextUtils.isEmpty(userInfo.store_name)) {
-            mTvMyStoreName.setText(String.format(getString(R.string.mine_store_info_tip), userInfo.store_name));
-        }
+        if (userInfo != null ) {
 
+            if (!TextUtils.isEmpty(userInfo.store_name)) {
+                mTvMyStoreName.setText(String.format(getString(R.string.mine_store_info_tip), userInfo.store_name));
+            }
+
+            GlideUtils.loadCircleImage(userInfo.member_avatar,mIvMyPhoto);
+
+        }
         GlideUtils.loadBoundImage("",mIvMyStorePhoto);
     }
 
