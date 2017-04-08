@@ -1,5 +1,6 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,9 @@ import com.help.reward.fragment.GoodImgInfoFragment;
 import com.help.reward.fragment.GoodRetedFragment;
 import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.MyProcessDialog;
+import com.help.reward.view.StoreInfoMenuPop;
 import com.idotools.utils.ToastUtils;
 
 import java.net.SocketTimeoutException;
@@ -67,7 +70,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         vpGoodinfo.setOffscreenPageLimit(3);
     }
 
-    @OnClick({R.id.iv_goodinfo_back,R.id.tv_goodinfo_shopcart_add})
+    @OnClick({R.id.iv_goodinfo_back,R.id.tv_goodinfo_shopcart_add,R.id.iv_goodinfo_more,R.id.tv_goodinfo_buy})
     @Override
     public void onClick(View v) {
        switch (v.getId()){
@@ -76,6 +79,16 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                break;
            case R.id.iv_goodinfo_back:
                this.finish();
+               ActivitySlideAnim.slideOutAnim(this);
+               break;
+           case R.id.iv_goodinfo_more:
+               StoreInfoMenuPop.showPopupWindow(this,ivGoodinfoMore);
+               break;
+           case R.id.tv_goodinfo_buy:
+               Intent intent = new Intent(GoodInfoActivity.this, ConfirmOrderActivity.class);
+               intent.putExtra("cart_id",goodsId+"|"+"1");
+               intent.putExtra("if_cart","0");
+               startActivity(intent);
                break;
        }
     }
@@ -101,10 +114,10 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
 
                         @Override
                         public void onNext(BaseResponse baseResponse) {
+                            MyProcessDialog.closeDialog();
                             if (baseResponse.code == 200) {
                                 ToastUtils.show(mContext, "加入购物车成功");
                             } else {
-                                MyProcessDialog.closeDialog();
                                 ToastUtils.show(mContext, baseResponse.msg);
                             }
                         }

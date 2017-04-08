@@ -1,9 +1,11 @@
 package com.help.reward.fragment;
 
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +87,7 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
         //禁用自动加载更多功能
         lRecyclerview.setLoadMoreEnabled(true);
         lRecyclerview.setItemAnimator(new DefaultItemAnimator());
+
         initLoadMoreListener();
     }
 
@@ -123,6 +126,12 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
                                 adapter.setDataList(response.data.goods_eval_list);
                             } else {
                                 adapter.addAll(response.data.goods_eval_list);
+                            }
+
+                            if (!response.hasmore) {
+                                lRecyclerview.setLoadMoreEnabled(false);
+                            } else {
+                                lRecyclerview.setLoadMoreEnabled(true);
                             }
 
                         } else {

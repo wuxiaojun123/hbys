@@ -14,6 +14,7 @@ import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.Response.CartInfoBean;
+import com.help.reward.bean.Response.ConfirmOrderResponse;
 import com.help.reward.utils.GlideUtils;
 
 import java.util.ArrayList;
@@ -31,20 +32,24 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
     public static final int ITEM_BOTTOM = ITEM_HEAD + 1;
     public static final int ITEM_NORMAL = ITEM_BOTTOM + 1;
 
-    protected List<CartInfoBean> mDataList = new ArrayList<CartInfoBean>();
+    protected List<ConfirmOrderResponse.ConfirmCartList> mDataList = new ArrayList<ConfirmOrderResponse.ConfirmCartList>();
 
     protected Context mContext;
 
     protected LayoutInflater mInflater;
+    private ConfirmOrderResponse.ConfirmAddressBean address_info;
+
+    private String discount_level;
+
+    private String available_general_voucher;
 
     public ConfirmOrderAdapter(Context mContext) {
-        this.mDataList = mDataList;
         this.mContext = mContext;
         mInflater = LayoutInflater.from(mContext);
 
     }
 
-    public void setDataList(List<CartInfoBean> mDataList){
+    public void setDataList(List<ConfirmOrderResponse.ConfirmCartList> mDataList){
         if (mDataList != null) {
             this.mDataList.clear();
             this.mDataList.addAll(mDataList);
@@ -106,19 +111,20 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
 
         LinearLayout ll_shop = holder.getView(R.id.ll_shop); // 商品列表
 
-        CartInfoBean bean = mDataList.get(position - 1);
+        ConfirmOrderResponse.ConfirmCartList bean = mDataList.get(position - 1);
 
         int size = 0;
-        if (ll_shop.getTag() == null && bean.goods != null) {
-            size = bean.goods.size();
+        if (ll_shop.getTag() == null && bean.goods_list != null) {
+            size = bean.goods_list.size();
             setShopText(ll_shop, bean, size);
             ll_shop.setTag(bean.store_id);
         }
 
         tv_store_name.setText(bean.store_name);
+        tv_total_shop_and_money.setText(bean.store_goods_total);
     }
 
-    private void setShopText(LinearLayout ll_shop, CartInfoBean bean, int size) {
+    private void setShopText(LinearLayout ll_shop, ConfirmOrderResponse.ConfirmCartList bean, int size) {
 
         for (int i = 0; i < size; i++) {
             View shopView = mInflater.inflate(R.layout.layout_my_order_shop, ll_shop, false);
@@ -128,7 +134,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             TextView tv_single_shop_price = (TextView) shopView.findViewById(R.id.tv_single_shop_price); // 单个商品价格 ￥200.0
             TextView tv_shop_num = (TextView) shopView.findViewById(R.id.tv_shop_num); // 商品数量 x1
 
-            CartInfoBean.GoodInfoBean goodInfoBean = bean.goods.get(i);
+            ConfirmOrderResponse.GoodInfo goodInfoBean = bean.goods_list.get(i);
 
             GlideUtils.loadImage(goodInfoBean.goods_image_url, iv_shop_img);
             tv_shop_name.setText(goodInfoBean.goods_name);
@@ -140,13 +146,40 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
     }
 
     private void doBottomView(SuperViewHolder holder, int position) {
+
+        TextView mOrderDiscountPer = (TextView) holder.itemView.findViewById(R.id.tv_confim_order_discount);
+        TextView mOrderDiscount = (TextView) holder.itemView.findViewById(R.id.tv_confim_order_discount_name);
+
+        mOrderDiscountPer.setText("商家设置的通用券抵扣比例为:" + discount_level);
+        mOrderDiscount.setText(available_general_voucher);
     }
 
     private void doHeadView(SuperViewHolder holder, int position) {
+        TextView mOrderReceiverPerson = (TextView) holder.itemView.findViewById(R.id.tv_order_receiver_person);
+        TextView mOrderReceiverPhone = (TextView) holder.itemView.findViewById(R.id.tv_order_receiver_phone);
+        TextView mOrderReceiverAdd = (TextView) holder.itemView.findViewById(R.id.tv_order_receiver_add);
+        if (address_info != null) {
+            mOrderReceiverPerson.setText("收货人:" + address_info.true_name);
+            mOrderReceiverPhone.setText(address_info.mob_phone);
+            String address = address_info.area_info + address_info.address;
+            mOrderReceiverAdd.setText("收货地址:" + address);
+        }
     }
 
     @Override
     public int getItemCount() {
         return mDataList.size() + 2;
+    }
+
+    public void setAddressInfo(ConfirmOrderResponse.ConfirmAddressBean address_info) {
+        this.address_info = address_info;
+    }
+
+    public void setDiscount_level(String discount_level) {
+        this.discount_level = discount_level;
+    }
+
+    public void setAvailable_general_voucher(String available_general_voucher) {
+        this.available_general_voucher = available_general_voucher;
     }
 }

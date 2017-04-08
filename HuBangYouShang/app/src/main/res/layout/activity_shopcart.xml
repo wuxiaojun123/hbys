@@ -7,19 +7,9 @@
     <include
         android:id="@+id/title"
         layout="@layout/layout_title" />
-
-    <ExpandableListView
-        android:id="@+id/id_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/title"
-        android:layout_height="match_parent"
-        android:childDivider="@null"
-        android:groupIndicator="@null"
-        android:divider="@null"/>
-
-
     
     <LinearLayout
+        android:id="@+id/ll_shopcart_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
         android:layout_alignParentBottom="true"
@@ -99,4 +89,13 @@
 
 
 
+    <ExpandableListView
+        android:id="@+id/id_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:layout_above="@+id/ll_shopcart_bottom"
+        android:childDivider="@null"
+        android:groupIndicator="@null"
+        android:divider="@null"/>
 </RelativeLayout>

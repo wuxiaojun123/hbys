@@ -24,7 +24,7 @@
             android:layout_width="@dimen/dimen_50"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/img_back"
+            android:src="@mipmap/store_menu"
             android:scaleType="center"
             />
         <com.astuetz.PagerSlidingTabStrip
@@ -134,6 +134,7 @@
                 android:text="@string/good_lable4"
                 />
             <TextView
+                android:id="@+id/tv_goodinfo_buy"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
