@@ -3,6 +3,7 @@ package com.help.reward.activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bigkoo.pickerview.OptionsPickerView;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.AssetsAreaBean;
@@ -38,11 +41,12 @@ import com.idotools.utils.FileUtils;
 import com.idotools.utils.ImageFormatUtils;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
-import com.lvfq.pickerview.OptionsPickerView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -71,8 +75,8 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
     @BindView(R.id.rl_head)
     RelativeLayout rl_head; // 用户点击头像即可拍照或者从相册选择
-    @BindView(R.id.tv_area)
-    TextView tv_area; // 所在地区
+    @BindView(R.id.tv_area1)
+    TextView tv_area1; // 所在地区
     @BindView(R.id.tv_sex)
     TextView tv_sex; // 性别
     @BindView(R.id.tv_code)
@@ -155,7 +159,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                                     tv_sex.setText("女");
                                     sexId = "0";
                                 }
-                                tv_area.setText(infoResponse.area_info);
+                                tv_area1.setText(infoResponse.area_info);
                                 tv_work.setText(infoResponse.member_business);
                                 et_word_position.setText(infoResponse.member_position);
                                 et_sign.setText(infoResponse.description);
@@ -218,7 +222,6 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
                 break;
             case R.id.ll_area: // 地区
-                LogUtils.e("点击地区选择...");
                 selectArea();
 
                 break;
@@ -263,30 +266,35 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                 });
     }
 
-    private ArrayList<AssetsAreaBean.AreaBean> provincesList = new ArrayList<>();
-    private ArrayList<ArrayList<AssetsAreaBean.AreaBean>> citiesList = new ArrayList<>();
-    private ArrayList<ArrayList<ArrayList<AssetsAreaBean.AreaBean>>> areasList = new ArrayList<>();
+    /*private List<AssetsAreaBean.AreaBean> provincesList = new ArrayList<>();
+    private List<List<AssetsAreaBean.AreaBean>> citiesList = new ArrayList<>();
+    private List<List<List<AssetsAreaBean.AreaBean>>> areasList = new ArrayList<>();*/
+
+    private List<AssetsAreaBean.AreaBean> options1Items = new ArrayList<>();
+    private List<List<AssetsAreaBean.AreaBean>> options2Items = new ArrayList<>();
+    private List<List<List<AssetsAreaBean.AreaBean>>> options3Items = new ArrayList<>();
 
     private void selectArea() {
         String areaJson = FileUtils.getAssetsFile(mContext);
         if (!TextUtils.isEmpty(areaJson)) {
             try { // 解析json
-                LogUtils.e("citiesList.size()集合长度是：" + citiesList.size());
-                if (citiesList.size() == 0) {
+                if (options1Items.size() == 0) {
                     initArea();
                 }
-                LogUtils.e("citiesList.size()   222222集合长度是：" + citiesList.size());
-
-                OptionsPickerView<AssetsAreaBean.AreaBean> mAreaPickerView = new OptionsPickerView<>(this);
-                LogUtils.e("身份，城市，县区的集合长度是：" + provincesList.size() + "====" + citiesList.size() + "==" + areasList.size());
-                mAreaPickerView.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+                OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
-                    public void onOptionsSelect(int options1, int option2, int options3) {
-                        LogUtils.e("选择的地区是：" + options1 + "====" + option2 + "====" + options3);
+                    public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                        //返回的分别是三个级别的选中位置
+                        String tx = options1Items.get(options1).getPickerViewText() +
+                                options2Items.get(options1).get(options2) +
+                                options3Items.get(options1).get(options2).get(options3);
+
+                        Toast.makeText(mContext, tx, Toast.LENGTH_SHORT).show();
                     }
-                });
-                mAreaPickerView.setPicker(provincesList, citiesList, areasList, true);
-                mAreaPickerView.show();
+                }).build();
+                pvOptions.setPicker(options1Items, options2Items, options3Items);//三级选择器
+                pvOptions.show();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -299,29 +307,8 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
             try { // 解析json
                 LogUtils.e("解析省份的json");
                 AssetsAreaBean bean = (AssetsAreaBean) JsonUtils.toObject(areaJson, AssetsAreaBean.class);
-                if (provincesList.isEmpty()) {
-                    provincesList.addAll(bean.provinces);
-                }
-                ArrayList<AssetsAreaBean.AreaBean> citiesList1 = bean.cities;
-                ArrayList<AssetsAreaBean.AreaBean> areasList1 = bean.areas;
-                LogUtils.e("省份的集合是：" + provincesList.size() + "  " + citiesList1.size() + "   " + areasList1.size());
-
-                for (AssetsAreaBean.AreaBean provincesBean : provincesList) { // 省份循环
-                    ArrayList citySonArrayList = new ArrayList<AssetsAreaBean.AreaBean>(); // 某省份的城市集合
-                    for (AssetsAreaBean.AreaBean citiesbean : citiesList1) { //  市区循环
-                        if (citiesbean.area_parent_id.equals(provincesBean.area_id)) { // 如果城市的父类id等于省份的id，那么需要添加
-                            citySonArrayList.add(citiesbean);
-                            ArrayList areasSonArrayList = new ArrayList<AssetsAreaBean.AreaBean>();
-                            for (AssetsAreaBean.AreaBean areasbean : areasList1) {  // 县级循环
-
-                                if (citiesbean.area_id.equals(areasbean.area_parent_id)) {
-                                    areasSonArrayList.add(areasbean);
-                                }
-                            }
-                            areasList.add(areasSonArrayList);
-                        }
-                        citiesList.add(citySonArrayList); //
-                    }
+                if (options1Items.isEmpty()) {
+                    options1Items.addAll(bean.provinces);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
