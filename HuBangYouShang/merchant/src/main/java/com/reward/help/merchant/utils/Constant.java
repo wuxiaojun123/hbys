@@ -20,7 +20,7 @@ public class Constant {
     public static final String URL_SELLER_LOGIN = "mobile/index.php?act=seller_login";
 
     // 注册获取验证码
-    public static final String URL_GET_CODE = "/mobile/index.php?act=member_account&op=modify_password_step2";
+    public static final String URL_GET_CODE = "mobile/index.php?act=connect&op=get_sms_captcha";
 
 
     public static final String URL_CHECK_CODE = "/mobile/index.php?act=member_account&op=modify_password_step3";

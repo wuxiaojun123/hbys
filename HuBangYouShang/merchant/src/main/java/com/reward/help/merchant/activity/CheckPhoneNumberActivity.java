@@ -131,7 +131,7 @@ public class CheckPhoneNumberActivity extends BaseActivity implements View.OnCli
 
     private void getCheckCode(String phone) {
         MyProcessDialog.showDialog(CheckPhoneNumberActivity.this);
-        subscribe = PersonalNetwork.getLoginApi().getVerificationCodeBean(phone)
+        subscribe = PersonalNetwork.getLoginApi().getVerificationCodeBean(phone,"3")
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<BaseResponse>() {

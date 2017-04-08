@@ -31,8 +31,9 @@ public interface LoginApi {
     @FormUrlEncoded
     @POST(Constant.URL_GET_CODE)
     Observable<VerificationCodeResponse> getVerificationCodeBean(
-            @Field("phone") String phone
-    );
+            @Field("phone") String phone,
+            @Field("type") String type
+            );
 
     // 获取code 注册和修改密码
     @FormUrlEncoded

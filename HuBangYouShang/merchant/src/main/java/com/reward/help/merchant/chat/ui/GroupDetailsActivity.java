@@ -49,11 +49,16 @@ import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.NetUtils;
 import com.idotools.utils.ToastUtils;
+import com.reward.help.merchant.App;
 import com.reward.help.merchant.R;
 import com.reward.help.merchant.chat.Constant;
+import com.reward.help.merchant.chat.db.TopUser;
+import com.reward.help.merchant.chat.db.TopUserDao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GroupDetailsActivity extends BaseActivity implements OnClickListener {
 	private static final String TAG = "GroupDetailsActivity";
@@ -80,6 +85,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private EaseSwitchButton conversationToTop;
 
 	private EMPushConfigs pushConfigs;
+	private Map<String, TopUser> topUserMap;
 
 
 	@Override
@@ -118,6 +124,15 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		RelativeLayout blockOfflineLayout = (RelativeLayout) findViewById(R.id.rl_switch_block_offline_message);
 		offlinePushSwitch = (EaseSwitchButton) findViewById(R.id.switch_block_offline_message);
 		conversationToTop = (EaseSwitchButton) findViewById(R.id.switch_up);
+
+
+		topUserMap = App.getApplication().getTopUserList();
+
+		if (topUserMap != null && topUserMap.containsKey(groupId)){
+			conversationToTop.openSwitch();
+		} else {
+			conversationToTop.closeSwitch();
+		}
 
 		idText.setText(groupId);
 		if (group.getOwner() == null || "".equals(group.getOwner())
@@ -475,8 +490,34 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private void conversationToTop() {
 		if(conversationToTop.isSwitchOpen()){
 			conversationToTop.closeSwitch();
+
+			TopUser topUser = new TopUser();
+			topUser.setTime(System.currentTimeMillis());
+			topUser.setTopuser_id(groupId);
+			topUser.setIs_group("1");
+			if (topUserMap.containsKey(groupId)) {
+				topUserMap.remove(groupId);
+			}
+			App.getApplication().setTopUserList(topUserMap);
+			TopUserDao topUserDao = new TopUserDao(mContext);
+			topUserDao.deleteTopUser(topUser);
+			ToastUtils.show(mContext,"取消成功");
 		}else{
 			conversationToTop.openSwitch();
+
+			TopUser topUser = new TopUser();
+			topUser.setTime(System.currentTimeMillis());
+			topUser.setTopuser_id(groupId);
+			topUser.setIs_group("1");
+			HashMap<String, TopUser> map = new HashMap<>();
+			map.put(groupId,topUser);
+			topUserMap.putAll(map);
+			App.getApplication().setTopUserList(topUserMap);
+
+			App.getApplication().setTopUserList(topUserMap);
+			TopUserDao topUserDao = new TopUserDao(mContext);
+			topUserDao.saveTopUser(topUser);
+			ToastUtils.show(mContext,"置顶成功");
 		}
 	}
 

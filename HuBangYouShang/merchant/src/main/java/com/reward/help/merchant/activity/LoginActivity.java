@@ -157,6 +157,7 @@ public class LoginActivity extends BaseActivity {
 							//finish();
 							//ActivitySlideAnim.slideOutAnim(LoginActivity.this);
 						} else {
+							MyProcessDialog.closeDialog();
 							ToastUtils.show(mContext, res.msg);
 						}
 					}

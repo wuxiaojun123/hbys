@@ -1,5 +1,6 @@
 package com.reward.help.merchant.chat.ui;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.view.View;
@@ -11,13 +12,13 @@ import android.widget.Toast;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
-import com.hyphenate.easeui.adapter.EaseConversationAdapter;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
-import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.util.NetUtils;
 import com.reward.help.merchant.R;
 import com.reward.help.merchant.chat.Constant;
+import com.reward.help.merchant.chat.adapter.EaseConversationAdapter;
 import com.reward.help.merchant.chat.db.InviteMessgeDao;
+import com.reward.help.merchant.chat.db.TopUser;
 
 public class ConversationListFragment extends EaseConversationListFragment{
 
@@ -49,6 +50,13 @@ public class ConversationListFragment extends EaseConversationListFragment{
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
     @Override
     protected void setUpView() {
         super.setUpView();

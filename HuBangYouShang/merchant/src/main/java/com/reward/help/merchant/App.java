@@ -9,11 +9,14 @@ import android.text.TextUtils;
 
 
 import com.reward.help.merchant.chat.DemoHelper;
+import com.reward.help.merchant.chat.db.DbOpenHelper;
+import com.reward.help.merchant.chat.db.TopUser;
 import com.reward.help.merchant.utils.CrashHandler;
 import com.reward.help.merchant.utils.SpUtils;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 更新一下,加了个注释
@@ -114,5 +117,14 @@ public class App extends Application{
             }
         }
         return processName;
+    }
+
+
+    public Map<String,TopUser> getTopUserList(){
+        return DemoHelper.getInstance().getTopUserList();
+    }
+
+    public void setTopUserList(Map<String,TopUser> contactList){
+        DemoHelper.getInstance().setTopUserList(contactList);
     }
 }
