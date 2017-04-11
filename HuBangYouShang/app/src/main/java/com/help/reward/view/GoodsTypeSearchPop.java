@@ -59,7 +59,7 @@ public class GoodsTypeSearchPop {
                     break;
                 case R.id.layout_shop:
                     if (onTypeChooseListener != null) {
-                        onTypeChooseListener.onType("shop");
+                        onTypeChooseListener.onType("store");
                     }
                     break;
                 default:

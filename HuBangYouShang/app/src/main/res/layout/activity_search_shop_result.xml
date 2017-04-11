@@ -21,6 +21,15 @@
             android:overScrollMode="never"
             android:scrollbars="none" />
 
+        <com.base.recyclerview.LRecyclerView
+            android:id="@+id/id_store_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
     </LinearLayout>
 
     <include

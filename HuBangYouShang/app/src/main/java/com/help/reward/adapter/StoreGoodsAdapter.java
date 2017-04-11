@@ -36,6 +36,9 @@ public class StoreGoodsAdapter extends BaseRecyclerAdapter<ShopMallHotBean> {
     public void setType(String type) {
         this.type = type;
     }
+    public String getType() {
+        return type;
+    }
 
     @Override
     public void onBindItemHolder(SuperViewHolder holder, int position) {

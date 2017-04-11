@@ -22,10 +22,13 @@ import com.base.recyclerview.OnItemClickListener;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.help.reward.R;
 import com.help.reward.adapter.GoodsSearchBrandAdapter;
+import com.help.reward.adapter.SearchStoreAdapter;
 import com.help.reward.adapter.StoreGoodsAdapter;
 import com.help.reward.bean.BrandBean;
 import com.help.reward.bean.Response.BrandResponse;
+import com.help.reward.bean.Response.SearchStoreResponse;
 import com.help.reward.bean.Response.StoreDetailAllResponse;
+import com.help.reward.bean.SearchStoreInfoBean;
 import com.help.reward.bean.ShopMallHotBean;
 import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -79,6 +82,8 @@ public class SearchShopResultActivity extends BaseActivity {
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
+    @BindView(R.id.id_store_recycler_view)
+    LRecyclerView lStoreRecyclerview;
 
 
     @BindView(R.id.tv_reset)
@@ -111,7 +116,9 @@ public class SearchShopResultActivity extends BaseActivity {
 
 
     private StoreGoodsAdapter adapter;
+    private SearchStoreAdapter storeAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
+    private LRecyclerViewAdapter storeLRecyclerViewAdapter = null;
     List<ShopMallHotBean> mDatas = new ArrayList<>();
     String store_id;
     int curpage = 1;
@@ -127,15 +134,20 @@ public class SearchShopResultActivity extends BaseActivity {
     String order;
     String type = "gird";
     String zongheType = "zonghe";
-
     List<BrandBean> brandList = new ArrayList<>();
+    List<SearchStoreInfoBean> storeList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_shop_result);
         ButterKnife.bind(this);
-        keyword = getIntent().getExtras().getString("keyword");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            keyword = bundle.getString("keyword");
+            searchType = bundle.getString("searchType", "goods");
+        }
+
         initView();
         initData();
     }
@@ -159,6 +171,7 @@ public class SearchShopResultActivity extends BaseActivity {
                     requestData(true);
                 } else {
                     //搜索店铺
+                    requestStoreData(true);
 
                 }
             }
@@ -198,10 +211,35 @@ public class SearchShopResultActivity extends BaseActivity {
         //禁用自动加载更多功能
         lRecyclerview.setLoadMoreEnabled(false);
         lRecyclerview.setItemAnimator(new DefaultItemAnimator());
+
+
+        storeAdapter = new SearchStoreAdapter(this);
+        storeAdapter.setDataList(storeList);
+        lStoreRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+        storeLRecyclerViewAdapter = new LRecyclerViewAdapter(storeAdapter);
+        lStoreRecyclerview.setAdapter(storeLRecyclerViewAdapter);
+        //禁用下拉刷新功能
+        lStoreRecyclerview.setPullRefreshEnabled(false);
+        //禁用自动加载更多功能
+        lStoreRecyclerview.setLoadMoreEnabled(false);
+        lStoreRecyclerview.setItemAnimator(new DefaultItemAnimator());
         initLoadMoreListener();
         initItemClickListener();
-        requestData(true);
         initBrandData();
+        if (!"goods".equals(searchType)) {
+            et_search.setHint("搜索关键字相关店铺");
+            iv_search_type.setText("店铺");
+            layout_alltitle.setVisibility(View.GONE);
+            lRecyclerview.setVisibility(View.GONE);
+            lStoreRecyclerview.setVisibility(View.VISIBLE);
+            requestStoreData(true);
+        }else{
+            requestData(true);
+        }
+
+
+
+
     }
 
     @OnClick({R.id.iv_title_back, R.id.iv_search_type, R.id.ll_zonghe,
@@ -399,6 +437,14 @@ public class SearchShopResultActivity extends BaseActivity {
                 requestData(false);
             }
         });
+        lStoreRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                curpage++;
+                //搜索店铺
+                requestStoreData(false);
+            }
+        });
     }
 
     private void initItemClickListener() {
@@ -412,6 +458,7 @@ public class SearchShopResultActivity extends BaseActivity {
             }
 
         });
+
     }
 
     Subscription subscribe;
@@ -445,6 +492,8 @@ public class SearchShopResultActivity extends BaseActivity {
                         if (response.code == 200) {
                             if (response.data != null) {
                                 if (curpage == 1) {
+                                    lStoreRecyclerview.setVisibility(View.GONE);
+                                    lRecyclerview.setVisibility(View.VISIBLE);
                                     mDatas = response.data.goods_list;
                                     adapter.setDataList(response.data.goods_list);
                                     if (adapter.getDataList().size() == 0) {
@@ -467,6 +516,58 @@ public class SearchShopResultActivity extends BaseActivity {
 
     }
 
+    private void requestStoreData(boolean isFirst) {
+        if (isFirst) {
+            curpage = 1;
+            MyProcessDialog.showDialog(this);
+        }
+
+        subscribe = ShopMallNetwork
+                .getShopMallMainApi()
+                .getSearchStoreResponse(keyword, curpage)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<SearchStoreResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        lStoreRecyclerview.refreshComplete(15);
+                        MyProcessDialog.closeDialog();
+                        ToastUtils.show(mContext, R.string.string_error);
+                        if (curpage != 1)
+                            curpage--;
+                    }
+
+                    @Override
+                    public void onNext(SearchStoreResponse response) {
+                        lStoreRecyclerview.refreshComplete(15);
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            if (response.data != null) {
+                                if (curpage == 1) {
+                                    lRecyclerview.setVisibility(View.GONE);
+                                    lStoreRecyclerview.setVisibility(View.VISIBLE);
+                                    storeList = response.data.list;
+                                    storeAdapter.setDataList(response.data.list);
+                                    if (adapter.getDataList().size() == 0) {
+                                    }
+                                } else {
+                                    storeList.addAll(response.data.list);
+                                    storeAdapter.addAll(response.data.list);
+                                }
+                            }
+                            if (!response.hasmore) {
+                                lStoreRecyclerview.setLoadMoreEnabled(false);
+                            } else {
+                                lStoreRecyclerview.setLoadMoreEnabled(true);
+                            }
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+
+    }
 
     /**
      * 品牌

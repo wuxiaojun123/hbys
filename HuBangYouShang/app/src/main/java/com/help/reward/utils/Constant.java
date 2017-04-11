@@ -110,6 +110,10 @@ public class Constant {
 
     public static final String URL_GOODSCLASS = "mobile/index.php?act=goods_class&op=index";
     public static final String URL_SEARCHGOODS = "mobile/index.php?act=goods&op=goods_list";
+    public static final String URL_SEARCHSTORE = "mobile/index.php?act=store&op=listStore";
+
+    public static final String URL_PAYOKGOODS = "mobile/index.php?act=member_buy&op=pay_ok";
+
     //品牌列表
     public static final String URL_BRANDLIST = "mobile/index.php?act=brand&op=recommend_list";
 }

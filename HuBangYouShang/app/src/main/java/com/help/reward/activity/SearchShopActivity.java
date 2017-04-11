@@ -15,6 +15,7 @@ import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.FluidLayout;
+import com.help.reward.view.GoodsTypeSearchPop;
 import com.help.reward.view.SearchEditTextView;
 import com.idotools.utils.ToastUtils;
 
@@ -35,6 +36,10 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
     SearchEditTextView et_search; // 搜索
     @BindView(R.id.tv_search_history)
     TextView tv_search_history;
+
+    @BindView(R.id.iv_search_type)
+    TextView iv_search_type;
+
     @BindView(R.id.fl_history)
     FluidLayout fl_history; // 历史记录的viewgroup
     @BindView(R.id.tv_search_hot)
@@ -45,7 +50,7 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
     private int colorTextBg;
     private String[] hotList;
     private String[] historyList;
-
+    String searchType="goods";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +110,8 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
         }
         Intent mIntent = new Intent(this, SearchShopResultActivity.class);
         mIntent.putExtra("keyword", searchStr);
+        //商品传goods 店铺传store
+        mIntent.putExtra("searchType", searchType);
         startActivity(mIntent);
         ActivitySlideAnim.slideInAnim(SearchShopActivity.this);
     }
@@ -168,7 +175,19 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.iv_search_type:
                 // 点击搜索出现下拉框，商品或者店铺
-
+                new GoodsTypeSearchPop().showPopupWindow(this, iv_search_type).setOnTypeChooseListener(new GoodsTypeSearchPop.OnTypeChooseListener() {
+                    @Override
+                    public void onType(String type) {
+                        searchType = type;
+                        if ("goods".equals(type)) {
+                            et_search.setHint("搜索关键字相关商品");
+                            iv_search_type.setText("商品");
+                        } else {
+                            et_search.setHint("搜索关键字相关店铺");
+                            iv_search_type.setText("店铺");
+                        }
+                    }
+                });
                 break;
             case R.id.iv_search:
                 // 点击搜索
