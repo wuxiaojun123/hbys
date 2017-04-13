@@ -55,11 +55,11 @@ public interface PersonalApi {
 
     // mobile/index.php?act=logout 退出登录 post传client
 
-    // 个人信息--获取地区
-    @FormUrlEncoded
-    @POST("mobile/index.php?act=area")
+    // 个人信息--获取地区 ?act=area
+    @GET("mobile/index.php")
     Observable<AeraResponse> getAeraResponse(
-            @Field("key") String key
+            @Query("act") String act,
+            @Query("area_id") String area_id
     );
 
     // 个人信息---行业

@@ -122,12 +122,11 @@
                 android:text="所在地区" />
 
             <TextView
-                android:id="@+id/tv_area1"
-                style="@style/style_person_info_text_right_area"
-                android:text="省"
+                android:id="@+id/tv_area"
+                style="@style/style_person_info_text_right"
                 />
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tv_area2"
                 style="@style/style_person_info_text_right_area"
                 android:text="市"
@@ -137,7 +136,7 @@
                 android:id="@+id/tv_area3"
                 style="@style/style_person_info_text_right_area"
                 android:text="县"
-                />
+                />-->
 
         </LinearLayout>
 
