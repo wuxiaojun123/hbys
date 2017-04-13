@@ -6,6 +6,8 @@ import com.help.reward.bean.Response.GoodEvaluateResponse;
 import com.help.reward.bean.Response.GoodResponse;
 import com.help.reward.bean.Response.GoodsSecondTypeResponse;
 import com.help.reward.bean.Response.GoodsTypeResponse;
+import com.help.reward.bean.Response.PayEndGoodsResponse;
+import com.help.reward.bean.Response.SearchStoreResponse;
 import com.help.reward.bean.Response.ShopMallMainResponse;
 import com.help.reward.bean.Response.ShopSearchResponse;
 import com.help.reward.bean.Response.StoreDetailAllResponse;
@@ -46,10 +48,9 @@ public interface ShopMallApi {
     );
 
     /**
-     *
      * @param goods_id 商品id
-     * @param type 类型：1-好评，2-中评，3-差评，默认不填
-     * @param curpage 分页，从1开始
+     * @param type     类型：1-好评，2-中评，3-差评，默认不填
+     * @param curpage  分页，从1开始
      * @return
      */
     @FormUrlEncoded
@@ -118,6 +119,7 @@ public interface ShopMallApi {
             @Field("keyword") String keyword,
             @Field("curpage") int curpage
     );
+
     /**
      * 品牌列表
      * /mobile/index.php?act=goods_class&op=index
@@ -132,11 +134,21 @@ public interface ShopMallApi {
 
     /**
      * 支付成功的商品列表
-     * mobile/index.php?act=goods&op=goods_list
+     * mobile/index.php?act=member_buy&op=pay_ok
+     */
+    @GET(Constant.URL_PAYOKGOODS)
+    Observable<PayEndGoodsResponse> getPayEndGoodsResponse(
+            @Query("key") String key
+    );
+
+    /**
+     * 店铺搜索
      */
     @FormUrlEncoded
-    @POST(Constant.URL_SEARCHGOODS)
-    Observable<StoreDetailAllResponse> getPayEndGoodsResponse(
+    @POST(Constant.URL_SEARCHSTORE)
+    Observable<SearchStoreResponse> getSearchStoreResponse(
+            @Field("keyword") String keyword,
             @Field("curpage") int curpage
     );
+
 }

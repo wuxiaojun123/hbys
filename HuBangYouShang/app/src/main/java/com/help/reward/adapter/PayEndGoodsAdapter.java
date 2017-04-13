@@ -38,12 +38,12 @@ public class PayEndGoodsAdapter extends BaseRecyclerAdapter<ShopMallHotBean> {
 
     @Override
     public void onBindItemHolder(SuperViewHolder holder, int position) {
+        View root_layout = holder.getView(R.id.root_layout);
         if (mDataList.size() == 0) {
-            View root_layout = holder.getView(R.id.root_layout);
             root_layout.setVisibility(View.GONE);
             return;
         }
-        View root_layout = holder.getView(R.id.root_layout);
+        root_layout.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) root_layout.getLayoutParams();
         if (position % 2 == 0) {
             lp.setMargins(0, DisplayUtil.dip2px(mContext, 10), DisplayUtil.dip2px(mContext, 5), 0);

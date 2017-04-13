@@ -12,10 +12,10 @@ import android.widget.TextView;
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnItemClickListener;
-import com.base.recyclerview.OnLoadMoreListener;
+import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.adapter.PayEndGoodsAdapter;
-import com.help.reward.bean.Response.StoreDetailAllResponse;
+import com.help.reward.bean.Response.PayEndGoodsResponse;
 import com.help.reward.bean.ShopMallHotBean;
 import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -56,7 +56,6 @@ public class PayendActivity extends BaseActivity {
     private PayEndGoodsAdapter adapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     List<ShopMallHotBean> mDatas = new ArrayList<>();
-    int curpage = 1;
     String money, type,order_id;
 
     @Override
@@ -94,10 +93,10 @@ public class PayendActivity extends BaseActivity {
         lRecyclerview.setLoadMoreEnabled(false);
         lRecyclerview.setItemAnimator(new DefaultItemAnimator());
         initHeader();
-        initLoadMoreListener();
+//        initLoadMoreListener();
         initItemClickListener();
 //        MyProcessDialog.showDialog(this);
-//        requestData();
+        requestData();
     }
 
     private void initHeader() {
@@ -130,15 +129,15 @@ public class PayendActivity extends BaseActivity {
 
     }
 
-    private void initLoadMoreListener() {
-        lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                curpage++;
-                requestData();
-            }
-        });
-    }
+//    private void initLoadMoreListener() {
+//        lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+//                curpage++;
+//                requestData();
+//            }
+//        });
+//    }
 
     private void initItemClickListener() {
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -159,41 +158,41 @@ public class PayendActivity extends BaseActivity {
 
         subscribe = ShopMallNetwork
                 .getShopMallMainApi()
-                .getPayEndGoodsResponse(curpage)
+                .getPayEndGoodsResponse(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<StoreDetailAllResponse>() {
+                .subscribe(new BaseSubscriber<PayEndGoodsResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         lRecyclerview.refreshComplete(15);
                         MyProcessDialog.closeDialog();
                         ToastUtils.show(mContext, R.string.string_error);
-                        if (curpage != 1)
-                            curpage--;
+//                        if (curpage != 1)
+//                            curpage--;
                     }
 
                     @Override
-                    public void onNext(StoreDetailAllResponse response) {
+                    public void onNext(PayEndGoodsResponse response) {
                         lRecyclerview.refreshComplete(15);
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             if (response.data != null) {
-                                if (curpage == 1) {
-                                    mDatas = response.data.goods_list;
-                                    adapter.setDataList(response.data.goods_list);
+//                                if (curpage == 1) {
+                                    mDatas = response.data.list;
+                                    adapter.setDataList(response.data.list);
                                     if (adapter.getDataList().size() == 0) {
                                     }
-                                } else {
-                                    mDatas.addAll(response.data.goods_list);
-                                    adapter.addAll(response.data.goods_list);
-                                }
+//                                } else {
+//                                    mDatas.addAll(response.data.goods_list);
+//                                    adapter.addAll(response.data.goods_list);
+//                                }
                             }
-                            if (!response.hasmore) {
-                                lRecyclerview.setLoadMoreEnabled(false);
-                            } else {
-                                lRecyclerview.setLoadMoreEnabled(true);
-                            }
+//                            if (!response.hasmore) {
+//                                lRecyclerview.setLoadMoreEnabled(false);
+//                            } else {
+//                                lRecyclerview.setLoadMoreEnabled(true);
+//                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
