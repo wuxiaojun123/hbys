@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="@dimen/dimen_16"
+    android:background="@color/color_while">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/num_dialog_show"
+            android:textColor="@color/assist0"
+            android:textSize="@dimen/dimen_14" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" >
+
+            <ImageButton
+                android:id="@+id/ib_dialog_number_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shoppingcart_number_des_selector" />
+
+            <EditText
+                android:id="@+id/et_dialog_number_show"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ib_dialog_number_des"
+                android:background="@mipmap/ico_zjsl_m"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/color_8a"
+                android:textSize="@dimen/dimen_14"
+                android:maxLength="2"
+                android:singleLine="true"
+                android:inputType="number"/>
+
+            <ImageButton
+                android:id="@+id/ib_dialog_number_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/et_dialog_number_show"
+                android:background="@drawable/shoppingcart_number_add_selector" />
+        </RelativeLayout>
+</RelativeLayout>
