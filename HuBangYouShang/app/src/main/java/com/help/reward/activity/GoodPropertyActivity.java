@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -81,6 +82,7 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
         WindowManager.LayoutParams lp = win.getAttributes();
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.BOTTOM;
         win.setAttributes(lp);
         setFinishOnTouchOutside(true);
         setContentView(R.layout.activity_good_property);
@@ -195,6 +197,10 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        propertyBean.setSelectNum(numShow +"");
+        Intent intent = new Intent();
+        intent.putExtra("selectInfo",propertyBean);
+        setResult(RESULT_OK,intent);
 
     }
 

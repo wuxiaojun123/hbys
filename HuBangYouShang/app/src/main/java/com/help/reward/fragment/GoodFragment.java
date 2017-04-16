@@ -27,6 +27,7 @@ import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.view.MyGridView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class GoodFragment extends BaseFragment {
     @BindView(R.id.tv_label)
     TextView tvLabel;
 
-    PropertyBean propertyBean = new PropertyBean();
+    public PropertyBean propertyBean = new PropertyBean();
 
     @Override
     protected int getLayoutId() {
@@ -163,6 +164,7 @@ public class GoodFragment extends BaseFragment {
         }
         tvLabel.setText(tip);
         propertyBean.setTip(tip);
+        propertyBean.setSelectNum("1");
     }
 
     private void initHotShop(final List<ShopMallHotBean> hot_goods_list) {
@@ -228,4 +230,12 @@ public class GoodFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 0 && data != null) {
+            propertyBean  = (PropertyBean) data.getSerializableExtra("selectInfo");
+        }
+    }
 }

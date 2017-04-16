@@ -15,6 +15,14 @@ public class PropertyBean implements Serializable{
     private String goods_id;
     private String tip;
 
+
+    /**
+     * 选择的属性
+     */
+
+    private String selectNum;
+
+
     private List<PropertyValueBean> propertyList;
 
     public String getGoods_pic() {
@@ -71,5 +79,13 @@ public class PropertyBean implements Serializable{
 
     public void setGoods_id(String goods_id) {
         this.goods_id = goods_id;
+    }
+
+    public String getSelectNum() {
+        return selectNum;
+    }
+
+    public void setSelectNum(String selectNum) {
+        this.selectNum = selectNum;
     }
 }

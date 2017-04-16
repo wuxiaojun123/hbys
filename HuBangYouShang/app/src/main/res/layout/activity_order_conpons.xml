@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_while">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+    <ScrollView
+        android:id="@+id/sl_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="有钱任性,不用优惠券"
+                    android:textColor="@color/color_3a"
+                    android:textSize="@dimen/dimen_12"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/img_address_checkbox"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/shape_divider_line">
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_10"
+                android:text="可用优惠券"
+                android:textColor="@color/color_79"
+                android:textSize="@dimen/dimen_12"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/shape_divider_line">
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_10"
+                android:text="不可用优惠券"
+                android:textColor="@color/color_79"
+                android:textSize="@dimen/dimen_12" />
+
+            <com.help.reward.view.MyListView
+                android:id="@+id/lv_canuse_coupons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:divider="#C0C0C0"
+                android:dividerHeight="0.5px"
+                android:listSelector="#00000000">
+            </com.help.reward.view.MyListView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/shape_divider_line">
+            </RelativeLayout>
+            <com.help.reward.view.MyListView
+                android:id="@+id/lv_unuse_coupons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:divider="#C0C0C0"
+                android:dividerHeight="0.5px"
+                android:listSelector="#00000000">
+            </com.help.reward.view.MyListView>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="您还没有优惠券哦~"
+            android:textColor="@color/color_79"
+            android:textSize="@dimen/dimen_14"
+            android:visibility="gone"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_goodinfo_buy"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="1.0"
+        android:background="#ec6a5c"
+        android:gravity="center"
+        android:textSize="15dp"
+        android:textColor="@color/color_while"
+        android:text="关闭"
+        />
+
+</LinearLayout>
