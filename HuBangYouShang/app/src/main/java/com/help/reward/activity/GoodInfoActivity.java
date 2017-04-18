@@ -57,6 +57,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
     ViewPager vpGoodinfo;
 
     private String goodsId;
+    GoodFragment goodFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                break;
            case R.id.tv_goodinfo_buy:
                Intent intent = new Intent(GoodInfoActivity.this, ConfirmOrderActivity.class);
-               intent.putExtra("cart_id",goodsId+"|"+"1");
+               intent.putExtra("cart_id",goodsId+"|"+goodFragment.propertyBean.getSelectNum());
                intent.putExtra("if_cart","0");
                startActivity(intent);
                break;
@@ -96,7 +97,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
     private void addToShopcart() {
         if (!TextUtils.isEmpty(goodsId)) {
             MyProcessDialog.showDialog(mContext);
-            ShopcartNetwork.getShopcartCookieApi().getShopcartAdd(App.APP_CLIENT_KEY,goodsId,"1")
+            ShopcartNetwork.getShopcartCookieApi().getShopcartAdd(App.APP_CLIENT_KEY,goodsId,goodFragment.propertyBean.getSelectNum())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -145,7 +146,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         public Fragment getItem(int position) {
             // 下面两个fragment是个人中心里的
             if (position == 0) {
-                GoodFragment goodFragment = new GoodFragment();
+                goodFragment = new GoodFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("goods_id", goodsId);
                 goodFragment.setArguments(bundle);
