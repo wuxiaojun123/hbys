@@ -517,10 +517,9 @@ public class HelpRewardInfoActivity extends BaseActivity {
     }
 
     private void showBigImage(String url) {
-        Intent intent = new Intent(this, EaseShowBigImageActivity.class);
+        Intent intent = new Intent(this, ShowBigImageActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("uri", Uri.parse(url));
-        bundle.putInt("default_image", R.mipmap.img_default);
+        bundle.putString("imageUrl", url);
         intent.putExtras(bundle);
         startActivity(intent);
     }

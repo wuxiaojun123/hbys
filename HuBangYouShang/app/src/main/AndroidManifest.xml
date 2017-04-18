@@ -364,6 +364,10 @@
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.help.reward.activity.ShowBigImageActivity"
+            android:screenOrientation="portrait" />
         <!--提交投诉-->
         <activity
             android:name="com.help.reward.activity.HelpComplainedActivity"

@@ -176,7 +176,7 @@ public class ReleaseHelpActivity extends BaseActivity {
             case tv_release_help_data:
                 if(dateList.size()<=0){
                     for (int i = 1; i <=15 ; i++) {
-                        dateList.add(String.valueOf(i));
+                        dateList.add(i+"天");
                     }
                 }
 
@@ -241,6 +241,14 @@ public class ReleaseHelpActivity extends BaseActivity {
         }
         if (!StringUtils.checkStr(board_id)) {
             ToastUtils.show(mContext, "请选择分类");
+            return;
+        }
+        if (!StringUtils.checkStr(area_id)) {
+            ToastUtils.show(mContext, "请选择地区");
+            return;
+        }
+        if (!StringUtils.checkStr(end_time)) {
+            ToastUtils.show(mContext, "请选择有效时间");
             return;
         }
         subHelpData(title, content, score, end_time);
