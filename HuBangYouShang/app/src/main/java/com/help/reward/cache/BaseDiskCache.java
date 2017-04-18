@@ -49,15 +49,13 @@ public class BaseDiskCache implements DiskCache {
 	protected int compressQuality = DEFAULT_COMPRESS_QUALITY;
 
 	/**
-	 * @param cacheDir
 	 *            Directory for file caching
 	 */
 
 	private static BaseDiskCache baseDiskCache;
 
 	/**
-	 * @param context
-	 * @return 暂时使用单利模式
+	 *暂时使用单利模式
 	 */
 	public static BaseDiskCache getInstance(Context context) {
 		if (baseDiskCache == null) {
@@ -83,14 +81,7 @@ public class BaseDiskCache implements DiskCache {
 	}
 
 	/**
-	 * @param cacheDir
-	 *            Directory for file caching
-	 * @param reserveCacheDir
-	 *            null-ok; Reserve directory for file caching. It's used when
-	 *            the primary directory isn't available.
-	 * @param fileNameGenerator
-	 *            {@linkplain com.nostra13.universalimageloader.cache.disc.naming.FileNameGenerator
-	 *            Name generator} for cached files
+	 *
 	 */
 	private BaseDiskCache(File cacheDir, File reserveCacheDir) {
 		if (cacheDir == null) {

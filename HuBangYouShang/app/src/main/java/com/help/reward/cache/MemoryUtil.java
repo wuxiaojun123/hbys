@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 
 /**
- * @author 田兴苗
+ *
  * TODO 缓存工具
  */
 public class MemoryUtil {

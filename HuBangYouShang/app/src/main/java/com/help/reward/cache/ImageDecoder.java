@@ -22,18 +22,14 @@ import android.graphics.Bitmap;
 /**
  * Provide decoding image to result {@link Bitmap}.
  *
- * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
- * @see ImageDecodingInfo
- * @since 1.8.3
+ *
+ *
  */
 public interface ImageDecoder {
 
 	/**
 	 * Decodes image to {@link Bitmap} according target size and other parameters.
-	 *
-	 * @param imageDecodingInfo
-	 * @return
-	 * @throws IOException
+
 	 */
 	Bitmap decode(String path) throws IOException;
 }
