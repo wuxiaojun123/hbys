@@ -11,9 +11,11 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.help.reward.activity.GoodInfoActivity;
+import com.help.reward.activity.GoodPropertyActivity;
 import com.help.reward.adapter.ShopHotAdapter;
 import com.help.reward.bean.GoodsInfoBean;
-import com.help.reward.bean.ShopInfoRecommendBean;
+import com.help.reward.bean.PropertyBean;
+import com.help.reward.bean.PropertyValueBean;
 import com.help.reward.bean.ShopMallHotBean;
 import com.help.reward.bean.StoreInfoBean;
 import com.help.reward.utils.ActivitySlideAnim;
@@ -25,6 +27,7 @@ import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.view.MyGridView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +70,11 @@ public class GoodFragment extends BaseFragment {
     @BindView(R.id.gv_shopinfo_recommand)
     MyGridView gv_shopinfo_recommand; // 商品推荐
 
+    @BindView(R.id.tv_label)
+    TextView tvLabel;
+
+    public PropertyBean propertyBean = new PropertyBean();
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_good;
@@ -77,10 +85,20 @@ public class GoodFragment extends BaseFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             String goodsId = bundle.getString("goods_id");
+            propertyBean.setGoods_id(goodsId);
             if (!TextUtils.isEmpty(goodsId)) {
                 initNetwork(goodsId);
             }
         }
+
+        layout_goodinfo_xuanze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), GoodPropertyActivity.class);
+                intent.putExtra("goods_property",propertyBean);
+                startActivityForResult(intent,0);
+            }
+        });
     }
 
     private void initNetwork(String goodsId) {
@@ -104,13 +122,49 @@ public class GoodFragment extends BaseFragment {
                                 initGoodsInfo(response.data.goods_info);
                                 initStoreInfo(response.data.store_info);
                                 initHotShop(response.data.goods_commend_list);
-
+                                initProperty(response.data.goods_info);
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
                     }
                 });
+    }
+
+    private void initProperty(GoodsInfoBean goods_info) {
+        propertyBean.setGoods_name(goods_info.goods_name);
+        propertyBean.setGoods_num(goods_info.goods_discount);
+        propertyBean.setGoods_price(goods_info.goods_price);
+
+        List<PropertyValueBean> propertyValueBeen = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (goods_info.spec_name != null) {
+            for(int i = 0; i < goods_info.spec_name.size();i++) {
+                GoodsInfoBean.PropertyName propertyName = goods_info.spec_name.get(i);
+                PropertyValueBean propertyValueBean = new PropertyValueBean();
+                propertyValueBean.setProperty_parent_id(propertyName.spec_id);
+                propertyValueBean.setProperty_parent_name(propertyName.spec_name);
+                stringBuilder.append(propertyName.spec_name);
+                if (goods_info.spec_value != null) {
+                    for(int j = 0; j < goods_info.spec_value.size();j++) {
+                        GoodsInfoBean.PropertyValue propertyValue = goods_info.spec_value.get(j);
+                        if (propertyValue.spec_id == propertyName.spec_id) {
+                            propertyValueBean.setPropertyChildList(propertyValue.spec_value);
+                        }
+                    }
+                }
+                propertyValueBeen.add(propertyValueBean);
+            }
+        }
+        propertyBean.setPropertyList(propertyValueBeen);
+        String tip = "";
+        if (!TextUtils.isEmpty(stringBuilder.toString())) {
+            tip = "请选择" + stringBuilder.toString();
+        }
+        tvLabel.setText(tip);
+        propertyBean.setTip(tip);
+        propertyBean.setSelectNum("1");
     }
 
     private void initHotShop(final List<ShopMallHotBean> hot_goods_list) {
@@ -176,4 +230,12 @@ public class GoodFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 0 && data != null) {
+            propertyBean  = (PropertyBean) data.getSerializableExtra("selectInfo");
+        }
+    }
 }

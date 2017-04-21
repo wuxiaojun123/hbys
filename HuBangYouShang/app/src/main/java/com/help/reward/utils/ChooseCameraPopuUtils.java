@@ -1,6 +1,9 @@
 package com.help.reward.utils;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -8,11 +11,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.Response.UploadHeadImageReponse;
+import com.help.reward.cache.BaseDiskCache;
+import com.help.reward.cache.BaseImageDecoder;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.view.ActionSheetDialog;
@@ -41,6 +47,15 @@ public class ChooseCameraPopuUtils {
 
     private File mFile;
     private Bitmap mBitmap;
+    public static final String PIC_CAMERA_IMG_DIR = "hbysUpImg";
+    public static final String PIC_CAMERA_IMG_NAME = "camera.jpg";
+    /**
+     * 调用摄像头或从相册选取照片
+     */
+    public static final int PIC_RROM_CAMERA = 13;
+    public static final int PIC_RROM_PHONO = 14;
+    public static final int PIC_RROM_VIDEO = 15;
+    public static final int PIC_SIZE = 16;
     String type;
     public ChooseCameraPopuUtils(Activity activity,String type){
         this.activity=activity;
@@ -57,90 +72,228 @@ public class ChooseCameraPopuUtils {
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                try {
+
                                     // 调用系统摄像头，进行拍照
-                                    String state = Environment.getExternalStorageState();
-                                    if (state.equals(Environment.MEDIA_MOUNTED)) {
-                                        Intent phoneIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        String saveDir = Constant.ROOT;
-                                        File dir = new File(saveDir);
-                                        if (!dir.exists()) {
-                                            dir.mkdir();
+                                    String status = Environment.getExternalStorageState();
+                                    if (status.equals(Environment.MEDIA_MOUNTED)) {
+                                        try {
+                                            File dir = new File(
+                                                    Environment.getExternalStorageDirectory() + "/"
+                                                            + PIC_CAMERA_IMG_DIR);
+                                            if (!dir.exists())
+                                                dir.mkdirs();
+                                            File f = new File(dir,PIC_CAMERA_IMG_NAME);// localTempImgDir和localTempImageFileName是自己定义的名字
+                                            Uri u = Uri.fromFile(f);
+                                            Intent intent = new Intent(
+                                                    android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+                                            intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                                            intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+
+                                            activity.startActivityForResult(intent,
+                                                        PIC_RROM_CAMERA);
+
+                                        } catch (Exception e) {
+                                            // TODO Auto-generated catch block
+                                            ToastUtils.show(activity,"没有找到储存目录");
+
                                         }
-                                        mFile = new File(saveDir, System.currentTimeMillis() + ".png");
-                                        phoneIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mFile));
-                                        activity.startActivityForResult(phoneIntent, 3);
+                                    } else {
+                                        ToastUtils.show(activity,"没有储存卡");
+
                                     }
-                                } catch (Exception e) {
-                                    LogUtils.e(e);
-                                }
+
                             }
                         })
                 .addSheetItem("从相册选择", ActionSheetDialog.SheetItemColor.Blue,
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                try {
-                                    // 选择本地文件
-                                    Intent fileIntent = new Intent(
-                                            Intent.ACTION_PICK,
-                                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                            /* 取得相片后返回本画面 */
-                                    activity.startActivityForResult(fileIntent, 2);
-                                } catch (Exception e) {
-                                    LogUtils.e(e);
-                                }
+                                openImage();
                             }
                         }).show();
     }
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 2 && resultCode == RESULT_OK) {
+        if (requestCode == PIC_RROM_PHONO && resultCode == RESULT_OK) {
             // 获取选择本地的图片
-            Uri uri = data.getData();
-            if (mFile != null) {
-                mFile = null;
+            Uri selectedImageUri = data.getData();
+            if(selectedImageUri ==  null) {
+                ToastUtils.show(activity,  "选择图片失败");
+                return;
             }
-            if (uri != null) {
-                String[] proj = {
-                        MediaStore.Images.Media.DATA
-                };
-                Cursor actualimagecursor = activity.managedQuery(uri, proj, null, null, null);
-                int actual_image_column_index = actualimagecursor
-                        .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                actualimagecursor.moveToFirst();
-                String img_path = actualimagecursor
-                        .getString(actual_image_column_index);
-                mFile = new File(img_path);
-                if (Build.VERSION.SDK_INT < 14) {
-                    actualimagecursor.close();
-                }
-                uploadHeadPhoto();
-            } else {
-                // 获取图片
-                Bundle extras = data.getExtras();
-                mBitmap = (Bitmap) extras.get("data");
-                uploadHeadPhoto();
+            String file = getImageAbsolutePath(activity, selectedImageUri);
+            if(file ==  null) {
+                ToastUtils.show(activity,  "选择图片失败");
+                return;
             }
-        } else if (requestCode == 3 && resultCode == RESULT_OK) {
+            extractPhoto(file);
+
+        } else if (requestCode == PIC_RROM_CAMERA && resultCode == RESULT_OK) {
             // 获取拍照的图片
-            if (mFile != null) {
+
+            File f = new File(Environment.getExternalStorageDirectory() + "/"
+                    + PIC_CAMERA_IMG_DIR + "/"
+                    + PIC_CAMERA_IMG_NAME);
+            if (f != null) {
                 // 上传图片
-                uploadHeadPhoto();
+                extractPhoto(Environment.getExternalStorageDirectory() + "/"
+                        + PIC_CAMERA_IMG_DIR + "/"
+                        + PIC_CAMERA_IMG_NAME);
             }
         }
     }
 
 
-    public void uploadHeadPhoto(){
-        if(mFile == null){
-            if(mBitmap != null){
-                String fileName = System.currentTimeMillis()+"";
-                ImageFormatUtils.saveBitmapFile(mBitmap,fileName);
-                mFile = new File(fileName);
+    private void openImage() {
+        try {
+//				Uri uri =  Uri.parse("content://media/external/images/media/*");
+            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                activity.startActivityForResult(intent,
+                        PIC_RROM_PHONO);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+
+            Intent localIntent = new Intent();
+            localIntent.setType("image/*");
+            localIntent.setAction("android.intent.action.GET_CONTENT");
+            Intent localIntent2 = Intent.createChooser(localIntent, "选择图片");
+                activity.startActivityForResult(localIntent2,
+                        PIC_RROM_PHONO);
+
+    }
+}
+
+
+    /**
+     * 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
+
+
+     */
+
+    public static String getImageAbsolutePath(Activity context, Uri imageUri) {
+        if (context == null || imageUri == null)
+            return null;
+        final String scheme = imageUri.getScheme();
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, imageUri)) {
+            if (isExternalStorageDocument(imageUri)) {
+                String docId = DocumentsContract.getDocumentId(imageUri);
+                String[] split = docId.split(":");
+                String type = split[0];
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+            } else if (isDownloadsDocument(imageUri)) {
+                String id = DocumentsContract.getDocumentId(imageUri);
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                return getDataColumn(context, contentUri, null, null);
+            } else if (isMediaDocument(imageUri)) {
+                String docId = DocumentsContract.getDocumentId(imageUri);
+                String[] split = docId.split(":");
+                String type = split[0];
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                String selection = MediaStore.Images.Media._ID + "=?";
+                String[] selectionArgs = new String[] { split[1] };
+                return getDataColumn(context, contentUri, selection, selectionArgs);
             }
+        } else if (scheme == null) {
+
+            return imageUri.getPath();
+
+        }else if (ContentResolver.SCHEME_CONTENT.equalsIgnoreCase(imageUri.getScheme())) {
+            if (isGooglePhotosUri(imageUri))
+                return imageUri.getLastPathSegment();
+            return getDataColumn(context, imageUri, null, null);
         }
+        // File
+        else if (ContentResolver.SCHEME_FILE.equalsIgnoreCase(imageUri.getScheme())) {
+
+            return imageUri.getPath();
+        }
+        return null;
+    }
+
+    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = null;
+        String column = MediaStore.Images.Media.DATA;
+        String[] projection = { column };
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
+     */
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is Google Photos.
+     */
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
+    public void extractPhoto(String path){
+        Bitmap bmp;
+        String fileName = null;
+        try {
+            bmp = new BaseImageDecoder(activity).calculateInSampleSize(path,
+                    750);
+            fileName = System.currentTimeMillis() + ".jpg";
+            BaseDiskCache.getInstance(activity).save(fileName, bmp);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            ToastUtils.show(activity, "存储图片失败");
+            return;
+        }
+        BaseDiskCache cache = BaseDiskCache.getInstance(activity);
+        File file = cache.get(fileName);
+        uploadHeadPhoto(file);
+
+    }
+
+    public void uploadHeadPhoto(File mFile){
+
         if(mFile == null){
             ToastUtils.show(activity,"请选择图片");
             return;

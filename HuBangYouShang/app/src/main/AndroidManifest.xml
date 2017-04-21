@@ -364,6 +364,10 @@
         <activity
             android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.help.reward.activity.ShowBigImageActivity"
+            android:screenOrientation="portrait" />
         <!--提交投诉-->
         <activity
             android:name="com.help.reward.activity.HelpComplainedActivity"
@@ -412,6 +416,13 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
+        <activity
+            android:name="com.help.reward.activity.GoodPropertyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:theme="@style/AppThemeDialogIsTranslucent"
+            >
+            </activity>
         <!-- 开机自启动服务 -->
         <receiver android:name="com.help.reward.chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">

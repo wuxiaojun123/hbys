@@ -32,7 +32,6 @@ import com.help.reward.utils.GlideUtils;
 import com.help.reward.utils.StringUtils;
 import com.help.reward.view.ChooseCommentTypePop;
 import com.help.reward.view.MyProcessDialog;
-import com.hyphenate.easeui.ui.EaseShowBigImageActivity;
 import com.idotools.utils.DateUtil;
 import com.idotools.utils.ToastUtils;
 
@@ -440,10 +439,9 @@ public class HelpSeekInfoActivity extends BaseActivity {
     }
 
     private void showBigImage(String url) {
-        Intent intent = new Intent(this, EaseShowBigImageActivity.class);
+        Intent intent = new Intent(this, ShowBigImageActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("uri", Uri.parse(url));
-        bundle.putInt("default_image", R.mipmap.img_default);
+        bundle.putString("imageUrl", url);
         intent.putExtras(bundle);
         startActivity(intent);
     }
