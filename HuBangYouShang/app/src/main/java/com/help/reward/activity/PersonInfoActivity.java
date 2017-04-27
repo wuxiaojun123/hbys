@@ -310,7 +310,6 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                                 if(avatarUrl != null){
                                     App.mLoginReponse.avator = avatarUrl;
                                 }
-
                                 finish();
                                 ActivitySlideAnim.slideOutAnim(PersonInfoActivity.this);
                             }
