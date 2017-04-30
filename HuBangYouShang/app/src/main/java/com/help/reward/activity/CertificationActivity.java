@@ -1,7 +1,10 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +20,7 @@ import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.ChooseCameraPopuUtils;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.utils.ValidateUtil;
 import com.idotools.utils.LogUtils;
@@ -64,6 +68,9 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
     LinearLayout ll_info; // 信息
     private String identity_img; // 图片
 
+    ChooseCameraPopuUtils chooseCameraPopuUtils;
+    private String avatarUrl; // 头像连接
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,6 +116,8 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
     private void judgeState(CertificationResponse.CertificationBean bean) {
         if (bean.certification != null) {
             if ("0".equals(bean.certification)) { // 未认证，正常显示
+                initSelectPhoto();
+                tv_upload.setCompoundDrawables(null, null, null, null);
 
             } else if ("1".equals(bean.certification)) {
                 tv_certification_success.setVisibility(View.VISIBLE);
@@ -131,6 +140,27 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    private void initSelectPhoto() {
+        chooseCameraPopuUtils = new ChooseCameraPopuUtils(this, "avatar");
+        chooseCameraPopuUtils.setOnUploadImageListener(new ChooseCameraPopuUtils.OnUploadImageListener() {
+            @Override
+            public void onLoadError() {
+                ToastUtils.show(mContext, "选择相片出错");
+            }
+
+            @Override
+            public void onLoadSucced(String file_name, String url) {
+                iv_photo.setVisibility(View.VISIBLE);
+                GlideUtils.loadImage(url, iv_photo);
+                identity_img = file_name;
+                avatarUrl = url;
+                Drawable drawable = ContextCompat.getDrawable(mContext, R.mipmap.img_certification_pass);
+                tv_upload.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                tv_upload.setText("已上传");
+            }
+        });
+    }
+
     private void initView() {
         tv_title.setText(R.string.string_certification_title);
         tv_title_right.setVisibility(View.GONE);
@@ -147,7 +177,7 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
 
                 break;
             case R.id.iv_upload: // 点击上传
-
+                chooseCameraPopuUtils.showPopupWindow();
 
                 break;
             case R.id.btn_commit: // 点击提交
@@ -190,6 +220,7 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
 
                     @Override
                     public void onNext(BaseResponse<String> response) {
+                        LogUtils.e("返回信息是：" + response.data + "--" + response.msg);
                         if (response.code == 200) {
                             if (response.data != null) {
                                 // 设置用户属性
@@ -200,6 +231,13 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (chooseCameraPopuUtils != null)
+            chooseCameraPopuUtils.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 

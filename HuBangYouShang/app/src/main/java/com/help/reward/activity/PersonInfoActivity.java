@@ -169,7 +169,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                             if (response.data != null) {
                                 // 设置用户属性
                                 PersonInfoResponse infoResponse = response.data;
-                                LogUtils.e("获取数据成功。。。" + response.data.member_name + "===头像路径是;" + infoResponse.member_avatar);
+//                                LogUtils.e("获取数据成功。。。" + response.data.member_name + "===头像路径是;" + infoResponse.member_avatar);
                                 GlideUtils.loadCircleImage(infoResponse.member_avatar, iv_head);
 
                                 et_nicheng.setText(infoResponse.member_name);

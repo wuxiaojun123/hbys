@@ -31,7 +31,7 @@ import rx.schedulers.Schedulers;
  * 地址管理
  */
 
-public class AddressManagerActivity extends BaseActivity implements View.OnClickListener{
+public class AddressManagerActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
@@ -42,7 +42,7 @@ public class AddressManagerActivity extends BaseActivity implements View.OnClick
 
     @BindView(R.id.btn_add_address)
     Button btn_add_address;
-//    @BindView(R.id.tv_empty_view)
+    //    @BindView(R.id.tv_empty_view)
 //    TextView tv_empty_view;
     @BindView(R.id.recycler_view)
     LRecyclerView lRecyclerview;// item_address_manager
@@ -104,24 +104,23 @@ public class AddressManagerActivity extends BaseActivity implements View.OnClick
                 });
     }
 
-    @OnClick({R.id.iv_title_back,R.id.btn_add_address})
+    @OnClick({R.id.iv_title_back, R.id.btn_add_address})
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.iv_title_back:
                 finish();
                 ActivitySlideAnim.slideOutAnim(AddressManagerActivity.this);
 
                 break;
             case R.id.btn_add_address:
-                startActivity(new Intent(AddressManagerActivity.this,AddAddressActivity.class));
+                startActivity(new Intent(AddressManagerActivity.this, AddAddressActivity.class));
                 ActivitySlideAnim.slideInAnim(AddressManagerActivity.this);
 
                 break;
         }
     }
-
 
 
 }

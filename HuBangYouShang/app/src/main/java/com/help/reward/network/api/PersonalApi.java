@@ -1,6 +1,7 @@
 package com.help.reward.network.api;
 
 import com.help.reward.bean.CertificationResponse;
+import com.help.reward.bean.Response.AddAddressResponse;
 import com.help.reward.bean.Response.AddressResponse;
 import com.help.reward.bean.Response.AdvertisementResponse;
 import com.help.reward.bean.Response.AeraResponse;
@@ -8,6 +9,7 @@ import com.help.reward.bean.Response.BalanceExchangeResponse;
 import com.help.reward.bean.Response.BalanceExchangeVolumeResponse;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.BusinessResponse;
+import com.help.reward.bean.Response.CouponDetailsResponse;
 import com.help.reward.bean.Response.CouponTradingResponse;
 import com.help.reward.bean.Response.DiscountAmountResponse;
 import com.help.reward.bean.Response.GeneralExchangeVolumeResponse;
@@ -129,13 +131,41 @@ public interface PersonalApi {
     );
 
 
-    // 我的求助--发帖
+    // 地址管理
     @FormUrlEncoded
     @POST("mobile/index.php?act=member_address&op=address_list")
     Observable<AddressResponse> getAddressResponse(
             @Field("key") String key
     );
 
+    // 删除地址
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_address&op=address_del")
+    Observable<BaseResponse<String>> getRemoveAddressResponse(
+            @Field("key") String key,
+            @Field("address_id") String address_id
+    );
+
+    // 新增地址
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_address&op=address_add")
+    Observable<BaseResponse<String>> getAddAddressResponse(
+            @Field("key") String key,
+            @Field("true_name") String true_name,
+            @Field("area_info") String area_info,
+            @Field("address") String address,
+            @Field("mob_phone") String mob_phone,
+            @Field("area_id") String area_id,
+            @Field("cite_id") String cite_id
+    );
+
+    // 编辑地址
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_address&op=address_edit")
+    Observable<AddAddressResponse> getEditAddressResponse(
+            @Field("key") String key,
+            @Field("address_id") String address_id
+    );
 
     // 我的求助--发帖
     @FormUrlEncoded
@@ -298,6 +328,14 @@ public interface PersonalApi {
             @Field("storename") String storename,
             @Field("order") String order,
             @Field("goodsname") String goodsname
+    );
+
+    // 我的账户--优惠劵详情
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_voucher&op=voucher_info")
+    Observable<CouponDetailsResponse> getCouponDetailsResponse(
+            @Field("key") String key,
+            @Field("voucher_id") String goodsname
     );
 
     // 余额兑换帮赏分

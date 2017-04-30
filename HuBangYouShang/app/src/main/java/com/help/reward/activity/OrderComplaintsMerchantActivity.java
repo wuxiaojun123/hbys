@@ -231,7 +231,7 @@ public class OrderComplaintsMerchantActivity extends BaseActivity implements Vie
                         finish();
                         ActivitySlideAnim.slideOutAnim(OrderComplaintsMerchantActivity.this);
                     }
-                });
+                }).show();
     }
 
     void showPhoto() {

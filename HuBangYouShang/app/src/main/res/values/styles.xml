@@ -36,8 +36,9 @@
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textSize">@dimen/dimen_15</item>
-        <item name="android:textColor">@color/color_3a</item>
+        <item name="android:textColor">@color/color_84</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:textColorHint">@color/color_bf</item>
         <item name="android:paddingLeft">10dp</item>
     </style>
 

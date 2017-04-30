@@ -113,10 +113,8 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
                 ActivitySlideAnim.slideInAnim(MyCouponActivity.this);
 
                 break;
-
         }
     }
-
 
     private class MyFragmentPageAdapter extends FragmentPagerAdapter {
 

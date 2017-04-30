@@ -225,11 +225,15 @@
         <!--优惠劵交易大厅-->
         <activity
             android:name="com.help.reward.activity.CouponTradingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
         <!--优惠劵搜索结果展示-->
         <activity
             android:name="com.help.reward.activity.CouponTradingSearchResultActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
         <!--我的订单-->
         <activity
             android:name="com.help.reward.activity.MyOrderActivity"

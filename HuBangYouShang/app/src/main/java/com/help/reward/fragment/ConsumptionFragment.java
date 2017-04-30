@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.help.reward.activity.MyAccountActivity;
+import com.help.reward.activity.MyCouponActivity;
 import com.help.reward.activity.MyOrderActivity;
 import com.help.reward.activity.SearchShopActivity;
 import com.help.reward.view.SearchEditTextView;
@@ -282,7 +283,8 @@ public class ConsumptionFragment extends BaseFragment {
 
                 break;
             case R.id.layout_shop_coupon: // 优惠劵
-
+                startActivity(new Intent(mContext, MyCouponActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
             case R.id.layout_shop_type: // 分类
