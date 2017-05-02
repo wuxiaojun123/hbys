@@ -18,7 +18,8 @@ public class Constant {
     // 210.72.13.135  http://jyb.youdoidodo.com   http://192.168.3.2/
     public static final String BASE_URL = "http://jyb.youdoidodo.com";
 
-    //public static final String BASE_URL = "http://192.168.3.2";
+
+    public static final String TEL_PHONE = "025-58840881"; // 电话号码，设置页面
 
     // 登录
     public static final String URL_LOGIN = "mobile/index.php?act=login";

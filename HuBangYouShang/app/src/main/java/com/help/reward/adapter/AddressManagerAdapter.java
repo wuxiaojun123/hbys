@@ -3,6 +3,7 @@ package com.help.reward.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -11,10 +12,12 @@ import android.widget.TextView;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.activity.AddAddressActivity;
+import com.help.reward.activity.AddressManagerActivity;
 import com.help.reward.activity.OrderComplaintsMerchantActivity;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.AddressBean;
 import com.help.reward.bean.MyOrderListBean;
+import com.help.reward.bean.Response.AddressResponse;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -34,6 +37,8 @@ import rx.schedulers.Schedulers;
 
 public class AddressManagerAdapter extends BaseRecyclerAdapter {
 
+    private int lastCheckedIndex = -1;
+
     public AddressManagerAdapter(Context context) {
         super(context);
     }
@@ -41,6 +46,11 @@ public class AddressManagerAdapter extends BaseRecyclerAdapter {
     @Override
     public int getLayoutId() {
         return R.layout.item_address_manager;
+    }
+
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+//        super.onViewRecycled(holder);
     }
 
     @Override
@@ -57,24 +67,23 @@ public class AddressManagerAdapter extends BaseRecyclerAdapter {
         tv_name.setText(bean.true_name);
         tv_mobile.setText(bean.mob_phone);
         tv_address.setText(bean.address);
+
+        cb_default.setOnCheckedChangeListener(null);
+
         if (bean.is_default.equals("0")) {
             cb_default.setChecked(false);
         } else {
             cb_default.setChecked(true);
+            cb_default.setEnabled(false);
+            lastCheckedIndex = position;
         }
 
         cb_default.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                LogUtils.e("是否选中isChecked=" + isChecked);
-                if (isChecked) { // 选中
-                    initCheckout();
-                    bean.is_default = "1";
-                } else { // 未选中
-                    bean.is_default = "0";
+                if (isChecked) {
+                    setDefault(position, bean.address_id);
                 }
-                mDataList.set(position, bean);
-                notifyDataSetChanged();
             }
         });
 
@@ -82,8 +91,8 @@ public class AddressManagerAdapter extends BaseRecyclerAdapter {
             @Override
             public void onClick(View v) {
                 Intent mIntent = new Intent(mContext, AddAddressActivity.class);
-                mIntent.putExtra("address_id", bean.address_id);
-                mContext.startActivity(mIntent);
+                mIntent.putExtra("AddressBean", bean);
+                ((Activity) mContext).startActivityForResult(mIntent, AddressManagerActivity.REQUEST_CODE1);
                 ActivitySlideAnim.slideInAnim((Activity) mContext);
             }
         });
@@ -96,18 +105,63 @@ public class AddressManagerAdapter extends BaseRecyclerAdapter {
 
     }
 
+
+    /***
+     * 设为默认
+     *
+     * @param address_id
+     */
+    private void setDefault(final int position, String address_id) {
+        AddressBean bean = (AddressBean) mDataList.get(position);
+        LogUtils.e("提交的名称是：" + bean.true_name);
+        PersonalNetwork
+                .getResponseApi()
+                .getSetDefaultAddressResponse(App.APP_CLIENT_KEY, address_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<AddressResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(AddressResponse response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            if (response.data != null) {
+                                ToastUtils.show(mContext, response.msg);
+                                if (mDataList != null) {
+                                    mDataList.clear();
+                                }
+                                mDataList = response.data.address_list;
+                                notifyDataSetChanged();
+                            }
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
     /***
      * 初始化所有的默认地址
      */
-    private void initCheckout() {
+    private void initCheckout(int position) {
         if (mDataList != null) {
-            int size = mDataList.size();
-            for (int i = 0; i < size; i++) {
-                AddressBean bean = (AddressBean) mDataList.get(i);
+            if (lastCheckedIndex != -1) {
+                AddressBean bean = (AddressBean) mDataList.get(lastCheckedIndex);
                 bean.is_default = "0";
-                mDataList.set(i, bean);
+                mDataList.set(lastCheckedIndex, bean);
             }
+            AddressBean bean2 = (AddressBean) mDataList.get(position);
+            bean2.is_default = "1";
+            mDataList.set(position, bean2);
+            lastCheckedIndex = position;
         }
+        notifyDataSetChanged();
     }
 
     /***

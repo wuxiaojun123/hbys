@@ -14,6 +14,7 @@ import com.help.reward.bean.AddressBean;
 import com.help.reward.bean.Response.AddAddressResponse;
 import com.help.reward.bean.Response.AddressResponse;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.SaveNewAddressResponse;
 import com.help.reward.manager.AddressManager;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -41,6 +42,9 @@ import rx.schedulers.Schedulers;
  */
 
 public class AddAddressActivity extends BaseActivity implements View.OnClickListener {
+
+    public static final int RESULT_CODE1 = 1;
+
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -61,21 +65,26 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
     private String cityID; // 城市
     private String countryID; // 地区
 
+    private AddressBean mAddressBean;
     private String address_id;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
         ButterKnife.bind(this);
-        address_id = getIntent().getStringExtra("address_id");
+        mAddressBean = getIntent().getParcelableExtra("AddressBean");
+        if (mAddressBean != null) {
+            address_id = mAddressBean.address_id;
+        }
         initView();
         if (!TextUtils.isEmpty(address_id)) {
-            initNet();
+            bindView();
         }
     }
 
-    private void initNet() {
+    /*private void initNet() {
         // AddAddressResponse
         PersonalNetwork
                 .getResponseApi()
@@ -100,17 +109,20 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                         }
                     }
                 });
-    }
+    }*/
 
     /****
      * 绑定数据
-     *
-     * @param data
      */
-    private void bindView(AddressBean data) {
-        et_name.setText(data.true_name);
-        et_phone_number.setText(data.mob_phone);
-        et_address.setText(data.address);
+    private void bindView() {
+        et_name.setText(mAddressBean.true_name);
+        et_phone_number.setText(mAddressBean.mob_phone);
+        tv_area.setText(mAddressBean.area_info);
+        et_address.setText(mAddressBean.address);
+
+        provinceID = mAddressBean.pro_id;
+        cityID = mAddressBean.area_id;
+        countryID = mAddressBean.city_id;
     }
 
     private void initView() {
@@ -133,7 +145,6 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                 dialog.setOnAddressSelectedListener(new OnAddressSelectedListener() {
                     @Override
                     public void onAddressSelected(Province province, City city, County county, Street street) {
-                        LogUtils.e("选择的是:" + province.name + "----" + city + "----country" + county);
                         String area = (province == null ? "" : province.name) +
                                 (city == null ? "" : "" + city.name) +
                                 (county == null ? "" : "" + county.name) +
@@ -141,7 +152,11 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
 
                         provinceID = province.id + "";
                         cityID = city.id + "";
-                        countryID = county.id + "";
+                        if (county != null) {
+                            countryID = county.id + "";
+                        }else{
+                            countryID = "";
+                        }
 
                         tv_area.setText(area);
                         dialog.dismiss();
@@ -177,8 +192,8 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             return;
         }
         String area_info = tv_area.getText().toString().trim();
-        if(TextUtils.isEmpty(area_info)){
-            ToastUtils.show(mContext,"请选择地区");
+        if (TextUtils.isEmpty(area_info)) {
+            ToastUtils.show(mContext, "请选择地区");
             return;
         }
         String detailAddress = et_address.getText().toString().trim();
@@ -186,10 +201,18 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             ToastUtils.show(mContext, "请输入详细地址");
             return;
         }
-        LogUtils.e("provinceID="+provinceID+"--cityID="+cityID+"--countryID="+countryID);
+        MyProcessDialog.showDialog(mContext, "提交中...", false, false);
+        if (mAddressBean != null) {
+            commitEditAddress(trueName, phoneNumber, area_info, detailAddress);
+        } else {
+            commitNewAddress(trueName, phoneNumber, area_info, detailAddress);
+        }
+    }
+
+    private void commitEditAddress(String trueName, String phoneNumber, String area_info, String detailAddress) {
         PersonalNetwork
                 .getResponseApi()
-                .getAddAddressResponse(App.APP_CLIENT_KEY, trueName, phoneNumber, provinceID, cityID, countryID,area_info, detailAddress)
+                .getEditAddressResponse(App.APP_CLIENT_KEY, address_id, trueName, phoneNumber, provinceID, cityID, countryID, area_info, detailAddress)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<String>>() {
@@ -204,8 +227,9 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                     public void onNext(BaseResponse<String> response) {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
-                            if (response.data != null) { // 删除成功
+                            if (response.data != null) { // 返回地址id  response.data.address_id
                                 ToastUtils.show(mContext, response.msg);
+                                setResult(RESULT_CODE1);
                                 finish();
                                 ActivitySlideAnim.slideOutAnim(AddAddressActivity.this);
                             }
@@ -214,8 +238,36 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                         }
                     }
                 });
-
     }
 
+    private void commitNewAddress(String trueName, String phoneNumber, String area_info, String detailAddress) {
+        PersonalNetwork
+                .getResponseApi()
+                .getAddAddressResponse(App.APP_CLIENT_KEY, trueName, phoneNumber, provinceID, cityID, countryID, area_info, detailAddress)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<SaveNewAddressResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(SaveNewAddressResponse response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            if (response.data != null) { // 返回地址id  response.data.address_id
+                                setResult(RESULT_CODE1);
+                                finish();
+                                ActivitySlideAnim.slideOutAnim(AddAddressActivity.this);
+                            }
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
 
 }

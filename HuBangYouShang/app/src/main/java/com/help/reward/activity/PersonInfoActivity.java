@@ -260,7 +260,11 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
                         provinceID = province.id + "";
                         cityID = city.id + "";
-                        countryID = county.id + "";
+                        if(county != null){
+                            countryID = county.id + "";
+                        }else{
+                            countryID = "";
+                        }
 
                         tv_area.setText(area);
                         dialog.dismiss();

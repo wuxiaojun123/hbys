@@ -30,6 +30,7 @@ import com.help.reward.bean.Response.MyRewardPostResponse;
 import com.help.reward.bean.Response.MyVoteResponse;
 import com.help.reward.bean.Response.OrderInfoResponse;
 import com.help.reward.bean.Response.PersonInfoResponse;
+import com.help.reward.bean.Response.SaveNewAddressResponse;
 import com.help.reward.bean.Response.UploadHeadImageReponse;
 import com.help.reward.utils.Constant;
 
@@ -150,7 +151,7 @@ public interface PersonalApi {
     // 新增地址
     @FormUrlEncoded
     @POST("mobile/index.php?act=member_address&op=address_add")
-    Observable<BaseResponse<String>> getAddAddressResponse(
+    Observable<SaveNewAddressResponse> getAddAddressResponse(
             @Field("key") String key,
             @Field("true_name") String true_name,
             @Field("mob_phone") String mob_phone,
@@ -164,7 +165,22 @@ public interface PersonalApi {
     // 编辑地址
     @FormUrlEncoded
     @POST("/mobile/index.php?act=member_address&op=address_edit")
-    Observable<AddAddressResponse> getEditAddressResponse(
+    Observable<BaseResponse<String>> getEditAddressResponse(
+            @Field("key") String key,
+            @Field("address_id") String address_id,
+            @Field("true_name") String true_name,
+            @Field("mob_phone") String mob_phone,
+            @Field("pro_id") String pro_id,
+            @Field("area_id") String area_id,
+            @Field("city_id") String cite_id,
+            @Field("area_info") String area_info,
+            @Field("address") String address
+    );
+
+    // 设为默认
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_address&op=set_default")
+    Observable<AddressResponse> getSetDefaultAddressResponse(
             @Field("key") String key,
             @Field("address_id") String address_id
     );

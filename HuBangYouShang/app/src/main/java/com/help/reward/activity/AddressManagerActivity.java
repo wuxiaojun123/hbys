@@ -33,6 +33,8 @@ import rx.schedulers.Schedulers;
 
 public class AddressManagerActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final int REQUEST_CODE1 = 1;
+
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -94,7 +96,7 @@ public class AddressManagerActivity extends BaseActivity implements View.OnClick
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                mHelpPostAdapter.addAll(response.data.address_list);
+                                mHelpPostAdapter.setDataList(response.data.address_list);
                             }
 
                         } else {
@@ -115,10 +117,19 @@ public class AddressManagerActivity extends BaseActivity implements View.OnClick
 
                 break;
             case R.id.btn_add_address:
-                startActivity(new Intent(AddressManagerActivity.this, AddAddressActivity.class));
+                Intent mIntent = new Intent(AddressManagerActivity.this, AddAddressActivity.class);
+                startActivityForResult(mIntent,REQUEST_CODE1);
                 ActivitySlideAnim.slideInAnim(AddressManagerActivity.this);
 
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == REQUEST_CODE1){
+            initNetwork();
         }
     }
 

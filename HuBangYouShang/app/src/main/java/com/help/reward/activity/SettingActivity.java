@@ -126,7 +126,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         DataCleanManager.cleanFiles(mContext);
                         DataCleanManager.cleanExternalCache(mContext);
 
-                        ToastUtils.show(mContext,"清除成功");
+                        ToastUtils.show(mContext, "清除成功");
                     }
                 })
                 .setNegativeButton("取消", new View.OnClickListener() {
@@ -141,11 +141,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         new AlertDialog(SettingActivity.this)
                 .builder()
                 .setTitle(R.string.string_system_prompt)
-                .setMsg("025-58840881")
+                .setMsg(Constant.TEL_PHONE)
                 .setPositiveButton("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:025-58840881"));
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Constant.TEL_PHONE));
                         startActivity(intent);
                     }
                 })
@@ -157,7 +157,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }).show();
     }
 
-    private void logout(){
+    private void logout() {
     }
 
 }
