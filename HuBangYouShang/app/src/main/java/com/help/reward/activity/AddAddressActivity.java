@@ -18,6 +18,7 @@ import com.help.reward.manager.AddressManager;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.ValidateUtil;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
@@ -69,7 +70,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         ButterKnife.bind(this);
         address_id = getIntent().getStringExtra("address_id");
         initView();
-        if(!TextUtils.isEmpty(address_id)){
+        if (!TextUtils.isEmpty(address_id)) {
             initNet();
         }
     }
@@ -78,7 +79,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         // AddAddressResponse
         PersonalNetwork
                 .getResponseApi()
-                .getEditAddressResponse(App.APP_CLIENT_KEY,address_id)
+                .getEditAddressResponse(App.APP_CLIENT_KEY, address_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<AddAddressResponse>() {
@@ -103,6 +104,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
 
     /****
      * 绑定数据
+     *
      * @param data
      */
     private void bindView(AddressBean data) {
@@ -170,15 +172,24 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             ToastUtils.show(mContext, "请输入收货人的手机号码");
             return;
         }
+        if (!ValidateUtil.isMobile(phoneNumber)) {
+            ToastUtils.show(mContext, "手机号格式不正确");
+            return;
+        }
+        String area_info = tv_area.getText().toString().trim();
+        if(TextUtils.isEmpty(area_info)){
+            ToastUtils.show(mContext,"请选择地区");
+            return;
+        }
         String detailAddress = et_address.getText().toString().trim();
         if (TextUtils.isEmpty(detailAddress)) {
             ToastUtils.show(mContext, "请输入详细地址");
             return;
         }
-
-        /*PersonalNetwork
+        LogUtils.e("provinceID="+provinceID+"--cityID="+cityID+"--countryID="+countryID);
+        PersonalNetwork
                 .getResponseApi()
-                .getAddAddressResponse(App.APP_CLIENT_KEY, trueName,)
+                .getAddAddressResponse(App.APP_CLIENT_KEY, trueName, phoneNumber, provinceID, cityID, countryID,area_info, detailAddress)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<String>>() {
@@ -195,13 +206,14 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                         if (response.code == 200) {
                             if (response.data != null) { // 删除成功
                                 ToastUtils.show(mContext, response.msg);
-                                remove(position);
+                                finish();
+                                ActivitySlideAnim.slideOutAnim(AddAddressActivity.this);
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
                     }
-                });*/
+                });
 
     }
 

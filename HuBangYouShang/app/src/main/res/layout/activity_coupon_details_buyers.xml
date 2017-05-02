@@ -174,10 +174,14 @@
             style="@style/style_coupon_details_text_left"
             android:text="交易价格" />
 
-        <TextView
-            android:id="@+id/tv_transaction_price"
+        <EditText
+            android:id="@+id/et_transaction_price"
             style="@style/style_coupon_details_text_right"
-            android:textColor="@color/color_fa" />
+            android:textColor="@color/color_fa"
+            android:maxLines="1"
+            android:background="@null"
+            android:inputType="number"
+            />
 
     </LinearLayout>
 

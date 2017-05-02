@@ -19,6 +19,7 @@ public class DateUtil {
     private static final SimpleDateFormat SDF_NO_SECONDS = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private static final SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy.MM.dd");
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     /**
@@ -41,6 +42,17 @@ public class DateUtil {
     public static String getDateToString(String time) throws ParseException {
         Date d = SDF_NO_SECONDS.parse(time);
         return SDF_NO_SECONDS.format(d);
+    }
+
+    /**
+     * 把时间戳变yyyy-MM-dd格式时间
+     *
+     * @param longTime
+     * @return
+     */
+    public static String getYYYYMMDDDateToString(String longTime) throws ParseException {
+        Date d = new Date(Long.parseLong(longTime));
+        return dateFormat2.format(d);
     }
 
     public static Date str2Date(String str) {

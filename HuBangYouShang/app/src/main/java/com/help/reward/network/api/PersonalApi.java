@@ -106,12 +106,13 @@ public interface PersonalApi {
 
     /**
      * 上传图片
+     *
      * @return
      */
     @Multipart
     @POST("mobile/index.php?act=upload_file&op=upload_img")
     Observable<UploadHeadImageReponse> uploadImage(
-                             @PartMap Map<String,RequestBody> params,@Part MultipartBody.Part part);
+            @PartMap Map<String, RequestBody> params, @Part MultipartBody.Part part);
 
     // 认证--获取状态
     @FormUrlEncoded
@@ -152,11 +153,12 @@ public interface PersonalApi {
     Observable<BaseResponse<String>> getAddAddressResponse(
             @Field("key") String key,
             @Field("true_name") String true_name,
-            @Field("area_info") String area_info,
-            @Field("address") String address,
             @Field("mob_phone") String mob_phone,
+            @Field("pro_id") String pro_id,
             @Field("area_id") String area_id,
-            @Field("cite_id") String cite_id
+            @Field("city_id") String cite_id,
+            @Field("area_info") String area_info,
+            @Field("address") String address
     );
 
     // 编辑地址
@@ -335,7 +337,33 @@ public interface PersonalApi {
     @POST("/mobile/index.php?act=member_voucher&op=voucher_info")
     Observable<CouponDetailsResponse> getCouponDetailsResponse(
             @Field("key") String key,
-            @Field("voucher_id") String goodsname
+            @Field("voucher_id") String voucher_id
+    );
+
+    // 我的账户--优惠劵详情--我要交易
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_voucher&op=buy")
+    Observable<BaseResponse<String>> getCouponPutOnSaleResponse(
+            @Field("key") String key,
+            @Field("voucher_id") String voucher_id,
+            @Field("price") int price
+    );
+
+    // 我的账户--优惠劵详情--优惠劵下架
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_voucher&op=withdraw")
+    Observable<BaseResponse<String>> getCouponWithdrawResponse(
+            @Field("key") String key,
+            @Field("voucher_id") String voucher_id
+    );
+
+    // 我的账户--优惠劵详情--确认交易
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_voucher&op=put_on_sale")
+    Observable<BaseResponse<String>> getCouponBuyResponse(
+            @Field("key") String key,
+            @Field("voucher_id") String voucher_id,
+            @Field("price") int price
     );
 
     // 余额兑换帮赏分

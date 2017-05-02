@@ -77,6 +77,7 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_certification);
         ButterKnife.bind(this);
+        ll_info.setVisibility(View.GONE);
         initView();
         initNet();
     }
@@ -116,10 +117,11 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
     private void judgeState(CertificationResponse.CertificationBean bean) {
         if (bean.certification != null) {
             if ("0".equals(bean.certification)) { // 未认证，正常显示
+                ll_info.setVisibility(View.VISIBLE);
                 initSelectPhoto();
-                tv_upload.setCompoundDrawables(null, null, null, null);
 
-            } else if ("1".equals(bean.certification)) {
+            } else if ("1".equals(bean.certification)) { // 通过
+                ll_info.setVisibility(View.VISIBLE);
                 tv_certification_success.setVisibility(View.VISIBLE);
                 btn_commit.setVisibility(View.GONE);
                 et_name.setText(bean.member_truename);
@@ -127,11 +129,18 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                 et_card.setText(bean.ID_card);
                 et_card.setClickable(false);
                 iv_photo.setVisibility(View.VISIBLE);
+                LogUtils.e("图片地址是：" + bean.identity_img);
                 GlideUtils.loadImage(bean.identity_img, iv_photo);
+                tv_upload.setText("审核成功");
+                Drawable drawable = ContextCompat.getDrawable(mContext, R.mipmap.img_certification_pass);
+                tv_upload.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
                 iv_upload.setVisibility(View.GONE);
+                initSelectPhoto();
 
             } else if ("2".equals(bean.certification)) { // 审核未通过
+                ll_info.setVisibility(View.VISIBLE);
                 tv_certification_failed.setVisibility(View.VISIBLE);
+                initSelectPhoto();
 
             } else if ("3".equals(bean.certification)) {
                 ll_info.setVisibility(View.GONE);
@@ -141,7 +150,7 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initSelectPhoto() {
-        chooseCameraPopuUtils = new ChooseCameraPopuUtils(this, "avatar");
+        chooseCameraPopuUtils = new ChooseCameraPopuUtils(this, "certification");
         chooseCameraPopuUtils.setOnUploadImageListener(new ChooseCameraPopuUtils.OnUploadImageListener() {
             @Override
             public void onLoadError() {
@@ -224,7 +233,9 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                         if (response.code == 200) {
                             if (response.data != null) {
                                 // 设置用户属性
-                                LogUtils.e("修改个人信息成功。。。" + response.data);
+                                ToastUtils.show(mContext, response.data);
+                                finish();
+                                ActivitySlideAnim.slideOutAnim(CertificationActivity.this);
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
