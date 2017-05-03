@@ -132,6 +132,59 @@ public interface PersonalApi {
             @Field("key") String key
     );
 
+    // 手机认证---验证码验证
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_account&op=modify_mobile_step3")
+    Observable<BaseResponse<String>> getModifyMobileStep3(
+            @Field("key") String key,
+            @Field("phone") String phone,
+            @Field("auth_code") String authcode
+    );
+
+    // 手机认证---重设密码
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_account&op=modify_mobile_step5")
+    Observable<BaseResponse<String>> getModifyMobileStep5(
+            @Field("key") String key,
+            @Field("password") String password
+    );
+
+    // 登录密码---验证码验证
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_account&op=modify_password_step3")
+    Observable<BaseResponse<String>> getModifyPwdStep3(
+            @Field("key") String key,
+            @Field("phone") String phone,
+            @Field("auth_code") String authcode
+    );
+
+    // 登录密码---重设密码
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_account&op=modify_password_step5")
+    Observable<BaseResponse<String>> getModifyPwdStep5(
+            @Field("key") String key,
+            @Field("password") String password,
+            @Field("password1") String password1
+    );
+
+    // 支付密码---验证码验证
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_account&op=modify_paypwd_step3")
+    Observable<BaseResponse<String>> getModifyPayStep3(
+            @Field("key") String key,
+            @Field("phone") String phone,
+            @Field("auth_code") String authcode
+    );
+
+    // 支付密码---重设密码
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_account&op=modify_password_step5")
+    Observable<BaseResponse<String>> getModifyPayStep5(
+            @Field("key") String key,
+            @Field("password") String password,
+            @Field("password1") String password1
+    );
+
 
     // 地址管理
     @FormUrlEncoded

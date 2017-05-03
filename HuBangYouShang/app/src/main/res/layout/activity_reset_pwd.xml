@@ -50,7 +50,7 @@
                 android:textSize="@dimen/dimen_15" />-->
 
             <EditText
-                android:id="@+id/et_phone_number"
+                android:id="@+id/et_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toLeftOf="@id/tv_code"
@@ -60,7 +60,7 @@
                 android:hint="请输入新的密码"
                 android:paddingLeft="10dp"
                 android:paddingRight="60dp"
-                android:inputType="phone"
+                android:inputType="textPassword"
                 android:maxLines="1"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/dimen_15" />
@@ -86,7 +86,7 @@
                 android:textSize="@dimen/dimen_15" />
 
             <EditText
-                android:id="@+id/et_code"
+                android:id="@+id/et_comfirm_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@id/tv_code2"
@@ -95,7 +95,7 @@
                 android:hint="请再次确认密码"
                 android:paddingLeft="10dp"
                 android:paddingRight="60dp"
-                android:inputType="number"
+                android:inputType="textPassword"
                 android:maxLines="1"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/dimen_15" />

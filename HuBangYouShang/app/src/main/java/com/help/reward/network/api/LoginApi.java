@@ -1,5 +1,6 @@
 package com.help.reward.network.api;
 
+import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.bean.Response.RegisterResponse;
 import com.help.reward.bean.Response.VerificationCodeResponse;
@@ -54,5 +55,24 @@ public interface LoginApi {
             @Field("password") String password,
             @Field("client") String client
     );
-    //mobile/index.php?act=connect&op=find_password_ww
+
+
+    // 找回密码---验证码验证
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=connect&op=check_captcha")
+    Observable<BaseResponse<String>> getCheckCaptchaBean(
+            @Field("phone") String phone,
+            @Field("auth_code") String authcode
+    );
+
+    // 找回密码---重设密码
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=connect&op=reset_password")
+    Observable<BaseResponse<String>> getResetPasswordBean(
+            @Field("password") String password,
+            @Field("password1") String password1,
+            @Field("phone") String phone
+    );
+
+
 }

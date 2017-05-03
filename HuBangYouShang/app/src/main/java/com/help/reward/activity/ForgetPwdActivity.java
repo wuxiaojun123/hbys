@@ -9,9 +9,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.CertificationResponse;
+import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.VerificationCodeResponse;
 import com.help.reward.network.PersonalNetwork;
+import com.help.reward.network.api.LoginApi;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.CountDownTimeUtils;
@@ -52,8 +56,6 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
     EditText et_code;
 
     private CountDownTimeUtils mTimer;
-    public String verificationCode; // 请求到的code
-
     private SmsSDKUtils smsSDKUtils;
 
 
@@ -125,13 +127,66 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
 
                 break;
             case R.id.btn_next: // 需要验证验证码，然后再下一步
-                startActivity(new Intent(ForgetPwdActivity.this, ResetPwdActivity.class));
-                ActivitySlideAnim.slideInAnim(ForgetPwdActivity.this);
+
+                String phoneNumber = et_phone_number.getText().toString().trim();
+                String code = et_code.getText().toString().trim();
+                if (!TextUtils.isEmpty(phoneNumber)) {
+                    if (ValidateUtil.isMobile(phoneNumber)) {
+                        if (!TextUtils.isEmpty(code)) {
+                            validateCode(phoneNumber, code);
+                        } else {
+                            ToastUtils.show(mContext, "请输入验证码");
+                        }
+                    } else {
+                        ToastUtils.show(mContext, "手机号码格式不正确");
+                    }
+                } else {
+                    ToastUtils.show(mContext, "请输入手机号码");
+                }
+
 
                 break;
         }
     }
 
+    public static final int REQUEST_CODE = 1;
+
+    private void validateCode(final String phoneNumber, String verificationCode) {
+        PersonalNetwork.getLoginApi()
+                .getCheckCaptchaBean(phoneNumber, verificationCode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<String>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<String> response) {
+                        if (response.code == 200) {
+                            if (response.data != null) {
+                                Intent mIntent = new Intent(ForgetPwdActivity.this, ResetPwdActivity.class);
+                                mIntent.putExtra("phone", phoneNumber);
+                                mIntent.putExtra("flag", 1);
+                                startActivityForResult(mIntent, REQUEST_CODE);
+                                ActivitySlideAnim.slideInAnim(ForgetPwdActivity.this);
+                            }
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            finish();
+        }
+    }
 
     @Override
     protected void onDestroy() {

@@ -9,6 +9,9 @@ import com.idotools.utils.JudgeNetWork;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import cn.smssdk.EventHandler;
 import cn.smssdk.OnSendMessageHandler;
 import cn.smssdk.SMSSDK;
@@ -49,12 +52,25 @@ public class SmsSDKUtils {
                     LogUtils.e("返回支持发送验证码的国家列表");
                 }
             } else {
-                ((Throwable) data).printStackTrace();
+//                ((Throwable) data).printStackTrace();
                 LogUtils.e("注册接口中：data" + data);
-                ToastUtils.show(mContext, "发送验证码失败!请稍后重试");
+                try {
+                    JSONObject jsonObject = new JSONObject((String) data);
+                    String detail = jsonObject.getString("detail");
+                    if(detail != null){
+                        ToastUtils.show(mContext, detail);
+                    }else{
+                        ToastUtils.show(mContext, "发送验证码失败!");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    ToastUtils.show(mContext, "发送验证码失败!");
+                }
             }
         }
     };
+    //datajava.lang.Throwable: {"status":477,"detail":"当前手机号发送短信的数量超过限额"}
 
     public SmsSDKUtils(Context context) {
         this.mContext = context;
