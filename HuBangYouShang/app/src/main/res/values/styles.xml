@@ -124,6 +124,19 @@
         <item name="android:paddingRight">10dp</item>
     </style>
 
+    <style name="style_sms_send_code">
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:background">@drawable/shape_bg_code</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">获取验证码</item>
+        <item name="android:textColor">@color/color_while</item>
+        <item name="android:textSize">@dimen/dimen_15</item>
+    </style>
+
     <!--实名认证-->
     <style name="style_certification_text_title">
         <item name="android:layout_width">60dp</item>

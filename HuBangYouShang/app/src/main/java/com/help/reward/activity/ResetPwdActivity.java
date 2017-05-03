@@ -38,7 +38,7 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initView() {
-        tv_title.setText(R.string.string_forget_pwd_title);
+        tv_title.setText(R.string.string_reset_pwd_title);
         tv_title_right.setVisibility(View.GONE);
     }
 

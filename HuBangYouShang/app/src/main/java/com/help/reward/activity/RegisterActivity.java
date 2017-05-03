@@ -68,7 +68,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     CheckBox cb_agreement; // 复选框
 
     private CountDownTimeUtils mTimer;
-    public String verificationCode; // 请求到的code
+//    public String verificationCode; // 请求到的code
     private EventHandler eh;
 
 
@@ -129,7 +129,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 msg.arg2 = result;
                 msg.obj = data;
                 handler.sendMessage(msg);
-
             }
         };
         SMSSDK.registerEventHandler(eh); //注册短信回调
@@ -181,7 +180,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             });
                             // 验证 验证码是否正确
 //                            SMSSDK.submitVerificationCode(); // s：86 s1:手机好 s2：验证码
-
                         }else{
                             ToastUtils.show(mContext,"请检查网络设置");
                         }
