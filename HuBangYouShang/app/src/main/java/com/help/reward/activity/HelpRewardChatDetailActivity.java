@@ -202,6 +202,7 @@ public class HelpRewardChatDetailActivity extends BaseActivity {
                             et_comment.setText("");
                             ToastUtils.show(mContext, "评论成功");
                             if (!StringUtils.checkStr(id)) {
+                                setResult(RESULT_OK);
                                 finish();
                                 return;
                             }

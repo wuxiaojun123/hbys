@@ -94,15 +94,21 @@ public class HelpSeekInfoActivity extends BaseActivity {
     ChooseCommentTypePop chooseCommentTypePop;
 
     String has_commented, status;
-
+    String from;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helpseekinfo);
         ButterKnife.bind(this);
-        id = getIntent().getExtras().getString("id");
-        if (!StringUtils.checkStr(id)) {
-            finish();
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null) {
+            id = bundle.getString("id");
+            if (!StringUtils.checkStr(id)) {
+                finish();
+            }
+            if(bundle.containsKey("from")){
+                from = bundle.getString("from");
+            }
         }
         initView();
         initRecycler();
@@ -182,13 +188,21 @@ public class HelpSeekInfoActivity extends BaseActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+
+        if("ReleaseHelpActivity".equals(from)){
+            startActivity(new Intent(mContext, MyHelpActivity.class));
+        }
+        super.onBackPressed();
+    }
 
 
     @OnClick({R.id.iv_title_back, R.id.tv_comment, R.id.tv_type, R.id.tv_send, R.id.iv_title_favorites, R.id.iv_title_complaint})
     void click(View v) {
         switch (v.getId()) {
             case R.id.iv_title_back:
-                finish();
+                onBackPressed();
                 break;
             case R.id.tv_comment:
                 //继续跟帖
