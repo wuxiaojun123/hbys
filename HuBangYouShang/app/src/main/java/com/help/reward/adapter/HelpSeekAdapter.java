@@ -1,6 +1,7 @@
 package com.help.reward.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
 import com.help.reward.R;
@@ -36,7 +37,7 @@ public class HelpSeekAdapter extends BaseRecyclerAdapter<HelpSeekBean> {
         TextView item_help1_score = holder.getView(R.id.item_help1_score);
         item_help1_score.setText("悬赏 " + item.offer);
         TextView item_help1_count = holder.getView(R.id.item_help1_count);
-        item_help1_count.setText("跟帖 " + item.comment);
+        item_help1_count.setVisibility(View.GONE);
         TextView item_help1_des = holder.getView(R.id.item_help1_des);
         item_help1_des.setText(item.u_name);
 

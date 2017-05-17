@@ -103,16 +103,23 @@ public class HelpRewardInfoActivity extends BaseActivity {
     boolean hasmore, hasmore2;
     int numSize = 15;
     String u_name, content;
-
+    String from;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helprewardinfo);
         ButterKnife.bind(this);
-        id = getIntent().getExtras().getString("id");
-        if (!StringUtils.checkStr(id)) {
-            finish();
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null) {
+            id = bundle.getString("id");
+            if (!StringUtils.checkStr(id)) {
+                finish();
+            }
+            if(bundle.containsKey("from")){
+                from = bundle.getString("from");
+            }
         }
+
         initView();
         initRecycler();
         MyProcessDialog.showDialog(this);
@@ -215,12 +222,20 @@ public class HelpRewardInfoActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if("ReleaseRewardActivity".equals(from)){
+            startActivity(new Intent(mContext, MyRewardActivity.class));
+        }
+        super.onBackPressed();
+    }
 
     @OnClick({R.id.iv_title_back, R.id.iv_title_right, R.id.tv_comment, R.id.tv_rewardcomment})
     void click(View v) {
         switch (v.getId()) {
             case R.id.iv_title_back:
-                finish();
+                onBackPressed();
                 break;
             case R.id.iv_title_right:
                 new HelpRewardInfoMorePop(id, u_name, content, "admiration").showPopupWindow(this, iv_title_right);
@@ -237,7 +252,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
                                 Intent intentDetail = new Intent(mContext, HelpRewardChatDetailActivity.class);
                                 intentDetail.putExtra("id", has_chatted);
                                 intentDetail.putExtra("post_id", id);
-                                startActivity(intentDetail);
+                                startActivityForResult(intentDetail,200);
                                 ActivitySlideAnim.slideInAnim(HelpRewardInfoActivity.this);
                             }
                         }
@@ -246,7 +261,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
                     Intent intentDetail = new Intent(this, HelpRewardChatDetailActivity.class);
                     intentDetail.putExtra("id", has_chatted);
                     intentDetail.putExtra("post_id", id);
-                    startActivity(intentDetail);
+                    startActivityForResult(intentDetail,200);
                     ActivitySlideAnim.slideInAnim(this);
                 }
                 break;
@@ -256,11 +271,27 @@ public class HelpRewardInfoActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("post_id", id);
                 intent.putExtras(bundle);
-                startActivity(intent);
+                startActivityForResult(intent,100);
                 ActivitySlideAnim.slideInAnim(this);
                 break;
 
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100){
+            if(resultCode ==RESULT_OK){
+                curpage = 1;
+                requestData();
+            }
+        }else  if(requestCode==200){
+            if(resultCode ==RESULT_OK){
+                curpage = 1;
+                requestData();
+            }
         }
     }
 
@@ -380,6 +411,8 @@ public class HelpRewardInfoActivity extends BaseActivity {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             ToastUtils.show(mContext, "打赏成功");
+                            curpage = 1;
+                            requestData();
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

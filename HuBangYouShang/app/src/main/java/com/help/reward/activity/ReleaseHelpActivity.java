@@ -277,6 +277,7 @@ public class ReleaseHelpActivity extends BaseActivity {
                         if (response.code == 200) {
                             Intent intent = new Intent(mContext, HelpSeekInfoActivity.class);
                             intent.putExtra("id", response.data.id);
+                            intent.putExtra("from", "ReleaseHelpActivity");
                             startActivity(intent);
                             finish();
                         } else {
