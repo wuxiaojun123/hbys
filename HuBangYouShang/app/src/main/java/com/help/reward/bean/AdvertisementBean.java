@@ -15,6 +15,7 @@ public class AdvertisementBean implements Parcelable{
     public String user_name;
     public String credit;
     public String type;
+    public boolean hasWatched; // true：看过当前广告
 
     protected AdvertisementBean(Parcel in) {
         id = in.readString();
