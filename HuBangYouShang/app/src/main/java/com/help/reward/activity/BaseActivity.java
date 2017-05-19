@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.DoAnalyticsManager;
 
 /**
  * Created by wuxiaojun on 2017/1/4.
@@ -22,6 +23,17 @@ public class BaseActivity extends AppCompatActivity {
         mContext = this;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DoAnalyticsManager.pageResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DoAnalyticsManager.pagePause(this);
+    }
 
     @Override
     public void onBackPressed() {

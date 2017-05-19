@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.help.reward.utils.DoAnalyticsManager;
+
 import butterknife.ButterKnife;
 import rx.Subscription;
 
@@ -42,6 +44,19 @@ public class BaseFragment extends Fragment {
 
     protected int getLayoutId(){
         return 0;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DoAnalyticsManager.pageFragmentResume(getClass().getSimpleName(),mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DoAnalyticsManager.pageFragmentPause(getClass().getSimpleName(),mContext);
     }
 
     @Override
