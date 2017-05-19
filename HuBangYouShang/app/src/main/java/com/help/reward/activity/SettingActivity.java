@@ -9,12 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.network.PersonalNetwork;
+import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.utils.SharedPreferenceConstant;
 import com.help.reward.view.AlertDialog;
+import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.DataCleanManager;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.SharedPreferencesHelper;
@@ -23,6 +28,8 @@ import com.idotools.utils.ToastUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 设置
@@ -107,7 +114,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
             case R.id.tv_logout: // 登出
-                logout();
+                if(App.APP_CLIENT_KEY != null){
+                    logoutDialog();
+                }
 
                 break;
         }
@@ -157,7 +166,60 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }).show();
     }
 
+    private void logoutDialog() {
+        new AlertDialog(SettingActivity.this)
+                .builder()
+                .setTitle(R.string.string_system_prompt)
+                .setMsg("确认退出吗?")
+                .setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        logout();
+                    }
+                })
+                .setNegativeButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
+    }
+
     private void logout() {
+        PersonalNetwork
+                .getResponseApi()
+                .getLogoutResponse("android", App.APP_CLIENT_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<String>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<String> response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            if (response.data != null) { // 返回地址id  response.data.address_id
+                                ToastUtils.show(mContext, response.msg);
+                                App.APP_CLIENT_KEY = null;
+                                App.APP_CLIENT_COOKIE = null;
+                                App.mLoginReponse = null;
+                                // 应该清除个人信息页面的信息
+                                RxBus.getDefault().post("logout");
+
+                                // 清除当前activity
+                                finish();
+                                ActivitySlideAnim.slideOutAnim(SettingActivity.this);
+                            }
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
     }
 
 }

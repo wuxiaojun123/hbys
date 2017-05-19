@@ -58,6 +58,14 @@ public interface PersonalApi {
 
     // mobile/index.php?act=logout 退出登录 post传client
 
+    // 退出登录
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=logout")
+    Observable<BaseResponse<String>> getLogoutResponse(
+            @Field("client") String client,
+            @Field("key") String key
+    );
+
     // 个人信息--获取地区 ?act=area
     @GET("mobile/index.php")
     Observable<AeraResponse> getAeraResponse(
