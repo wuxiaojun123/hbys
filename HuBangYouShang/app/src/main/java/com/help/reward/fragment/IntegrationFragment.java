@@ -37,6 +37,8 @@ public class IntegrationFragment extends BaseFragment implements View.OnClickLis
     @BindView(R.id.et_search)
     SearchEditTextView et_search; // 搜索内容
 
+    private BaseFragment[] fragments = new BaseFragment[2];
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_integration;
@@ -44,6 +46,9 @@ public class IntegrationFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     protected void init() {
+        fragments[0] = new IntegrationWatchPraiseFragment();
+        fragments[1] = new IntegrationGroupBuyingFragment();
+
         viewPager.setAdapter(new MyPagerAdapter(getActivity().getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
 
@@ -99,9 +104,9 @@ public class IntegrationFragment extends BaseFragment implements View.OnClickLis
         public Fragment getItem(int position) {
             // 下面两个fragment是个人中心里的
             if (position == 0) {
-                return new IntegrationWatchPraiseFragment();
+                return fragments[0];
             } else {
-                return new IntegrationGroupBuyingFragment();
+                return fragments[1];
             }
         }
 

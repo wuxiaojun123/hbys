@@ -55,11 +55,11 @@ public class HelpRewardCommentActivity extends BaseActivity {
     }
 
     private void initView() {
-        tvTitle.setText("投诉");
+        tvTitle.setText("评论");
         tvTitleRight.setText("提交");
     }
 
-    @OnClick({R.id.iv_title_back, R.id.tv_title_right, R.id.iv_release_addphoto})
+    @OnClick({R.id.iv_title_back, R.id.tv_title_right})
     void click(View v) {
         switch (v.getId()) {
             case R.id.iv_title_back:
@@ -74,8 +74,8 @@ public class HelpRewardCommentActivity extends BaseActivity {
 
     private void subComplained() {
         String content = et_content.getText().toString().trim();
-        if (!StringUtils.checkStr(content) || content.length() < 100) {
-            ToastUtils.show(mContext, "请输入投诉内容,不少于100字");
+        if (!StringUtils.checkStr(content) || content.length() < 10) {
+            ToastUtils.show(mContext, "请输入评论内容,不少于10字");
             return;
         }
         subComplainedData(content);
@@ -103,6 +103,7 @@ public class HelpRewardCommentActivity extends BaseActivity {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             ToastUtils.show(mContext, "评论成功");
+                            setResult(RESULT_OK);
                             finish();
 
                         } else {

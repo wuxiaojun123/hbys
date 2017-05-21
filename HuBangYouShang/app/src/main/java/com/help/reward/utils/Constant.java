@@ -15,8 +15,9 @@ public class Constant {
     public static final String SMS_APPKEY = "1bebf93388e20"; // sms短信验证
     public static final String SMS_APPSECRET = "007b9903829fa24053dd4386a2019e4b"; // sms短信验证
 
-    // 210.72.13.135  http://jyb.youdoidodo.com   http://192.168.3.2/
-    public static final String BASE_URL = "http://jyb.youdoidodo.com";
+    // 210.72.13.135  http://jyb.youdoidodo.com   http://192.168.3.2/   12d1:107e
+//    public static final String BASE_URL = "http://jyb.youdoidodo.com";
+    public static final String BASE_URL = "http://www.hubangyoushang.com";
 
 
     public static final String TEL_PHONE = "025-58840881"; // 电话号码，设置页面
@@ -28,6 +29,10 @@ public class Constant {
 
     // 注册
     public static final String URL_REGISTER = "mobile/index.php?act=connect&op=sms_register";
+
+    // 退出登录
+    public static final String URL_LOGOUT = "/mobile/index.php?act=logout";
+
     // 商城首页
     public static final String URL_SHOP_MALL_MAIN = "mobile/index.php?act=shop&op=index";
 

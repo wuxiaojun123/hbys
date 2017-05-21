@@ -18,6 +18,8 @@ import com.help.reward.bean.Response.HelpBoardResponse;
 import com.help.reward.bean.Response.HelpSubResponse;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.HelpCommitRxbusType;
 import com.help.reward.utils.ChooseCameraPopuUtils;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.utils.PickerUtils;
@@ -114,6 +116,7 @@ public class ReleaseRewardActivity extends BaseActivity {
         tvTitleRight.setText("发布");
         tv_score_title.setText("帮赏分");
         tv_release_help_score.setHint(R.string.release_hint9);
+        tv_release_help_score.setEnabled(false);
         etReleaseHelpContent.setHint(R.string.release_hint8);
         release_help_data_line.setVisibility(View.GONE);
         release_help_data_layout.setVisibility(View.GONE);
@@ -221,7 +224,7 @@ public class ReleaseRewardActivity extends BaseActivity {
         String title = etReleaseHelpTitle.getText().toString().trim();
         String end_time = etReleaseHelpTitle.getText().toString().trim();
         String content = etReleaseHelpContent.getText().toString().trim();
-        String score = tv_release_help_score.getText().toString().trim();
+//        String score = tv_release_help_score.getText().toString().trim();
         if (!StringUtils.checkStr(title)) {
             ToastUtils.show(mContext, "请输入标题");
             return;
@@ -230,23 +233,23 @@ public class ReleaseRewardActivity extends BaseActivity {
             ToastUtils.show(mContext, "请输入内容");
             return;
         }
-        if (!StringUtils.checkStr(score) || Integer.parseInt(score) < 1) {
-            ToastUtils.show(mContext, "请输入赏分");
-            return;
-        }
+//        if (!StringUtils.checkStr(score) || Integer.parseInt(score) < 1) {
+//            ToastUtils.show(mContext, "请输入赏分");
+//            return;
+//        }
         if (!StringUtils.checkStr(board_id)) {
             ToastUtils.show(mContext, "请选择分类");
             return;
         }
-        subHelpData(title, content, score);
+        subHelpData(title, content);
     }
 
 
-    private void subHelpData(String title, String content, String score) {
+    private void subHelpData(String title, String content) {
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
                 .getHelpApi()
-                .subHelpRewardBean(App.APP_CLIENT_KEY, board_id, title, content, area_id, score, (String[]) file_names.toArray(new String[file_names.size()]))
+                .subHelpRewardBean(App.APP_CLIENT_KEY, board_id, title, content, area_id, (String[]) file_names.toArray(new String[file_names.size()]))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HelpSubResponse>() {
@@ -263,8 +266,10 @@ public class ReleaseRewardActivity extends BaseActivity {
                         if (response.code == 200) {
                             Intent intent = new Intent(mContext, HelpRewardInfoActivity.class);
                             intent.putExtra("id", response.data.id);
+                            intent.putExtra("from", "ReleaseRewardActivity");
                             startActivity(intent);
                             finish();
+                            RxBus.getDefault().post(new HelpCommitRxbusType());
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

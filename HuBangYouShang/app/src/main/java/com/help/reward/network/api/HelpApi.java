@@ -201,7 +201,6 @@ public interface HelpApi {
             @Field("title") String title,
             @Field("content") String content,
             @Field("area_id") String area_id,
-            @Field("offer") String offer,
             @Field("url[]") String[] url
 
     );

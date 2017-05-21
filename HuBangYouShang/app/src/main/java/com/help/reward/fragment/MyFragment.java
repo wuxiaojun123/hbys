@@ -38,8 +38,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     private View contentView;
 
-    @BindView(R.id.ll_height)
-    LinearLayout ll_login_height;
+    @BindView(R.id.ll_not_logged_in)
+    LinearLayout ll_not_logged_in;
     @BindView(R.id.rl_user_info)
     RelativeLayout rl_user_info;
     @BindView(R.id.ll_logined)
@@ -85,9 +85,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         switch (id) {
             case R.id.rl_user_info:
                 // 需要判断是否已登陆
-                if(App.APP_CLIENT_KEY == null){
+                if (App.APP_CLIENT_KEY == null) {
                     login();
-                }else{
+                } else {
                     startActivity(new Intent(mContext, AccountManagerActivity.class));
                     ActivitySlideAnim.slideInAnim(getActivity());
                 }
@@ -156,38 +156,67 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     /***
      */
-    private void login(){
+    private void login() {
         RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
-                if("loginSuccess".equals(s)){
-                    if (ll_logined.getVisibility() == View.GONE) {
-                        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_login_height.getLayoutParams();
-                        lp.height = MetricsUtils.dipToPx(210);
-                        ll_login_height.requestLayout();
-                        ll_logined.setVisibility(View.VISIBLE);
-                        // 设置会员信息
-                        if(App.mLoginReponse != null){
-                            GlideUtils.loadCircleImage(App.mLoginReponse.avator,iv_photo);
-                            tv_register.setVisibility(View.GONE);
-                            tv_login.setText(App.mLoginReponse.username);
-                            tv_user_level.setText("用户等级："+App.mLoginReponse.level_name);
-                            tv_help_num.setText(App.mLoginReponse.people_help);
-                            tv_account_help_reward.setText(App.mLoginReponse.point);
-                            tv_number_of_complaints.setText(App.mLoginReponse.complaint);
-                            tv_number_of_complaints2.setText(App.mLoginReponse.complained);
-
-                            tv_available_predeposit.setText(App.mLoginReponse.available_predeposit);
-                            tv_voucher.setText(App.mLoginReponse.voucher);
-                            tv_general_voucher.setText(App.mLoginReponse.general_voucher);
-                            tv_discount_level.setText(App.mLoginReponse.discount_level);
-                        }
-                    }
+                if ("loginSuccess".equals(s)) {
+                    loginSuccess();
+                } else if ("logout".equals(s)) {
+                    logout();
                 }
             }
         });
         startActivity(new Intent(getActivity(), LoginActivity.class));
         ActivitySlideAnim.slideInAnim(getActivity());
+    }
+
+    private void logout() {
+        if (ll_logined.getVisibility() == View.VISIBLE) {
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_not_logged_in.getLayoutParams();
+            lp.height = MetricsUtils.dipToPx(155);
+            ll_not_logged_in.requestLayout();
+            ll_logined.setVisibility(View.GONE);
+
+            iv_photo.setImageResource(R.mipmap.img_my_default_photo);
+            tv_register.setVisibility(View.VISIBLE);
+            tv_login.setText("登陆/");
+            tv_user_level.setText("这里是用户等级");
+            tv_help_num.setText("0");
+            tv_account_help_reward.setText(null);
+            tv_number_of_complaints.setText(null);
+            tv_number_of_complaints2.setText(null);
+
+            tv_available_predeposit.setText("0");
+            tv_voucher.setText("0");
+            tv_general_voucher.setText("0");
+            tv_discount_level.setText("0");
+        }
+    }
+
+    private void loginSuccess() {
+        if (ll_logined.getVisibility() == View.GONE) {
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_not_logged_in.getLayoutParams();
+            lp.height = MetricsUtils.dipToPx(210);
+            ll_not_logged_in.requestLayout();
+            ll_logined.setVisibility(View.VISIBLE);
+            // 设置会员信息
+            if (App.mLoginReponse != null) {
+                GlideUtils.loadCircleImage(App.mLoginReponse.avator, iv_photo);
+                tv_register.setVisibility(View.GONE);
+                tv_login.setText(App.mLoginReponse.username);
+                tv_user_level.setText("用户等级：" + App.mLoginReponse.level_name);
+                tv_help_num.setText(App.mLoginReponse.people_help);
+                tv_account_help_reward.setText(App.mLoginReponse.point);
+                tv_number_of_complaints.setText(App.mLoginReponse.complaint);
+                tv_number_of_complaints2.setText(App.mLoginReponse.complained);
+
+                tv_available_predeposit.setText(App.mLoginReponse.available_predeposit);
+                tv_voucher.setText(App.mLoginReponse.voucher);
+                tv_general_voucher.setText(App.mLoginReponse.general_voucher);
+                tv_discount_level.setText(App.mLoginReponse.discount_level);
+            }
+        }
     }
 
 }

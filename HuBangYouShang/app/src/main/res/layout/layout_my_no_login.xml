@@ -4,7 +4,7 @@
     android:layout_height="155dp"
     android:background="@mipmap/img_my_login"
     android:orientation="vertical"
-    android:id="@+id/ll_height"
+    android:id="@+id/ll_not_logged_in"
     >
 
     <RelativeLayout
