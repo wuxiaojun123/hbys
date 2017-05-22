@@ -53,9 +53,8 @@ public class ExchangeOptionActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.tv_balance_exchange:
                 // 余额兑换通用卷
-                startActivity(new Intent(ExchangeOptionActivity.this, BalanceExchangeHelpScoreActivity.class));
+                startActivity(new Intent(ExchangeOptionActivity.this, BalanceExchangeVolumeActivity.class));
                 ActivitySlideAnim.slideInAnim(ExchangeOptionActivity.this);
-
 
                 break;
             case R.id.tv_bonus_points:

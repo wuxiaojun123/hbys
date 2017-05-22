@@ -13,6 +13,7 @@ import com.help.reward.R;
 import com.help.reward.bean.Response.MessageReadResponse;
 import com.help.reward.network.MessageNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -68,7 +69,11 @@ public class MsgCenterActivity extends BaseActivity {
         //type 0为私信、1为系统消息、2为留言、3帖子动态、4账户消息、5交易信息、6投诉消息
         switch (v.getId()) {
             case R.id.iv_title_back:
+
                 finish();
+                ActivitySlideAnim.slideOutAnim(MsgCenterActivity.this);
+
+
                 break;
             case R.id.layout_msgcenter_post://帖子动态
                 intent.putExtra("type", "3");

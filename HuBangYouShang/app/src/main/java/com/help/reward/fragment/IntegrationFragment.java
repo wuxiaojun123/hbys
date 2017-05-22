@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
+import com.help.reward.activity.MsgCenterActivity;
 import com.help.reward.activity.SearchAdvertisementActivity;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.SearchEditTextView;
@@ -28,7 +29,6 @@ import butterknife.OnClick;
 
 public class IntegrationFragment extends BaseFragment implements View.OnClickListener {
 
-    private View contentView;
     @BindView(R.id.id_viewpager)
     ViewPager viewPager;
     @BindView(R.id.tabs)
@@ -60,7 +60,7 @@ public class IntegrationFragment extends BaseFragment implements View.OnClickLis
         });
     }
 
-    @OnClick({R.id.iv_search})
+    @OnClick({R.id.iv_search,R.id.iv_email})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -68,6 +68,12 @@ public class IntegrationFragment extends BaseFragment implements View.OnClickLis
             case R.id.iv_search:
                 // 点击搜索
                 search();
+                break;
+            case R.id.iv_email:
+                // 消息中心
+                startActivity(new Intent(mContext, MsgCenterActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
                 break;
         }
 

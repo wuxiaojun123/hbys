@@ -39,10 +39,22 @@ public class DateUtil {
      * @param time
      * @return
      */
-    public static String getDateToString(String time) throws ParseException {
-        Date d = SDF_NO_SECONDS.parse(time);
-        return SDF_NO_SECONDS.format(d);
+    public static String getDateToString(String time) {
+//        Date d = SDF_NO_SECONDS.parse(time);
+        long lcc_time = Long.valueOf(time);
+        return SDF_NO_SECONDS.format(new Date(lcc_time * 1000L));
     }
+
+    /*public static String getStrTime(String cc_time) {
+        String re_StrTime = null;
+        //同理也可以转为其它样式的时间格式.例如："yyyy/MM/dd HH:mm"
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        // 例如：cc_time=1291778220
+        long lcc_time = Long.valueOf(cc_time);
+        re_StrTime = SDF_NO_SECONDS.format(new Date(lcc_time * 1000L));
+
+        return re_StrTime;
+    }*/
 
     /**
      * 把时间戳变yyyy-MM-dd格式时间

@@ -29,9 +29,9 @@ import rx.functions.Action1;
 
 /**
  * 余额---明细
- *
+ * <p>
  * item_my_balance.xml
- *
+ * <p>
  * <p>
  * Created by wuxiaojun on 2017/1/10.
  */
@@ -65,13 +65,13 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
         MyBalanceFragment fragmentPay = new MyBalanceFragment();
         // 支出
         Bundle bundle = new Bundle();
-        bundle.putString("type","2");
+        bundle.putString("type", "2");
         fragmentPay.setArguments(bundle);
 
         MyBalanceFragment fragmentInCome = new MyBalanceFragment();
         // 收入
         Bundle bundle2 = new Bundle();
-        bundle2.putString("type","1");
+        bundle2.putString("type", "1");
         fragmentInCome.setArguments(bundle2);
 
         fragmentList.add(fragmentAll);
@@ -85,7 +85,9 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
     private void initEvent() {
 
     }
+
     private Subscription subscribe;
+
     /**
      * 获取rxbus传递过来的数据
      */
@@ -98,11 +100,19 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
         });
     }
 
-    @OnClick({R.id.tv_balance_recharge, R.id.tv_help_score, R.id.tv_general_volume})
+    @OnClick({R.id.iv_back, R.id.tv_balance_recharge, R.id.tv_help_score,
+            R.id.tv_general_volume})
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.iv_back:
+                // 退出
+                finish();
+                ActivitySlideAnim.slideOutAnim(MyBalanceActivity.this);
+
+                break;
+
             case R.id.tv_balance_recharge:
                 // 余额充值
                 startActivity(new Intent(MyBalanceActivity.this, PrepaidBalanceActivity.class));
@@ -159,7 +169,7 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
-        if(subscribe != null && !subscribe.isUnsubscribed()){
+        if (subscribe != null && !subscribe.isUnsubscribed()) {
             subscribe.unsubscribe();
         }
         super.onDestroy();

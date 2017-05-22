@@ -7,6 +7,7 @@ import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.MyBalanceBean;
 import com.idotools.utils.DateUtil;
+import com.idotools.utils.LogUtils;
 
 /**
  * 我的账户---余额明细
@@ -35,7 +36,8 @@ public class MyBalanceAdapter extends BaseRecyclerAdapter {
 
         tv_title.setText(bean.lg_desc);
         tv_price.setText(bean.lg_av_amount);
-        tv_date.setText(DateUtil.getDateToString(Long.parseLong(bean.lg_add_time)));
+        LogUtils.e("时间戳是："+bean.lg_add_time);
+        tv_date.setText(DateUtil.getDateToString(bean.lg_add_time));
 
     }
 

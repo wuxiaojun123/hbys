@@ -51,7 +51,7 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
-
+    private int firstPage; // 第一次进来显示哪一个页面
     private List<BaseFragment> fragmentList;
 
     @Override
@@ -59,6 +59,8 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
         ButterKnife.bind(this);
+
+        firstPage = getIntent().getIntExtra("firstPage",0);
 
         initView();
         initEvent();
@@ -102,9 +104,12 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
         fragmentList.add(fragment3);
         fragmentList.add(fragment4);
         fragmentList.add(fragment5);
-        viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));
+        MyFragmentPageAdapter myFragmentPageAdapter = new MyFragmentPageAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(myFragmentPageAdapter);
         tabStrip.setViewPager(viewPager);
         viewPager.setOffscreenPageLimit(5);
+        // 显示那一个fragment
+        viewPager.setCurrentItem(firstPage);
     }
 
     private void initEvent() {

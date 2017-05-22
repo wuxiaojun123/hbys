@@ -9,6 +9,11 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.activity.AccountManagerActivity;
+import com.help.reward.activity.DiscountAmountActivity;
+import com.help.reward.activity.MsgCenterActivity;
+import com.help.reward.activity.MyBalanceActivity;
+import com.help.reward.activity.MyCouponActivity;
+import com.help.reward.activity.MyGeneralVolumeActivity;
 import com.help.reward.activity.ShopcartActivity;
 import com.help.reward.utils.GlideUtils;
 import com.idotools.utils.MetricsUtils;
@@ -76,9 +81,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         return R.layout.fragment_my;
     }
 
-    @OnClick({R.id.rl_user_info, R.id.iv_setting, R.id.tv_login, R.id.tv_register, R.id.tv_account,
-            R.id.tv_my_help, R.id.tv_my_reward, R.id.tv_my_vote, R.id.tv_my_collection, R.id.tv_share,
-            R.id.tv_order})
+    @OnClick({R.id.rl_user_info, R.id.iv_setting, R.id.tv_msg, R.id.tv_login, R.id.tv_register,
+            R.id.tv_payment, R.id.tv_take_delivery, R.id.tv_evaluate, R.id.tv_return_goods,
+            R.id.ll_available_predeposit,R.id.ll_voucher,R.id.ll_general_voucher,R.id.ll_discount_level,
+            R.id.tv_account, R.id.tv_my_help, R.id.tv_my_reward, R.id.tv_my_vote, R.id.tv_my_collection,
+            R.id.tv_share, R.id.tv_order})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -93,9 +100,17 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 }
 
                 break;
+
             case R.id.iv_setting:
                 // 设置页面
                 startActivity(new Intent(mContext, SettingActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+
+            case R.id.tv_msg:
+                // 消息中心
+                startActivity(new Intent(mContext, MsgCenterActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
@@ -105,47 +120,119 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 login();
 
                 break;
+
             case R.id.tv_register:
+                // 注册
                 startActivity(new Intent(mContext, RegisterActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
+
+            case R.id.tv_payment:
+                // 待付款
+                Intent mIntent = new Intent(mContext, MyOrderActivity.class);
+                mIntent.putExtra("firstPage", 1);
+                startActivity(mIntent);
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+
+            case R.id.tv_take_delivery:
+                // 待收货
+                Intent mIntent1 = new Intent(mContext, MyOrderActivity.class);
+                mIntent1.putExtra("firstPage", 2);
+                startActivity(mIntent1);
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+
+            case R.id.tv_evaluate:
+                // 待评价
+                Intent mIntent2 = new Intent(mContext, MyOrderActivity.class);
+                mIntent2.putExtra("firstPage", 3);
+                startActivity(mIntent2);
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+
+            case R.id.tv_return_goods:
+                // 退款/退货
+                Intent mIntent3 = new Intent(mContext, MyOrderActivity.class);
+                mIntent3.putExtra("firstPage", 4);
+                startActivity(mIntent3);
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+            case R.id.ll_available_predeposit:
+                // 余额
+                startActivity(new Intent(mContext, MyBalanceActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+
+            case R.id.ll_voucher:
+                // 优惠劵
+                startActivity(new Intent(mContext, MyCouponActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+
+            case R.id.ll_general_voucher:
+                // 通用卷
+                startActivity(new Intent(mContext, MyGeneralVolumeActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+
+            case R.id.ll_discount_level:
+                // 优惠百分比
+                startActivity(new Intent(mContext, DiscountAmountActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+
             case R.id.tv_order:
                 // 我的订单
                 startActivity(new Intent(mContext, MyOrderActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
+
             case R.id.tv_account:
                 // 我的账户
                 startActivity(new Intent(mContext, MyAccountActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
+
             case R.id.tv_my_help:
                 // 我的求助
                 startActivity(new Intent(mContext, MyHelpActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
+
             case R.id.tv_my_reward:
                 // 我的收藏
                 startActivity(new Intent(mContext, MyRewardActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
+
             case R.id.tv_my_vote:
                 // 我的投票
                 startActivity(new Intent(mContext, MyVoteActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
+
             case R.id.tv_my_collection:
                 // 我的收藏
                 startActivity(new Intent(mContext, MyCollectionActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;
+
             case R.id.tv_share:
                 startActivity(new Intent(mContext, MyShareActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());

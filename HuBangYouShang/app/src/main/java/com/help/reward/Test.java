@@ -2,8 +2,12 @@ package com.help.reward;
 
 import com.help.reward.bean.OrderPulishedEvaluateBean;
 import com.help.reward.utils.JsonUtils;
+import com.idotools.utils.DateUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +18,8 @@ import java.util.Map;
 
 public class Test {
 
-    public static void main(String[] args) {
-        List<OrderPulishedEvaluateBean> list = new ArrayList<>();
+    public static void main(String[] args) throws ParseException {
+        /*List<OrderPulishedEvaluateBean> list = new ArrayList<>();
         OrderPulishedEvaluateBean bean = new OrderPulishedEvaluateBean();
         bean.goods_id = "商品id1";
         bean.score = "2";
@@ -26,7 +30,6 @@ public class Test {
 
         String beanJson1 = JsonUtils.toJsonFromObject(bean);
         System.out.println("beanJson1转换之后的是：" + beanJson1);
-
 
         OrderPulishedEvaluateBean bean2 = new OrderPulishedEvaluateBean();
         bean2.goods_id = "商品id2";
@@ -45,7 +48,31 @@ public class Test {
         Map<String,Map<String,OrderPulishedEvaluateBean>> map = new HashMap<>();
         map.put("goods",map2);
         String mapString = JsonUtils.toJsonFromMap(map);
-        System.out.println("mapString转换之后的是：" + mapString);
+        System.out.println("mapString转换之后的是：" + mapString);*/
+
+        String time = "1489597006";
+        long timeLong = Long.parseLong(time);
+        System.out.println(timeLong);
+        String a = DateUtil.getYYYYMMDDDateToString(time);
+
+//        String dateToString = DateUtil.getDateToString(time);
+
+        String b = getStrTime(time);
+
+        System.out.println(a+"-----"+b);
+
+
+    }
+
+    public static String getStrTime(String cc_time) {
+        String re_StrTime = null;
+        //同理也可以转为其它样式的时间格式.例如："yyyy/MM/dd HH:mm"
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        // 例如：cc_time=1291778220
+        long lcc_time = Long.valueOf(cc_time);
+        re_StrTime = sdf.format(new Date(lcc_time * 1000L));
+
+        return re_StrTime;
     }
 
     public static List<String> getList() {
