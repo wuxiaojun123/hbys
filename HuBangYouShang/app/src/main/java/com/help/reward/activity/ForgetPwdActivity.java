@@ -144,7 +144,6 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
                     ToastUtils.show(mContext, "请输入手机号码");
                 }
 
-
                 break;
         }
     }
