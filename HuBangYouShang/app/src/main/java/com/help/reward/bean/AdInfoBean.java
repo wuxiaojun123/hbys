@@ -36,5 +36,6 @@ public class AdInfoBean {
     public String expire_time;
     public String user_id;
     public String user_name;
+//    public boolean hasWatched; // 是否观看过，ture为已看过
 
 }

@@ -217,4 +217,8 @@
 
     <drawable name="string_watch_ad_group_bug_normal">#ec6a5c</drawable>
     <drawable name="string_watch_ad_group_bug_pressed">#af4034</drawable>
+
+    <drawable name="string_warch_ad_group_bug_text_normal">#ffffff</drawable>
+    <drawable name="string_warch_ad_group_bug_text_pressed">#af4034</drawable>
+
 </resources>

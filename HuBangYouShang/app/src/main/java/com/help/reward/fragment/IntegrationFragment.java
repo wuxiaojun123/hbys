@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
@@ -36,6 +38,10 @@ public class IntegrationFragment extends BaseFragment implements View.OnClickLis
 
     @BindView(R.id.et_search)
     SearchEditTextView et_search; // 搜索内容
+    @BindView(R.id.iv_email)
+    ImageView iv_email; // 消息
+    @BindView(R.id.tv_text)
+    TextView tv_text; // 搜索
 
     private BaseFragment[] fragments = new BaseFragment[2];
 
@@ -46,12 +52,14 @@ public class IntegrationFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     protected void init() {
-        fragments[0] = new IntegrationWatchPraiseFragment();
-        fragments[1] = new IntegrationGroupBuyingFragment();
+        initView();
+        initViewPager();
+    }
 
-        viewPager.setAdapter(new MyPagerAdapter(getActivity().getSupportFragmentManager()));
-        tabStrip.setViewPager(viewPager);
-
+    private void initView() {
+        iv_email.setVisibility(View.GONE);
+        tv_text.setVisibility(View.VISIBLE);
+        tv_text.setText("搜索");
         et_search.setOnKeyListener(new SearchEditTextView.onKeyListener() {
             @Override
             public void onKey() {
@@ -60,23 +68,24 @@ public class IntegrationFragment extends BaseFragment implements View.OnClickLis
         });
     }
 
-    @OnClick({R.id.iv_search,R.id.iv_email})
+    private void initViewPager() {
+        fragments[0] = new IntegrationWatchPraiseFragment();
+        fragments[1] = new IntegrationGroupBuyingFragment();
+        viewPager.setAdapter(new MyPagerAdapter(getActivity().getSupportFragmentManager()));
+        tabStrip.setViewPager(viewPager);
+    }
+
+    @OnClick({R.id.iv_search,R.id.tv_text})
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.tv_text:
             case R.id.iv_search:
                 // 点击搜索
                 search();
                 break;
-            case R.id.iv_email:
-                // 消息中心
-                startActivity(new Intent(mContext, MsgCenterActivity.class));
-                ActivitySlideAnim.slideInAnim(getActivity());
-
-                break;
         }
-
     }
 
     private void search() {

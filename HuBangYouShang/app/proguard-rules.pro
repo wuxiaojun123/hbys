@@ -68,6 +68,24 @@
     public static final int *;
 }
 
+
+######################一些实体类和自定义控件不混淆  start##################
+
+-keep class com.help.reward.bean.** {*;}
+-keep class com.help.reward.view.** {*;}
+-keep class com.help.reward.chat.** {*;}
+
+-keep class chihane.jdaddressselector.** { *; } ## 地址
+-keep class com.hbys.chatlibrary.** { *; } ##library_chat
+-keep class com.hyphenate.easeui.** { *; } ##easeui
+-keep class com.astuetz.pagerslidingtabstrip.** { *; } ## pagerSlidingTabStrip
+-keep class com.base.recyclerview.** { *; } ## recycler
+-keep class com.bigkoo.pickerview.** { *; } ## pickerview
+-keep class com.gxz.library.** { *; } ## sticknavlayout
+
+######################一些实体类和自定义控件不混淆  end##################
+
+
 #####################glide start###################
 #glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -131,3 +149,16 @@
 -dontwarn com.mob.**
 -dontwarn cn.smssdk.**
 ################## sms ############################
+
+######################umeng统计 start##################
+-keepclassmembers class * {
+    public <init> (org.json.JSONObject);
+}
+-keep public class com.help.reward.R$*{
+    public static final int *;
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+#######################umeng统计 end####################

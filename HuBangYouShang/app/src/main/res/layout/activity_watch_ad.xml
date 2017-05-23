@@ -97,7 +97,7 @@
         android:id="@+id/tv_buy"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/selector_watch_ad_buy_bg"
+        android:background="@color/color_dc"
         android:gravity="center"
         android:text="加群购买(100/99)"
         android:textColor="@color/color_3a"

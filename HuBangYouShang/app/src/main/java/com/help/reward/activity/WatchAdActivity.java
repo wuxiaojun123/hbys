@@ -84,6 +84,9 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
         if (!TextUtils.isEmpty(ad_id)) { // 请求服务器
             initNet();
         }
+        if (App.APP_USER_ID == null) {
+            ToastUtils.show(mContext,"需登录");
+        }
     }
 
     private void initView() {
@@ -120,13 +123,20 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                                 if (ad_type_flag == 1) {
                                     tv_point_of_praise.setText("看完点赞(" + bean.click_num + "/" + bean.times + ")");
                                 } else {
-                                    tv_buy.setText("加群购买" + bean.click_num + "/" + bean.times + ")");
+                                    tv_buy.setText("加群购买(" + bean.click_num + "/" + bean.times + ")");
                                 }
-                                // 开始计时
-                                initTimer();
-                                mTimer.start();
-                                tv_point_of_praise.setClickable(false);
-                                tv_buy.setClickable(false);
+                                if (!response.data.hasWathced) {
+                                    initTimer(); // 开始计时
+                                    mTimer.start();
+                                    tv_point_of_praise.setClickable(false);
+                                    tv_buy.setClickable(false);
+
+                                } else {
+                                    tv_time.setText("已观看");
+                                    tv_point_of_praise.setVisibility(View.GONE);
+                                    tv_buy.setVisibility(View.GONE);
+                                }
+
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
@@ -149,11 +159,7 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
             case R.id.tv_point_of_praise:
                 // 需要登录才能点击，看完点赞,只有观看完成才可以点击,如果点击过了，就不应该再次点击
                 if (App.APP_USER_ID != null) {
-//                    if (!watchAdFinish) {
-                        getScroe();
-//                    } else {
-//                        ToastUtils.show(mContext, "您已看过此广告");
-//                    }
+                    getScroe();
                 } else {
                     ToastUtils.show(mContext, "请先登录");
                 }
@@ -162,11 +168,8 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
             case R.id.tv_buy:
                 // 加群购买
                 if (App.APP_USER_ID != null) {
-//                    if (!watchAdFinish) {
-                        getScroe();
-//                    } else {
-//                        ToastUtils.show(mContext, "您已看过此广告");
-//                    }
+//                    getScroe();
+
                 } else {
                     ToastUtils.show(mContext, "请先登录");
                 }
@@ -183,7 +186,7 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
     private void getScroe() {
         IntegrationNetwork
                 .getIntegrationApi()
-                .getWatchAdGetScroeResponse("advertisement", "watch",App.APP_CLIENT_KEY, ad_id)
+                .getWatchAdGetScroeResponse("advertisement", "watch", App.APP_CLIENT_KEY, ad_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<WatchAdGetScroeResponse>() {
@@ -237,6 +240,13 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                 tv_time.setText("观看完成");
                 tv_point_of_praise.setClickable(true);
                 tv_buy.setClickable(true);
+
+                tv_point_of_praise.setBackgroundResource(R.drawable.selector_watch_ad_buy_bg);
+                tv_buy.setBackgroundResource(R.drawable.selector_watch_ad_buy_bg);
+
+                tv_point_of_praise.setTextColor(getResources().getColorStateList(R.color.selector_watch_ad_buy_textcolor));
+                tv_buy.setTextColor(getResources().getColorStateList(R.color.selector_watch_ad_buy_textcolor));
+
             }
         });
     }
