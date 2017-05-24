@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -17,6 +18,7 @@ import com.help.reward.fragment.MyBalanceFragment;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,8 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
     ViewPager viewPager;
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
+    @BindView(R.id.rl_content)
+    RelativeLayout rl_content;
 
     private List<BaseFragment> fragmentList;
 
@@ -57,6 +61,8 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
         initData();
         getRxBusData();
     }
+
+
 
     private void initData() {
         fragmentList = new ArrayList<>(3);
@@ -84,6 +90,11 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
 
     private void initEvent() {
 
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForImageView(MyBalanceActivity.this, 0, rl_content);
     }
 
     private Subscription subscribe;

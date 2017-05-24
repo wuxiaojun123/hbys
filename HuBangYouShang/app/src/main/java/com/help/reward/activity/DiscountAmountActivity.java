@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.help.reward.App;
@@ -12,6 +13,7 @@ import com.help.reward.bean.Response.DiscountAmountResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.StatusBarUtil;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -38,12 +40,20 @@ public class DiscountAmountActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.tv_content)
     TextView tv_content; // 优惠内容
 
+    @BindView(R.id.rl_content)
+    RelativeLayout rl_content;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount_amount);
         ButterKnife.bind(this);
         initNetwork();
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForImageView(DiscountAmountActivity.this, 0, rl_content);
     }
 
     private Subscription subscribe;

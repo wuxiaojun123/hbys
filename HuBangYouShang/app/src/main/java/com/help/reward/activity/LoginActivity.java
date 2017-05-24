@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.help.reward.App;
 import com.help.reward.R;
@@ -16,6 +17,7 @@ import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
+import com.help.reward.utils.StatusBarUtil;
 import com.help.reward.view.MyProcessDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
@@ -174,6 +176,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ActivitySlideAnim.slideOutAnim(LoginActivity.this);
             }
         });
+    }
+
+    @BindView(R.id.ll_total)
+    LinearLayout ll_total;
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForImageView(LoginActivity.this, 0, ll_total);
+//        StatusBarUtil.setTransparent(this);
+//        StatusBarUtil.setTranslucent(LoginActivity.this, 0);
+//        StatusBarUtil.setTranslucentForImageView(LoginActivity.this, 0, ll_total);
     }
 
     @Override

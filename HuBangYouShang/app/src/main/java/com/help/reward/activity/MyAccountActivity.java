@@ -12,6 +12,7 @@ import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.utils.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,6 +75,15 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
             tv_general_voucher.setText("0");
             tv_discount_level.setText("0");
         }
+    }
+
+    @BindView(R.id.ll_content)
+    LinearLayout ll_content;
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForImageView(MyAccountActivity.this, 0, ll_content);
+
     }
 
     @OnClick({R.id.id_back, R.id.tv_balance, R.id.tv_account_help_reward, R.id.tv_coupon, R.id.tv_general_volume,

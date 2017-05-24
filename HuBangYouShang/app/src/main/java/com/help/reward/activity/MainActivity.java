@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.help.reward.chat.db.UserDao;
 import com.help.reward.chat.ui.GroupActivity;
+import com.help.reward.utils.StatusBarUtil;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.EMMessageListener;
@@ -562,6 +563,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         PermissionsManager.getInstance().notifyPermissionsChange(permissions, grantResults);
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, null);
     }
 
 }

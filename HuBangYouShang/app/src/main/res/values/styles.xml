@@ -16,6 +16,12 @@
 
     </style>
 
+    <style name="style_fake_status_bar_height">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/statusbar_view_height</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
     <!--首页底部radiobutton-->
     <style name="style_radio_button">
         <item name="android:layout_width">0dp</item>

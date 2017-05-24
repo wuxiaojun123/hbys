@@ -12,6 +12,7 @@
     <dimen name="dimen_50">50dp</dimen>
     <dimen name="dimen_64">64dp</dimen>
     <dimen name="dimen_170">170dp</dimen>
+    <dimen name="dimen_195">195dp</dimen>
 
     <!--字体大小-->
     <dimen name="dimen_5">5dp</dimen>

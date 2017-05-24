@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_not_logged_in"
     android:layout_width="match_parent"
     android:layout_height="155dp"
     android:background="@mipmap/img_my_login"
-    android:orientation="vertical"
-    android:id="@+id/ll_not_logged_in"
-    >
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/fake_status_bar"
+        style="@style/style_fake_status_bar_height"
+        android:alpha="0" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -62,8 +66,8 @@
                     android:id="@+id/tv_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="登陆/"
                     android:gravity="center_horizontal"
+                    android:text="登陆/"
                     android:textColor="@color/color_while"
                     android:textSize="@dimen/dimen_15" />
 
@@ -71,8 +75,8 @@
                     android:id="@+id/tv_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="注册"
                     android:gravity="center_horizontal"
+                    android:text="注册"
                     android:textColor="@color/color_while"
                     android:textSize="@dimen/dimen_15" />
             </LinearLayout>
@@ -82,8 +86,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="这里是用户等级"
                 android:gravity="center_horizontal"
+                android:text="这里是用户等级"
                 android:textColor="@color/color_while"
                 android:textSize="@dimen/dimen_12" />
 
@@ -108,8 +112,7 @@
         android:divider="@drawable/shape_divider_line"
         android:orientation="horizontal"
         android:showDividers="middle"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <LinearLayout style="@style/style_my_account_ll">
 

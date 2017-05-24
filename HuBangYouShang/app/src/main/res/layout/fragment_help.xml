@@ -4,7 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <include layout="@layout/layout_title_help"/>
+
+    <View
+        android:id="@+id/fake_status_bar"
+        style="@style/style_fake_status_bar_height"/>
+
+    <include layout="@layout/layout_title_help" />
+
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/pstb_help"
         android:layout_width="match_parent"

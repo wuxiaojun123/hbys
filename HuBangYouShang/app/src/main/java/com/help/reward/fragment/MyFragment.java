@@ -16,6 +16,7 @@ import com.help.reward.activity.MyCouponActivity;
 import com.help.reward.activity.MyGeneralVolumeActivity;
 import com.help.reward.activity.ShopcartActivity;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.utils.StatusBarUtil;
 import com.idotools.utils.MetricsUtils;
 import com.help.reward.R;
 import com.help.reward.activity.LoginActivity;
@@ -76,9 +77,17 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.tv_discount_level)
     TextView tv_discount_level; // 优惠百分比
 
+    @BindView(R.id.ll_total)
+    LinearLayout ll_total;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_my;
+    }
+
+
+    @Override
+    protected void init() {
     }
 
     @OnClick({R.id.rl_user_info, R.id.iv_setting, R.id.tv_msg, R.id.tv_login, R.id.tv_register,
@@ -284,7 +293,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private void loginSuccess() {
         if (ll_logined.getVisibility() == View.GONE) {
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll_not_logged_in.getLayoutParams();
-            lp.height = MetricsUtils.dipToPx(210);
+            lp.height = MetricsUtils.dipToPx(235);
             ll_not_logged_in.requestLayout();
             ll_logined.setVisibility(View.VISIBLE);
             // 设置会员信息
