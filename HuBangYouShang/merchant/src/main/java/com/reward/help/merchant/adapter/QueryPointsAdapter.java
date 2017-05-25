@@ -9,6 +9,7 @@ import com.reward.help.merchant.R;
 import com.reward.help.merchant.adapter.viewholder.SuperViewHolder;
 import com.reward.help.merchant.bean.CouponLogBean;
 import com.reward.help.merchant.bean.PointsLogBean;
+import com.reward.help.merchant.utils.GlideUtils;
 
 public class QueryPointsAdapter extends BaseRecyclerAdapter<PointsLogBean.Member> {
 
@@ -31,6 +32,9 @@ public class QueryPointsAdapter extends BaseRecyclerAdapter<PointsLogBean.Member
 
         mTvName.setText(member.member_name);
         mTvDate.setText(member.created);
-        mTvDes.setText(member.num);
+        mTvDes.setText(member.num + "分");
+
+        GlideUtils.loadBoundImage(member.member_avatar,mIvPhoto);
+
     }
 }

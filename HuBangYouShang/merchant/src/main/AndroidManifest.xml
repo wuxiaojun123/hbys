@@ -111,9 +111,22 @@
 
         <activity
             android:name=".chat.ui.GroupSearchMessageActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"></activity>
 
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".chat.ui.GroupDeleteActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
         <!-- 开机自启动服务 -->
         <receiver android:name="chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">

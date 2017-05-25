@@ -62,6 +62,13 @@ public class StoreInfoActivity extends BaseActivity {
         mTvCheck.setVisibility(View.INVISIBLE);
         mTvCheckDes.setVisibility(View.GONE);
 
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         initData();
     }
 
@@ -110,6 +117,16 @@ public class StoreInfoActivity extends BaseActivity {
             }
             mTvStoreMain.setText(data.company_name);
             mTvStoreOwner.setText(data.contacts_name);
+
+            if ("1".equals(data.joinin_type)) {//失败
+                mIvStoreCheckProgress.setImageResource(R.mipmap.store_unpass);
+            } else if ("2".equals(data.joinin_type)) {//成功
+                mIvStoreCheckProgress.setImageResource(R.mipmap.store_pass);
+            } else {
+                mIvStoreCheckProgress.setImageResource(R.mipmap.store_wait);
+
+            }
+            mIvStoreCheckProgress.setVisibility(View.VISIBLE);
         }
     }
 }

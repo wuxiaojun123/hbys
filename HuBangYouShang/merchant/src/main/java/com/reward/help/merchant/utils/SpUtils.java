@@ -3,7 +3,9 @@ package com.reward.help.merchant.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
 import com.reward.help.merchant.App;
+import com.reward.help.merchant.bean.LoginBean;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -25,7 +27,7 @@ public class SpUtils {
     /**
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
      *
-     * @param context
+     * @param
      * @param key
      * @param object
      */
@@ -62,7 +64,7 @@ public class SpUtils {
     /**
      * 得到保存数据的方法，我们根据默认值得到保存的数据的具体类型，然后调用相对于的方法获取值
      *
-     * @param context
+     * @param
      * @param key
      * @param defaultObject
      * @return
@@ -199,5 +201,29 @@ public class SpUtils {
         }
     }
 
+    public static void saveUserInfo(LoginBean loginInfo){
+        if (loginInfo != null) {
+
+            try{
+                Gson gson = new Gson();
+                String userinfo = gson.toJson(loginInfo);
+                put("userInfo",userinfo);
+
+            }catch (Exception e){}
+
+        }
+    }
+
+    public static LoginBean getUserInfo(){
+        try {
+            String userinfo = (String) get("userInfo", "userInfo");
+            Gson gson = new Gson();
+            return gson.fromJson(userinfo, LoginBean.class);
+        }catch (Exception e){
+
+        }
+        return null;
+
+    }
 }
 

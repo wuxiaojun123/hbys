@@ -2,6 +2,7 @@ package com.reward.help.merchant.network.api;
 
 import com.reward.help.merchant.bean.Response.BaseResponse;
 import com.reward.help.merchant.bean.Response.CouponListResponse;
+import com.reward.help.merchant.bean.Response.GroupProgressResponse;
 import com.reward.help.merchant.bean.Response.QueryCouponResponse;
 import com.reward.help.merchant.bean.Response.QueryMyPointsResponse;
 import com.reward.help.merchant.bean.Response.QueryPointsResponse;
@@ -58,6 +59,20 @@ public interface CouponPointsApi {
     @FormUrlEncoded
     @POST(Constant.URL_GET_POINTS)
     Observable<QueryMyPointsResponse> getPoints(
+            @Field("key") String key
+    );
+
+    @FormUrlEncoded
+    @POST(Constant.URL_GROUP_APPLY)
+    Observable<BaseResponse> apply(
+            @Field("key") String key,
+            @Field("content") String content
+    );
+
+
+    @FormUrlEncoded
+    @POST(Constant.URL_GROUP_PROGRESS)
+    Observable<GroupProgressResponse> queryApplyProgress(
             @Field("key") String key
     );
 }

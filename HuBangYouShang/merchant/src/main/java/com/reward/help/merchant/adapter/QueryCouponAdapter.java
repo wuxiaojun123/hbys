@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.reward.help.merchant.R;
 import com.reward.help.merchant.adapter.viewholder.SuperViewHolder;
 import com.reward.help.merchant.bean.CouponLogBean;
+import com.reward.help.merchant.utils.GlideUtils;
 
 public class QueryCouponAdapter extends BaseRecyclerAdapter<CouponLogBean.Member> {
 
@@ -41,6 +42,7 @@ public class QueryCouponAdapter extends BaseRecyclerAdapter<CouponLogBean.Member
 
         mTvName.setText(member.member_name);
         mTvDate.setText(member.created);
+        GlideUtils.loadBoundImage(member.member_avatar,mIvPhoto);
 
     }
 

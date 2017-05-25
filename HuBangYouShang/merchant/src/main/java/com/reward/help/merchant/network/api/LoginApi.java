@@ -33,5 +33,21 @@ public interface LoginApi {
     Observable<VerificationCodeResponse> getVerificationCodeBean(
             @Field("phone") String phone,
             @Field("type") String type
+            );
+
+    // 获取code 注册和修改密码
+    @FormUrlEncoded
+    @POST(Constant.URL_CHECK_CODE)
+    Observable<VerificationCodeResponse> getCheckCode(
+            @Field("phone") String phone,
+            @Field("auth_code") String auth_code
+    );
+
+    // 获取code 注册和修改密码
+    @FormUrlEncoded
+    @POST(Constant.URL_UPDATE_PASSWORD)
+    Observable<VerificationCodeResponse> getUpdatePwd(
+            @Field("password") String password,
+            @Field("password1") String password1
     );
 }

@@ -44,6 +44,7 @@ import com.reward.help.merchant.network.base.BaseSubscriber;
 import com.reward.help.merchant.rxbus.RxBus;
 import com.reward.help.merchant.utils.ActivitySlideAnim;
 import com.reward.help.merchant.utils.Constant;
+import com.reward.help.merchant.utils.SpUtils;
 import com.reward.help.merchant.view.MyProcessDialog;
 
 import java.net.SocketTimeoutException;
@@ -154,9 +155,12 @@ public class LoginActivity extends BaseActivity {
 							if(res.data != null && res.data.easemobId != null){
 								loginToHuanxin(username,res.data.easemobId,password);
 							}
+							SpUtils.saveUserInfo(res.data);
+//							loginToHuanxin(username,password);
 							//finish();
 							//ActivitySlideAnim.slideOutAnim(LoginActivity.this);
 						} else {
+							MyProcessDialog.closeDialog();
 							ToastUtils.show(mContext, res.msg);
 						}
 					}

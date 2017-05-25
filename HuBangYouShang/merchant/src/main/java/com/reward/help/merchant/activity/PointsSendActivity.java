@@ -63,6 +63,7 @@ public class PointsSendActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
+        mTvTitle.setText("发营销积分");
         int groupNum = getIntent().getIntExtra("num",0);
         mTvGroupNum.setText(String.format(getString(R.string.group_num),groupNum+""));
     }

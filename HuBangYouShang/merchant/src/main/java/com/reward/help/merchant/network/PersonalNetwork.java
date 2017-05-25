@@ -1,6 +1,7 @@
 package com.reward.help.merchant.network;
 
 import com.reward.help.merchant.network.api.LoginApi;
+import com.reward.help.merchant.network.api.PersonalApi;
 import com.reward.help.merchant.network.api.StoreApi;
 import com.reward.help.merchant.network.base.RetrofitUtils;
 
@@ -20,4 +21,8 @@ public class PersonalNetwork {
         return RetrofitUtils.getRetrofitCookie().create(StoreApi.class);
     }
 
+    // 获取个人的信息
+    public static PersonalApi getResponseApi(){
+        return RetrofitUtils.getRetrofitCookie().create(PersonalApi.class);
+    }
 }

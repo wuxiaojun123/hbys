@@ -48,10 +48,17 @@ import com.hyphenate.easeui.widget.EaseSwitchButton;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.NetUtils;
+import com.idotools.utils.ToastUtils;
+import com.reward.help.merchant.App;
 import com.reward.help.merchant.R;
+import com.reward.help.merchant.chat.Constant;
+import com.reward.help.merchant.chat.db.TopUser;
+import com.reward.help.merchant.chat.db.TopUserDao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GroupDetailsActivity extends BaseActivity implements OnClickListener {
 	private static final String TAG = "GroupDetailsActivity";
@@ -78,6 +85,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private EaseSwitchButton conversationToTop;
 
 	private EMPushConfigs pushConfigs;
+	private Map<String, TopUser> topUserMap;
 
 
 	@Override
@@ -116,6 +124,15 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		RelativeLayout blockOfflineLayout = (RelativeLayout) findViewById(R.id.rl_switch_block_offline_message);
 		offlinePushSwitch = (EaseSwitchButton) findViewById(R.id.switch_block_offline_message);
 		conversationToTop = (EaseSwitchButton) findViewById(R.id.switch_up);
+
+
+		topUserMap = App.getApplication().getTopUserList();
+
+		if (topUserMap != null && topUserMap.containsKey(groupId)){
+			conversationToTop.openSwitch();
+		} else {
+			conversationToTop.closeSwitch();
+		}
 
 		idText.setText(groupId);
 		if (group.getOwner() == null || "".equals(group.getOwner())
@@ -473,8 +490,34 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private void conversationToTop() {
 		if(conversationToTop.isSwitchOpen()){
 			conversationToTop.closeSwitch();
+
+			TopUser topUser = new TopUser();
+			topUser.setTime(System.currentTimeMillis());
+			topUser.setTopuser_id(groupId);
+			topUser.setIs_group("1");
+			if (topUserMap.containsKey(groupId)) {
+				topUserMap.remove(groupId);
+			}
+			App.getApplication().setTopUserList(topUserMap);
+			TopUserDao topUserDao = new TopUserDao(mContext);
+			topUserDao.deleteTopUser(topUser);
+			ToastUtils.show(mContext,"取消成功");
 		}else{
 			conversationToTop.openSwitch();
+
+			TopUser topUser = new TopUser();
+			topUser.setTime(System.currentTimeMillis());
+			topUser.setTopuser_id(groupId);
+			topUser.setIs_group("1");
+			HashMap<String, TopUser> map = new HashMap<>();
+			map.put(groupId,topUser);
+			topUserMap.putAll(map);
+			App.getApplication().setTopUserList(topUserMap);
+
+			App.getApplication().setTopUserList(topUserMap);
+			TopUserDao topUserDao = new TopUserDao(mContext);
+			topUserDao.saveTopUser(topUser);
+			ToastUtils.show(mContext,"置顶成功");
 		}
 	}
 
@@ -632,13 +675,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			}
 			final LinearLayout button = (LinearLayout) convertView.findViewById(R.id.button_avatar);
 
-			/*
+
 
 			// 最后一个item，减人按钮
 			if (position == getCount() - 1) {
 			    holder.textView.setText("");
 				// 设置成删除按钮
-			    holder.imageView.setImageResource(R.mipmap.more);
+			    holder.imageView.setImageResource(R.drawable.em_smiley_minus_btn);/*
 //				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_minus_btn, 0, 0);
 				// 如果不是创建者或者没有相应权限，不提供加减人按钮
 				if (!group.getOwner().equals(EMClient.getInstance().getCurrentUser())) {
@@ -654,21 +697,27 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
 					}
 					final String st10 = getResources().getString(R.string.The_delete_button_is_clicked);
+					*/
 					button.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							EMLog.d(TAG, st10);
-							isInDeleteMode = true;
-							notifyDataSetChanged();
+							//isInDeleteMode = true;
+							//notifyDataSetChanged();
+							if (!group.getOwner().equals(EMClient.getInstance().getCurrentUser())) {
+								ToastUtils.show(GroupDetailsActivity.this,"您不是群主，无法进行此操作！");
+							} else {
+								startActivity(new Intent(GroupDetailsActivity.this, GroupDeleteActivity.class).putExtra("groupId", groupId));
+							}
 						}
 					});
 
 					//TODO 隐藏掉
-					convertView.setClickable(false);
-					convertView.setVisibility(View.INVISIBLE);
+					convertView.setClickable(true);
+					convertView.setVisibility(View.VISIBLE);
 
-				}
-			} else if (position == getCount() - 2) { // 添加群组成员按钮
+				//}
+			//}
+			/*else if (position == getCount() - 2) { // 添加群组成员按钮
 			    holder.textView.setText("");
 			    holder.imageView.setImageResource(R.mipmap.more);
 //				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_add_btn, 0, 0);
@@ -698,8 +747,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				}
 				//TODO 隐藏掉
 				convertView.setClickable(false);
-				convertView.setVisibility(View.INVISIBLE);
-			} else { // 普通item，显示群组成员 */
+				convertView.setVisibility(View.INVISIBLE);*/
+			} else { // 普通item，显示群组成员
 				final String username = getItem(position);
 				convertView.setVisibility(View.VISIBLE);
 				button.setVisibility(View.VISIBLE);
@@ -735,6 +784,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							deleteMembersFromGroup(username);
 						} else {
 							// 正常情况下点击user，可以进入用户详情或者聊天页面等等
+							if (!EMClient.getInstance().getCurrentUser().equals(username) ) {
+								Intent intent = new Intent(GroupDetailsActivity.this, ChatActivity.class);
+								intent.putExtra("userId", username);
+								intent.putExtra("chatType", Constant.CHATTYPE_SINGLE);
+								startActivity(intent);
+							}
 
 						}
 					}
@@ -802,14 +857,14 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						return false;
 					}
 				});
-			/*}*/
+			}
 			return convertView;
 		}
 
 		@Override
 		public int getCount() {
 			//return super.getCount() + 2;
-			return  super.getCount();
+			return  super.getCount() + 1;
 		}
 	}
 
@@ -883,7 +938,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		super.onDestroy();
 		instance = null;
 	}
-	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		refreshMembers();
+	}
+
 	private static class ViewHolder{
 	    ImageView imageView;
 	    TextView textView;

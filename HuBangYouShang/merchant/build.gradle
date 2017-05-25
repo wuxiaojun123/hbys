@@ -17,8 +17,13 @@ android {
 
     }
     buildTypes {
+
         release {
             minifyEnabled false
+//            lintOptions {
+//                abortOnError false
+//            }
+//            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

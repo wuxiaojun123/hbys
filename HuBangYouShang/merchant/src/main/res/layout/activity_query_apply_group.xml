@@ -7,5 +7,9 @@
 
     <include layout="@layout/layout_title"></include>
 
-
+    <com.base.recyclerview.LRecyclerView
+        android:id="@+id/id_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>

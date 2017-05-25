@@ -173,7 +173,7 @@
             android:textColor="@color/color_3a"/>
 
         <TextView
-            android:id="@+id/tv_profile_cellphone"
+            android:id="@+id/tv_profile_store"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/dimen_10"
