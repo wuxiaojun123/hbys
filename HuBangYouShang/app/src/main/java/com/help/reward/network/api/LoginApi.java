@@ -2,13 +2,17 @@ package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.LoginResponse;
+import com.help.reward.bean.Response.LoginResponse2;
 import com.help.reward.bean.Response.RegisterResponse;
 import com.help.reward.bean.Response.VerificationCodeResponse;
+import com.help.reward.bean.Response.WXLoginTokenResponse;
 import com.help.reward.utils.Constant;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -25,6 +29,44 @@ public interface LoginApi {
     Observable<LoginResponse> getLoginBean(
             @Field("username") String username,
             @Field("password") String password,
+            @Field("client") String client
+    );
+
+    /*// 微信-登录-获取access_token  ?act=connect_wx&op=index
+    @GET("/mobile/index.php")
+    Observable<WXLoginTokenResponse> getWXLoginTokenResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("code") String code
+    );
+
+    // 微信-登录-获取access_token ?act=connect_wx&op=login
+    @GET("/mobile/index.php")
+    Observable<LoginResponse> getWXLoginResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("access_token") String access_token,
+            @Query("openid") String openid,
+            @Query("client") String client
+    );*/
+
+    // 微信-登录-获取access_token  ?act=connect_wx&op=index
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=connect_wx&op=index")
+    Observable<WXLoginTokenResponse> getWXLoginTokenResponse(
+//            @Field("act") String act,
+//            @Field("op") String op,
+            @Field("code") String code
+    );
+
+    // 微信-登录-获取access_token ?act=connect_wx&op=login
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=connect_wx&op=login")
+    Observable<LoginResponse2> getWXLoginResponse(
+//            @Field("act") String act,
+//            @Field("op") String op,
+            @Field("access_token") String access_token,
+            @Field("openid") String openid,
             @Field("client") String client
     );
 

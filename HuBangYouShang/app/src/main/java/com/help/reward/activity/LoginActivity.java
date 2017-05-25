@@ -19,13 +19,18 @@ import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.utils.StatusBarUtil;
 import com.help.reward.view.MyProcessDialog;
+import com.help.reward.wxapi.WXEntryActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +51,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @BindView(R.id.et_login_pwd)
     EditText et_login_pwd; // 密码
 
+    private Subscription subscribe;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +61,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-    @OnClick({R.id.btn_login, R.id.tv_register,R.id.tv_forget_pwd, R.id.tv_wetchat, R.id.tv_qq, R.id.tv_weibo})
+    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd, R.id.tv_wetchat, R.id.tv_qq, R.id.tv_weibo})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -73,12 +79,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.tv_forget_pwd: // 忘记密码
                 Intent mIntent = new Intent(LoginActivity.this, ForgetPwdActivity.class);
-                mIntent.putExtra("title","忘记密码");
+                mIntent.putExtra("title", "忘记密码");
                 startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim(LoginActivity.this);
 
                 break;
             case R.id.tv_wetchat:
+                // 微信登录
+                wxLogin();
 
                 break;
             case R.id.tv_qq:
@@ -90,7 +98,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private Subscription subscribe;
+    /***
+     * 微信登录
+     */
+    private void wxLogin() {
+        startActivityForResult(new Intent(mContext, WXEntryActivity.class), 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        LogUtils.e("获取到的resultcode=" + resultCode);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                finish();
+                ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+            }
+        }
+
+    }
+
 
     /***
      * 登录逻辑
@@ -134,7 +161,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             // 请求会员信息
                             App.mLoginReponse = res.data;
                             RxBus.getDefault().post("loginSuccess");
-                            LoginToHuanxin(username,password);
+                            LoginToHuanxin(username, password);
                             //finish();
                             //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
                         } else {
@@ -146,10 +173,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    private void LoginToHuanxin(String username, String password){
+    private void LoginToHuanxin(String username, String password) {
         //String userName = "hbys3";
         //String password = "123456";
-        EMClient.getInstance().login(username,password,new EMCallBack() {//回调
+        EMClient.getInstance().login(username, password, new EMCallBack() {//回调
             @Override
             public void onSuccess() {
                 MyProcessDialog.closeDialog();
@@ -184,9 +211,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void setStatusBar() {
         StatusBarUtil.setTranslucentForImageView(LoginActivity.this, 0, ll_total);
-//        StatusBarUtil.setTransparent(this);
-//        StatusBarUtil.setTranslucent(LoginActivity.this, 0);
-//        StatusBarUtil.setTranslucentForImageView(LoginActivity.this, 0, ll_total);
     }
 
     @Override

@@ -162,3 +162,16 @@
     public static ** valueOf(java.lang.String);
 }
 #######################umeng统计 end####################
+
+###################### weixin login ##################
+-keep class com.tencent.mm.opensdk.** {
+   *;
+}
+-keep class com.tencent.wxop.** {
+   *;
+}
+-keep class com.tencent.mm.sdk.** {
+   *;
+}
+###################### weixin login ##################
+
