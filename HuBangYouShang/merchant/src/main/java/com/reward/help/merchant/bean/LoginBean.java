@@ -7,4 +7,6 @@ public class LoginBean{
     public String store_id;
     public String store_name;
     public String key;
+    public String easemobId; // 环信用户名
+
 }

@@ -8,8 +8,9 @@ public class Constant {
 
     public static final String PLATFORM_CLIENT = "android"; // 平台是安卓
 
-    // 210.72.13.135
-    public static final String BASE_URL = "http://210.72.13.135/";
+    // 210.72.13.135 http://www.hubangyoushang.com
+//    public static final String BASE_URL = "http://210.72.13.135/";
+    public static final String BASE_URL = "http://www.hubangyoushang.com/";
     // 登录
     public static final String URL_LOGIN = "mobile/index.php?act=login";
 
