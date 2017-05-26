@@ -37,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -72,7 +73,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.tv_register:
                 // 快速注册
-
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 ActivitySlideAnim.slideInAnim(LoginActivity.this);
 
@@ -102,20 +102,31 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 微信登录
      */
     private void wxLogin() {
-        startActivityForResult(new Intent(mContext, WXEntryActivity.class), 1);
+        getLoginSuccessInfo();
+        IWXAPI api = WXAPIFactory.createWXAPI(this, Constant.WXCHAT_APP_ID, true);
+        api.registerApp(Constant.WXCHAT_APP_ID); // 将应用注册到微信
+        if (api != null && api.isWXAppInstalled()) {
+
+            SendAuth.Req req = new SendAuth.Req();
+            req.scope = "snsapi_userinfo"; // 作用域 只获取用户信息
+            req.state = String.valueOf(System.currentTimeMillis());
+            api.sendReq(req);
+
+        } else {
+            ToastUtils.show(getApplicationContext(), "请安装微信");
+        }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-        LogUtils.e("获取到的resultcode=" + resultCode);
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                finish();
-                ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+    private void getLoginSuccessInfo(){
+        RxBus.getDefault().toObservable(Boolean.class).subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean b) {
+                if(b){
+                    finish();
+                    ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                }
             }
-        }
-
+        });
     }
 
 

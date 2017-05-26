@@ -48,24 +48,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             mContext = getApplicationContext();
             api = WXAPIFactory.createWXAPI(this, Constant.WXCHAT_APP_ID, true);
             api.registerApp(Constant.WXCHAT_APP_ID); // 将应用注册到微信
-
-
-            if (api != null && api.isWXAppInstalled()) {
-
-                SendAuth.Req req = new SendAuth.Req();
-                req.scope = "snsapi_userinfo"; // 作用域 只获取用户信息
-                req.state = String.valueOf(System.currentTimeMillis());
-                api.sendReq(req);
-
-                api.handleIntent(getIntent(), this);
-
-            } else {
-                ToastUtils.show(getApplicationContext(), "请安装微信");
-            }
+            api.handleIntent(getIntent(), this);
 
         } catch (Exception e) {
             e.printStackTrace();
-            WXEntryActivity.this.setResult(RESULT_CANCELED);
             finish();
         }
     }
@@ -101,14 +87,19 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 // 用户取消
                 LogUtils.e("点击取消");
-                WXEntryActivity.this.setResult(RESULT_CANCELED);
+//                WXEntryActivity.this.setResult(RESULT_CANCELED);
                 WXEntryActivity.this.finish();
 
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
                 // 发送被拒绝
                 LogUtils.e("点击拒绝");
-                WXEntryActivity.this.setResult(RESULT_CANCELED);
+//                WXEntryActivity.this.setResult(RESULT_CANCELED);
+                WXEntryActivity.this.finish();
+
+                break;
+            default:
+//                WXEntryActivity.this.setResult(RESULT_CANCELED);
                 WXEntryActivity.this.finish();
 
                 break;
@@ -194,8 +185,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                             // 请求会员信息
                             App.mLoginReponse = res.data;
                             RxBus.getDefault().post("loginSuccess");
+                            // 关闭LoginActivity页面
+                            RxBus.getDefault().post(true);
 
-                            WXEntryActivity.this.setResult(RESULT_OK);
                             WXEntryActivity.this.finish();
 
                         } else {
