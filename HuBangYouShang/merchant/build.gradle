@@ -16,15 +16,34 @@ android {
         multiDexEnabled true
 
     }
+    signingConfigs {
+        myConfig {
+            storeFile file("hbys.jks")
+            storePassword "123456"
+            keyAlias "hbys"
+            keyPassword "123456"
+        }
+    }
     buildTypes {
 
-        release {
+        /*release {
             minifyEnabled false
 //            lintOptions {
 //                abortOnError false
 //            }
 //            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }*/
+
+        release {
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            debuggable false
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.myConfig
         }
     }
     sourceSets{
