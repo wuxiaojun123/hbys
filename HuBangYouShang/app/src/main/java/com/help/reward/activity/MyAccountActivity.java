@@ -63,7 +63,7 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
             tv_reward_points.setText(App.mLoginReponse.point);
             tv_voucher.setText(App.mLoginReponse.voucher);
             tv_general_voucher.setText(App.mLoginReponse.general_voucher);
-            tv_discount_level.setText(App.mLoginReponse.discount_level);
+            tv_discount_level.setText(App.mLoginReponse.discount_level + "%");
 
         } else {
             iv_photo.setImageResource(R.mipmap.img_my_default_photo);
@@ -83,7 +83,6 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void setStatusBar() {
         StatusBarUtil.setTranslucentForImageView(MyAccountActivity.this, 0, ll_content);
-
     }
 
     @OnClick({R.id.id_back, R.id.tv_balance, R.id.tv_account_help_reward, R.id.tv_coupon, R.id.tv_general_volume,

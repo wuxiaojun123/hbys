@@ -1,6 +1,7 @@
 package com.help.reward.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.help.reward.R;
+import com.help.reward.activity.SearchShopResultActivity;
 import com.help.reward.bean.GoodsSecondTypeBeans;
 import com.help.reward.bean.GoodsTypeBean;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.MyGridView;
 import com.idotools.utils.ToastUtils;
 
@@ -87,6 +90,12 @@ public class GoodsSecondTypeAdapter extends BaseAdapter {
                                     int arg2, long arg3) { // TODO Auto-generated method
                 try {
                     ToastUtils.show(mActivity, item.next_class_list.get(arg2).gc_name);
+                    Intent mIntent = new Intent(mActivity,SearchShopResultActivity.class);
+                    mIntent.putExtra("keyword",item.next_class_list.get(arg2).gc_name);
+                    mIntent.putExtra("searchType","goods");
+                    mActivity.startActivity(mIntent);
+                    ActivitySlideAnim.slideInAnim(mActivity);
+
                 } catch (Exception e) {
                     // TODO: handle exception
                     e.printStackTrace();

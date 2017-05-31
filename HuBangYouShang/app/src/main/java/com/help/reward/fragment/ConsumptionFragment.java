@@ -14,6 +14,7 @@ import com.help.reward.activity.MyAccountActivity;
 import com.help.reward.activity.MyCouponActivity;
 import com.help.reward.activity.MyOrderActivity;
 import com.help.reward.activity.SearchShopActivity;
+import com.help.reward.activity.ShopcartActivity;
 import com.help.reward.view.SearchEditTextView;
 import com.idotools.utils.InputWindowUtils;
 import com.idotools.utils.LogUtils;
@@ -54,16 +55,12 @@ import static com.help.reward.R.id.layout_help_title_sms;
 
 public class ConsumptionFragment extends BaseFragment {
 
-    //    @BindView(R.id.tv_title_help_msgcount)
-//    TextView tvTitleHelpMsgcount;
-//    @BindView(R.id.layout_help_title_sms)
-//    LinearLayout layoutHelpTitleSms;
-//    @BindView(R.id.et_shop_search)
-//    EditText etShopSearch;
+    @BindView(R.id.tv_search)
+    TextView tv_search; // 搜索框
     @BindView(R.id.banner_shop)
     ConvenientBanner bannerShop;
-    @BindView(R.id.layout_shop_myaccount)
-    LinearLayout layoutShopMyaccount;
+//    @BindView(R.id.layout_shop_myaccount)
+//    LinearLayout layoutShopMyaccount;
     @BindView(R.id.layout_shop_myorder)
     LinearLayout layoutShopMyorder;
     @BindView(R.id.layout_shop_coupon)
@@ -132,8 +129,8 @@ public class ConsumptionFragment extends BaseFragment {
     }
 
     private void initView() {
+        tv_search.setText("搜素关键字相关商品");
     }
-
 
     private void initNetwork() {
         ShopMallNetwork
@@ -163,7 +160,6 @@ public class ConsumptionFragment extends BaseFragment {
                         }
                     }
                 });
-
     }
 
     /***
@@ -267,13 +263,13 @@ public class ConsumptionFragment extends BaseFragment {
                 .startTurning(3000);
     }
 
-    @OnClick({R.id.layout_shop_myaccount, R.id.layout_shop_myorder, R.id.layout_shop_coupon,
+    @OnClick({R.id.layout_shop_cart, R.id.layout_shop_myorder, R.id.layout_shop_coupon,
             R.id.layout_shop_type, R.id.rl_hot_shop, R.id.rl_hot_shop2, R.id.ll_hot_shop3,
             R.id.ll_hot_shop4, R.id.ll_hot_shop5, R.id.tv_search, R.id.iv_email})
     void click(View v) {
         switch (v.getId()) {
-            case R.id.layout_shop_myaccount: // 我的账户
-                startActivity(new Intent(mContext, MyAccountActivity.class));
+            case R.id.layout_shop_cart: // 购物车
+                startActivity(new Intent(mContext, ShopcartActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;

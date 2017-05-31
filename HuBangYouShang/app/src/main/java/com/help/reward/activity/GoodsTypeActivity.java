@@ -1,5 +1,6 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -81,12 +82,21 @@ public class GoodsTypeActivity extends BaseActivity {
             public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
                 if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                        if ("goods".equals(searchType)) {
-
-                        } else {
-
+                        String searchText = et_shop_search.getText().toString().trim();
+                        if(!TextUtils.isEmpty(searchText)){
+                            Intent mIntent = new Intent(mContext,SearchShopResultActivity.class);
+                            mIntent.putExtra("keyword",searchText);
+                            if ("goods".equals(searchType)) {
+                                mIntent.putExtra("searchType","goods");
+                            } else {
+                                mIntent.putExtra("searchType","store");
+                            }
+                            startActivity(mIntent);
+                            ActivitySlideAnim.slideInAnim(GoodsTypeActivity.this);
+                        }else{
+                            ToastUtils.show(mContext, "请输入搜索内容");
                         }
-                        ToastUtils.show(mContext, et_shop_search.getText().toString());
+
                         return true;
                     }
                 }

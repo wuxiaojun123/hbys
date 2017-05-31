@@ -145,7 +145,7 @@ public class SearchShopResultActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             keyword = bundle.getString("keyword");
-            searchType = bundle.getString("searchType", "goods");
+            searchType = bundle.getString("searchType", "goods"); // 店铺 store
         }
 
         initView();

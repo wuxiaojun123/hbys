@@ -169,6 +169,7 @@
     <string name="pay_lable10">继续购物</string>
 
     <!--商城-->
+    <string name="shop_cart">购物车</string>
     <string name="shop_lable1">我的账户</string>
     <string name="shop_lable2">我的订单</string>
     <string name="shop_lable3">优惠券</string>
