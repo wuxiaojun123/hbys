@@ -92,12 +92,14 @@ public class ShopInfoHomeFragment extends BaseFragment {
         initItemClickListener();
         requestData();
     }
+
     private void initItemClickListener() {
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(mContext, GoodInfoActivity.class);
                 intent.putExtra("goods_id", adapter.getDataList().get(position).goods_id);
+                intent.putExtra("store_id", adapter.getDataList().get(position).store_id);
                 startActivity(intent);
                 ActivitySlideAnim.slideInAnim(getActivity());
             }
@@ -201,16 +203,16 @@ public class ShopInfoHomeFragment extends BaseFragment {
             case 5:
                 layout_goods5.setVisibility(View.VISIBLE);
                 ShopMallHotBean item5 = response.data.sale_goods_list.get(4);
-                setOnGoodsClick(layout_goods5, item5.goods_id);
-                tv_goods_price5.setText("￥"+item5.goods_price);
+                setOnGoodsClick(layout_goods5, item5.goods_id, item5.store_id);
+                tv_goods_price5.setText("￥" + item5.goods_price);
                 tv_goods_name5.setText(item5.goods_name);
                 tv_goods_jingle5.setText(item5.goods_jingle);
                 GlideUtils.loadImage(item5.goods_image_url, iv_goods5);
             case 4:
                 layout_goods4.setVisibility(View.VISIBLE);
                 ShopMallHotBean item4 = response.data.sale_goods_list.get(3);
-                setOnGoodsClick(layout_goods4, item4.goods_id);
-                tv_goods_price4.setText("￥"+item4.goods_price);
+                setOnGoodsClick(layout_goods4, item4.goods_id, item4.store_id);
+                tv_goods_price4.setText("￥" + item4.goods_price);
                 tv_goods_name4.setText(item4.goods_name);
                 tv_goods_jingle4.setText(item4.goods_jingle);
                 GlideUtils.loadImage(item4.goods_image_url, iv_goods4);
@@ -218,16 +220,16 @@ public class ShopInfoHomeFragment extends BaseFragment {
                 layout_goods3.setVisibility(View.VISIBLE);
                 layout_goodsLine2.setVisibility(View.VISIBLE);
                 ShopMallHotBean item3 = response.data.sale_goods_list.get(2);
-                setOnGoodsClick(layout_goods3, item3.goods_id);
-                tv_goods_price3.setText("￥"+item3.goods_price);
+                setOnGoodsClick(layout_goods3, item3.goods_id, item3.store_id);
+                tv_goods_price3.setText("￥" + item3.goods_price);
                 tv_goods_name3.setText(item3.goods_name);
                 tv_goods_jingle3.setText(item3.goods_jingle);
                 GlideUtils.loadImage(item3.goods_image_url, iv_goods3);
             case 2:
                 layout_goods2.setVisibility(View.VISIBLE);
                 ShopMallHotBean item2 = response.data.sale_goods_list.get(1);
-                setOnGoodsClick(layout_goods2, item2.goods_id);
-                tv_goods_price2.setText("￥"+item2.goods_price);
+                setOnGoodsClick(layout_goods2, item2.goods_id, item2.store_id);
+                tv_goods_price2.setText("￥" + item2.goods_price);
                 tv_goods_name2.setText(item2.goods_name);
                 tv_goods_jingle2.setText(item2.goods_jingle);
                 GlideUtils.loadImage(item2.goods_image_url, iv_goods2);
@@ -235,8 +237,8 @@ public class ShopInfoHomeFragment extends BaseFragment {
                 layout_goods1.setVisibility(View.VISIBLE);
                 layout_goodsLine1.setVisibility(View.VISIBLE);
                 ShopMallHotBean item1 = response.data.sale_goods_list.get(0);
-                setOnGoodsClick(layout_goods1, item1.goods_id);
-                tv_goods_price1.setText("￥"+item1.goods_price);
+                setOnGoodsClick(layout_goods1, item1.goods_id, item1.store_id);
+                tv_goods_price1.setText("￥" + item1.goods_price);
                 tv_goods_name1.setText(item1.goods_name);
                 tv_goods_jingle1.setText(item1.goods_jingle);
                 GlideUtils.loadImage(item1.goods_image_url, iv_goods1);
@@ -262,12 +264,13 @@ public class ShopInfoHomeFragment extends BaseFragment {
         }
     }
 
-    private void setOnGoodsClick(View view, final String goods_id) {
+    private void setOnGoodsClick(View view, final String goods_id, final String store_id) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, GoodInfoActivity.class);
                 intent.putExtra("goods_id", goods_id);
+                intent.putExtra("store_id", store_id);
                 startActivity(intent);
                 ActivitySlideAnim.slideInAnim(getActivity());
             }

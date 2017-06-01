@@ -176,6 +176,7 @@ public class ConsumptionFragment extends BaseFragment {
                 LogUtils.e("点击的position=" + position + "  good_id=" + hot_goods_list.get(position).goods_id);
                 Intent mIntent = new Intent(mContext, GoodInfoActivity.class);
                 mIntent.putExtra("goods_id", hot_goods_list.get(position).goods_id);
+                mIntent.putExtra("store_id", hot_goods_list.get(position).store_id);
                 startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim(getActivity());
             }

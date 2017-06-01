@@ -93,6 +93,7 @@ public class ShopInfoNewFragment extends BaseFragment {
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(mContext, GoodInfoActivity.class);
                 intent.putExtra("goods_id", adapter.getDataList().get(position).goods_id);
+                intent.putExtra("store_id", adapter.getDataList().get(position).store_id);
                 startActivity(intent);
                 ActivitySlideAnim.slideInAnim(getActivity());
             }

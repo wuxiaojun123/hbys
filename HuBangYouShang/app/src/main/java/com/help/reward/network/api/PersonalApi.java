@@ -186,7 +186,7 @@ public interface PersonalApi {
 
     // 支付密码---重设密码
     @FormUrlEncoded
-    @POST("/mobile/index.php?act=member_account&op=modify_password_step5")
+    @POST("/mobile/index.php?act=member_account&op=modify_paypwd_step5")
     Observable<BaseResponse<String>> getModifyPayStep5(
             @Field("key") String key,
             @Field("password") String password,

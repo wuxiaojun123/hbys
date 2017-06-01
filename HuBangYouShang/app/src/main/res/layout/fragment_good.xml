@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="春秋款，小怪兽黑色卫衣" />
+                android:text="商品名称"
+                 />
 
             <TextView
                 android:id="@+id/tv_goodinfo_goodprice"
@@ -39,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_goodinfo_goodname"
                 android:layout_marginTop="@dimen/layout_margin"
-                android:text="￥200" />
+                android:text="￥0" />
 
             <TextView
                 android:id="@+id/tv_goodinfo_goodppost"
@@ -69,7 +70,7 @@
                 android:layout_marginLeft="@dimen/layout_margin"
                 android:layout_marginTop="@dimen/layout_margin"
                 android:layout_toRightOf="@+id/tv_goodinfo_alert1"
-                android:text="￥588" />
+                android:text="￥0" />
 
             <TextView
                 android:id="@+id/tv_goodinfo_salecount"
@@ -79,7 +80,7 @@
                 android:layout_below="@id/tv_goodinfo_goodprice"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/layout_margin"
-                android:text="34人付款" />
+                android:text="0人付款" />
 
             <TextView
                 android:id="@+id/tv_goodinfo_address"
@@ -89,7 +90,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/tv_goodinfo_goodprice"
                 android:layout_marginTop="@dimen/layout_margin"
-                android:text="广州" />
+                android:text="北京" />
         </RelativeLayout>
 
         <LinearLayout
@@ -278,7 +279,7 @@
                 android:layout_centerVertical="true"
                 android:drawableLeft="@mipmap/store"
                 android:drawableRight="@mipmap/img_disclosure_arrow"
-                android:text="XXXXX旗舰店" />
+                android:text="店铺" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -307,7 +308,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/content_margin"
-                        android:text="4.5" />
+                        android:text="0" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -329,7 +330,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/content_margin"
-                        android:text="4.5" />
+                        android:text="0" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -351,7 +352,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/content_margin"
-                        android:text="4.5" />
+                        android:text="0" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

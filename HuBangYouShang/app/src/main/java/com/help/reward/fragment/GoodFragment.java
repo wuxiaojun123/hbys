@@ -175,6 +175,7 @@ public class GoodFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent mIntent = new Intent(mContext, GoodInfoActivity.class);
                 mIntent.putExtra("goods_id", hot_goods_list.get(position).goods_id);
+                mIntent.putExtra("store_id", hot_goods_list.get(position).store_id);
                 startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim(getActivity());
             }

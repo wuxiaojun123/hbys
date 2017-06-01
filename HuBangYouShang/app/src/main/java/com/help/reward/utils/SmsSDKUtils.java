@@ -44,26 +44,25 @@ public class SmsSDKUtils {
                     if(mOnSMSSDKListener != null){
                         mOnSMSSDKListener.onSMSSDKSendSuccessListener();
                     }
-                   /* tv_code.setClickable(false);
-                    mTimer.start();*/
 
                 } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
                     //返回支持发送验证码的国家列表
                     LogUtils.e("返回支持发送验证码的国家列表");
                 }
             } else {
-//                ((Throwable) data).printStackTrace();
                 LogUtils.e("注册接口中：data" + data);
                 try {
-                    JSONObject jsonObject = new JSONObject((String) data);
-                    String detail = jsonObject.getString("detail");
-                    if(detail != null){
-                        ToastUtils.show(mContext, detail);
-                    }else{
-                        ToastUtils.show(mContext, "发送验证码失败!");
+                    if(data instanceof String){
+                        JSONObject jsonObject = new JSONObject((String) data);
+                        String detail = jsonObject.getString("detail");
+                        if(detail != null){
+                            ToastUtils.show(mContext, detail);
+                        }else{
+                            ToastUtils.show(mContext, "发送验证码失败!");
+                        }
                     }
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     ToastUtils.show(mContext, "发送验证码失败!");
                 }

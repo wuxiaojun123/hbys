@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.google.android.gms.games.multiplayer.InvitationEntity;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.Response.BaseResponse;
@@ -40,7 +41,7 @@ import rx.schedulers.Schedulers;
  * Created by MXY on 2017/3/3.
  */
 
-public class GoodInfoActivity extends BaseActivity implements View.OnClickListener{
+public class GoodInfoActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_goodinfo_back)
     ImageView ivGoodinfoBack;
     @BindView(R.id.iv_goodinfo_more)
@@ -57,6 +58,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
     ViewPager vpGoodinfo;
 
     private String goodsId;
+    private String storeId;
     GoodFragment goodFragment;
 
     @Override
@@ -65,39 +67,60 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_goodinfo);
         ButterKnife.bind(this);
         goodsId = getIntent().getStringExtra("goods_id");
+        storeId = getIntent().getStringExtra("store_id");
 
         vpGoodinfo.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         pstbGoodinfo.setViewPager(vpGoodinfo);
         vpGoodinfo.setOffscreenPageLimit(3);
     }
 
-    @OnClick({R.id.iv_goodinfo_back,R.id.tv_goodinfo_shopcart_add,R.id.iv_goodinfo_more,R.id.tv_goodinfo_buy})
+    @OnClick({R.id.iv_goodinfo_back, R.id.tv_goodinfo_shopcart_add, R.id.iv_goodinfo_more,
+            R.id.tv_goodinfo_buy, R.id.ll_store, R.id.ll_seller_group, R.id.ll_collection})
     @Override
     public void onClick(View v) {
-       switch (v.getId()){
-           case R.id.tv_goodinfo_shopcart_add:
-               addToShopcart();
-               break;
-           case R.id.iv_goodinfo_back:
-               this.finish();
-               ActivitySlideAnim.slideOutAnim(this);
-               break;
-           case R.id.iv_goodinfo_more:
-               StoreInfoMenuPop.showPopupWindow(this,ivGoodinfoMore);
-               break;
-           case R.id.tv_goodinfo_buy:
-               Intent intent = new Intent(GoodInfoActivity.this, ConfirmOrderActivity.class);
-               intent.putExtra("cart_id",goodsId+"|"+goodFragment.propertyBean.getSelectNum());
-               intent.putExtra("if_cart","0");
-               startActivity(intent);
-               break;
-       }
+        switch (v.getId()) {
+            case R.id.tv_goodinfo_shopcart_add:
+                addToShopcart();
+                break;
+            case R.id.iv_goodinfo_back:
+                this.finish();
+                ActivitySlideAnim.slideOutAnim(this);
+                break;
+            case R.id.iv_goodinfo_more:
+                StoreInfoMenuPop.showPopupWindow(this, ivGoodinfoMore);
+                break;
+            case R.id.tv_goodinfo_buy:
+                Intent intent = new Intent(GoodInfoActivity.this, ConfirmOrderActivity.class);
+                intent.putExtra("cart_id", goodsId + "|" + goodFragment.propertyBean.getSelectNum());
+                intent.putExtra("if_cart", "0");
+                startActivity(intent);
+                ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);
+
+                break;
+            case R.id.ll_store: // 店铺
+                if(!TextUtils.isEmpty(storeId)){
+                    Intent mStoreIntent = new Intent(GoodInfoActivity.this, StoreInfoActivity.class);
+                    mStoreIntent.putExtra("store_id", storeId);
+                    startActivity(mStoreIntent);
+                    ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);
+                }
+
+                break;
+            case R.id.ll_seller_group: // 商家群
+
+
+                break;
+            case R.id.ll_collection: // 收藏 /mobile/index.php?act=member_favorites&op=favorites_add   参数[post]：goods_id
+
+
+                break;
+        }
     }
 
     private void addToShopcart() {
         if (!TextUtils.isEmpty(goodsId)) {
             MyProcessDialog.showDialog(mContext);
-            ShopcartNetwork.getShopcartCookieApi().getShopcartAdd(App.APP_CLIENT_KEY,goodsId,goodFragment.propertyBean.getSelectNum())
+            ShopcartNetwork.getShopcartCookieApi().getShopcartAdd(App.APP_CLIENT_KEY, goodsId, goodFragment.propertyBean.getSelectNum())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new BaseSubscriber<BaseResponse>() {

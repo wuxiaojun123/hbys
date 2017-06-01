@@ -20,6 +20,7 @@ import com.help.reward.bean.Response.ShopCartResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.ToastUtils;
 
@@ -349,6 +350,8 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
                 break;
             case R.id.iv_title_back:
                 finish();
+                ActivitySlideAnim.slideOutAnim(ShopcartActivity.this);
+
                 break;
         }
     }

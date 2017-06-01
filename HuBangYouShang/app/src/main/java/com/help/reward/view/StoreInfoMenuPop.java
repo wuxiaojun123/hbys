@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 import com.help.reward.R;
 import com.help.reward.activity.MainActivity;
 import com.help.reward.activity.MsgCenterActivity;
+import com.help.reward.activity.SearchShopActivity;
 import com.help.reward.activity.ShopcartActivity;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.DisplayUtil;
@@ -66,19 +67,24 @@ public class StoreInfoMenuPop {
                     mActivity.startActivity(new Intent(mActivity, MainActivity.class));
                     ActivitySlideAnim.slideInAnim(mActivity);
                     mActivity.finish();
+
                     break;
                 case R.id.layout_search:
                     ToastUtils.show(mActivity, "搜索");
-//                    mActivity.startActivity(new Intent(mActivity, ShopcartActivity.class));
-//                    ActivitySlideAnim.slideInAnim(mActivity);
+                    Intent mIntent = new Intent(mActivity, SearchShopActivity.class);
+                    mActivity.startActivity(mIntent);
+                    ActivitySlideAnim.slideInAnim(mActivity);
+
                     break;
                 case R.id.layout_car:
                     mActivity.startActivity(new Intent(mActivity, ShopcartActivity.class));
                     ActivitySlideAnim.slideInAnim(mActivity);
+
                     break;
                 case R.id.layout_message:
                     mActivity.startActivity(new Intent(mActivity, MsgCenterActivity.class));
                     ActivitySlideAnim.slideInAnim(mActivity);
+
                     break;
 
                 default:

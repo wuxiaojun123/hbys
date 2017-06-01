@@ -88,9 +88,9 @@ public class MyOrderAllFragment extends BaseFragment {
                                         }
                                     }
                                     LogUtils.e("返回数据集合是：" + list.size());
-                                    if(currentPage == 1){
+                                    if (currentPage == 1) {
                                         mOrderAdapter.setDataList(list);
-                                    }else{
+                                    } else {
                                         mOrderAdapter.addAll(list);
                                     }
                                 }
