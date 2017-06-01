@@ -31,6 +31,16 @@ public interface ShopcartApi {
             @Field("quantity") String quantity
     );
 
+    // 收藏商品
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_favorites&op=favorites_add")
+    Observable<BaseResponse> getCollectionShopss(
+            @Field("key") String key,
+            @Field("goods_id") String goods_id
+    );
+
+
+
     @FormUrlEncoded
     @POST(Constant.URL_SHOPCART_DELETE)
     Observable<BaseResponse> getShopcartDelete(

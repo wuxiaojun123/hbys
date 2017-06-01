@@ -42,6 +42,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class GoodInfoActivity extends BaseActivity implements View.OnClickListener {
+
     @BindView(R.id.iv_goodinfo_back)
     ImageView ivGoodinfoBack;
     @BindView(R.id.iv_goodinfo_more)
@@ -56,6 +57,8 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
     LinearLayout layoutSpill;
     @BindView(R.id.vp_goodinfo)
     ViewPager vpGoodinfo;
+    @BindView(R.id.iv_collection)
+    ImageView iv_collection; // 收藏
 
     private String goodsId;
     private String storeId;
@@ -111,9 +114,45 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
 
                 break;
             case R.id.ll_collection: // 收藏 /mobile/index.php?act=member_favorites&op=favorites_add   参数[post]：goods_id
-
+                collectionShop();
 
                 break;
+        }
+    }
+
+    /***
+     * 收藏商品
+     */
+    private void collectionShop() {
+        if (!TextUtils.isEmpty(goodsId)) {
+            MyProcessDialog.showDialog(mContext);
+            ShopcartNetwork
+                    .getShopcartCookieApi()
+                    .getCollectionShopss(App.APP_CLIENT_KEY, goodsId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<BaseResponse>() {
+
+                        @Override
+                        public void onError(Throwable e) {
+                            MyProcessDialog.closeDialog();
+                            e.printStackTrace();
+                            if (e instanceof UnknownHostException) {
+                                ToastUtils.show(mContext, "请求到错误服务器");
+                            } else if (e instanceof SocketTimeoutException) {
+                                ToastUtils.show(mContext, "请求超时");
+                            }
+                        }
+
+                        @Override
+                        public void onNext(BaseResponse baseResponse) {
+                            MyProcessDialog.closeDialog();
+                            if (baseResponse.code == 200) { // 收藏成功
+                                iv_collection.setImageResource(R.mipmap.nav_favorites_b);
+                            }
+                            ToastUtils.show(mContext, baseResponse.msg);
+                        }
+                    });
         }
     }
 
