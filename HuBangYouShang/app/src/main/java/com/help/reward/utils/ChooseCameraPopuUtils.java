@@ -298,6 +298,10 @@ public class ChooseCameraPopuUtils {
             ToastUtils.show(activity,"请选择图片");
             return;
         }
+        if(null == App.APP_CLIENT_KEY){
+            ToastUtils.show(activity,"请登录");
+            return;
+        }
         // 请求携带的参数
         Map<String,RequestBody> params = new HashMap<>();
         params.put("type",toRequestBody(type));
