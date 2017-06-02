@@ -187,7 +187,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private void logout() {
         PersonalNetwork
-                .getResponseApi()
+                .getLoginApi()
                 .getLogoutResponse("android", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

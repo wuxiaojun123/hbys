@@ -23,9 +23,12 @@ import com.help.reward.fragment.GoodImgInfoFragment;
 import com.help.reward.fragment.GoodRetedFragment;
 import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.CollectionRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.MyProcessDialog;
 import com.help.reward.view.StoreInfoMenuPop;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.net.SocketTimeoutException;
@@ -34,7 +37,9 @@ import java.net.UnknownHostException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -75,6 +80,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         vpGoodinfo.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         pstbGoodinfo.setViewPager(vpGoodinfo);
         vpGoodinfo.setOffscreenPageLimit(3);
+        initEvent();
     }
 
     @OnClick({R.id.iv_goodinfo_back, R.id.tv_goodinfo_shopcart_add, R.id.iv_goodinfo_more,
@@ -101,7 +107,11 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
 
                 break;
             case R.id.ll_store: // 店铺
-                if(!TextUtils.isEmpty(storeId)){
+                if (App.APP_CLIENT_KEY == null) {
+                    ToastUtils.show(mContext, R.string.string_please_login);
+                    return;
+                }
+                if (!TextUtils.isEmpty(storeId)) {
                     Intent mStoreIntent = new Intent(GoodInfoActivity.this, StoreInfoActivity.class);
                     mStoreIntent.putExtra("store_id", storeId);
                     startActivity(mStoreIntent);
@@ -113,7 +123,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
 
 
                 break;
-            case R.id.ll_collection: // 收藏 /mobile/index.php?act=member_favorites&op=favorites_add   参数[post]：goods_id
+            case R.id.ll_collection: // 收藏
                 collectionShop();
 
                 break;
@@ -157,6 +167,10 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void addToShopcart() {
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, R.string.string_please_login);
+            return;
+        }
         if (!TextUtils.isEmpty(goodsId)) {
             MyProcessDialog.showDialog(mContext);
             ShopcartNetwork.getShopcartCookieApi().getShopcartAdd(App.APP_CLIENT_KEY, goodsId, goodFragment.propertyBean.getSelectNum())
@@ -186,6 +200,25 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                         }
                     });
         }
+    }
+
+    private Subscription subscribe;
+
+    private void initEvent() {
+        subscribe = RxBus.getDefault().toObservable(CollectionRxbusType.class).subscribe(new Action1<CollectionRxbusType>() {
+            @Override
+            public void call(CollectionRxbusType type) {
+                LogUtils.e("收到值" + type.collection);
+                if (type.collection) {
+                    iv_collection.setImageResource(R.mipmap.nav_favorites_b);
+                } else {
+                    iv_collection.setImageResource(R.mipmap.nav_favorites_a);
+                }
+                if (!subscribe.isUnsubscribed()) {
+                    subscribe.unsubscribe();
+                }
+            }
+        });
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

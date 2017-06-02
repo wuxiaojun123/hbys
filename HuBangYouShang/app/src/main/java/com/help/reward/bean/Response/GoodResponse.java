@@ -19,6 +19,6 @@ public class GoodResponse extends BaseResponse<GoodResponse> {
     public List<ShopMallHotBean> goods_commend_list; // 推荐商品
     public String goods_image; // 展示图片
     public StoreInfoBean store_info; // 店铺信息
-
+    public boolean is_favorate; // 是否为收藏
 
 }

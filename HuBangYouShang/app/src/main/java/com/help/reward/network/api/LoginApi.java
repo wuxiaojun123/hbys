@@ -32,6 +32,14 @@ public interface LoginApi {
             @Field("client") String client
     );
 
+    // 退出登录
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=logout")
+    Observable<BaseResponse<String>> getLogoutResponse(
+            @Field("client") String client,
+            @Field("key") String key
+    );
+
     /*// 微信-登录-获取access_token  ?act=connect_wx&op=index
     @GET("/mobile/index.php")
     Observable<WXLoginTokenResponse> getWXLoginTokenResponse(

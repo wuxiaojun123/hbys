@@ -3,6 +3,7 @@ package com.help.reward.fragment;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
@@ -43,8 +45,20 @@ import rx.schedulers.Schedulers;
  * Created by MXY on 2017/2/26.
  */
 
-public class GoodRetedFragment extends BaseFragment implements View.OnClickListener{
+public class GoodRetedFragment extends BaseFragment implements View.OnClickListener {
 
+    public static final String TYPE_GOOD = "1"; // 好评
+    public static final String TYPE_MIDDLE = "2"; // 中评
+    public static final String TYPE_BAD = "3"; // 差评
+
+    @BindView(R.id.tv_evaluate_all)
+    TextView tv_evaluate_all; // 全部评价
+    @BindView(R.id.tv_evaluate_good)
+    TextView tv_evaluate_good; // 好评价
+    @BindView(R.id.tv_evaluate_middle)
+    TextView tv_evaluate_middle; // 中评价
+    @BindView(R.id.tv_evaluate_bad)
+    TextView tv_evaluate_bad; // 差评价
 
     @BindView(R.id.lv_shopinfo_rated)
     LRecyclerView lRecyclerview;
@@ -59,6 +73,9 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
     private String goodsId = "233";
     private String type = null;
 
+    private int colorWhile;
+    private int colorBlack;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_goodinfo_rated;
@@ -66,10 +83,12 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     protected void init() {
+        colorWhile = ContextCompat.getColor(mContext, R.color.color_while);
+        colorBlack = ContextCompat.getColor(mContext, R.color.color_3a);
         initView();
         Bundle bundle = getArguments();
         if (bundle != null) {
-            //goodsId = bundle.getString("goods_id");
+            goodsId = bundle.getString("goods_id");
             if (!TextUtils.isEmpty(goodsId)) {
                 initNetwork();
             }
@@ -124,6 +143,11 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
                         if (response.code == 200) {
                             if (curpage == 1) {
                                 adapter.setDataList(response.data.goods_eval_list);
+                                if (response.data.goods_eval_info != null) {
+                                    setTextCount(response.data.goods_eval_info.all, response.data.goods_eval_info.good,
+                                            response.data.goods_eval_info.normal, response.data.goods_eval_info.bad);
+                                }
+
                             } else {
                                 adapter.addAll(response.data.goods_eval_list);
                             }
@@ -133,6 +157,8 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
                             } else {
                                 lRecyclerview.setLoadMoreEnabled(true);
                             }
+                            // 设置按钮颜色
+                            selectedBtn(type);
 
                         } else {
                             ToastUtils.show(mContext, response.msg);
@@ -141,7 +167,7 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
                 });
     }
 
-    @OnClick({R.id.tv_evaluate_all,R.id.tv_evaluate_good,R.id.tv_evaluate_middle,R.id.tv_evaluate_bad})
+    @OnClick({R.id.tv_evaluate_all, R.id.tv_evaluate_good, R.id.tv_evaluate_middle, R.id.tv_evaluate_bad})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -151,20 +177,76 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
                 initNetwork();
                 break;
             case R.id.tv_evaluate_good:
-                type = "1";
+                type = TYPE_GOOD;
                 curpage = 1;
                 initNetwork();
                 break;
             case R.id.tv_evaluate_middle:
-                type = "2";
+                type = TYPE_MIDDLE;
                 curpage = 1;
                 initNetwork();
                 break;
             case R.id.tv_evaluate_bad:
-                type = "3";
+                type = TYPE_BAD;
                 curpage = 1;
                 initNetwork();
                 break;
         }
     }
+
+    private void setTextCount(String all, String good, String normal, String bad) {
+        tv_evaluate_all.setText("全部评价(" + all + ")");
+        tv_evaluate_good.setText("好评(" + good + ")");
+        tv_evaluate_middle.setText("中评(" + normal + ")");
+        tv_evaluate_bad.setText("差评(" + bad + ")");
+    }
+
+
+    private void selectedBtn(String type) {
+        if (type == null) {
+            tv_evaluate_all.setBackgroundResource(R.drawable.bg_pay_btn_selected);
+            tv_evaluate_good.setBackgroundResource(R.drawable.bg_pay_btn);
+            tv_evaluate_middle.setBackgroundResource(R.drawable.bg_pay_btn);
+            tv_evaluate_bad.setBackgroundResource(R.drawable.bg_pay_btn);
+
+            tv_evaluate_all.setTextColor(colorWhile);
+            tv_evaluate_good.setTextColor(colorBlack);
+            tv_evaluate_middle.setTextColor(colorBlack);
+            tv_evaluate_bad.setTextColor(colorBlack);
+        } else {
+            if (type == TYPE_GOOD) {
+                tv_evaluate_good.setBackgroundResource(R.drawable.bg_pay_btn_selected);
+                tv_evaluate_all.setBackgroundResource(R.drawable.bg_pay_btn);
+                tv_evaluate_middle.setBackgroundResource(R.drawable.bg_pay_btn);
+                tv_evaluate_bad.setBackgroundResource(R.drawable.bg_pay_btn);
+
+                tv_evaluate_good.setTextColor(colorWhile);
+                tv_evaluate_all.setTextColor(colorBlack);
+                tv_evaluate_middle.setTextColor(colorBlack);
+                tv_evaluate_bad.setTextColor(colorBlack);
+            } else if (type == TYPE_MIDDLE) {
+                tv_evaluate_middle.setBackgroundResource(R.drawable.bg_pay_btn_selected);
+                tv_evaluate_all.setBackgroundResource(R.drawable.bg_pay_btn);
+                tv_evaluate_good.setBackgroundResource(R.drawable.bg_pay_btn);
+                tv_evaluate_bad.setBackgroundResource(R.drawable.bg_pay_btn);
+
+                tv_evaluate_middle.setTextColor(colorWhile);
+                tv_evaluate_all.setTextColor(colorBlack);
+                tv_evaluate_good.setTextColor(colorBlack);
+                tv_evaluate_bad.setTextColor(colorBlack);
+            } else if (type == TYPE_BAD) {
+                tv_evaluate_bad.setBackgroundResource(R.drawable.bg_pay_btn_selected);
+                tv_evaluate_all.setBackgroundResource(R.drawable.bg_pay_btn);
+                tv_evaluate_middle.setBackgroundResource(R.drawable.bg_pay_btn);
+                tv_evaluate_good.setBackgroundResource(R.drawable.bg_pay_btn);
+
+                tv_evaluate_bad.setTextColor(colorWhile);
+                tv_evaluate_all.setTextColor(colorBlack);
+                tv_evaluate_middle.setTextColor(colorBlack);
+                tv_evaluate_good.setTextColor(colorBlack);
+            }
+        }
+    }
+
+
 }

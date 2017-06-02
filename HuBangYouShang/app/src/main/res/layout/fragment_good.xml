@@ -30,8 +30,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="商品名称"
-                 />
+                android:text="商品名称" />
 
             <TextView
                 android:id="@+id/tv_goodinfo_goodprice"
@@ -90,7 +89,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/tv_goodinfo_goodprice"
                 android:layout_marginTop="@dimen/layout_margin"
-                android:text="北京" />
+                android:text="地址" />
         </RelativeLayout>
 
         <LinearLayout

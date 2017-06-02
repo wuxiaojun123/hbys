@@ -25,6 +25,7 @@ import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.MobileScreenUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.net.SocketTimeoutException;
@@ -40,7 +41,7 @@ import rx.schedulers.Schedulers;
  * Created by ADBrian on 15/04/2017.
  */
 
-public class GoodPropertyActivity extends BaseActivity implements View.OnClickListener{
+public class GoodPropertyActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.iv_good_pic)
     ImageView mIvPic;
@@ -67,18 +68,18 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
     EditText mNumShow;
 
 
-    private  PropertyBean propertyBean;
+    private PropertyBean propertyBean;
     private int numShow = 1;
-    private  int Max_num = 99;
+    private int Max_num = 99;
     private String goodsId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        int paddingHeight = MobileScreenUtils.getNavigationBarHeight(mContext);
         //窗口对齐屏幕宽度
         Window win = this.getWindow();
-        win.getDecorView().setPadding(0, 0, 0, 0);
+        win.getDecorView().setPadding(0, 0, 0, paddingHeight);
         WindowManager.LayoutParams lp = win.getAttributes();
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -89,7 +90,7 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
         ButterKnife.bind(this);
 
         propertyBean = (PropertyBean) getIntent().getSerializableExtra("goods_property");
-        goodsId  = propertyBean.getGoods_id();
+        goodsId = propertyBean.getGoods_id();
         initView();
     }
 
@@ -97,8 +98,8 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
         PropertyAdapter propertyAdapter = new PropertyAdapter(GoodPropertyActivity.this);
         mList.setAdapter(propertyAdapter);
         if (propertyBean != null) {
-            GlideUtils.loadImage(propertyBean.getGoods_pic(),mIvPic);
-            mTvPrice.setText("¥ "+ propertyBean.getGoods_price());
+            GlideUtils.loadImage(propertyBean.getGoods_pic(), mIvPic);
+            mTvPrice.setText("¥ " + propertyBean.getGoods_price());
             mTvProtip.setText(propertyBean.getTip());
             mTvNum.setText("库存" + propertyBean.getGoods_num());
             propertyAdapter.setList(propertyBean.getPropertyList());
@@ -109,7 +110,7 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onClick(View v) {
                 int newNum = numShow + 1;
-                setButtonState(newNum,mNumAdd,mNumDes);
+                setButtonState(newNum, mNumAdd, mNumDes);
                 mNumShow.setText(numShow + "");
                 mNumShow.setSelection(Integer.toString(numShow).length());
             }
@@ -119,7 +120,7 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onClick(View v) {
                 int newNum = numShow - 1;
-                setButtonState(newNum,mNumAdd,mNumDes);
+                setButtonState(newNum, mNumAdd, mNumDes);
                 mNumShow.setText(numShow + "");
                 mNumShow.setSelection(Integer.toString(numShow).length());
 
@@ -143,16 +144,16 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
                 if (!TextUtils.isEmpty(s.toString().trim())) {
                     newNum = Integer.parseInt(s.toString().trim());
                     if (newNum > Max_num) {
-                        mNumShow.setText(Max_num +"");
+                        mNumShow.setText(Max_num + "");
                     }
                 } else {
                     newNum = 1;
                 }
-                setButtonState(newNum,mNumAdd,mNumDes);
+                setButtonState(newNum, mNumAdd, mNumDes);
             }
         });
-        setButtonState(numShow,mNumAdd,mNumDes);
-        mNumShow.setText(numShow +"");
+        setButtonState(numShow, mNumAdd, mNumDes);
+        mNumShow.setText(numShow + "");
     }
 
 
@@ -174,7 +175,7 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    @OnClick({R.id.btn_close,R.id.tv_goodinfo_shopcart_add,R.id.tv_goodinfo_buy})
+    @OnClick({R.id.btn_close, R.id.tv_goodinfo_shopcart_add, R.id.tv_goodinfo_buy})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -186,8 +187,8 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_goodinfo_buy:
                 Intent intent = new Intent(GoodPropertyActivity.this, ConfirmOrderActivity.class);
-                intent.putExtra("cart_id",goodsId+"|"+numShow);
-                intent.putExtra("if_cart","0");
+                intent.putExtra("cart_id", goodsId + "|" + numShow);
+                intent.putExtra("if_cart", "0");
                 startActivity(intent);
                 break;
         }
@@ -197,17 +198,37 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        propertyBean.setSelectNum(numShow +"");
+        propertyBean.setSelectNum(numShow + "");
         Intent intent = new Intent();
-        intent.putExtra("selectInfo",propertyBean);
-        setResult(RESULT_OK,intent);
+        intent.putExtra("selectInfo", propertyBean);
+        setResult(RESULT_OK, intent);
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void addToShopcart() {
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, R.string.string_please_login);
+            return;
+        }
+        // 得判断当前数量是否大于库存量
+        if (numShow <= 0) {
+            ToastUtils.show(mContext, "商品数量必须大于0");
+            return;
+        }
+        String goods_num = propertyBean.getGoods_num();
+        int goodsNum = Integer.parseInt(goods_num);
+        if (numShow > goodsNum) {
+            ToastUtils.show(mContext, "商品数量不能大于库存量");
+            return;
+        }
         if (!TextUtils.isEmpty(goodsId)) {
             MyProcessDialog.showDialog(mContext);
-            ShopcartNetwork.getShopcartCookieApi().getShopcartAdd(App.APP_CLIENT_KEY,goodsId,numShow +"")
+            ShopcartNetwork.getShopcartCookieApi().getShopcartAdd(App.APP_CLIENT_KEY, goodsId, numShow + "")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new BaseSubscriber<BaseResponse>() {

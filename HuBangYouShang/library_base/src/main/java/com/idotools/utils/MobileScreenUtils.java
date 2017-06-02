@@ -114,7 +114,7 @@ public class MobileScreenUtils {
         } catch (Exception e) {
             LogUtils.e(e);
         }
-        LogUtils.e("是否包含虚拟按键" + hasNavigationBar);
+//        LogUtils.e("是否包含虚拟按键" + hasNavigationBar);
         return hasNavigationBar;
 
     }

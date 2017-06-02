@@ -13,4 +13,5 @@ public class ShopCartResponse extends BaseResponse<ShopCartResponse.ShopCartList
         public String sum;
         public int cart_count;
     }
+
 }

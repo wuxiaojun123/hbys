@@ -36,8 +36,17 @@ public interface ShopMallApi {
     Observable<GoodResponse> getGoodResponse(
             @Query("act") String act,
             @Query("op") String op,
-            @Query("goods_id") String goods_id
+            @Query("goods_id") String goods_id,
+            @Query("key") String key
     );
+
+    /*// 获取商城信息的数据 ?act=goods&op=goods_detail&goods_id=42  post请求
+    @GET(Constant.URL_SHOP_MALL_INFO)
+    Observable<GoodResponse> getGoodResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("goods_id") String goods_id
+    );*/
 
 
     @GET(Constant.URL_SHOP_MALL_INFO)

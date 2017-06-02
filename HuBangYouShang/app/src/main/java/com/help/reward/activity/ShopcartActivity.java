@@ -22,6 +22,7 @@ import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.math.BigDecimal;
@@ -39,7 +40,7 @@ import rx.schedulers.Schedulers;
  * Created by ADBrian on 26/03/2017.
  */
 
-public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdapter.ShopCartOperateListener,View.OnClickListener {
+public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdapter.ShopCartOperateListener, View.OnClickListener {
 
 
     @BindView(R.id.iv_title_back)
@@ -83,7 +84,7 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
 
     }
 
-    private void expandChild(){
+    private void expandChild() {
         for (int i = 0; i < mAdapter.getGroupCount(); i++) {
             lRecyclerview.expandGroup(i);
         }
@@ -94,7 +95,7 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
         tv_title.setText("购物车");
         tv_title_right.setVisibility(View.GONE);
 
-        mAdapter = new ExpandShopcartAdapter(mSelected,this,cart_list,lRecyclerview,this);
+        mAdapter = new ExpandShopcartAdapter(mSelected, this, cart_list, lRecyclerview, this);
         lRecyclerview.setAdapter(mAdapter);
 
         lRecyclerview.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -129,6 +130,7 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
                     @Override
                     public void onNext(ShopCartResponse response) {
                         MyProcessDialog.closeDialog();
+                        LogUtils.e("获取成功,,," + response.toString());
                         if (response.code == 200) {
                             if (response.data != null) {
                                 if (response.data.cart_list != null) {
@@ -147,13 +149,12 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
     }
 
     /**
-     *
      * @param goodInfo 删除和编辑数量必须传入
-     * @param action 操作
-     * @param num 编辑数量必须传入
+     * @param action   操作
+     * @param num      编辑数量必须传入
      */
     @Override
-    public void operate(CartInfoBean.GoodInfoBean goodInfo, int action,int num) {
+    public void operate(CartInfoBean.GoodInfoBean goodInfo, int action, int num) {
 
         if (action == ExpandShopcartAdapter.SHOPCART_DELETED) {
             if (goodInfo != null) {
@@ -162,7 +163,7 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
 
 
         } else if (action == ExpandShopcartAdapter.SHOPCART_SELECTED) {
-            if(judgeIsAll()){
+            if (judgeIsAll()) {
                 isAll = true;
                 mIvAll.setImageResource(R.mipmap.img_address_checkbox_checked);
             } else {
@@ -170,14 +171,14 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
                 mIvAll.setImageResource(R.mipmap.img_address_checkbox);
             }
         } else if (action == ExpandShopcartAdapter.SHOPCART_NUM_EDIT) {
-            editNumRequest(goodInfo,num);
+            editNumRequest(goodInfo, num);
         }
         calculate();
     }
 
     private void editNumRequest(final CartInfoBean.GoodInfoBean goodInfo, final int num) {
         MyProcessDialog.showDialog(mContext);
-        ShopcartNetwork.getShopcartCookieApi().getShopcartEdit(App.APP_CLIENT_KEY,goodInfo.cart_id,num)
+        ShopcartNetwork.getShopcartCookieApi().getShopcartEdit(App.APP_CLIENT_KEY, goodInfo.cart_id, num)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -192,7 +193,7 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
                     public void onNext(BaseResponse response) {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
-                            goodInfo.goods_num = num +"";
+                            goodInfo.goods_num = num + "";
                             calculate();
                             mAdapter.notifyDataSetChanged();
 
@@ -211,7 +212,7 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
 
     private void deleteRequest(final CartInfoBean.GoodInfoBean good_info) {
         MyProcessDialog.showDialog(mContext);
-        ShopcartNetwork.getShopcartCookieApi().getShopcartDelete(App.APP_CLIENT_KEY,good_info.cart_id)
+        ShopcartNetwork.getShopcartCookieApi().getShopcartDelete(App.APP_CLIENT_KEY, good_info.cart_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -226,9 +227,9 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
                     public void onNext(BaseResponse response) {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
-                            for (int i = 0; i< cart_list.size();i++) {
+                            for (int i = 0; i < cart_list.size(); i++) {
                                 CartInfoBean cartInfo = cart_list.get(i);
-                                if (cartInfo.goods!= null) {
+                                if (cartInfo.goods != null) {
                                     if (cartInfo.goods.contains(good_info)) {
                                         if (cartInfo.goods.size() > 1) {
                                             cartInfo.goods.remove(good_info);
@@ -259,7 +260,7 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
     }
 
     private boolean judgeIsAll() {
-        if (cart_list.isEmpty()){
+        if (cart_list.isEmpty()) {
             return false;
         }
 
@@ -267,12 +268,12 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
             return false;
         }
 
-        for (CartInfoBean cartInfo:cart_list) {
-            if (cartInfo.goods!= null) {
-                for (CartInfoBean.GoodInfoBean goodBean:
-                     cartInfo.goods) {
+        for (CartInfoBean cartInfo : cart_list) {
+            if (cartInfo.goods != null) {
+                for (CartInfoBean.GoodInfoBean goodBean :
+                        cartInfo.goods) {
                     if (!mSelected.contains(goodBean)) {
-                        return  false;
+                        return false;
                     }
                 }
             }
@@ -280,48 +281,48 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
         return true;
     }
 
-    private  void  addAll(){
+    private void addAll() {
         mSelected.clear();
-        for (CartInfoBean cartInfo:cart_list) {
-            if (cartInfo.goods!= null) {
-               mSelected.addAll(cartInfo.goods);
+        for (CartInfoBean cartInfo : cart_list) {
+            if (cartInfo.goods != null) {
+                mSelected.addAll(cartInfo.goods);
             }
         }
         mAdapter.notifyDataSetChanged();
     }
 
-    public static String formatPrice2BlankToBlank ( String str ){
-        DecimalFormat df = new DecimalFormat ( "###,##0.00" ) ;
-        return df.format ( Double.parseDouble( str ) ) ;
+    public static String formatPrice2BlankToBlank(String str) {
+        DecimalFormat df = new DecimalFormat("###,##0.00");
+        return df.format(Double.parseDouble(str));
     }
 
     private void calculate() {
         String result = "0";
         if (!mSelected.isEmpty()) {
-            for (CartInfoBean.GoodInfoBean goodInfo:
-            mSelected) {
+            for (CartInfoBean.GoodInfoBean goodInfo :
+                    mSelected) {
                 try {
                     result = new BigDecimal(result).add(new BigDecimal(goodInfo.goods_price).multiply(new BigDecimal(goodInfo.goods_num))).toString();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                    ToastUtils.show(ShopcartActivity.this,"error num");
+                    ToastUtils.show(ShopcartActivity.this, "error num");
                 }
             }
         }
-        mTvtotal.setText("合计： ¥ "+formatPrice2BlankToBlank(result));
+        mTvtotal.setText("合计： ¥ " + formatPrice2BlankToBlank(result));
     }
 
-    @OnClick({R.id.ll_select_all,R.id.commit,R.id.iv_title_back})
+    @OnClick({R.id.ll_select_all, R.id.commit, R.id.iv_title_back})
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_select_all:
 
                 if (isAll) {
                     isAll = false;
                     mIvAll.setImageResource(R.mipmap.img_address_checkbox);
                     mSelected.clear();
-                }else {
+                } else {
                     isAll = true;
                     mIvAll.setImageResource(R.mipmap.img_address_checkbox_checked);
                     addAll();
@@ -329,20 +330,20 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
                 calculate();
                 mAdapter.notifyDataSetChanged();
 
-            break;
+                break;
             case R.id.commit:
-                
+
                 if (!mSelected.isEmpty()) {
                     StringBuffer sb = new StringBuffer();
-                    for (int i=0;i < mSelected.size();i++) {
+                    for (int i = 0; i < mSelected.size(); i++) {
                         CartInfoBean.GoodInfoBean goodInfoBean = mSelected.get(i);
-                        sb.append(goodInfoBean.cart_id+"|"+goodInfoBean.goods_num);
+                        sb.append(goodInfoBean.cart_id + "|" + goodInfoBean.goods_num);
                         sb.append(",");
                     }
 
                     Intent intent = new Intent(ShopcartActivity.this, ConfirmOrderActivity.class);
-                    intent.putExtra("cart_id", sb.toString().substring(0,sb.length()-1));
-                    intent.putExtra("if_cart","1");
+                    intent.putExtra("cart_id", sb.toString().substring(0, sb.length() - 1));
+                    intent.putExtra("if_cart", "1");
                     startActivity(intent);
                 }
                 //startActivity(new Intent(ShopcartActivity.this,ConfirmOrderActivity.class));

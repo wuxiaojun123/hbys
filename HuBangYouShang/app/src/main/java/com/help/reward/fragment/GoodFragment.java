@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.help.reward.App;
 import com.help.reward.activity.GoodInfoActivity;
 import com.help.reward.activity.GoodPropertyActivity;
 import com.help.reward.adapter.ShopHotAdapter;
@@ -18,7 +19,10 @@ import com.help.reward.bean.PropertyBean;
 import com.help.reward.bean.PropertyValueBean;
 import com.help.reward.bean.ShopMallHotBean;
 import com.help.reward.bean.StoreInfoBean;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.CollectionRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.BannerImageGoodHolderView;
@@ -95,16 +99,17 @@ public class GoodFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), GoodPropertyActivity.class);
-                intent.putExtra("goods_property",propertyBean);
-                startActivityForResult(intent,0);
+                intent.putExtra("goods_property", propertyBean);
+                startActivityForResult(intent, 0);
             }
         });
     }
 
     private void initNetwork(String goodsId) {
+        LogUtils.e("key是：" + App.APP_CLIENT_KEY);
         ShopMallNetwork
                 .getShopMallMainApi()
-                .getGoodResponse("goods", "goods_detail", goodsId)
+                .getGoodResponse("goods", "goods_detail", goodsId, App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<GoodResponse>() {
@@ -123,6 +128,14 @@ public class GoodFragment extends BaseFragment {
                                 initStoreInfo(response.data.store_info);
                                 initHotShop(response.data.goods_commend_list);
                                 initProperty(response.data.goods_info);
+                                if (response.data.goods_hair_info != null) { // 是否包邮，地区
+                                    tv_goodinfo_goodppost.setText(response.data.goods_hair_info.content);
+                                    tv_goodinfo_address.setText(response.data.goods_hair_info.area_name);
+                                }
+                                LogUtils.e("是否收藏..." + response.data.is_favorate);
+                                if (response.data.is_favorate) {
+                                    RxBus.getDefault().post(new CollectionRxbusType(true));
+                                }
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
@@ -140,14 +153,14 @@ public class GoodFragment extends BaseFragment {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (goods_info.spec_name != null) {
-            for(int i = 0; i < goods_info.spec_name.size();i++) {
+            for (int i = 0; i < goods_info.spec_name.size(); i++) {
                 GoodsInfoBean.PropertyName propertyName = goods_info.spec_name.get(i);
                 PropertyValueBean propertyValueBean = new PropertyValueBean();
                 propertyValueBean.setProperty_parent_id(propertyName.spec_id);
                 propertyValueBean.setProperty_parent_name(propertyName.spec_name);
                 stringBuilder.append(propertyName.spec_name);
                 if (goods_info.spec_value != null) {
-                    for(int j = 0; j < goods_info.spec_value.size();j++) {
+                    for (int j = 0; j < goods_info.spec_value.size(); j++) {
                         GoodsInfoBean.PropertyValue propertyValue = goods_info.spec_value.get(j);
                         if (propertyValue.spec_id == propertyName.spec_id) {
                             propertyValueBean.setPropertyChildList(propertyValue.spec_value);
@@ -221,7 +234,7 @@ public class GoodFragment extends BaseFragment {
             }, goodsImageList)
                     .setPageIndicator(new int[]{R.mipmap.img_ic_page_indicator, R.mipmap.img_ic_page_indicator_focus})
                     .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
-            .startTurning(10000);
+                    .startTurning(10000);
 
         }
 
@@ -236,7 +249,8 @@ public class GoodFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 0 && data != null) {
-            propertyBean  = (PropertyBean) data.getSerializableExtra("selectInfo");
+            propertyBean = (PropertyBean) data.getSerializableExtra("selectInfo");
+            LogUtils.e("返回的信息是:" + propertyBean);
         }
     }
 }

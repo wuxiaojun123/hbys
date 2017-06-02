@@ -1,5 +1,6 @@
 package com.help.reward.network.base;
 
+import com.google.gson.GsonBuilder;
 import com.help.reward.App;
 import com.help.reward.utils.Constant;
 

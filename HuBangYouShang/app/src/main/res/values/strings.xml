@@ -11,6 +11,7 @@
     <!--搜索-->
     <string name="string_search_hint">搜索关键字广告</string>
 
+    <string name="string_please_login">请先登录</string>
 
     <!--首页 积分-->
     <string name="string_watch_point_praise">看完点赞</string>
