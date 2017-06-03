@@ -13,6 +13,7 @@ import com.help.reward.bean.Response.WXLoginTokenResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.WeiXinLoginRxbusType;
 import com.help.reward.utils.Constant;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
@@ -186,7 +187,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                             App.mLoginReponse = res.data;
                             RxBus.getDefault().post("loginSuccess");
                             // 关闭LoginActivity页面
-                            RxBus.getDefault().post(true);
+                            RxBus.getDefault().post(new WeiXinLoginRxbusType(true));
 
                             WXEntryActivity.this.finish();
 

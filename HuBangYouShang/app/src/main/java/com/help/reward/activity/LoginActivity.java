@@ -15,6 +15,7 @@ import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.WeiXinLoginRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.utils.StatusBarUtil;
@@ -117,13 +118,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    private Subscription subscribeRxbusWeixin;
+
     private void getLoginSuccessInfo(){
-        RxBus.getDefault().toObservable(Boolean.class).subscribe(new Action1<Boolean>() {
+        subscribeRxbusWeixin = RxBus.getDefault().toObservable(WeiXinLoginRxbusType.class).subscribe(new Action1<WeiXinLoginRxbusType>() {
             @Override
-            public void call(Boolean b) {
-                if(b){
+            public void call(WeiXinLoginRxbusType type) {
+                if (type.isLogin) {
                     finish();
                     ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                }
+                if(!subscribeRxbusWeixin.isUnsubscribed()){
+                    subscribeRxbusWeixin.unsubscribe();
                 }
             }
         });
@@ -172,7 +178,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             // 请求会员信息
                             App.mLoginReponse = res.data;
                             RxBus.getDefault().post("loginSuccess");
-                            LoginToHuanxin(username, password);
+                            LoginToHuanxin(App.mLoginReponse.easemobId, password);
                             //finish();
                             //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
                         } else {

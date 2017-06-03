@@ -19,5 +19,6 @@ public class LoginResponse extends BaseResponse<LoginResponse> {
     public String discount_level;
     public String general_voucher;
     public String voucher;
+    public String easemobId; // 环信登陆账号名称
 
 }
