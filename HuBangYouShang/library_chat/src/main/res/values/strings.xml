@@ -360,6 +360,7 @@
         <string name="exit_title">系统提示</string>
         <string name="exit_text">是否退出商家群</string>
         <string name="Group_member_number">群组人数</string>
+        <string name="send_record">发放记录</string>
 
         <string name="get_coupon">领取优惠券</string>
         <string name="get_points">领取帮赏分</string>

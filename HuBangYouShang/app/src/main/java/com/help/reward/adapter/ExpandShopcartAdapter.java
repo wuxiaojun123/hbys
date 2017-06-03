@@ -167,6 +167,18 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
         GlideUtils.loadImage(myOrderShopBean.goods_image_url, holderChild.iv_shop_img);
         holderChild.tv_shop_name.setText(myOrderShopBean.goods_name);
 //            tv_shop_atrribute.setText("商品属性:");
+
+        List<CartInfoBean.GoodSpec> goods_spec = myOrderShopBean.goods_spec;
+        if (goods_spec != null && !goods_spec.isEmpty()) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (CartInfoBean.GoodSpec goodSpec:
+                 goods_spec) {
+                stringBuilder.append(goodSpec.sp_name+":" +goodSpec.sp_value_name+" ");
+            }
+            holderChild.tv_shop_atrribute.setText(stringBuilder.toString());
+        } else {
+            holderChild.tv_shop_atrribute.setText("");
+        }
         holderChild.tv_single_shop_price.setText(myOrderShopBean.goods_price);
         holderChild.mNumShow.setText(myOrderShopBean.goods_num);
         if (isCurrentGoodSelect(myOrderShopBean)) {

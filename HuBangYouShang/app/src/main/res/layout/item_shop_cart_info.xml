@@ -72,6 +72,7 @@
             android:id="@+id/tv_shop_atrribute"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/ll_num_set"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
@@ -81,6 +82,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_num_set"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

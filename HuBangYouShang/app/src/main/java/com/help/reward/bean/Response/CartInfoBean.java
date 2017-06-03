@@ -37,7 +37,7 @@ public class CartInfoBean {
         public String goods_click; //
         public String goods_salenum; //
         public String goods_collect; //
-        public String goods_spec; //
+        public List<GoodSpec> goods_spec; //
         public String goods_storage; //
         public String goods_image; //
         public String goods_state; //
@@ -65,5 +65,13 @@ public class CartInfoBean {
         public String is_own_shop;
         public String goods_barcode;
         public String gift_list;
+    }
+
+
+    public class GoodSpec{
+        public String sp_id;
+        public String sp_name;
+        public String sp_value_id;
+        public String sp_value_name;
     }
 }
