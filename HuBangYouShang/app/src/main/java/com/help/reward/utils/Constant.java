@@ -102,6 +102,9 @@ public class Constant {
 
     public static final String URL_RECEIVE_POINTS = "mobile/index.php?act=member_points&op=receivePoints";
 
+    public static final String URL_RECEIVE_COUPON_LOG = "mobile/index.php?act=member_voucher&op=receiveVoucherLog";
+
+    public static final String URL_RECEIVE_POINTS_LOG = "mobile/index.php?act=member_points&op=receivePointsLog";
 
     // 购物车
     public static final String URL_SHOPCART_ADD = "mobile/index.php?act=member_cart&op=cart_add";

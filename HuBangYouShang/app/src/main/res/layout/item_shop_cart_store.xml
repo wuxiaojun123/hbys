@@ -30,7 +30,7 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:text="这里是商家名称"
+            android:text=""
             android:textColor="@color/color_3a"
             android:textSize="@dimen/dimen_15" />
     </LinearLayout>

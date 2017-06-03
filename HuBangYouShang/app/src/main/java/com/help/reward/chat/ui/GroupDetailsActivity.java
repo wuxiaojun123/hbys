@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.activity.GroupCouponsRecordActivity;
 import com.help.reward.chat.Constant;
 import com.help.reward.chat.db.TopUser;
 import com.help.reward.chat.db.TopUserDao;
@@ -119,6 +120,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		idLayout.setVisibility(View.GONE);
 		TextView idText = (TextView) findViewById(R.id.tv_group_id_value);
 
+		RelativeLayout mRLRecord = (RelativeLayout) findViewById(R.id.group_send_record);
+		mRLRecord.setOnClickListener(this);
 		RelativeLayout rl_switch_block_groupmsg = (RelativeLayout) findViewById(R.id.rl_switch_block_groupmsg);
 		switchButton = (EaseSwitchButton) findViewById(R.id.switch_btn);
 		RelativeLayout searchLayout = (RelativeLayout) findViewById(R.id.rl_search);
@@ -267,6 +270,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 					}).start();
 				}
 				break;
+
 			default:
 				break;
 			}
@@ -480,6 +484,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				break;
 			case R.id.rl_switch_up://置顶
 				conversationToTop();
+				break;
+			case R.id.group_send_record:
+				startActivity(new Intent(this, GroupCouponsRecordActivity.class));
 				break;
 			default:
 				break;

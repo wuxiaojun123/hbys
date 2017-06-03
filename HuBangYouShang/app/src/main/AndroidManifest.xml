@@ -332,6 +332,8 @@
             android:name="com.help.reward.activity.SearchAdvertisementActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.GroupCouponsRecordActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 群组聊天-->
         <activity

@@ -106,6 +106,7 @@ public class ExpandShopcartAdapter extends BaseExpandableListAdapter {
         }
 
         holderGroup.iv_store_check.setImageResource(R.mipmap.img_address_checkbox);
+        holderGroup.tv_store_name.setText(mDataList.get(groupPosition).store_name);
 
         final CartInfoBean bean = mDataList.get(groupPosition);
 
