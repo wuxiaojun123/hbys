@@ -12,6 +12,7 @@ import android.widget.ToggleButton;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.chat.DemoHelper;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
@@ -20,6 +21,7 @@ import com.help.reward.utils.Constant;
 import com.help.reward.utils.SharedPreferenceConstant;
 import com.help.reward.view.AlertDialog;
 import com.help.reward.view.MyProcessDialog;
+import com.hyphenate.EMCallBack;
 import com.idotools.utils.DataCleanManager;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.SharedPreferencesHelper;
@@ -201,25 +203,59 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                     @Override
                     public void onNext(BaseResponse<String> response) {
-                        MyProcessDialog.closeDialog();
+
                         if (response.code == 200) {
                             if (response.data != null) { // 返回地址id  response.data.address_id
-                                ToastUtils.show(mContext, response.msg);
-                                App.APP_CLIENT_KEY = null;
-                                App.APP_CLIENT_COOKIE = null;
-                                App.mLoginReponse = null;
-                                // 应该清除个人信息页面的信息
-                                RxBus.getDefault().post("logout");
-
-                                // 清除当前activity
-                                finish();
-                                ActivitySlideAnim.slideOutAnim(SettingActivity.this);
+                                logoutHuanxin();
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
                     }
                 });
+    }
+
+    private void logoutHuanxin(){
+        DemoHelper.getInstance().logout(false,new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        MyProcessDialog.closeDialog();
+                        // show login screen
+                        ToastUtils.show(mContext, "退出成功");
+                        App.APP_CLIENT_KEY = null;
+                        App.APP_CLIENT_COOKIE = null;
+                        App.mLoginReponse = null;
+                        // 应该清除个人信息页面的信息
+                        RxBus.getDefault().post("logout");
+
+                        // 清除当前activity
+                        finish();
+                        ActivitySlideAnim.slideOutAnim(SettingActivity.this);
+                    }
+                });
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        ToastUtils.show(mContext,"unbind devicetokens failed");
+                    }
+                });
+            }
+        });
+
     }
 
 }

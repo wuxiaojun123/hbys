@@ -3,6 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!--<dimen name="statusbar_view_height">0dp</dimen>-->
+
     <dimen name="dimen_line">0.3dp</dimen>
     <dimen name="dimen_margin_10">10dp</dimen>
     <dimen name="dimen_35">35dp</dimen>
