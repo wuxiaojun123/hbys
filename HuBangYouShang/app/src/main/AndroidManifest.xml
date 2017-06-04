@@ -342,7 +342,8 @@
 
         <activity
             android:name="com.help.reward.chat.ui.ContextMenuActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle"></activity>
         <activity
             android:name="com.help.reward.chat.ui.ForwardMessageActivity"
             android:screenOrientation="portrait"></activity>

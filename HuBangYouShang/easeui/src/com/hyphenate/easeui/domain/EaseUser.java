@@ -31,6 +31,8 @@ public class EaseUser extends EMContact {
 	    this.username = username;
 	}
 
+
+
 	public String getInitialLetter() {
 	    if(initialLetter == null){
             EaseCommonUtils.setUserInitialLetter(this);
