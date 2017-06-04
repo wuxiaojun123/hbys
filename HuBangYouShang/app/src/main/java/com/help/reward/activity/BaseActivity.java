@@ -23,11 +23,18 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+//        setStatusBar();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         setStatusBar();
     }
 
     protected void setStatusBar() {
 //        StatusBarUtil.setTranslucent(this,30);
+//        StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 30);
     }
 

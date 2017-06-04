@@ -115,6 +115,10 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
 
 
     private void initNetwork() {
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, R.string.string_please_login);
+            return;
+        }
         MyProcessDialog.showDialog(mContext);
         ShopcartNetwork.getShopcartCookieApi().getShopcartList(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
