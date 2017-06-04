@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 我的获赏
+ * 发放记录
  * Created by wuxiaojun on 2017/2/8.
  */
 
-public class MyRewardActivity extends BaseActivity implements View.OnClickListener{
+public class GroupCouponsRecordActivity extends BaseActivity implements View.OnClickListener{
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -54,7 +54,7 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initView() {
-        tv_title.setText(R.string.string_my_help_reward);
+        tv_title.setText("发放记录");
         tv_title_right.setVisibility(View.GONE);
     }
 
@@ -65,7 +65,7 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
         switch (id){
             case R.id.iv_title_back:
                 finish();
-                ActivitySlideAnim.slideOutAnim(MyRewardActivity.this);
+                ActivitySlideAnim.slideOutAnim(GroupCouponsRecordActivity.this);
 
                 break;
         }
@@ -77,8 +77,8 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
-            TITLES[0] = getResources().getString(R.string.string_posted);
-            TITLES[1] = getResources().getString(R.string.string_comment);
+            TITLES[0] = "帮赏分";
+            TITLES[1] = "优惠券";
         }
 
         @Override

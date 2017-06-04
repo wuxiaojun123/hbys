@@ -116,7 +116,11 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         super.setUpView();
         // set click listener
         titleBar.setBackgroundColor(getResources().getColor(R.color.color_title_bg));
-        titleBar.setRightImageResource(R.mipmap.group);
+        if (chatType == EaseConstant.CHATTYPE_SINGLE) {
+            titleBar.setRightImageResource(R.mipmap.nav_store);
+        } else {
+            titleBar.setRightImageResource(R.mipmap.group);
+        }
         titleBar.setLeftLayoutClickListener(new OnClickListener() {
 
             @Override
@@ -126,6 +130,18 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                     startActivity(intent);
                 }
                 onBackPressed();
+            }
+        });
+
+        titleBar.setRightLayoutClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (chatType == EaseConstant.CHATTYPE_SINGLE) {
+                    //emptyHistory();
+                } else {
+                    toGroupDetails();
+                }
             }
         });
         ((EaseEmojiconMenu)inputMenu.getEmojiconMenu()).addEmojiconGroup(EmojiconExampleGroupData.getData());
