@@ -38,8 +38,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/release_hint1"
                 android:maxLength="30"
-                android:maxLines="2"
-                android:textCursorDrawable="@color/color_spiline" />
+                android:maxLines="2" />
         </LinearLayout>
 
         <View
