@@ -53,7 +53,7 @@ public class DiscountAmountActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setTranslucentForImageView(DiscountAmountActivity.this, 0, rl_content);
+        StatusBarUtil.setTranslucentForImageViewInFragment(DiscountAmountActivity.this, StatusBarUtil.DEFAULT_ALPHA, null);
     }
 
     private Subscription subscribe;

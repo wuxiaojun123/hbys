@@ -51,7 +51,7 @@ import butterknife.OnClick;
  *
  *
  */
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected static final String TAG = "MainActivity";
 
     /*@BindView(R.id.et_search)
@@ -109,18 +109,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void initData() {
-        if(mFragmentManager == null){
+        if (mFragmentManager == null) {
             mFragmentManager = getSupportFragmentManager();
         }
         radio_help.performClick();
     }
 
-    @OnClick({R.id.radio_help,R.id.radio_integration,R.id.radio_benefit,R.id.radio_consumption,R.id.radio_my})
+    @OnClick({R.id.radio_help, R.id.radio_integration, R.id.radio_benefit, R.id.radio_consumption, R.id.radio_my})
     @Override
     public void onClick(View v) {
         int id = v.getId();
         showFragment(id);
-        switch (id){
+        switch (id) {
             case R.id.radio_help:
 
                 break;
@@ -142,49 +142,49 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private void showFragment(int id) {
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
         hideFragment(mFragmentTransaction);
-        switch (id){
+        switch (id) {
             case R.id.radio_help:
-                if(mHelpFragment == null){
+                if (mHelpFragment == null) {
                     mHelpFragment = new HelpFragment();
-                    mFragmentTransaction.add(R.id.fl_content,mHelpFragment);
-                }else{
+                    mFragmentTransaction.add(R.id.fl_content, mHelpFragment);
+                } else {
                     mFragmentTransaction.show(mHelpFragment);
                 }
 
                 break;
             case R.id.radio_integration:
-                if(mIntegrationFragment == null){
+                if (mIntegrationFragment == null) {
                     mIntegrationFragment = new IntegrationFragment();
-                    mFragmentTransaction.add(R.id.fl_content,mIntegrationFragment);
-                }else{
+                    mFragmentTransaction.add(R.id.fl_content, mIntegrationFragment);
+                } else {
                     mFragmentTransaction.show(mIntegrationFragment);
                 }
 
                 break;
             case R.id.radio_benefit:
-                if(mBenefitFragment == null){
+                if (mBenefitFragment == null) {
                     //mBenefitFragment = new BenefitFragment();
                     mBenefitFragment = new ConversationListFragment();
-                    mFragmentTransaction.add(R.id.fl_content,mBenefitFragment);
-                }else{
+                    mFragmentTransaction.add(R.id.fl_content, mBenefitFragment);
+                } else {
                     mFragmentTransaction.show(mBenefitFragment);
                 }
 
                 break;
             case R.id.radio_consumption:
-                if(mConSumptionFragment == null){
+                if (mConSumptionFragment == null) {
                     mConSumptionFragment = new ConsumptionFragment();
-                    mFragmentTransaction.add(R.id.fl_content,mConSumptionFragment);
-                }else{
+                    mFragmentTransaction.add(R.id.fl_content, mConSumptionFragment);
+                } else {
                     mFragmentTransaction.show(mConSumptionFragment);
                 }
 
                 break;
             case R.id.radio_my:
-                if(mMyFragment == null){
+                if (mMyFragment == null) {
                     mMyFragment = new MyFragment();
-                    mFragmentTransaction.add(R.id.fl_content,mMyFragment);
-                }else {
+                    mFragmentTransaction.add(R.id.fl_content, mMyFragment);
+                } else {
                     mFragmentTransaction.show(mMyFragment);
                 }
 
@@ -193,24 +193,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mFragmentTransaction.commitAllowingStateLoss();
     }
 
-    private void hideFragment(FragmentTransaction mFragmentTransaction){
-        if(mHelpFragment != null && !mHelpFragment.isHidden()){
+    private void hideFragment(FragmentTransaction mFragmentTransaction) {
+        if (mHelpFragment != null && !mHelpFragment.isHidden()) {
             mFragmentTransaction.hide(mHelpFragment);
         }
-        if(mIntegrationFragment != null && !mIntegrationFragment.isHidden()){
+        if (mIntegrationFragment != null && !mIntegrationFragment.isHidden()) {
             mFragmentTransaction.hide(mIntegrationFragment);
         }
-        if(mBenefitFragment != null && !mBenefitFragment.isHidden()){
+        if (mBenefitFragment != null && !mBenefitFragment.isHidden()) {
             mFragmentTransaction.hide(mBenefitFragment);
         }
-        if(mConSumptionFragment != null && !mConSumptionFragment.isHidden()){
+        if (mConSumptionFragment != null && !mConSumptionFragment.isHidden()) {
             mFragmentTransaction.hide(mConSumptionFragment);
         }
-        if(mMyFragment != null && !mMyFragment.isHidden()){
+        if (mMyFragment != null && !mMyFragment.isHidden()) {
             mFragmentTransaction.hide(mMyFragment);
         }
     }
-
 
 
     EMMessageListener messageListener = new EMMessageListener() {
@@ -247,7 +246,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
 
         @Override
-        public void onMessageChanged(EMMessage message, Object change) {}
+        public void onMessageChanged(EMMessage message, Object change) {
+        }
     };
 
     private void refreshUIWithMessage() {
@@ -289,7 +289,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 //                    }
 //                }
                 String action = intent.getAction();
-                if(action.equals(Constant.ACTION_GROUP_CHANAGED)){
+                if (action.equals(Constant.ACTION_GROUP_CHANAGED)) {
                     if (EaseCommonUtils.getTopActivity(MainActivity.this).equals(GroupActivity.class.getName())) {
                         GroupActivity.instance.onResume();
                     }
@@ -308,7 +308,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     public class MyContactListener implements EMContactListener {
         @Override
-        public void onContactAdded(String username) {}
+        public void onContactAdded(String username) {
+        }
+
         @Override
         public void onContactDeleted(final String username) {
             runOnUiThread(new Runnable() {
@@ -323,15 +325,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 }
             });
         }
+
         @Override
-        public void onContactInvited(String username, String reason) {}
+        public void onContactInvited(String username, String reason) {
+        }
+
         @Override
-        public void onFriendRequestAccepted(String username) {}
+        public void onFriendRequestAccepted(String username) {
+        }
+
         @Override
-        public void onFriendRequestDeclined(String username) {}
+        public void onFriendRequestDeclined(String username) {
+        }
     }
 
-    private void unregisterBroadcastReceiver(){
+    private void unregisterBroadcastReceiver() {
         broadcastManager.unregisterReceiver(broadcastReceiver);
     }
 
@@ -403,14 +411,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         int unreadMsgCountTotal = 0;
         int chatroomUnreadMsgCount = 0;
         unreadMsgCountTotal = EMClient.getInstance().chatManager().getUnreadMessageCount();
-        for(EMConversation conversation:EMClient.getInstance().chatManager().getAllConversations().values()){
-            if(conversation.getType() == EMConversation.EMConversationType.ChatRoom)
-                chatroomUnreadMsgCount=chatroomUnreadMsgCount+conversation.getUnreadMsgCount();
+        for (EMConversation conversation : EMClient.getInstance().chatManager().getAllConversations().values()) {
+            if (conversation.getType() == EMConversation.EMConversationType.ChatRoom)
+                chatroomUnreadMsgCount = chatroomUnreadMsgCount + conversation.getUnreadMsgCount();
         }
-        return unreadMsgCountTotal-chatroomUnreadMsgCount;
+        return unreadMsgCountTotal - chatroomUnreadMsgCount;
     }
-
-
 
 
     private InviteMessgeDao inviteMessgeDao;
@@ -459,14 +465,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private android.app.AlertDialog.Builder exceptionBuilder;
-    private boolean isExceptionDialogShow =  false;
+    private boolean isExceptionDialogShow = false;
     private BroadcastReceiver internalDebugReceiver;
     private ConversationListFragment conversationListFragment;
     private BroadcastReceiver broadcastReceiver;
     private LocalBroadcastManager broadcastManager;
 
     private int getExceptionMessageId(String exceptionType) {
-        if(exceptionType.equals(Constant.ACCOUNT_CONFLICT)) {
+        if (exceptionType.equals(Constant.ACCOUNT_CONFLICT)) {
             return R.string.connect_conflict;
         } else if (exceptionType.equals(Constant.ACCOUNT_REMOVED)) {
             return R.string.em_user_remove;
@@ -475,12 +481,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
         return R.string.Network_error;
     }
+
     /**
      * show the dialog when user met some exception: such as login on another device, user removed or user forbidden
      */
     private void showExceptionDialog(String exceptionType) {
         isExceptionDialogShow = true;
-        DemoHelper.getInstance().logout(false,null);
+        DemoHelper.getInstance().logout(false, null);
         String st = getResources().getString(R.string.Logoff_notification);
         if (!MainActivity.this.isFinishing()) {
             // clear up global variables
@@ -535,7 +542,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
             @Override
             public void onReceive(Context context, Intent intent) {
-                DemoHelper.getInstance().logout(false,new EMCallBack() {
+                DemoHelper.getInstance().logout(false, new EMCallBack() {
 
                     @Override
                     public void onSuccess() {
@@ -548,10 +555,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     }
 
                     @Override
-                    public void onProgress(int progress, String status) {}
+                    public void onProgress(int progress, String status) {
+                    }
 
                     @Override
-                    public void onError(int code, String message) {}
+                    public void onError(int code, String message) {
+                    }
                 });
             }
         };
@@ -567,7 +576,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, null);
+        StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 30, null);
     }
 
 }

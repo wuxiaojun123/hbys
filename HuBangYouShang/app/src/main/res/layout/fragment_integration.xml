@@ -7,9 +7,7 @@
 
     <View
         android:id="@+id/fake_status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/statusbar_view_height"
-        android:background="@color/colorPrimary"/>
+        style="@style/style_fake_status_bar_height"/>
 
     <include
         layout="@layout/layout_search"

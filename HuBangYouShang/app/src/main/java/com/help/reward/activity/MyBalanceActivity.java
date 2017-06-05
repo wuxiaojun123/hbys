@@ -94,7 +94,7 @@ public class MyBalanceActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setTranslucentForImageView(MyBalanceActivity.this, 0, rl_content);
+        StatusBarUtil.setTranslucentForImageViewInFragment(MyBalanceActivity.this, StatusBarUtil.DEFAULT_ALPHA, null);
     }
 
     private Subscription subscribe;

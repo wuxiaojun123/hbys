@@ -82,7 +82,7 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setTranslucentForImageView(MyAccountActivity.this, 0, ll_content);
+        StatusBarUtil.setTranslucentForImageViewInFragment(MyAccountActivity.this, StatusBarUtil.DEFAULT_ALPHA, null);
     }
 
     @OnClick({R.id.id_back, R.id.tv_balance, R.id.tv_account_help_reward, R.id.tv_coupon, R.id.tv_general_volume,
@@ -118,7 +118,7 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 
                 break;
-            case R.id.ll_discount_amount: // 优惠金额
+            case R.id.ll_discount_amount: // 优惠百分比
                 startActivity(new Intent(MyAccountActivity.this, DiscountAmountActivity.class));
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 

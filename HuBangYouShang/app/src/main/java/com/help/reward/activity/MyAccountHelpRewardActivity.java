@@ -94,7 +94,7 @@ public class MyAccountHelpRewardActivity extends BaseActivity implements View.On
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setTranslucentForImageView(MyAccountHelpRewardActivity.this, 0, rl_content);
+        StatusBarUtil.setTranslucentForImageViewInFragment(MyAccountHelpRewardActivity.this, StatusBarUtil.DEFAULT_ALPHA, null);
     }
 
     @OnClick({R.id.iv_back,R.id.tv_exchange})

@@ -90,7 +90,7 @@ public class MyCouponActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setTranslucentForImageView(MyCouponActivity.this, 0, rl_content);
+        StatusBarUtil.setTranslucentForImageViewInFragment(MyCouponActivity.this, StatusBarUtil.DEFAULT_ALPHA, null);
     }
 
     /**

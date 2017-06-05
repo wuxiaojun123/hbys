@@ -93,7 +93,7 @@ public class MyGeneralVolumeActivity extends BaseActivity implements View.OnClic
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setTranslucentForImageView(MyGeneralVolumeActivity.this, 0, rl_content);
+        StatusBarUtil.setTranslucentForImageViewInFragment(MyGeneralVolumeActivity.this, StatusBarUtil.DEFAULT_ALPHA, null);
     }
 
     /**

@@ -23,7 +23,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-//        setStatusBar();
     }
 
     @Override
@@ -33,9 +32,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void setStatusBar() {
-//        StatusBarUtil.setTranslucent(this,30);
-//        StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 30);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), StatusBarUtil.DEFAULT_ALPHA);
     }
 
     @Override
@@ -54,6 +51,5 @@ public class BaseActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
         ActivitySlideAnim.slideOutAnim(this);
-//        super.onBackPressed();
     }
 }

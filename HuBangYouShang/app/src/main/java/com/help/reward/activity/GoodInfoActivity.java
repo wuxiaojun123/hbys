@@ -208,7 +208,6 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         subscribe = RxBus.getDefault().toObservable(CollectionRxbusType.class).subscribe(new Action1<CollectionRxbusType>() {
             @Override
             public void call(CollectionRxbusType type) {
-                LogUtils.e("收到值" + type.collection);
                 if (type.collection) {
                     iv_collection.setImageResource(R.mipmap.nav_favorites_b);
                 } else {
