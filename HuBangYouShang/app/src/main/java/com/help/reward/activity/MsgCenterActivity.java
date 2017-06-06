@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.MessageReadResponse;
 import com.help.reward.network.MessageNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.network.exception.ApiHttpResonseException;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.ToastUtils;
 
@@ -99,7 +101,6 @@ public class MsgCenterActivity extends BaseActivity {
      */
 
     private void requestData() {
-
         subscribe = MessageNetwork
                 .getMessageApi()
                 .getMessageReadBean(App.APP_CLIENT_KEY, "new_msg_num")
