@@ -45,7 +45,12 @@ public class HelpSeekInfoCommentDetailAdapter extends BaseRecyclerAdapter<HelpSe
             left_layout.setVisibility(View.VISIBLE);
         }
         final HelpSeekCommentBean item = mDataList.get(position);
-
+        ImageView iv_helpinfo_private = holder.getView(R.id.iv_helpinfo_private);
+        if ("1".equals(item.type)) {
+            iv_helpinfo_private.setVisibility(View.VISIBLE);
+        } else {
+            iv_helpinfo_private.setVisibility(View.GONE);
+        }
         LinearLayout title_layout = holder.getView(R.id.title_layout);
         title_layout.setVisibility(View.GONE);
 
