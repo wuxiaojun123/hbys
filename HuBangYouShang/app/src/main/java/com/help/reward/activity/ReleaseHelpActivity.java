@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.AddDayBean;
 import com.help.reward.bean.AreaBean;
 import com.help.reward.bean.HelpBoardBean;
 import com.help.reward.bean.Response.AreaResponse;
@@ -24,6 +25,8 @@ import com.help.reward.utils.GlideUtils;
 import com.help.reward.utils.PickerUtils;
 import com.help.reward.utils.StringUtils;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.DateUtil;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -70,7 +73,9 @@ public class ReleaseHelpActivity extends BaseActivity {
     ImageView ivReleaseAddphoto;
     ArrayList<AreaBean> cityList = new ArrayList<>();
     ArrayList<HelpBoardBean> boardList = new ArrayList<>();
-    ArrayList<String> dateList = new ArrayList<>();
+    //    ArrayList<String> dateList = new ArrayList<>();
+    ArrayList<AddDayBean> dateDayList = new ArrayList<>();
+    String end_time; // 有效时间 格式是yyyy/MM/dd HH/mm/ss
     String area_id;
     String board_id;
     ChooseCameraPopuUtils chooseCameraPopuUtils;
@@ -98,6 +103,7 @@ public class ReleaseHelpActivity extends BaseActivity {
 
     List<String> photoUrl = new ArrayList<>();
     List<String> file_names = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +124,7 @@ public class ReleaseHelpActivity extends BaseActivity {
             }
 
             @Override
-            public void onLoadSucced(String file_name,String url) {
+            public void onLoadSucced(String file_name, String url) {
                 photoUrl.add(url);
                 file_names.add(file_name);
                 showPhoto();
@@ -156,7 +162,7 @@ public class ReleaseHelpActivity extends BaseActivity {
                 GlideUtils.loadImage(photoUrl.get(0), iv_photo1);
                 break;
         }
-        tv_photonum.setText("还可上传（"+(4-photoUrl.size())+"）张");
+        tv_photonum.setText("还可上传（" + (4 - photoUrl.size()) + "）张");
     }
 
     @OnClick({R.id.iv_title_back, R.id.tv_title_right, R.id.tv_release_help_address, R.id.tv_release_help_type,
@@ -176,7 +182,7 @@ public class ReleaseHelpActivity extends BaseActivity {
                 getBoardData();
                 break;
             case tv_release_help_data:
-                if(dateList.size()<=0){
+                /*if(dateList.size()<=0){
                     for (int i = 1; i <=15 ; i++) {
                         dateList.add(i+"天");
                     }
@@ -187,7 +193,21 @@ public class ReleaseHelpActivity extends BaseActivity {
                     public void onClick(View view, int postion) {
                         tvReleaseHelpData.setText(dateList.get(postion));
                     }
+                });*/
+                if (dateDayList.size() <= 0) {
+                    for (int i = 1; i <= 15; i++) {
+                        dateDayList.add(new AddDayBean(i + "天", DateUtil.addDayToStringTime(i)));
+                    }
+                }
+
+                PickerUtils.alertBottomWheelOption(this, dateDayList, new PickerUtils.OnWheelViewClick() {
+                    @Override
+                    public void onClick(View view, int postion) {
+                        end_time = dateDayList.get(postion).time;
+                        tvReleaseHelpData.setText(dateDayList.get(postion).day);
+                    }
                 });
+
                 break;
             case R.id.iv_release_addphoto:
                 chooseCameraPopuUtils.showPopupWindow();
@@ -226,7 +246,7 @@ public class ReleaseHelpActivity extends BaseActivity {
 
     private void subHelp() {
         String title = etReleaseHelpTitle.getText().toString().trim();
-        String end_time = tvReleaseHelpData.getText().toString().trim();
+//        String endTimeStr = tvReleaseHelpData.getText().toString().trim();
         String content = etReleaseHelpContent.getText().toString().trim();
         String score = tv_release_help_score.getText().toString().trim();
         if (!StringUtils.checkStr(title)) {

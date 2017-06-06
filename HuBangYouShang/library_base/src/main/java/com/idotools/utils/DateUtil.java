@@ -45,16 +45,26 @@ public class DateUtil {
         return SDF_NO_SECONDS.format(new Date(lcc_time * 1000L));
     }
 
-    /*public static String getStrTime(String cc_time) {
+    /***
+     * 在当前日期之上加多少天
+     * @param addDay
+     * @return
+     */
+    public static String addDayToStringTime(int addDay) {
+        Date date = new Date();//取时间
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(calendar.DATE, addDay);//把日期往后增加一天.整数往后推,负数往前移动
+        date = calendar.getTime();   //这个时间就是日期往后推一天的结果
+
         String re_StrTime = null;
         //同理也可以转为其它样式的时间格式.例如："yyyy/MM/dd HH:mm"
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         // 例如：cc_time=1291778220
-        long lcc_time = Long.valueOf(cc_time);
-        re_StrTime = SDF_NO_SECONDS.format(new Date(lcc_time * 1000L));
+        re_StrTime = sdf.format(date);
 
         return re_StrTime;
-    }*/
+    }
 
     /**
      * 把时间戳变yyyy-MM-dd格式时间

@@ -80,7 +80,6 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
                     if (!TextUtils.isEmpty(pwd1)) {
                         if (pwd.equals(pwd1)) {
                             judge(pwd, pwd1);
-                            commit(pwd, pwd1);
                         } else {
                             ToastUtils.show(mContext, "请检查您的确认密码");
                         }
