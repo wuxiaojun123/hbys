@@ -75,6 +75,7 @@
 -keep class com.help.reward.view.** {*;}
 -keep class com.help.reward.chat.** {*;}
 
+-keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; } ## 地址
 -keep class chihane.jdaddressselector.** { *; } ## 地址
 -keep class com.hbys.chatlibrary.** { *; } ##library_chat
 -keep class com.hyphenate.easeui.** { *; } ##easeui

@@ -32,6 +32,8 @@ import com.help.reward.activity.SettingActivity;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.utils.ActivitySlideAnim;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.functions.Action1;

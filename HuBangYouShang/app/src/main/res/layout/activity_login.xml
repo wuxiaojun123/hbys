@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sl_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/img_login_bg"
     android:fadingEdge="none"
     android:overScrollMode="never"
     android:requiresFadingEdge="none"
     android:scrollbarStyle="@null"
-    android:scrollbars="none"
-    android:id="@+id/sl_view"
-    android:background="@mipmap/img_login_bg"
-    >
+    android:scrollbars="none">
 
     <LinearLayout
         android:id="@+id/ll_total"
@@ -27,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="90dp"
-            android:src="@mipmap/img_default_head_portrait" />
+            android:src="@mipmap/img_login_logo" />
 
         <TextView
             android:id="@+id/tv_user_name"
@@ -49,6 +48,7 @@
             android:background="@drawable/shape_login_edittext_bg"
             android:drawableLeft="@mipmap/img_telephone"
             android:drawablePadding="14dp"
+            android:hint="昵称/手机号"
             android:maxLines="1"
             android:paddingLeft="12dp"
             android:text="zhouying"
@@ -80,7 +80,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/shape_login_bg"
-            android:text="登陆"
+            android:text="登录"
             android:textColor="@color/color_while"
             android:textSize="@dimen/dimen_15" />
 
@@ -152,7 +152,8 @@
                 android:gravity="center"
                 android:text="QQ"
                 android:textColor="@color/color_while"
-                android:textSize="@dimen/dimen_15" />
+                android:textSize="@dimen/dimen_15"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_weibo"
@@ -163,7 +164,8 @@
                 android:gravity="center"
                 android:text="微博"
                 android:textColor="@color/color_while"
-                android:textSize="@dimen/dimen_15" />
+                android:textSize="@dimen/dimen_15"
+                android:visibility="gone" />
 
         </LinearLayout>
 

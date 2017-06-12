@@ -121,21 +121,20 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
                 initSelectPhoto();
 
             } else if ("1".equals(bean.certification)) { // 通过
-                ll_info.setVisibility(View.VISIBLE);
+                ll_info.setVisibility(View.GONE);
                 tv_certification_success.setVisibility(View.VISIBLE);
-                btn_commit.setVisibility(View.GONE);
-                et_name.setText(bean.member_truename);
-                et_name.setClickable(false);
-                et_card.setText(bean.ID_card);
-                et_card.setClickable(false);
-                iv_photo.setVisibility(View.VISIBLE);
+//                et_name.setText(bean.member_truename);
+//                et_name.setClickable(false);
+//                et_card.setText(bean.ID_card);
+//                et_card.setClickable(false);
+//                iv_photo.setVisibility(View.VISIBLE);
                 LogUtils.e("图片地址是：" + bean.identity_img);
-                GlideUtils.loadImage(bean.identity_img, iv_photo);
-                tv_upload.setText("审核成功");
-                Drawable drawable = ContextCompat.getDrawable(mContext, R.mipmap.img_certification_pass);
-                tv_upload.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-                iv_upload.setVisibility(View.GONE);
-                initSelectPhoto();
+//                GlideUtils.loadImage(bean.identity_img, iv_photo);
+//                tv_upload.setText("审核成功");
+//                Drawable drawable = ContextCompat.getDrawable(mContext, R.mipmap.img_certification_pass);
+//                tv_upload.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+//                iv_upload.setVisibility(View.GONE);
+//                initSelectPhoto();
 
             } else if ("2".equals(bean.certification)) { // 审核未通过
                 ll_info.setVisibility(View.VISIBLE);

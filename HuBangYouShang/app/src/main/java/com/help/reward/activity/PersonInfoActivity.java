@@ -132,7 +132,9 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         sexList.add(new SexBean("0", "保密"));
         sexList.add(new SexBean("1", "男"));
         sexList.add(new SexBean("2", "女"));
-        GlideUtils.loadCircleImage(App.mLoginReponse.avator, iv_head);
+        if (App.mLoginReponse != null) {
+            GlideUtils.loadCircleImage(App.mLoginReponse.avator, iv_head);
+        }
 
         chooseCameraPopuUtils = new ChooseCameraPopuUtils(this, "avatar");
         chooseCameraPopuUtils.setOnUploadImageListener(new ChooseCameraPopuUtils.OnUploadImageListener() {
@@ -143,6 +145,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onLoadSucced(String file_name, String url) {
+                LogUtils.e("头像修改的路径是：" + url);
                 GlideUtils.loadCircleImage(url, iv_head);
                 avatar = file_name;
                 avatarUrl = url;
@@ -170,6 +173,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                                 // 设置用户属性
                                 PersonInfoResponse infoResponse = response.data;
 //                                LogUtils.e("获取数据成功。。。" + response.data.member_name + "===头像路径是;" + infoResponse.member_avatar);
+                                LogUtils.e("当前路径是：" + infoResponse.member_avatar);
                                 GlideUtils.loadCircleImage(infoResponse.member_avatar, iv_head);
 
                                 et_nicheng.setText(infoResponse.member_name);
@@ -185,6 +189,8 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                                     sexId = "0";
                                 }
                                 tv_area.setText(infoResponse.area_info);
+                                LogUtils.e("当前行业是：" + infoResponse.member_business);
+                                business = infoResponse.member_business;
                                 tv_work.setText(infoResponse.member_business);
                                 et_word_position.setText(infoResponse.member_position);
                                 et_sign.setText(infoResponse.description);
@@ -260,9 +266,9 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
 
                         provinceID = province.id + "";
                         cityID = city.id + "";
-                        if(county != null){
+                        if (county != null) {
                             countryID = county.id + "";
-                        }else{
+                        } else {
                             countryID = "";
                         }
 
@@ -311,7 +317,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                             if (response.data != null) {
                                 // 设置用户属性
                                 LogUtils.e("修改个人信息成功。。。" + response.data);
-                                if(avatarUrl != null){
+                                if (avatarUrl != null) {
                                     App.mLoginReponse.avator = avatarUrl;
                                 }
                                 finish();
@@ -337,6 +343,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onClick(View view, int postion) {
                 tv_work.setText(businessList.get(postion).business_name);
+                business = businessList.get(postion).business_name;
             }
         });
     }

@@ -25,20 +25,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="14dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="83dp"
         android:drawablePadding="25dp"
         android:drawableTop="@mipmap/img_already_passed_certification"
         android:gravity="center_horizontal"
         android:text="您已通过实名认证"
         android:textColor="@color/color_3a"
         android:textSize="@dimen/dimen_14"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/ll_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:visibility="gone"
         >
 
         <include

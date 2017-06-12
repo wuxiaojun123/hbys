@@ -212,7 +212,9 @@
                 android:inputType="textMultiLine"
                 android:maxLines="4"
                 android:textColor="@color/color_bf"
-                android:textSize="@dimen/dimen_13" />
+                android:textSize="@dimen/dimen_13"
+                android:hint="请输入您可以为他人提供帮助的资源，50字以内"
+                />
 
         </LinearLayout>
 
