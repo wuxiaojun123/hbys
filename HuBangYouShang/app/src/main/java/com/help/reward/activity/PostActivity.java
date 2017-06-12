@@ -74,6 +74,8 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
             tvTitle.setText("投诉信息");
         } else if ("1".equals(type)) {
             tvTitle.setText("系统消息");
+        }else if ("4".equals(type)) {
+            tvTitle.setText("账户消息");
         }
 
         initRecycler();

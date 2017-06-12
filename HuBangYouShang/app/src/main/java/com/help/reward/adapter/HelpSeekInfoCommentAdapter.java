@@ -16,6 +16,7 @@ import com.help.reward.bean.Response.StringResponse;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.DialogUtil;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.view.HelpSeekInfoCommentMorePop;
 import com.help.reward.view.MyProcessDialog;
@@ -122,25 +123,43 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
             iv_awful.setImageResource(R.mipmap.awful_selected);
         }
 
-        if (!"0".equals(item.useful) || !"0".equals(item.useless)) {
+        if (!"0".equals(item.useful) || !"0".equals(item.useless)||!isMyPost) {
             iv_fabulous.setEnabled(false);
             iv_awful.setEnabled(false);
         } else {
             iv_fabulous.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    setUseFulOrUseless("set_useful", item.id, position);
+                    DialogUtil.showConfirmCancleDialog(mActivity,"您将增加此用户0.1帮助人数，确定么？",new DialogUtil.OnDialogUtilClickListener(){
+
+                        @Override
+                        public void onClick(boolean isLeft) {
+                            if(isLeft) {
+                                setUseFulOrUseless("set_useful", item.id, position);
+                            }
+                        }
+                    });
+
                 }
             });
             iv_awful.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    setUseFulOrUseless("set_useless", item.id, position);
+                    DialogUtil.showConfirmCancleDialog(mActivity,"您将减少此用户0.1帮助人数，确定么？",new DialogUtil.OnDialogUtilClickListener(){
+
+                        @Override
+                        public void onClick(boolean isLeft) {
+                            if(isLeft) {
+                                setUseFulOrUseless("set_useless", item.id, position);
+                            }
+                        }
+                    });
+
                 }
             });
         }
 
-        ImageView iv_reply = holder.getView(R.id.iv_reply);
+      final ImageView iv_reply = holder.getView(R.id.iv_reply);
 
         if ("true".equalsIgnoreCase(item.new_unread)) {
             iv_reply.setImageResource(R.mipmap.reply_selected);
@@ -160,6 +179,29 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
                 intentDetail.putExtra("status", status);
                 mActivity.startActivity(intentDetail);
                 ActivitySlideAnim.slideInAnim(mActivity);
+                if ("true".equalsIgnoreCase(item.new_unread)) {
+                    iv_reply.setImageResource(R.mipmap.reply_normal);
+                }
+
+            }
+        });
+        //点击内容也可以跳转回复
+        tv_helpinfo_content.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //继续跟帖
+                Intent intentDetail = new Intent(mActivity, HelpSeekCommentDetailActivity.class);
+                intentDetail.putExtra("id", item.id);
+                intentDetail.putExtra("type", item.type);
+                intentDetail.putExtra("post_id", item.post_id);
+                intentDetail.putExtra("status", status);
+                mActivity.startActivity(intentDetail);
+                ActivitySlideAnim.slideInAnim(mActivity);
+                if ("true".equalsIgnoreCase(item.new_unread)) {
+                    iv_reply.setImageResource(R.mipmap.reply_normal);
+                }
 
             }
         });

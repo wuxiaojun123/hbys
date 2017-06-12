@@ -46,6 +46,7 @@
                     style="@style/style_text_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true" />
 
                 <TextView
@@ -56,7 +57,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_toLeftOf="@+id/tv_time"
                     android:ellipsize="end"
-                    android:maxLines="1" />
+                     />
             </RelativeLayout>
         </RelativeLayout>
 

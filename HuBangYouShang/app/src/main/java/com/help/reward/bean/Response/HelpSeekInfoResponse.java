@@ -15,6 +15,7 @@ public class HelpSeekInfoResponse extends BaseResponse<HelpSeekInfoResponse> {
     public String has_commented;
     public String commented_type;
     public boolean hasmore;
+    public boolean has_helped;
     public int page_total;
     public HelpSeekInfoBean info;
     public List<HelpSeekCommentBean> comment;

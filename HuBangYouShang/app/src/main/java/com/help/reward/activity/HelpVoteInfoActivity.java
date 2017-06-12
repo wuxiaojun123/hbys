@@ -170,6 +170,8 @@ public class HelpVoteInfoActivity extends BaseActivity {
                                     tv_subvote.setBackgroundResource(R.drawable.vote_done);
                                     tv_subvote.setEnabled(false);
                                     layout_vote1.setEnabled(false);
+                                    checkbox_vote1.setEnabled(false);
+                                    checkbox_vote2.setEnabled(false);
                                     layout_vote2.setEnabled(false);
                                     tv_subvote.setTextColor(getResources().getColor(R.color.color_8a));
                                 }
@@ -209,6 +211,8 @@ public class HelpVoteInfoActivity extends BaseActivity {
                             layout_vote1.setEnabled(false);
                             layout_vote2.setEnabled(false);
                             tv_subvote.setTextColor(getResources().getColor(R.color.color_8a));
+
+                            requestData();
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

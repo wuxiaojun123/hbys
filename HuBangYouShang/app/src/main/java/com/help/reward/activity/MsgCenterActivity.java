@@ -54,6 +54,8 @@ public class MsgCenterActivity extends BaseActivity {
     ImageView ivMsgcenterSys;
     @BindView(R.id.layout_msgcenter_ss)
     RelativeLayout layoutMsgcenterSs;
+    @BindView(R.id.iv_msgcenter_account)
+    ImageView ivMsgcenterAccount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class MsgCenterActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_title_back, R.id.layout_msgcenter_post, R.id.layout_msgcenter_deal,
-            R.id.layout_msgcenter_complain, R.id.layout_msgcenter_ss})
+            R.id.layout_msgcenter_complain, R.id.layout_msgcenter_ss,R.id.layout_msgcenter_account})
     public void onCLick(View v) {
         Intent intent = new Intent(mContext, PostActivity.class);
         //type 0为私信、1为系统消息、2为留言、3帖子动态、4账户消息、5交易信息、6投诉消息
@@ -93,6 +95,11 @@ public class MsgCenterActivity extends BaseActivity {
                 intent.putExtra("type", "1");
                 startActivity(intent);
                 break;
+            case R.id.layout_msgcenter_account://账户消息
+                intent.putExtra("type", "4");
+                startActivity(intent);
+                break;
+
         }
     }
 
@@ -141,6 +148,11 @@ public class MsgCenterActivity extends BaseActivity {
                                 ivMsgcenterComplain.setVisibility(View.VISIBLE);
                             } else {
                                 ivMsgcenterComplain.setVisibility(View.GONE);
+                            }
+                            if (response.data.account > 0) {
+                                ivMsgcenterAccount.setVisibility(View.VISIBLE);
+                            } else {
+                                ivMsgcenterAccount.setVisibility(View.GONE);
                             }
 
                         } else {
