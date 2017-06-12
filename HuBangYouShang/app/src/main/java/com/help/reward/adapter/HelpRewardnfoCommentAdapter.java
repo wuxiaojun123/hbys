@@ -125,6 +125,20 @@ public class HelpRewardnfoCommentAdapter extends BaseRecyclerAdapter<HelpRewardC
 
             }
         });
+        tv_helpinfo_content.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //继续跟帖
+                Intent intentDetail = new Intent(mActivity, HelpRewardChatDetailActivity.class);
+                intentDetail.putExtra("id", item.id);
+                intentDetail.putExtra("post_id", item.post_id);
+                mActivity.startActivity(intentDetail);
+                ActivitySlideAnim.slideInAnim(mActivity);
+
+            }
+        });
         ImageView iv_complain = holder.getView(R.id.iv_complain);
         iv_complain.setOnClickListener(new View.OnClickListener() {
 

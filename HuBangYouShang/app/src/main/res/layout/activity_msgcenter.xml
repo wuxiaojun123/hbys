@@ -50,6 +50,40 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_vertical_margin">
+        <RelativeLayout
+            android:id="@+id/layout_msgcenter_account"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hight_msgcenter_item">
+
+            <TextView
+                android:id="@+id/tv_msgcenter_account"
+                style="@style/style_text_lable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingRight="5dp"
+                android:text="@string/msgcenter_lable5" />
+
+            <ImageView
+                android:id="@+id/iv_msgcenter_account"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_alignRight="@+id/tv_msgcenter_account"
+                android:layout_alignTop="@+id/tv_msgcenter_account"
+                android:background="@drawable/bg_reddot"
+                android:visibility="gone" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/img_disclosure_arrow" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_spiline" />
 
         <RelativeLayout
             android:id="@+id/layout_msgcenter_deal"

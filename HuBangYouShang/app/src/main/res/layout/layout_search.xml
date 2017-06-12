@@ -36,6 +36,7 @@
             android:hint="@string/string_search_hint"
             android:maxLines="1"
             android:imeOptions="actionSearch"
+            android:inputType="text"
             android:selectAllOnFocus="true"
             android:textColor="@color/color_while"
             android:textColorHint="@color/color_while"

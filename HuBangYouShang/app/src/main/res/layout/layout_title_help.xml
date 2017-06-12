@@ -93,6 +93,7 @@
         android:hint="@string/help_lable2"
         android:imeOptions="actionSearch"
         android:maxLines="1"
+        android:inputType="text"
         android:textColor="@color/color_while"
         android:textColorHint="@color/color_while"
         android:textSize="@dimen/dimen_13" />

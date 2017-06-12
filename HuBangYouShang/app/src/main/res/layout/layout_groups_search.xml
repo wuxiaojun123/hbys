@@ -43,6 +43,9 @@
             android:background="@drawable/shape_search_background"
             android:drawableLeft="@mipmap/img_search"
             android:hint="搜索关键字相关群组"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
             android:textColor="@color/color_while"
             android:textSize="@dimen/dimen_13"
             android:textColorHint="@color/color_while"/>

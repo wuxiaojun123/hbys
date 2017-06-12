@@ -59,6 +59,7 @@
     <string name="msgcenter_lable2">交易信息</string>
     <string name="msgcenter_lable3">投诉信息</string>
     <string name="msgcenter_lable4">系统消息</string>
+    <string name="msgcenter_lable5">账户消息</string>
 
     <!--交易信息-->
     <string name="trade_lable1">交易信息</string>

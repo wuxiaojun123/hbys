@@ -54,6 +54,7 @@
             android:drawablePadding="6dp"
             android:hint="搜索关键字相关商品"
             android:imeOptions="actionSearch"
+            android:inputType="text"
             android:maxLines="1"
             android:selectAllOnFocus="true"
             android:textColor="@color/color_while"
