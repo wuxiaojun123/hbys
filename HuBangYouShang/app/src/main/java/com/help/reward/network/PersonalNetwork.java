@@ -1,5 +1,6 @@
 package com.help.reward.network;
 
+import com.help.reward.App;
 import com.help.reward.network.api.LoginApi;
 import com.help.reward.network.api.PersonalApi;
 import com.help.reward.network.base.RetrofitUtils;

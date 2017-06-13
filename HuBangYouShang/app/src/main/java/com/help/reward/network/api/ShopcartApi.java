@@ -1,5 +1,6 @@
 package com.help.reward.network.api;
 
+import com.help.reward.bean.Response.AddSellerGroupResponse;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.CommitOrderResponse;
 import com.help.reward.bean.Response.ConfirmOrderResponse;
@@ -39,6 +40,13 @@ public interface ShopcartApi {
             @Field("goods_id") String goods_id
     );
 
+    // 商家群
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_group&op=join_group")
+    Observable<AddSellerGroupResponse> getAddSellerGroup(
+            @Field("key") String key,
+            @Field("member_id") String member_id
+    );
 
 
     @FormUrlEncoded

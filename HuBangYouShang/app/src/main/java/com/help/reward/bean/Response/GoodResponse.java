@@ -20,5 +20,6 @@ public class GoodResponse extends BaseResponse<GoodResponse> {
     public String goods_image; // 展示图片
     public StoreInfoBean store_info; // 店铺信息
     public boolean is_favorate; // 是否为收藏
+    public boolean is_in_group; // 标记是否已经加入群组
 
 }

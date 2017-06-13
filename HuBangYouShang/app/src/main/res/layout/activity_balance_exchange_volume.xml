@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="2000以上 余额数x1.1=通用卷"
+                android:text="2000以上 余额数x1=通用卷"
                 android:textColor="@color/color_bf"
                 android:textSize="@dimen/dimen_14" />
 

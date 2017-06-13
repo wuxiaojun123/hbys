@@ -32,6 +32,7 @@ import rx.schedulers.Schedulers;
 public class MyHelpCommentFragment extends BaseFragment {
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     private MyHelpCommentAdapter myHelpCommentAdapter;
 
@@ -61,29 +62,33 @@ public class MyHelpCommentFragment extends BaseFragment {
     }
 
     private void initNetwork() {
-        lRecyclerview.refresh();
+        if(App.APP_CLIENT_KEY == null){
+            return;
+        }
+        // ?act=member_index&op=my_seek_help
         PersonalNetwork
                 .getResponseApi()
-                .getMyHelpCommentResponse("comment", App.APP_CLIENT_KEY)
+                .getMyHelpCommentResponse("member_index","my_seek_help",currentPage+"","comment", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyHelpCommentResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        lRecyclerview.refreshComplete(numSize);
+//                        lRecyclerview.refreshComplete(numSize);
                         ToastUtils.show(mContext, R.string.string_error);
                     }
 
                     @Override
                     public void onNext(MyHelpCommentResponse response) {
-                        lRecyclerview.refreshComplete(numSize);
+//                        lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             LogUtils.e("获取数据成功。。。。"+response.data.size());
                             if (response.data != null) {
                                 myHelpCommentAdapter.addAll(response.data);
                             }
                             lRecyclerview.setPullRefreshEnabled(false);
+                            lRecyclerview.setLoadMoreEnabled(false);
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -113,7 +118,7 @@ public class MyHelpCommentFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                    LogUtils.e("执行onRefresh方法");
+
             }
         });
     }

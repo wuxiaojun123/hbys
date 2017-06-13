@@ -20,7 +20,7 @@ import com.help.reward.bean.PropertyValueBean;
 import com.help.reward.bean.ShopMallHotBean;
 import com.help.reward.bean.StoreInfoBean;
 import com.help.reward.rxbus.RxBus;
-import com.help.reward.rxbus.event.type.CollectionRxbusType;
+import com.help.reward.rxbus.event.type.GoodInfoRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
@@ -31,12 +31,10 @@ import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.view.MyGridView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -133,10 +131,10 @@ public class GoodFragment extends BaseFragment {
                                     tv_goodinfo_goodppost.setText(response.data.goods_hair_info.content);
                                     tv_goodinfo_address.setText(response.data.goods_hair_info.area_name);
                                 }
-                                LogUtils.e("是否收藏..." + response.data.is_favorate);
-                                if (response.data.is_favorate) {
-                                    RxBus.getDefault().post(new CollectionRxbusType(true));
-                                }
+                                LogUtils.e("是否加入到群里了"+response.data.is_in_group + "--" + response.data.store_info.available_groupid
+                                        + "--" + response.data.store_info.member_id);
+                                RxBus.getDefault().post(new GoodInfoRxbusType(response.data.is_favorate, response.data.is_in_group,
+                                        response.data.is_in_group ? response.data.store_info.available_groupid : response.data.store_info.member_id));
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);

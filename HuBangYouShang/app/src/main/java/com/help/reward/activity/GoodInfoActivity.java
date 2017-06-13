@@ -14,17 +14,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.google.android.gms.games.multiplayer.InvitationEntity;
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.Response.AddSellerGroupResponse;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.chat.Constant;
+import com.help.reward.chat.ui.ChatActivity;
 import com.help.reward.fragment.GoodFragment;
 import com.help.reward.fragment.GoodImgInfoFragment;
 import com.help.reward.fragment.GoodRetedFragment;
 import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
-import com.help.reward.rxbus.event.type.CollectionRxbusType;
+import com.help.reward.rxbus.event.type.GoodInfoRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.MyProcessDialog;
 import com.help.reward.view.StoreInfoMenuPop;
@@ -68,6 +70,10 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
     private String goodsId;
     private String storeId;
     GoodFragment goodFragment;
+
+    private String member_id; // 加商家群的时候需要用到
+    private boolean is_in_group; // 标记是否已经加入群组
+    private Subscription subscribeRxBus;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,8 +125,8 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                 }
 
                 break;
-            case R.id.ll_seller_group: // 商家群
-
+            case R.id.ll_seller_group: // 加入商家群
+                addSellerGroup();
 
                 break;
             case R.id.ll_collection: // 收藏
@@ -130,10 +136,69 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    /**
+     * 加入商家群
+     */
+    private void addSellerGroup() {
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, R.string.string_please_login);
+            return;
+        }
+        if (is_in_group && !TextUtils.isEmpty(member_id)) { // 已经加入到商家群了，直接跳转到群页面
+            Intent intent = new Intent(GoodInfoActivity.this, ChatActivity.class);
+            intent.putExtra(Constant.EXTRA_USER_ID, member_id);
+            startActivity(intent);
+
+        } else {
+            if (TextUtils.isEmpty(member_id)) {
+                return;
+            }
+            ShopcartNetwork
+                    .getShopcartCookieApi()
+                    .getAddSellerGroup(App.APP_CLIENT_KEY, member_id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<AddSellerGroupResponse>() {
+
+                        @Override
+                        public void onError(Throwable e) {
+                            MyProcessDialog.closeDialog();
+                            e.printStackTrace();
+                            if (e instanceof UnknownHostException) {
+                                ToastUtils.show(mContext, "请求到错误服务器");
+                            } else if (e instanceof SocketTimeoutException) {
+                                ToastUtils.show(mContext, "请求超时");
+                            }
+                        }
+
+                        @Override
+                        public void onNext(AddSellerGroupResponse res) {
+                            MyProcessDialog.closeDialog();
+                            if (res.code == 200) { // 收藏成功
+                                LogUtils.e("结果是：" + res.data.groupid);
+                                is_in_group = true;
+                                member_id = res.data.groupid;
+
+                                Intent intent = new Intent(GoodInfoActivity.this, ChatActivity.class);
+                                intent.putExtra(Constant.EXTRA_USER_ID, member_id);
+                                startActivity(intent);
+
+                            } else {
+                                ToastUtils.show(mContext, res.msg);
+                            }
+                        }
+                    });
+        }
+    }
+
     /***
      * 收藏商品
      */
     private void collectionShop() {
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, R.string.string_please_login);
+            return;
+        }
         if (!TextUtils.isEmpty(goodsId)) {
             MyProcessDialog.showDialog(mContext);
             ShopcartNetwork
@@ -202,19 +267,19 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private Subscription subscribe;
-
     private void initEvent() {
-        subscribe = RxBus.getDefault().toObservable(CollectionRxbusType.class).subscribe(new Action1<CollectionRxbusType>() {
+        subscribeRxBus = RxBus.getDefault().toObservable(GoodInfoRxbusType.class).subscribe(new Action1<GoodInfoRxbusType>() {
             @Override
-            public void call(CollectionRxbusType type) {
+            public void call(GoodInfoRxbusType type) {
                 if (type.collection) {
                     iv_collection.setImageResource(R.mipmap.nav_favorites_b);
                 } else {
                     iv_collection.setImageResource(R.mipmap.nav_favorites_a);
                 }
-                if (!subscribe.isUnsubscribed()) {
-                    subscribe.unsubscribe();
+                member_id = type.member_id;
+                is_in_group = type.is_in_group;
+                if (!subscribeRxBus.isUnsubscribed()) {
+                    subscribeRxBus.unsubscribe();
                 }
             }
         });
@@ -265,4 +330,13 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
             return TITLES.length;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (subscribeRxBus != null && !subscribeRxBus.isUnsubscribed()) {
+            subscribeRxBus.unsubscribe();
+        }
+    }
+
 }

@@ -254,10 +254,13 @@ public interface PersonalApi {
             @Field("key") String key
     );
 
-    // 我的求助--跟帖
+    // 我的求助--跟帖 ?act=member_index&op=my_seek_help
     @FormUrlEncoded
-    @POST("mobile/index.php?act=member_index&op=my_seek_help")
+    @POST("mobile/index.php")
     Observable<MyHelpCommentResponse> getMyHelpCommentResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
             @Field("type") String type,
             @Field("key") String key
     );

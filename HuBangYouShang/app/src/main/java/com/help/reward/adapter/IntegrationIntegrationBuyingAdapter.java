@@ -42,7 +42,7 @@ public class IntegrationIntegrationBuyingAdapter extends BaseRecyclerAdapter {
         final AdvertisementBean bean = (AdvertisementBean) mDataList.get(position);
         tv_title.setText(bean.name);
         tv_name.setText(bean.user_name);
-        tv_score.setText(bean.credit + "帮赏分");
+        tv_score.setText(bean.per_credit + "帮赏分");
         GlideUtils.loadImage(bean.url, iv_img_ad);
 
         ll_content.setOnClickListener(new View.OnClickListener() {

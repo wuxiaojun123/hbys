@@ -6,6 +6,7 @@ import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.network.api.PersonalApi;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
 import com.help.reward.R;
@@ -24,7 +25,7 @@ import rx.schedulers.Schedulers;
 
 public class MyHelpPostFragment extends BaseFragment {
 
-    private int numSize = 15;
+    private int numSize = 150;
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -42,6 +43,9 @@ public class MyHelpPostFragment extends BaseFragment {
     }
 
     private void initNetwork() {
+        if(App.APP_CLIENT_KEY == null){
+            return;
+        }
         PersonalNetwork
                 .getResponseApi()
                 .getMyHelpPostResponse("post", App.APP_CLIENT_KEY)
@@ -57,12 +61,13 @@ public class MyHelpPostFragment extends BaseFragment {
 
                     @Override
                     public void onNext(MyHelpPostResponse response) {
-                        lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
+                                lRecyclerview.refreshComplete(response.data.size());
                                 mHelpPostAdapter.addAll(response.data);
                             }
                             lRecyclerview.setPullRefreshEnabled(false);
+                            lRecyclerview.setLoadMoreEnabled(false);
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

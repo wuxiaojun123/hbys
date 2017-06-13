@@ -1,5 +1,6 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -11,15 +12,23 @@ import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.AdInfoBean;
 import com.help.reward.bean.Response.AdInfoResponse;
+import com.help.reward.bean.Response.AddSellerGroupResponse;
 import com.help.reward.bean.Response.WatchAdGetScroeResponse;
+import com.help.reward.chat.Constant;
+import com.help.reward.chat.ui.ChatActivity;
 import com.help.reward.network.IntegrationNetwork;
+import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.CountDownTimeUtils;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.view.AlertDialog;
+import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
+
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +69,8 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
     private String ad_type; // 广告类型
     private int ad_type_flag; // 看完点赞 1  加群购买 2
     private boolean watchAdFinish; // 看完ad，点击获取帮赏分后，不能再点击了
+    private String seller_member_id; // 卖家对应的member_id
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,7 +96,7 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
             initNet();
         }
         if (App.APP_USER_ID == null) {
-            ToastUtils.show(mContext,"需登录");
+            ToastUtils.show(mContext, "需登录");
         }
     }
 
@@ -118,12 +129,13 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                                 ad_id = bean.id;
                                 tv_ad_title.setText(bean.name);
                                 tv_ad_name.setText(bean.user_name);
-                                tv_score.setText(bean.credit + "帮赏分");
+                                tv_score.setText(bean.per_credit + "帮赏分");
                                 GlideUtils.loadImage(bean.url, iv_img_ad);
                                 if (ad_type_flag == 1) {
                                     tv_point_of_praise.setText("看完点赞(" + bean.click_num + "/" + bean.times + ")");
                                 } else {
                                     tv_buy.setText("加群购买(" + bean.click_num + "/" + bean.times + ")");
+                                    seller_member_id = response.data.info.seller_member_id;
                                 }
                                 if (!response.data.hasWathced) {
                                     initTimer(); // 开始计时
@@ -168,7 +180,7 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
             case R.id.tv_buy:
                 // 加群购买
                 if (App.APP_USER_ID != null) {
-//                    getScroe();
+                    addSellerGroup();
 
                 } else {
                     ToastUtils.show(mContext, "请先登录");
@@ -176,6 +188,49 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
 
                 break;
         }
+    }
+
+    /**
+     * 加群购买
+     */
+    private void addSellerGroup() {
+        LogUtils.e("seller_member_id是：" + seller_member_id);
+        if (TextUtils.isEmpty(seller_member_id)) {
+            return;
+        }
+        ShopcartNetwork
+                .getShopcartCookieApi()
+                .getAddSellerGroup(App.APP_CLIENT_KEY, seller_member_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<AddSellerGroupResponse>() {
+
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        if (e instanceof UnknownHostException) {
+                            ToastUtils.show(mContext, "请求到错误服务器");
+                        } else if (e instanceof SocketTimeoutException) {
+                            ToastUtils.show(mContext, "请求超时");
+                        }
+                    }
+
+                    @Override
+                    public void onNext(AddSellerGroupResponse res) {
+                        MyProcessDialog.closeDialog();
+                        if (res.code == 200) { // 收藏成功
+                            LogUtils.e("结果是：" + res.data.groupid);
+                            if (res.data != null && !TextUtils.isEmpty(res.data.groupid)) {
+                                Intent intent = new Intent(WatchAdActivity.this, ChatActivity.class);
+                                intent.putExtra(Constant.EXTRA_USER_ID, res.data.groupid);
+                                startActivity(intent);
+                            }
+                        } else {
+                            ToastUtils.show(mContext, res.msg);
+                        }
+                    }
+                });
     }
 
     /***

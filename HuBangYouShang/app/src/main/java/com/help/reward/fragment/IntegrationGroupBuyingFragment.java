@@ -55,7 +55,8 @@ public class IntegrationGroupBuyingFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() { // 如果集合中没有数据，则进行刷新，否则不刷新
-
+                currentPage = 1;
+                initNetwor();
             }
         });
     }
@@ -89,9 +90,6 @@ public class IntegrationGroupBuyingFragment extends BaseFragment {
                         if (response.code == 200) {
                             if (response.data != null) {
                                 mIntegrationWatchPraiseAdapter.addAll(response.data.adv_list);
-                            }
-                            if(currentPage == 1){
-                                lRecyclerview.setPullRefreshEnabled(false);
                             }
                             if (!response.hasmore) { // 是否有更多数据
                                 lRecyclerview.setLoadMoreEnabled(false);
