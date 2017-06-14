@@ -40,6 +40,9 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
+    private PointsRecordFragment pointsRecordFragment;
+    private CouponsRecordFragment couponsRecordFragment ;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
         ButterKnife.bind(this);
 
         initView();
+        pointsRecordFragment = new PointsRecordFragment();
+        couponsRecordFragment = new CouponsRecordFragment();
 
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
@@ -89,9 +94,9 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
         @Override
         public Fragment getItem(int position) {
             if(position == 0){
-                return new PointsRecordFragment();
+                return pointsRecordFragment;
             }else{
-                return new CouponsRecordFragment();
+                return couponsRecordFragment;
             }
         }
 

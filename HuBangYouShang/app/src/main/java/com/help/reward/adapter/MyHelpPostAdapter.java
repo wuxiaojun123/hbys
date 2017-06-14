@@ -32,11 +32,11 @@ public class MyHelpPostAdapter extends BaseRecyclerAdapter {
         TextView tv_post = holder.getView(R.id.tv_post);
         TextView tv_reward = holder.getView(R.id.tv_reward);
 
-        MyHelpPostResponse bean = (MyHelpPostResponse) mDataList.get(position);
+        MyHelpPostResponse.MyHelpPostBean bean = (MyHelpPostResponse.MyHelpPostBean) mDataList.get(position);
 
         tv_content.setText(bean.title);
         tv_title.setText(bean.board_name);
-        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time)*1000));
+        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time) * 1000));
         tv_state.setText(bean.status);
         tv_post.setText(bean.comment);
         tv_reward.setText(bean.offer);

@@ -224,7 +224,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case R.id.tv_my_reward:
-                // 我的收藏
+                // 我的获赏
                 startActivity(new Intent(mContext, MyRewardActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 

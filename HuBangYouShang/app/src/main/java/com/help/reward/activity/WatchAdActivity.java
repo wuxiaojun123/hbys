@@ -67,10 +67,10 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
     private CountDownTimeUtils mTimer;
     private String ad_id; // 广告id
     private String ad_type; // 广告类型
+    private String type; // 看完点赞 null  加群购买 join
     private int ad_type_flag; // 看完点赞 1  加群购买 2
-    private boolean watchAdFinish; // 看完ad，点击获取帮赏分后，不能再点击了
     private String seller_member_id; // 卖家对应的member_id
-
+    private String avaliable_groupid; // 商家群id
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,18 +86,18 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                 tv_point_of_praise.setVisibility(View.VISIBLE);
                 tv_buy.setVisibility(View.GONE);
                 ad_type_flag = 1;
+                type = null;
             } else {
                 tv_buy.setVisibility(View.VISIBLE);
                 tv_point_of_praise.setVisibility(View.GONE);
                 ad_type_flag = 2;
+                type = "join";
             }
         }
         if (!TextUtils.isEmpty(ad_id)) { // 请求服务器
             initNet();
         }
-        if (App.APP_USER_ID == null) {
-            ToastUtils.show(mContext, "需登录");
-        }
+
     }
 
     private void initView() {
@@ -109,9 +109,12 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
      * act=advertisement&op=info
      */
     private void initNet() {
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, "需登录");
+        }
         IntegrationNetwork
                 .getIntegrationApi()
-                .getAdInfoResponse("advertisement", "info", ad_id)
+                .getAdInfoResponse("advertisement", "info", ad_id, type, App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<AdInfoResponse>() {
@@ -136,19 +139,27 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                                 } else {
                                     tv_buy.setText("加群购买(" + bean.click_num + "/" + bean.times + ")");
                                     seller_member_id = response.data.info.seller_member_id;
+                                    if (response.data.isInGroup) {
+                                        avaliable_groupid = response.data.avaliable_groupid;
+                                    }
                                 }
-                                if (!response.data.hasWathced) {
-                                    initTimer(); // 开始计时
-                                    mTimer.start();
-                                    tv_point_of_praise.setClickable(false);
-                                    tv_buy.setClickable(false);
+                                LogUtils.e("是否看过该广告" + response.data.hasWathced + "----" + response.data.isInGroup + "----" + response.data.avaliable_groupid);
+                                if (response.data.hasWathced) { // 已看过该广告
+                                    tv_time.setText("已看过");
+                                    tv_point_of_praise.setText("已看过");
+                                    tv_buy.setText("已看过");
+
+                                } else if (bean.times.equals(bean.click_num)) { // 已结束
+                                    tv_time.setText("已结束");
+                                    tv_point_of_praise.setText("已结束");
+                                    tv_buy.setText("已结束");
 
                                 } else {
-                                    tv_time.setText("已观看");
-                                    tv_point_of_praise.setVisibility(View.GONE);
-                                    tv_buy.setVisibility(View.GONE);
+                                    initTimer(); // 开始计时
+                                    mTimer.start();
                                 }
-
+                                tv_point_of_praise.setClickable(false);
+                                tv_buy.setClickable(false);
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
@@ -180,7 +191,7 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
             case R.id.tv_buy:
                 // 加群购买
                 if (App.APP_USER_ID != null) {
-                    addSellerGroup();
+                    getScroe();
 
                 } else {
                     ToastUtils.show(mContext, "请先登录");
@@ -194,6 +205,13 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
      * 加群购买
      */
     private void addSellerGroup() {
+        if (!TextUtils.isEmpty(avaliable_groupid)) {
+            Intent intent = new Intent(WatchAdActivity.this, ChatActivity.class);
+            intent.putExtra(Constant.EXTRA_USER_ID, avaliable_groupid);
+            startActivity(intent);
+            ActivitySlideAnim.slideInAnim(WatchAdActivity.this);
+            return;
+        }
         LogUtils.e("seller_member_id是：" + seller_member_id);
         if (TextUtils.isEmpty(seller_member_id)) {
             return;
@@ -219,12 +237,13 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onNext(AddSellerGroupResponse res) {
                         MyProcessDialog.closeDialog();
-                        if (res.code == 200) { // 收藏成功
+                        if (res.code == 200) { //
                             LogUtils.e("结果是：" + res.data.groupid);
                             if (res.data != null && !TextUtils.isEmpty(res.data.groupid)) {
                                 Intent intent = new Intent(WatchAdActivity.this, ChatActivity.class);
                                 intent.putExtra(Constant.EXTRA_USER_ID, res.data.groupid);
                                 startActivity(intent);
+                                ActivitySlideAnim.slideInAnim(WatchAdActivity.this);
                             }
                         } else {
                             ToastUtils.show(mContext, res.msg);
@@ -234,9 +253,7 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
     }
 
     /***
-     * "data": {
-     * "get": "1"
-     * }
+     * 获取帮赏分
      */
     private void getScroe() {
         IntegrationNetwork
@@ -255,22 +272,22 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                     public void onNext(WatchAdGetScroeResponse response) {
                         if (response.code == 200) {
                             if (response.data != null) {
-                                showDialogPointOfPraise(response.data.get);
+                                LogUtils.e("剩余帮赏分是：" + response.data.rest);
+                                showDialogPointOfPraise(response.data.get, response.data.rest);
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
-//                        watchAdFinish = true;
                     }
                 });
     }
 
-    private void showDialogPointOfPraise(String score) {
+    private void showDialogPointOfPraise(String getScore, String rest) {
         String msg = null;
-        if (ad_type_flag == 1) {
-            msg = "恭喜您获得" + score + "帮赏分";
+        if (TextUtils.isEmpty(rest) || "0".equals(rest)) {
+            msg = "恭喜您获得" + getScore + "帮赏分";
         } else {
-            msg = "恭喜您获得" + score + "帮赏分\n剩余多少帮赏分多少天后到账";
+            msg = "恭喜您获得" + getScore + "帮赏分\n剩余" + rest + "帮赏分5天后到账";
         }
         new AlertDialog(WatchAdActivity.this)
                 .builder()
@@ -278,6 +295,9 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                 .setMsg(msg).setNegativeButton("确认", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ad_type_flag == 2) {
+                    addSellerGroup();
+                }
             }
         }).show();
     }

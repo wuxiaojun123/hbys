@@ -25,7 +25,8 @@ import rx.schedulers.Schedulers;
 
 public class MyHelpPostFragment extends BaseFragment {
 
-    private int numSize = 150;
+    private int numSize = 15;
+    private int currentPage = 1;
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -43,12 +44,13 @@ public class MyHelpPostFragment extends BaseFragment {
     }
 
     private void initNetwork() {
-        if(App.APP_CLIENT_KEY == null){
+        if (App.APP_CLIENT_KEY == null) {
             return;
         }
+        // ?act=member_index&op=my_seek_help
         PersonalNetwork
                 .getResponseApi()
-                .getMyHelpPostResponse("post", App.APP_CLIENT_KEY)
+                .getMyHelpPostResponse("member_index", "my_seek_help", currentPage + "", "post", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyHelpPostResponse>() {
@@ -61,13 +63,20 @@ public class MyHelpPostFragment extends BaseFragment {
 
                     @Override
                     public void onNext(MyHelpPostResponse response) {
+                        lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                lRecyclerview.refreshComplete(response.data.size());
-                                mHelpPostAdapter.addAll(response.data);
+                                if (currentPage == 1) {
+                                    mHelpPostAdapter.setDataList(response.data);
+                                } else {
+                                    mHelpPostAdapter.addAll(response.data);
+                                }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
-                            lRecyclerview.setLoadMoreEnabled(false);
+                            if (!response.hasmore) {
+                                lRecyclerview.setNoMore(true);
+                            } else {
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -88,7 +97,7 @@ public class MyHelpPostFragment extends BaseFragment {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                initNetwork();
             }
         });
     }
@@ -97,7 +106,8 @@ public class MyHelpPostFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                currentPage = 1;
+                initNetwork();
             }
         });
     }

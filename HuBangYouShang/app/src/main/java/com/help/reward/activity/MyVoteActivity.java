@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
@@ -32,6 +33,7 @@ import rx.schedulers.Schedulers;
 public class MyVoteActivity extends BaseActivity implements View.OnClickListener {
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
@@ -55,9 +57,13 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initNet() {
+        if (App.APP_CLIENT_KEY == null) {
+            return;
+        }
+        //  ?act=member_vote&op=list
         PersonalNetwork
                 .getResponseApi()
-                .getMyVoteResponse(App.APP_CLIENT_KEY)
+                .getMyVoteResponse("member_vote","list",currentPage+"",App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyVoteResponse>() {
@@ -73,10 +79,17 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                mHelpPostAdapter.addAll(response.data);
+                                if(currentPage == 1){
+                                    mHelpPostAdapter.setDataList(response.data);
+                                }else{
+                                    mHelpPostAdapter.addAll(response.data);
+                                }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
-
+                            if(!response.hasmore){
+                                lRecyclerview.setNoMore(true);
+                            }else{
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -109,15 +122,25 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
         LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
-//        initLoadMoreListener();
-        lRecyclerview.setLoadMoreEnabled(false);
+        initLoadMoreListener();
+    }
+
+    private void initLoadMoreListener() {
+        lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                initNet();
+            }
+        });
+
     }
 
     private void initRefreshListener() {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                currentPage = 1;
+                initNet();
             }
         });
     }

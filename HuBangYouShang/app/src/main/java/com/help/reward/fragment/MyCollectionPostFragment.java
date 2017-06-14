@@ -24,13 +24,14 @@ import rx.schedulers.Schedulers;
 
 /**
  * item_my_collection_post
- *
+ * <p>
  * Created by wuxiaojun on 2017/2/11.
  */
 
 public class MyCollectionPostFragment extends BaseFragment {
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -64,10 +65,10 @@ public class MyCollectionPostFragment extends BaseFragment {
             @Override
             public void deleteItem(final int position) {
                 MyCollectionPostBean bean = (MyCollectionPostBean) mCollectionPostAdapter.getDataList().get(position);
-                if(bean != null){
+                if (bean != null) {
                     PersonalNetwork
                             .getResponseApi()
-                            .getDeleteMyCollectionPostResponse(App.APP_CLIENT_KEY,bean.fav_id,bean.log_msg)
+                            .getDeleteMyCollectionPostResponse(App.APP_CLIENT_KEY, bean.fav_id, bean.log_msg)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -79,7 +80,7 @@ public class MyCollectionPostFragment extends BaseFragment {
 
                                 @Override
                                 public void onNext(BaseResponse response) {
-                                    LogUtils.e("删除我的收藏中的帖子："+response.toString());
+                                    LogUtils.e("删除我的收藏中的帖子：" + response.toString());
                                     if (response.code == 200) { // 删除成功
                                         mCollectionPostAdapter.remove(position);
                                     } else {
@@ -97,7 +98,8 @@ public class MyCollectionPostFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() { // 如果集合中没有数据，则进行刷新，否则不刷新
-                LogUtils.e("执行下拉刷新的方法");
+                currentPage = 1;
+                initNetwork();
             }
         });
     }
@@ -106,15 +108,19 @@ public class MyCollectionPostFragment extends BaseFragment {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                initNetwork();
             }
         });
     }
 
     private void initNetwork() {
+        if (App.APP_CLIENT_KEY == null) {
+            return;
+        }
+        // ?act=member_favorites_post&op=favorites_list
         PersonalNetwork
                 .getResponseApi()
-                .getMyCollectionPostResponse(App.APP_CLIENT_KEY)
+                .getMyCollectionPostResponse("member_favorites_post", "favorites_list", currentPage + "", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyCollectionPostResponse>() {
@@ -130,12 +136,17 @@ public class MyCollectionPostFragment extends BaseFragment {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                mCollectionPostAdapter.addAll(response.data.favorites_list);
+                                if (currentPage == 1) {
+                                    mCollectionPostAdapter.setDataList(response.data.favorites_list);
+                                } else {
+                                    mCollectionPostAdapter.addAll(response.data.favorites_list);
+                                }
                             }
-                            if(!response.hasmore){
-                                lRecyclerview.setLoadMoreEnabled(false);
+                            if (!response.hasmore) {
+                                lRecyclerview.setNoMore(true);
+                            } else {
+                                currentPage += 1;
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

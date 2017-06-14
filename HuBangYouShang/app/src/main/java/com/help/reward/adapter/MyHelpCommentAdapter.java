@@ -34,7 +34,7 @@ public class MyHelpCommentAdapter extends BaseRecyclerAdapter {
         TextView tv_help = holder.getView(R.id.tv_help);
 
 
-        MyHelpCommentResponse bean = (MyHelpCommentResponse) mDataList.get(position);
+        MyHelpCommentResponse.MyHelpCommentBean bean = (MyHelpCommentResponse.MyHelpCommentBean) mDataList.get(position);
 
         tv_content.setText(bean.title);
         tv_title.setText(bean.board_name);
@@ -45,26 +45,5 @@ public class MyHelpCommentAdapter extends BaseRecyclerAdapter {
         tv_help.setText(bean.u_name);
 
     }
-
-
-    /*class HelpPostViewHolder extends SuperViewHolder{
-        *//*@BindView(R.id.tv_content)
-        TextView tv_content;
-        @BindView(R.id.tv_title)
-        TextView tv_title;
-        @BindView(R.id.tv_time)
-        TextView tv_time;
-        @BindView(R.id.tv_state)
-        TextView tv_state;
-        @BindView(R.id.tv_post)
-        TextView tv_post;
-        @BindView(R.id.tv_reward)
-        TextView tv_reward;*//*
-
-        public HelpPostViewHolder(View itemView) {
-            super(itemView);
-//            ButterKnife.bind(this,itemView);
-        }
-    }*/
 
 }

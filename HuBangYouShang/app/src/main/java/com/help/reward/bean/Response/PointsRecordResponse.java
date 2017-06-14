@@ -10,4 +10,7 @@ import java.util.List;
 
 public class PointsRecordResponse extends BaseResponse<List<PointRecordBean>>{
 
+    public boolean hasmore;
+    public int page_total;
+
 }

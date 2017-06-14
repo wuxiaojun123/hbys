@@ -30,6 +30,7 @@ import rx.schedulers.Schedulers;
 public class MyCollectionStoreFragment extends BaseFragment {
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -96,7 +97,8 @@ public class MyCollectionStoreFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() { // 如果集合中没有数据，则进行刷新，否则不刷新
-                LogUtils.e("执行下拉刷新的方法");
+                currentPage = 1;
+                initNetwork();
             }
         });
     }
@@ -105,15 +107,19 @@ public class MyCollectionStoreFragment extends BaseFragment {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                initNetwork();
             }
         });
     }
 
     private void initNetwork() {
+        if (App.APP_CLIENT_KEY == null) {
+            return;
+        }
+        //?act=member_favorites_store&op=favorites_list
         PersonalNetwork
                 .getResponseApi()
-                .getMyCollectionStoreResponse(App.APP_CLIENT_KEY)
+                .getMyCollectionStoreResponse("member_favorites_store","favorites_list",currentPage+"",App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyCollectionStoreResponse>() {
@@ -130,9 +136,17 @@ public class MyCollectionStoreFragment extends BaseFragment {
                         if (response.code == 200) {
                             LogUtils.e("获取数据成功。。。" + response.data.favorites_list.size());
                             if (response.data != null) {
-                                myCollectionStoreAdapter.addAll(response.data.favorites_list);
+                                if(currentPage == 1){
+                                    myCollectionStoreAdapter.setDataList(response.data.favorites_list);
+                                }else{
+                                    myCollectionStoreAdapter.addAll(response.data.favorites_list);
+                                }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
+                            if (!response.hasmore) {
+                                lRecyclerview.setNoMore(true);
+                            } else {
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

@@ -40,7 +40,9 @@ public interface IntegrationApi {
     Observable<AdInfoResponse> getAdInfoResponse(
             @Query("act") String act,
             @Query("op") String curpage,
-            @Field("id") String id
+            @Field("id") String id,
+            @Field("type") String type,
+            @Field("key") String key
     );
 
     // 会员看广告  mobile/index.php?act=advertisement&op=watch

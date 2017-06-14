@@ -38,4 +38,7 @@ import java.util.List;
 
 public class CouponsRecordResponse extends BaseResponse<List<CouponRecordBean>> {
 
+    public boolean hasmore;
+    public int page_total;
+
 }

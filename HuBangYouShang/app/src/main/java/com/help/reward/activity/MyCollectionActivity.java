@@ -53,7 +53,7 @@ public class MyCollectionActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_my_collection);
         ButterKnife.bind(this);
 
-        fragmentList = new ArrayList<>();
+        fragmentList = new ArrayList<>(3);
         fragmentList.add(new MyCollectionPostFragment());
         fragmentList.add(new MyCollectionGoodsFragment());
         fragmentList.add(new MyCollectionStoreFragment());

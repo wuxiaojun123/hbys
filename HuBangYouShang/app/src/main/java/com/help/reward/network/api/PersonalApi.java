@@ -246,10 +246,13 @@ public interface PersonalApi {
             @Field("address_id") String address_id
     );
 
-    // 我的求助--发帖
+    // 我的求助--发帖 ?act=member_index&op=my_seek_help
     @FormUrlEncoded
-    @POST("mobile/index.php?act=member_index&op=my_seek_help")
+    @POST("mobile/index.php")
     Observable<MyHelpPostResponse> getMyHelpPostResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
             @Field("type") String type,
             @Field("key") String key
     );
@@ -281,17 +284,23 @@ public interface PersonalApi {
             @Field("key") String key
     );
 
-    // 我的投票
+    // 我的投票 ?act=member_vote&op=list
     @FormUrlEncoded
-    @POST("mobile/index.php?act=member_vote&op=list")
+    @POST("mobile/index.php")
     Observable<MyVoteResponse> getMyVoteResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
             @Field("key") String key
     );
 
-    // 我的收藏--帖子
+    // 我的收藏--帖子 ?act=member_favorites_post&op=favorites_list
     @FormUrlEncoded
-    @POST("mobile/index.php?act=member_favorites_post&op=favorites_list")
+    @POST("mobile/index.php")
     Observable<MyCollectionPostResponse> getMyCollectionPostResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
             @Field("key") String key
     );
 
@@ -320,17 +329,23 @@ public interface PersonalApi {
             @Field("store_id") String post_id
     );
 
-    // 我的收藏--商品
+    // 我的收藏--商品  ?act=member_favorites&op=favorites_list
     @FormUrlEncoded
-    @POST("/mobile/index.php?act=member_favorites&op=favorites_list")
+    @POST("/mobile/index.php")
     Observable<MyCollectionGoodsResponse> getMyCollectionGoodsResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
             @Field("key") String key
     );
 
-    // 我的收藏--店铺
+    // 我的收藏--店铺  ?act=member_favorites_store&op=favorites_list
     @FormUrlEncoded
-    @POST("mobile/index.php?act=member_favorites_store&op=favorites_list")
+    @POST("mobile/index.php")
     Observable<MyCollectionStoreResponse> getMyCollectionStoreResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
             @Field("key") String key
     );
 

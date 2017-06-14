@@ -13,8 +13,9 @@ import com.help.reward.bean.AdInfoBean;
 
 public class WatchAdGetScroeResponse extends BaseResponse<WatchAdGetScroeResponse.WatchAdGeScroeData> {
 
-    public class WatchAdGeScroeData{
-        public String get;
+    public class WatchAdGeScroeData {
+        public String get; // 获取到的分数
+        public String rest; // 剩余分数
     }
 
 }

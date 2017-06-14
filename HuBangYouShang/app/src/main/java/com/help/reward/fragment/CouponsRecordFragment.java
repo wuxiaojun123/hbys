@@ -29,6 +29,7 @@ import rx.schedulers.Schedulers;
 public class CouponsRecordFragment extends BaseFragment {
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -46,9 +47,13 @@ public class CouponsRecordFragment extends BaseFragment {
     }
 
     private void initNetwork() {
+        if (App.APP_CLIENT_KEY == null) {
+            return;
+        }
+        // mobile/index.php?act=member_voucher&op=receiveVoucherLog
         CouponPointsNetwork
                 .getHelpNoCookieApi()
-                .receiveCouponsLog( App.APP_CLIENT_KEY)
+                .receiveCouponsLog("member_voucher","receiveVoucherLog",currentPage+"",App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CouponsRecordResponse>() {
@@ -64,14 +69,17 @@ public class CouponsRecordFragment extends BaseFragment {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                //CouponsRecordResponse.TplInfo tpl_info = response.data.tpl_info;
-                                //if (tpl_info != null) {
-                                //    String content = "满"+tpl_info.voucher_t_limit +"减"+ tpl_info.voucher_t_price;
-                                //    mCouponRecordAdapter.setCouponsContent(content);
-                                //}
-                                mCouponRecordAdapter.setDataList(response.data);
+                                if (currentPage == 1) {
+                                    mCouponRecordAdapter.setDataList(response.data);
+                                } else {
+                                    mCouponRecordAdapter.addAll(response.data);
+                                }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
+                            if (!response.hasmore) {
+                                lRecyclerview.setNoMore(true);
+                            } else {
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -85,15 +93,14 @@ public class CouponsRecordFragment extends BaseFragment {
         LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mCouponRecordAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
-        lRecyclerview.setLoadMoreEnabled(false);
-//        initLoadMoreListener();
+        initLoadMoreListener();
     }
 
     private void initLoadMoreListener() {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                initNetwork();
             }
         });
     }
@@ -102,7 +109,8 @@ public class CouponsRecordFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                currentPage = 1;
+                initNetwork();
             }
         });
     }

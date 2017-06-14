@@ -22,7 +22,7 @@ import java.util.List;
  * "com_explain_time": null,
  * "respondent_explain": "大家好，我是MC子龙。",
  * "respondent_time": "1484796441",
- *
+ * <p>
  * "update_time": "1487088000",
  * "status": "和解",
  * "result": "",
@@ -31,32 +31,36 @@ import java.util.List;
  * Created by wuxiaojun on 17-3-3.
  */
 
-public class MyVoteResponse extends BaseResponse<List<MyVoteResponse>> {
+public class MyVoteResponse extends BaseResponse<List<MyVoteResponse.MyVoteBean>> {
 
-    public String id;
-    public String complainant_id;
-    public String complainant_name;
-    public String complainant_vote;
-    public String respondent_id;
-    public String respondent_name;
-    public String respondent_vote;
-    public String post_id;
-    public String post_type;
-    public String post_title;
-    public String post_board;
-    public String create_time;
-    public String content;
-    public String appeal;
-    public String appeal_time;
-    public String complainant_explain;
-    public String com_explain_time;
-    public String respondent_explain;
-    public String respondent_time;
-    public String update_time;
-    public String status;
-    public String result;
-    public String vote_for_cpn;
-    public String vote_for_rpd;
+    public boolean hasmore;
+    public int page_total;
 
+    public class MyVoteBean {
+        public String id;
+        public String complainant_id;
+        public String complainant_name;
+        public String complainant_vote;
+        public String respondent_id;
+        public String respondent_name;
+        public String respondent_vote;
+        public String post_id;
+        public String post_type;
+        public String post_title;
+        public String post_board;
+        public String create_time;
+        public String content;
+        public String appeal;
+        public String appeal_time;
+        public String complainant_explain;
+        public String com_explain_time;
+        public String respondent_explain;
+        public String respondent_time;
+        public String update_time;
+        public String status;
+        public String result;
+        public String vote_for_cpn;
+        public String vote_for_rpd;
+    }
 
 }

@@ -40,11 +40,6 @@ public class MyHelpCommentFragment extends BaseFragment {
     LRecyclerView lRecyclerview;
 
 
-    /*@Override
-    protected int getLayoutId() {
-        return R.layout.fragment_my_help_comment;
-    }*/
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,20 +70,27 @@ public class MyHelpCommentFragment extends BaseFragment {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-//                        lRecyclerview.refreshComplete(numSize);
+                        lRecyclerview.refreshComplete(numSize);
                         ToastUtils.show(mContext, R.string.string_error);
                     }
 
                     @Override
                     public void onNext(MyHelpCommentResponse response) {
-//                        lRecyclerview.refreshComplete(numSize);
+                        lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
-                            LogUtils.e("获取数据成功。。。。"+response.data.size());
+                            LogUtils.e("获取数据成功。。。。"+response.data.size()+"----"+response.hasmore+"---"+response.page_total);
                             if (response.data != null) {
-                                myHelpCommentAdapter.addAll(response.data);
+                                if(currentPage == 1){
+                                    myHelpCommentAdapter.setDataList(response.data);
+                                }else{
+                                    myHelpCommentAdapter.addAll(response.data);
+                                }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
-                            lRecyclerview.setLoadMoreEnabled(false);
+                            if(!response.hasmore){
+                                lRecyclerview.setNoMore(true);
+                            }else{
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -109,7 +111,7 @@ public class MyHelpCommentFragment extends BaseFragment {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                initNetwork();
             }
         });
     }
@@ -118,7 +120,8 @@ public class MyHelpCommentFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                currentPage = 1;
+                initNetwork();
             }
         });
     }

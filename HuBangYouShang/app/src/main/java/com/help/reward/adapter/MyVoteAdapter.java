@@ -33,11 +33,11 @@ public class MyVoteAdapter extends BaseRecyclerAdapter {
         TextView tv_help = holder.getView(R.id.tv_help);
         TextView tv_state = holder.getView(R.id.tv_state);
 
-        MyVoteResponse bean = (MyVoteResponse) mDataList.get(position);
+        MyVoteResponse.MyVoteBean bean = (MyVoteResponse.MyVoteBean) mDataList.get(position);
 
         tv_content.setText(bean.content);
         tv_title.setText(bean.post_board);
-        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time)*1000));
+        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time) * 1000));
 //        tv_state.setText(bean.status);
         tv_help.setText(bean.post_title);
         tv_state.setText(bean.status);

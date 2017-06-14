@@ -29,6 +29,7 @@ import rx.schedulers.Schedulers;
 public class PointsRecordFragment extends BaseFragment {
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -46,9 +47,13 @@ public class PointsRecordFragment extends BaseFragment {
     }
 
     private void initNetwork() {
+        if (App.APP_CLIENT_KEY == null) {
+            return;
+        }
+        // ?act=member_points&op=receivePointsLog
         CouponPointsNetwork
                 .getHelpNoCookieApi()
-                .receivePointsLog(App.APP_CLIENT_KEY)
+                .receivePointsLog("member_points","receivePointsLog",currentPage+"",App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<PointsRecordResponse>() {
@@ -64,9 +69,17 @@ public class PointsRecordFragment extends BaseFragment {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                mHelpPostAdapter.setDataList(response.data);
+                                if(currentPage == 1){
+                                    mHelpPostAdapter.setDataList(response.data);
+                                }else{
+                                    mHelpPostAdapter.addAll(response.data);
+                                }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
+                            if(!response.hasmore){
+                                lRecyclerview.setNoMore(true);
+                            }else{
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -80,15 +93,14 @@ public class PointsRecordFragment extends BaseFragment {
         LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
-        lRecyclerview.setLoadMoreEnabled(false);
-//        initLoadMoreListener();
+        initLoadMoreListener();
     }
 
     private void initLoadMoreListener() {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                initNetwork();
             }
         });
     }
@@ -97,7 +109,8 @@ public class PointsRecordFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                currentPage = 1;
+                initNetwork();
             }
         });
     }

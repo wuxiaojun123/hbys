@@ -93,7 +93,11 @@ public class IntegrationWatchPraiseFragment extends BaseFragment {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                mIntegrationWatchPraiseAdapter.addAll(response.data.adv_list);
+                                if (currentPage == 1) {
+                                    mIntegrationWatchPraiseAdapter.setDataList(response.data.adv_list);
+                                } else {
+                                    mIntegrationWatchPraiseAdapter.addAll(response.data.adv_list);
+                                }
                             }
                             if (!response.hasmore) { // 是否有更多数据
                                 lRecyclerview.setLoadMoreEnabled(false);
