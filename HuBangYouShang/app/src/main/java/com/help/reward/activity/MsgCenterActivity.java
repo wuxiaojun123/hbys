@@ -15,6 +15,8 @@ import com.help.reward.bean.Response.MessageReadResponse;
 import com.help.reward.network.MessageNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.network.exception.ApiHttpResonseException;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateMessageDataRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.ToastUtils;
 
@@ -157,6 +159,7 @@ public class MsgCenterActivity extends BaseActivity {
                             } else {
                                 ivMsgcenterAccount.setVisibility(View.GONE);
                             }
+                            RxBus.getDefault().post(new UpdateMessageDataRxbusType(response.data.totalNew > 0));
 
                         } else {
                             ToastUtils.show(mContext, response.msg);

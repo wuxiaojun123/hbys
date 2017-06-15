@@ -13,6 +13,8 @@ import com.help.reward.R;
 import com.help.reward.bean.Response.StringResponse;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
 import com.help.reward.utils.ScreenUtils;
 import com.help.reward.utils.StringUtils;
 import com.idotools.utils.ToastUtils;
@@ -87,6 +89,7 @@ public class HelpRewardInfoGivePointsDialog {
                         if (response.code == 200) {
                             dialog.dismiss();
                             ToastUtils.show(mContext,"打赏成功");
+                            RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

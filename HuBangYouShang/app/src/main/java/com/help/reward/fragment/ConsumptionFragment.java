@@ -15,6 +15,8 @@ import com.help.reward.activity.MyCouponActivity;
 import com.help.reward.activity.MyOrderActivity;
 import com.help.reward.activity.SearchShopActivity;
 import com.help.reward.activity.ShopcartActivity;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateMessageDataRxbusType;
 import com.help.reward.view.SearchEditTextView;
 import com.idotools.utils.InputWindowUtils;
 import com.idotools.utils.LogUtils;
@@ -44,6 +46,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import static com.help.reward.R.id.layout_help_title_sms;
@@ -113,7 +116,8 @@ public class ConsumptionFragment extends BaseFragment {
 //    SearchEditTextView et_search;
     @BindView(R.id.iv_email)
     ImageView iv_email; // 消息中心
-
+    @BindView(R.id.tv_title_help_msgcount)
+    TextView tvTitleHelpMsgcount; // 消息红点
     StoreRecommandAdapter mStoreRecommandAdapter;
     ShopHotAdapter mShopHotAdapter;
 
@@ -126,6 +130,7 @@ public class ConsumptionFragment extends BaseFragment {
     protected void init() {
         initView();
         initNetwork();
+        updateData();
     }
 
     private void initView() {
@@ -303,6 +308,22 @@ public class ConsumptionFragment extends BaseFragment {
         Intent mIntent = new Intent(mContext, SearchShopActivity.class);
         mContext.startActivity(mIntent);
         ActivitySlideAnim.slideInAnim(getActivity());
+    }
+
+    /***
+     * 更新消息红点
+     */
+    private void updateData() {
+        RxBus.getDefault().toObservable(UpdateMessageDataRxbusType.class).subscribe(new Action1<UpdateMessageDataRxbusType>() {
+            @Override
+            public void call(UpdateMessageDataRxbusType type) {
+                if (type.hasNew) { // 更新数据
+                    tvTitleHelpMsgcount.setVisibility(View.VISIBLE);
+                }else{
+                    tvTitleHelpMsgcount.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
 }

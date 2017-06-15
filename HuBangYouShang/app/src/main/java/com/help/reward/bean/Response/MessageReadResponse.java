@@ -17,5 +17,6 @@ public class MessageReadResponse extends BaseResponse<MessageReadResponse> {
     public int account;
     public int trade;
     public int complain;
+    public int totalNew;
 
 }

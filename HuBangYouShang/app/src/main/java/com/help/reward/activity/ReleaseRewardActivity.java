@@ -20,6 +20,7 @@ import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.HelpCommitRxbusType;
+import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
 import com.help.reward.utils.ChooseCameraPopuUtils;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.utils.PickerUtils;
@@ -269,6 +270,7 @@ public class ReleaseRewardActivity extends BaseActivity {
                             intent.putExtra("from", "ReleaseRewardActivity");
                             startActivity(intent);
                             finish();
+                            RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
                             RxBus.getDefault().post(new HelpCommitRxbusType());
                         } else {
                             ToastUtils.show(mContext, response.msg);
