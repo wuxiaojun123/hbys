@@ -14,6 +14,8 @@ import com.help.reward.bean.Response.BalanceExchangeVolumeResponse;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.ToastUtils;
 
@@ -143,6 +145,8 @@ public class BalanceExchangeVolumeActivity extends BaseActivity implements View.
                     public void onNext(BaseResponse<String> response) {
                         if (response.code == 200) {
                             if (response.data != null) {
+                                RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
+
                                 ToastUtils.show(mContext, response.data.toString());
                                 // 回到原来页面，并且更改帮赏分和余额的数目
                                 back();

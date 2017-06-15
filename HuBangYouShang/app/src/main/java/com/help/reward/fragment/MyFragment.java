@@ -15,8 +15,13 @@ import com.help.reward.activity.MyBalanceActivity;
 import com.help.reward.activity.MyCouponActivity;
 import com.help.reward.activity.MyGeneralVolumeActivity;
 import com.help.reward.activity.ShopcartActivity;
+import com.help.reward.bean.Response.LoginResponse;
+import com.help.reward.network.PersonalNetwork;
+import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.utils.StatusBarUtil;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.MetricsUtils;
 import com.help.reward.R;
 import com.help.reward.activity.LoginActivity;
@@ -36,7 +41,12 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.observers.Subscribers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by wuxiaojun on 2017/1/8.
@@ -82,6 +92,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.ll_total)
     LinearLayout ll_total;
 
+    private Subscription loginSubscribe;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_my;
@@ -90,11 +102,52 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void init() {
+        updateData();
+    }
+
+    /***
+     * 更新数据接口
+     * // /mobile/index.php?act=member_index&op=index
+     */
+    private void updateData() {
+        RxBus.getDefault().toObservable(UpdateLoginDataRxbusType.class).subscribe(new Action1<UpdateLoginDataRxbusType>() {
+            @Override
+            public void call(UpdateLoginDataRxbusType type) {
+                LogUtils.e("更新个人中心数据11111111");
+                if (type.isUpdate) { // 更新数据
+                    LogUtils.e("更新个人中心数据2222222222");
+                    getPersonData();
+                }
+            }
+        });
+    }
+
+
+    public void getPersonData() {
+        if (App.APP_CLIENT_KEY == null) {
+            return;
+        }
+        LogUtils.e("更新个人中心数据333333333333");
+        PersonalNetwork.getResponseApi()
+                .getLoggedInResponse(App.APP_CLIENT_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<LoginResponse>() {
+                    @Override
+                    public void onNext(LoginResponse loginResponse) {
+                        // 更新数据
+                        LogUtils.e("获取个人中心数据，已登录,,," + loginResponse.code + "-" + loginResponse.msg);
+                        if (loginResponse.code == 200) {
+                            App.mLoginReponse = loginResponse.data;
+                            setUserData();
+                        }
+                    }
+                });
     }
 
     @OnClick({R.id.rl_user_info, R.id.iv_setting, R.id.tv_msg, R.id.tv_login, R.id.tv_register,
             R.id.tv_payment, R.id.tv_take_delivery, R.id.tv_evaluate, R.id.tv_return_goods,
-            R.id.ll_available_predeposit,R.id.ll_voucher,R.id.ll_general_voucher,R.id.ll_discount_level,
+            R.id.ll_available_predeposit, R.id.ll_voucher, R.id.ll_general_voucher, R.id.ll_discount_level,
             R.id.tv_account, R.id.tv_my_help, R.id.tv_my_reward, R.id.tv_my_vote, R.id.tv_my_collection,
             R.id.tv_share, R.id.tv_order})
     @Override
@@ -252,10 +305,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+
     /***
+     * 获取到是否登录的信息
      */
     private void login() {
-        RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
+        loginSubscribe = RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
             @Override
             public void call(String s) {
                 if ("loginSuccess".equals(s)) {
@@ -299,21 +354,25 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             ll_not_logged_in.requestLayout();
             ll_logined.setVisibility(View.VISIBLE);
             // 设置会员信息
-            if (App.mLoginReponse != null) {
-                GlideUtils.loadCircleImage(App.mLoginReponse.avator, iv_photo);
-                tv_register.setVisibility(View.GONE);
-                tv_login.setText(App.mLoginReponse.username);
-                tv_user_level.setText("用户等级：" + App.mLoginReponse.level_name);
-                tv_help_num.setText(App.mLoginReponse.people_help);
-                tv_account_help_reward.setText(App.mLoginReponse.point);
-                tv_number_of_complaints.setText(App.mLoginReponse.complaint);
-                tv_number_of_complaints2.setText(App.mLoginReponse.complained);
+            setUserData();
+        }
+    }
 
-                tv_available_predeposit.setText(App.mLoginReponse.available_predeposit);
-                tv_voucher.setText(App.mLoginReponse.voucher);
-                tv_general_voucher.setText(App.mLoginReponse.general_voucher);
-                tv_discount_level.setText(App.mLoginReponse.discount_level);
-            }
+    private void setUserData() {
+        if (App.mLoginReponse != null) {
+            GlideUtils.loadCircleImage(App.mLoginReponse.avator, iv_photo);
+            tv_register.setVisibility(View.GONE);
+            tv_login.setText(App.mLoginReponse.username);
+            tv_user_level.setText("用户等级：" + App.mLoginReponse.level_name);
+            tv_help_num.setText(App.mLoginReponse.people_help);
+            tv_account_help_reward.setText(App.mLoginReponse.point);
+            tv_number_of_complaints.setText(App.mLoginReponse.complaint);
+            tv_number_of_complaints2.setText(App.mLoginReponse.complained);
+
+            tv_available_predeposit.setText(App.mLoginReponse.available_predeposit);
+            tv_voucher.setText(App.mLoginReponse.voucher);
+            tv_general_voucher.setText(App.mLoginReponse.general_voucher);
+            tv_discount_level.setText(App.mLoginReponse.discount_level);
         }
     }
 

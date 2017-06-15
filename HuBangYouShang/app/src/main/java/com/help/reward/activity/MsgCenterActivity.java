@@ -108,6 +108,9 @@ public class MsgCenterActivity extends BaseActivity {
      */
 
     private void requestData() {
+        if(App.APP_CLIENT_KEY == null){
+            return;
+        }
         subscribe = MessageNetwork
                 .getMessageApi()
                 .getMessageReadBean(App.APP_CLIENT_KEY, "new_msg_num")

@@ -16,6 +16,7 @@ import com.help.reward.bean.Response.GeneralExchangeVolumeResponse;
 import com.help.reward.bean.Response.GeneralVolumeResponse;
 import com.help.reward.bean.Response.HelpCenterResponse;
 import com.help.reward.bean.Response.HelpRewardResponse;
+import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.bean.Response.MemberInfoResponse;
 import com.help.reward.bean.Response.MyBalanceResponse;
 import com.help.reward.bean.Response.MyCollectionGoodsResponse;
@@ -56,7 +57,13 @@ import rx.Observable;
 
 public interface PersonalApi {
 
-    // mobile/index.php?act=logout 退出登录 post传client
+
+    // 个人中心--已登录
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_index&op=index")
+    Observable<LoginResponse> getLoggedInResponse(
+            @Field("key") String key
+    );
 
     // 退出登录
     @FormUrlEncoded
@@ -245,6 +252,7 @@ public interface PersonalApi {
             @Field("key") String key,
             @Field("address_id") String address_id
     );
+
 
     // 我的求助--发帖 ?act=member_index&op=my_seek_help
     @FormUrlEncoded

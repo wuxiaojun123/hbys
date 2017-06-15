@@ -20,5 +20,6 @@ public class LoginResponse extends BaseResponse<LoginResponse> {
     public String general_voucher;
     public String voucher;
     public String easemobId; // 环信登陆账号名称
+    public boolean new_message; // 是否有新的消息，true有
 
 }
