@@ -19,6 +19,7 @@ import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
+import com.help.reward.rxbus.event.type.UpdateMessageDataRxbusType;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.utils.StatusBarUtil;
 import com.idotools.utils.LogUtils;
@@ -87,7 +88,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.tv_general_voucher)
     TextView tv_general_voucher; // 通用卷
     @BindView(R.id.tv_discount_level)
-    TextView tv_discount_level; // 优惠百分比
+    TextView tv_discount_level; // 优惠百分比in
+    @BindView(R.id.tv_title_help_msgcount)
+    TextView tv_title_help_msgcount; // 消息红点
+
 
     @BindView(R.id.ll_total)
     LinearLayout ll_total;
@@ -373,6 +377,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             tv_voucher.setText(App.mLoginReponse.voucher);
             tv_general_voucher.setText(App.mLoginReponse.general_voucher);
             tv_discount_level.setText(App.mLoginReponse.discount_level);
+
+            if(App.mLoginReponse.new_message){
+                tv_title_help_msgcount.setVisibility(View.VISIBLE);
+            }else{
+                tv_title_help_msgcount.setVisibility(View.INVISIBLE);
+            }
+            RxBus.getDefault().post(new UpdateMessageDataRxbusType(App.mLoginReponse.new_message));
         }
     }
 

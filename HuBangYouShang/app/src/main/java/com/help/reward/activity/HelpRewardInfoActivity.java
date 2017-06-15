@@ -27,6 +27,8 @@ import com.help.reward.bean.Response.HelpRewardInfoResponse;
 import com.help.reward.bean.Response.StringResponse;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.DialogUtil;
 import com.help.reward.utils.DisplayUtil;
@@ -413,6 +415,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
                             ToastUtils.show(mContext, "打赏成功");
                             curpage = 1;
                             requestData();
+                            RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

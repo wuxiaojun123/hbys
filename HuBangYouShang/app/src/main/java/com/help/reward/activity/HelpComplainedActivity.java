@@ -13,6 +13,8 @@ import com.help.reward.R;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
 import com.help.reward.utils.ChooseCameraPopuUtils;
 import com.help.reward.utils.DialogUtil;
 import com.help.reward.utils.GlideUtils;
@@ -229,6 +231,7 @@ public class HelpComplainedActivity extends BaseActivity {
                                 @Override
                                 public void onClick(boolean isLeft) {
                                     finish();
+                                    RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
                                 }
                             });
 

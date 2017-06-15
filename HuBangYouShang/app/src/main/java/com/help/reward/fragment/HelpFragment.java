@@ -22,6 +22,8 @@ import com.help.reward.activity.HelpFilterActivity;
 import com.help.reward.activity.MsgCenterActivity;
 import com.help.reward.activity.ReleaseActivity;
 import com.help.reward.activity.SearchHelpActivity;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateMessageDataRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.SearchEditTextView;
 import com.idotools.utils.InputWindowUtils;
@@ -30,6 +32,7 @@ import com.idotools.utils.ToastUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 /**
  * 首页-互帮
@@ -92,6 +95,7 @@ public class HelpFragment extends BaseFragment {
                 search();
             }
         });
+        updateData();
         return contentView;
     }
 
@@ -202,5 +206,21 @@ public class HelpFragment extends BaseFragment {
                 }
             }
         }
+    }
+
+    /***
+     * 更新消息红点
+     */
+    private void updateData() {
+        RxBus.getDefault().toObservable(UpdateMessageDataRxbusType.class).subscribe(new Action1<UpdateMessageDataRxbusType>() {
+            @Override
+            public void call(UpdateMessageDataRxbusType type) {
+                if (type.hasNew) { // 更新数据
+                    tvTitleHelpMsgcount.setVisibility(View.VISIBLE);
+                }else{
+                    tvTitleHelpMsgcount.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 }

@@ -56,16 +56,37 @@
         android:textColorHint="@color/color_while"
         android:maxLines="1"
         />-->
-
-    <ImageView
-        android:id="@+id/iv_email"
-        android:layout_width="20dp"
+    <LinearLayout
+        android:id="@+id/layout_help_title_sms"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="13dp"
-        android:layout_marginTop="8dp"
-        android:src="@mipmap/img_email"
-        android:visibility="visible" />
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <ImageView
+            android:id="@+id/iv_email"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/img_email" />
+
+        <TextView
+            android:id="@+id/tv_title_help_msgcount"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="-8dp"
+            android:background="@drawable/bg_reddot"
+            android:gravity="center"
+            android:padding="2dp"
+            android:textColor="@color/color_while"
+            android:textSize="10sp"
+            android:visibility="invisible" />
+    </LinearLayout>
 
     <!--<TextView
         android:id="@+id/tv_text"
