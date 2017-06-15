@@ -93,6 +93,9 @@ public class CouponDetailsBuyersActivity extends BaseActivity implements View.On
     }
 
     private void initData() {
+        if(TextUtils.isEmpty(App.APP_CLIENT_KEY)){
+            return;
+        }
         if (TextUtils.isEmpty(voucher_id)) {
             return;
         }
@@ -102,11 +105,11 @@ public class CouponDetailsBuyersActivity extends BaseActivity implements View.On
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CouponDetailsResponse>() {
-                    @Override
+                    /*@Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         ToastUtils.show(mContext, R.string.string_error);
-                    }
+                    }*/
 
                     @Override
                     public void onNext(CouponDetailsResponse response) {
@@ -127,6 +130,8 @@ public class CouponDetailsBuyersActivity extends BaseActivity implements View.On
             voucher_id = response.voucher_info.voucher_id;
             if (IDENTITY_BUYER.equals(response.identity)) { // 买家的优惠劵详情
                 btn_transaction.setTag(IDENTITY_BUYER);
+                et_transaction_price.setText(response.voucher_info.voucher_owner_setting);
+                et_transaction_price.setEnabled(false);
 
             } else if (IDENTITY_OWNER.equals(response.identity)) { // 卖家的优惠劵信息
                 LogUtils.e("当前的voucher_state=" + response.voucher_info.voucher_state);
@@ -157,8 +162,8 @@ public class CouponDetailsBuyersActivity extends BaseActivity implements View.On
             tv_complaint.setText(response.store_info.store_complaint);
             tv_constact.setText(response.store_info.store_phone);
             tv_quota.setText("满" + response.voucher_info.voucher_price + "减去" + response.voucher_info.voucher_limit);
-            String time = DateUtil.getDateToString(Long.parseLong(response.voucher_info.voucher_start_date)) + "-" +
-                    DateUtil.getDateToString(Long.parseLong(response.voucher_info.voucher_end_date));
+            String time = DateUtil.getDateToString(response.voucher_info.voucher_start_date) + "-" +
+                    DateUtil.getDateToString(response.voucher_info.voucher_end_date);
             tv_effective_time.setText(time);
 
         } catch (Exception e) {

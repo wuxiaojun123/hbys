@@ -31,7 +31,6 @@ public class App extends Application {
     public static String APP_CLIENT_COOKIE = null; // cookie
     public static LoginResponse mLoginReponse; // 会员信息
 
-
     @Override
     public void onCreate() {
         MultiDex.install(this);

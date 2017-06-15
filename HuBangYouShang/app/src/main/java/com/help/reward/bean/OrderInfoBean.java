@@ -25,23 +25,25 @@ public class OrderInfoBean {
 
     public Extend_order_common extend_order_common; //
     public List<MyOrderShopBean> goods_list; // 商品列表
-//    public Extend_store extend_store; // 商家信息
+    public Extend_store extend_store; // 商家信息
 
-    public class Extend_order_common{
+    public class Extend_order_common {
         public String reciver_name; // 收货人姓名
         public reciver_info reciver_info; // 收货人信息
         public String voucher_price; // 优惠劵满减
+        public String dlyo_pickup_code; // 消费验证码
 
     }
 
-    public class reciver_info{
+    public class reciver_info {
         public String mob_phone;
         public String tel_phone;
         public String address;
     }
 
-//    public class Extend_store{
-//        public String live_store_tel; // 商家电话
-//    }
+    public class Extend_store{
+        public String live_store_tel; // 商家电话
+        public String live_store_address; // 商家地址
+    }
 
 }

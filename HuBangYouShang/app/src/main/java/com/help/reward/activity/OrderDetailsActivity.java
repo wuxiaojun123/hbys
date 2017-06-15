@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.help.reward.App;
@@ -84,6 +85,9 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.tv_remove_order)
     TextView tv_remove_order;
 
+    @BindView(R.id.rl_receiver_info)
+    RelativeLayout rl_receiver_info; // 收货人信息
+
     private String sellerPhoneNumber;  // 商家电话
     private LayoutInflater mInflater;
     private String order_id;
@@ -139,7 +143,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
-    @OnClick({R.id.iv_title_back, R.id.tv_complaint, R.id.tv_contact_seller,R.id.tv_evaluate_order})
+    @OnClick({R.id.iv_title_back, R.id.tv_complaint, R.id.tv_contact_seller, R.id.tv_evaluate_order})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -150,9 +154,9 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.tv_complaint: // 投诉
-                Intent mIntent = new Intent(OrderDetailsActivity.this,OrderComplaintsMerchantActivity.class);
-                mIntent.putExtra("seller_name",tv_seller_name.getText().toString());
-                mIntent.putExtra("order_id",order_id);
+                Intent mIntent = new Intent(OrderDetailsActivity.this, OrderComplaintsMerchantActivity.class);
+                mIntent.putExtra("seller_name", tv_seller_name.getText().toString());
+                mIntent.putExtra("order_id", order_id);
                 startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim(OrderDetailsActivity.this);
 
@@ -170,7 +174,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
     private void showDialogContactSeller() { // 联系买家--拨打电话
         if (TextUtils.isEmpty(sellerPhoneNumber)) {
-            ToastUtils.show(mContext,"无卖家电话号码");
+            ToastUtils.show(mContext, "无卖家电话号码");
             return;
         }
         new AlertDialog(OrderDetailsActivity.this)
@@ -189,10 +193,16 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         tv_order_state.setText(bean.state_desc);
         tv_order_start_time.setText(bean.add_time);
 
-        tv_express.setText("快递单号:" + bean.shipping_code);
-        tv_receiver_person.setText(bean.extend_order_common.reciver_name);
-        tv_receiver_phone.setText(bean.extend_order_common.reciver_info.mob_phone);
-        tv_receiver_address.setText(bean.extend_order_common.reciver_info.address);
+        if (bean.extend_order_common.dlyo_pickup_code == null) {
+            tv_express.setText("快递单号:" + bean.shipping_code);
+            tv_receiver_person.setText(bean.extend_order_common.reciver_name);
+            tv_receiver_phone.setText(bean.extend_order_common.reciver_info.mob_phone);
+            tv_receiver_address.setText(bean.extend_order_common.reciver_info.address);
+        } else { // 需要显示消费验证码
+            tv_express.setText("验证码:" + bean.extend_order_common.dlyo_pickup_code);
+            tv_receiver_address.setText("商家地址:" + bean.extend_store.live_store_address);
+            rl_receiver_info.setVisibility(View.GONE);
+        }
         tv_seller_name.setText(bean.store_name);
         tv_pay_way.setText(bean.payment_name);
         tv_shop_total_price.setText("￥" + bean.goods_amount);

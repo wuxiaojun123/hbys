@@ -28,9 +28,13 @@ public class DateUtil {
      * @param time
      * @return
      */
-    public static String getDateToString(long time) {
+    /*public static String getDateToString(long time) {
         Date d = new Date(time);
         return SDF_NO_SECONDS.format(d);
+    }*/
+    public static String getDateToString1(String time){
+        long lcc_time = Long.valueOf(time);
+        return datetimeFormat.format(new Date(lcc_time * 1000L));
     }
 
     /**
