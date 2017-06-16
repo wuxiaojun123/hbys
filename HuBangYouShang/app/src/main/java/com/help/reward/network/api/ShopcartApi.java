@@ -4,6 +4,8 @@ import com.help.reward.bean.Response.AddSellerGroupResponse;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.CommitOrderResponse;
 import com.help.reward.bean.Response.ConfirmOrderResponse;
+import com.help.reward.bean.Response.PayTypeResponse;
+import com.help.reward.bean.Response.PayTypeWchatResponse;
 import com.help.reward.bean.Response.ShopCartResponse;
 import com.help.reward.utils.Constant;
 
@@ -93,5 +95,22 @@ public interface ShopcartApi {
             @Field("offpay_hash_batch") String offpay_hash_batch,
             @Field("pay_name") String pay_name
             );
+
+    // 选择支付方式
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_payment&op=pay")
+    Observable<PayTypeResponse> getPayTypeResponse(
+        @Field("pay_sn") String pay_sn,
+        @Field("key") String key
+    );
+
+
+    // 微信支付
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_payment&op=wx_app_pay3")
+    Observable<PayTypeWchatResponse> getPayTypeWchatResponse(
+            @Field("pay_sn") String pay_sn,
+            @Field("key") String key
+    );
 
 }

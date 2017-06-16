@@ -38,16 +38,16 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!--sms end-->
     <!--umeng统计-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--微信登录-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
     <!--58d5e426677baa2007001842-->
@@ -237,14 +237,12 @@
         <activity
             android:name="com.help.reward.activity.CouponTradingActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         <!--优惠劵搜索结果展示-->
         <activity
             android:name="com.help.reward.activity.CouponTradingSearchResultActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         <!--我的订单-->
         <activity
             android:name="com.help.reward.activity.MyOrderActivity"
@@ -257,8 +255,7 @@
         <activity
             android:name="com.help.reward.activity.OrderPulishedEvaluateActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         <!--投诉商家-->
         <activity
             android:name="com.help.reward.activity.OrderComplaintsMerchantActivity"
@@ -320,7 +317,7 @@
         <activity
             android:name=".activity.SearchShopResultActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
 
 
         <!--看广告-->
@@ -332,7 +329,8 @@
             android:name="com.help.reward.activity.SearchAdvertisementActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.GroupCouponsRecordActivity"
+        <activity
+            android:name=".activity.GroupCouponsRecordActivity"
             android:screenOrientation="portrait" />
 
         <!-- 群组聊天-->
@@ -437,10 +435,8 @@
         <activity
             android:name="com.help.reward.activity.GoodPropertyActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
             android:theme="@style/AppThemeDialogIsTranslucent"
-            >
-            </activity>
+            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
         <!-- 开机自启动服务 -->
         <receiver android:name="com.help.reward.chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">
@@ -458,6 +454,10 @@
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
 
         <!-- 国内 key -->
         <meta-data

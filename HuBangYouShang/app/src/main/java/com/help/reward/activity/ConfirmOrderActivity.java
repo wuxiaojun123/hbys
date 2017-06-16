@@ -21,6 +21,7 @@ import com.help.reward.bean.Response.ConfirmOrderResponse;
 import com.help.reward.bean.Response.ShopCartResponse;
 import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.ToastUtils;
 
@@ -37,9 +38,9 @@ import rx.schedulers.Schedulers;
  * Created by ADBrian on 04/04/2017.
  */
 
-public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener{
+public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener {
 
-    protected final static  int REQ_CODE = 1;
+    protected final static int REQ_CODE = 1;
 
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
@@ -90,17 +91,17 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             public void onItemClick(View view, int position) {
                 if (position == 0) {
                     Intent intent = new Intent(ConfirmOrderActivity.this, AddressManagerActivity.class);
-                    intent.putExtra("from","confirm_order");
-                    startActivityForResult(intent,REQ_CODE);
+                    intent.putExtra("from", "confirm_order");
+                    startActivityForResult(intent, REQ_CODE);
                 }
             }
         });
     }
 
-    @OnClick({R.id.iv_title_back,R.id.tv_commit_order})
+    @OnClick({R.id.iv_title_back, R.id.tv_commit_order})
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_title_back:
                 finish();
                 break;
@@ -113,8 +114,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private void commitOrderRequest() {
 
         MyProcessDialog.showDialog(mContext);
-        ShopcartNetwork.getShopcartCookieApi().commitComfirmOrderList(App.APP_CLIENT_KEY,cart_id,if_cart,confirmOrderBean.address_info.address_id
-                ,confirmOrderBean.vat_hash,confirmOrderBean.address_api.offpay_hash,confirmOrderBean.address_api.offpay_hash_batch,"online")
+        ShopcartNetwork.getShopcartCookieApi().commitComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, confirmOrderBean.address_info.address_id
+                , confirmOrderBean.vat_hash, confirmOrderBean.address_api.offpay_hash, confirmOrderBean.address_api.offpay_hash_batch, "online")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CommitOrderResponse>() {
@@ -130,10 +131,16 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             if (response.data != null) {
-                                ToastUtils.show(mContext,response.data.pay_sn);
-                                //TODO 支付
+//                                ToastUtils.show(mContext, response.data.pay_sn);
+                                String pay_sn = response.data.pay_sn;
+                                if (!TextUtils.isEmpty(pay_sn)) {
+                                    //TODO 支付
+                                    Intent mIntent = new Intent(ConfirmOrderActivity.this, PayTypeActivity.class);
+                                    mIntent.putExtra("pay_sn", pay_sn);
+                                    startActivity(mIntent);
+                                    ActivitySlideAnim.slideInAnim(ConfirmOrderActivity.this);
+                                }
                             }
-
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -141,9 +148,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
-    private void initData(){
+    private void initData() {
         MyProcessDialog.showDialog(mContext);
-        ShopcartNetwork.getShopcartCookieApi().getComfirmOrderList(App.APP_CLIENT_KEY,cart_id,if_cart,null)
+        ShopcartNetwork.getShopcartCookieApi().getComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<ConfirmOrderResponse>() {
@@ -159,7 +166,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             if (response.data != null) {
-                                if (response.data.store_cart_list!= null) {
+                                if (response.data.store_cart_list != null) {
                                     //expandChild();
                                     confirmOrderBean = response.data;
                                     adapter.setAddressInfo(response.data.address_info);

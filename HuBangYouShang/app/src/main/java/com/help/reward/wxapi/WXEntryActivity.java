@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.help.reward.App;
-import com.help.reward.activity.LoginActivity;
-import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.bean.Response.LoginResponse2;
 import com.help.reward.bean.Response.WXLoginTokenResponse;
 import com.help.reward.network.PersonalNetwork;
@@ -15,7 +13,6 @@ import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.WeiXinLoginRxbusType;
 import com.help.reward.utils.Constant;
-import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -39,7 +36,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     private IWXAPI api;
     private Context mContext;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

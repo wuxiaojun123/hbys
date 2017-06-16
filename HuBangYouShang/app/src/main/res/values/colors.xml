@@ -47,6 +47,7 @@
 
     <color name="color_8b4ab8">#8b4ab8</color>
     <color name="color_8c">#8c8c8c</color>
+    <color name="navpage">#FFE1E8EB</color>
 
     <!-- 仿ios弹窗颜色 -->
     <color name="alertdialog_line">#c6c6c6</color>
