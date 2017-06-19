@@ -124,6 +124,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 }
             }
         });
+        RxBus.getDefault().toObservable(UpdateMessageDataRxbusType.class).subscribe(new Action1<UpdateMessageDataRxbusType>() {
+            @Override
+            public void call(UpdateMessageDataRxbusType type) {
+                if (type.hasNew) { // 更新数据
+                    tv_title_help_msgcount.setVisibility(View.VISIBLE);
+                }else{
+                    tv_title_help_msgcount.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
 
