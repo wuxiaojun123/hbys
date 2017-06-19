@@ -43,7 +43,7 @@ public class MyCollectionPostAdapter extends BaseRecyclerAdapter {
 
         tv_content.setText(bean.title);
         tv_title.setText(bean.board_name);
-        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time)*1000));
+        tv_time.setText(DateUtil.getDateToString(bean.create_time));
         tv_help.setText(bean.u_name);
         tv_post.setText(bean.comment);
         tv_reward.setText(bean.admiration);

@@ -23,6 +23,7 @@ import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -164,6 +165,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onNext(ConfirmOrderResponse response) {
                         MyProcessDialog.closeDialog();
+                        LogUtils.e("请求回来的数据是:" + response.code + "--" + response.msg);
                         if (response.code == 200) {
                             if (response.data != null) {
                                 if (response.data.store_cart_list != null) {
@@ -200,6 +202,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        initData();
+//        initData(); 为啥要放在这里，而且在onCreate方法里面已经调用过
     }
+
 }

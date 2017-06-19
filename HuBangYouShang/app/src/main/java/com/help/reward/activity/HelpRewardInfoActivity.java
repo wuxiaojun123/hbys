@@ -432,7 +432,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
         u_name = info.u_name;
         content = info.content;
         tv_helpinfo_uname.setText(info.u_name);
-        tv_helpinfo_date.setText(DateUtil.getDateToString(info.create_time * 1000));
+        tv_helpinfo_date.setText(DateUtil.getDateToString(info.create_time + ""));
         tv_helpinfo_count.setText("获赏" + info.admiration_all);
         tv_helpinfo_title.setText(info.title);
         tv_helpinfo_content.setText(info.content);

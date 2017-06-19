@@ -44,7 +44,7 @@ public class CouponTradingAdapter extends BaseRecyclerAdapter {
         tv_price.setText(bean.voucher_price);
         tv_price_bottom.setText("满"+bean.voucher_limit+"可用");
         tv_store_name.setText(bean.voucher_t_storename);
-        tv_date.setText(DateUtil.getDateToString(Long.parseLong(bean.voucher_start_date))+"-"+DateUtil.getDateToString(Long.parseLong(bean.voucher_end_date)));
+        tv_date.setText(DateUtil.getDateToString(bean.voucher_start_date)+"-"+DateUtil.getDateToString(bean.voucher_end_date));
         tv_score.setText(bean.voucher_owner_setting);
         tv_coupon.setOnClickListener(new View.OnClickListener() {
             @Override

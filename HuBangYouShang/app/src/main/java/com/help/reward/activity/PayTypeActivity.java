@@ -141,6 +141,7 @@ public class PayTypeActivity extends BaseActivity {
                                     + "--" + response.data.sign
                                     + "--" + response.data.timestamp);
 
+                            sendPay(response.data);
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

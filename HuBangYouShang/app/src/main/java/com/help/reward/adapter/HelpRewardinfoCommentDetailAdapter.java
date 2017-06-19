@@ -54,7 +54,7 @@ public class HelpRewardinfoCommentDetailAdapter extends BaseRecyclerAdapter<Help
         TextView tv_helpinfo_uname = holder.getView(R.id.tv_helpinfo_uname);
         tv_helpinfo_uname.setText(item.u_name);
         TextView tv_helpinfo_date = holder.getView(R.id.tv_helpinfo_date);
-        tv_helpinfo_date.setText(DateUtil.getDateToString(item.create_time * 1000));
+        tv_helpinfo_date.setText(DateUtil.getDateToString(item.create_time+""));
 
 
         TextView tv_helpinfo_content = holder.getView(R.id.tv_helpinfo_content);

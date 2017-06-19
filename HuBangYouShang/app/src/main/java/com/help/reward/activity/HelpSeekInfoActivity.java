@@ -357,7 +357,7 @@ public class HelpSeekInfoActivity extends BaseActivity {
         HelpSeekInfoBean info = response.data.info;
         GlideUtils.loadCircleImage(info.member_avatar, iv_helpinfo_headimg);
         tv_helpinfo_uname.setText(info.u_name);
-        tv_helpinfo_date.setText(DateUtil.getDateToString(info.create_time * 1000));
+        tv_helpinfo_date.setText(DateUtil.getDateToString(info.create_time + ""));
         tv_helpinfo_count.setText("跟帖" + response.data.comment_num);
         tv_helpinfo_title.setText(info.title);
         tv_helpinfo_content.setText(info.content);

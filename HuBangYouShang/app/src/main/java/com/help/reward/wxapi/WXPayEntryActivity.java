@@ -1,6 +1,7 @@
 package com.help.reward.wxapi;
 
 import com.help.reward.R;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.idotools.utils.LogUtils;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -25,8 +26,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pay_result);
-
+//        setContentView(R.layout.pay_result);
         api = WXAPIFactory.createWXAPI(this, Constant.WXCHAT_APP_ID);
         api.handleIntent(getIntent(), this);
     }
@@ -48,11 +48,27 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         LogUtils.e("onPayFinish, errCode = " + resp.errCode);
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            int code = resp.errCode;
+            if (code == 0) { // 支付成功
+                finish();
+
+            } else if (code == -1) { // 错误
+
+
+            } else if (code == -2) { // 用户取消
+                finish();
+
+            }
+            /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.app_tip);
             builder.setMessage(getString(R.string.pay_result_callback_msg, String.valueOf(resp.errCode)));
-            builder.show();
+            builder.show();*/
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
 }

@@ -35,7 +35,7 @@ public class MyAccountHelpRewardAdapter extends BaseRecyclerAdapter {
 
         tv_title.setText(bean.pl_desc);
         tv_price.setText(bean.pl_points);
-        tv_date.setText(DateUtil.getDateToString(Long.parseLong(bean.pl_addtime)));
+        tv_date.setText(DateUtil.getDateToString(bean.pl_addtime));
 
     }
 

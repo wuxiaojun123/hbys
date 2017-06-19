@@ -349,6 +349,7 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
                     intent.putExtra("cart_id", sb.toString().substring(0, sb.length() - 1));
                     intent.putExtra("if_cart", "1");
                     startActivity(intent);
+                    ActivitySlideAnim.slideInAnim(ShopcartActivity.this);
                 }
                 //startActivity(new Intent(ShopcartActivity.this,ConfirmOrderActivity.class));
 

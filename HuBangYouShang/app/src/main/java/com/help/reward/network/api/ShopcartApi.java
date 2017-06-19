@@ -54,9 +54,9 @@ public interface ShopcartApi {
     @FormUrlEncoded
     @POST(Constant.URL_SHOPCART_DELETE)
     Observable<BaseResponse> getShopcartDelete(
-                    @Field("key") String key,
-                    @Field("cart_id") String cart_id
-            );
+            @Field("key") String key,
+            @Field("cart_id") String cart_id
+    );
 
     @FormUrlEncoded
     @POST(Constant.URL_SHOPCART_EDIT)
@@ -67,10 +67,9 @@ public interface ShopcartApi {
     );
 
     /**
-     *
      * @param key
      * @param cart_id
-     * @param ifcart 0 ，直接购买，1，购物车
+     * @param ifcart     0 ，直接购买，1，购物车
      * @param address_id
      * @return
      */
@@ -81,7 +80,7 @@ public interface ShopcartApi {
             @Field("cart_id") String cart_id,
             @Field("ifcart") String ifcart,
             @Field("address_id") String address_id
-            );
+    );
 
     @FormUrlEncoded
     @POST(Constant.URL_BUY_STEP_TWO)
@@ -94,14 +93,14 @@ public interface ShopcartApi {
             @Field("offpay_hash") String offpay_hash,
             @Field("offpay_hash_batch") String offpay_hash_batch,
             @Field("pay_name") String pay_name
-            );
+    );
 
     // 选择支付方式
     @FormUrlEncoded
     @POST("mobile/index.php?act=member_payment&op=pay")
     Observable<PayTypeResponse> getPayTypeResponse(
-        @Field("pay_sn") String pay_sn,
-        @Field("key") String key
+            @Field("pay_sn") String pay_sn,
+            @Field("key") String key
     );
 
 

@@ -35,7 +35,7 @@ public class MyGeneralVolumeAdapter extends BaseRecyclerAdapter {
 
         tv_title.setText(bean.gvl_desc);
         tv_price.setText(bean.gvl_points);
-        tv_date.setText(DateUtil.getDateToString(Long.parseLong(bean.gvl_addtime)));
+        tv_date.setText(DateUtil.getDateToString(bean.gvl_addtime));
 
     }
 

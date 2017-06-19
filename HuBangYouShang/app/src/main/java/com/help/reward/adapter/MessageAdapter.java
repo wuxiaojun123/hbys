@@ -55,7 +55,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
 
         holder.tv_title.setText(mDatas.get(position).message_title);
         holder.tv_body.setText(mDatas.get(position).message_body);
-        holder.tv_time.setText(DateUtil.getDateToString(mDatas.get(position).message_time*1000));
+        holder.tv_time.setText(DateUtil.getDateToString(mDatas.get(position).message_time+""));
         if (holder.tv_order != null&&mDatas.get(position).noteObject!=null) {
             holder.tv_order.setText(mDatas.get(position).noteObject.order_sn);
         }

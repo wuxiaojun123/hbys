@@ -457,7 +457,9 @@
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:theme="@style/style_transparent"
+            />
 
         <!-- 国内 key -->
         <meta-data

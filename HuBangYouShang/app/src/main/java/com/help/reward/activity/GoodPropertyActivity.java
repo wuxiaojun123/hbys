@@ -23,6 +23,7 @@ import com.help.reward.bean.PropertyBean;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.MobileScreenUtils;
@@ -190,6 +191,8 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
                 intent.putExtra("cart_id", goodsId + "|" + numShow);
                 intent.putExtra("if_cart", "0");
                 startActivity(intent);
+                ActivitySlideAnim.slideInAnim(GoodPropertyActivity.this);
+
                 break;
         }
 

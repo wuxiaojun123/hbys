@@ -37,7 +37,7 @@ public class PointsRecordAdapter extends BaseRecyclerAdapter {
         tv_content.setText(couponsContent);
 
         tv_num.setText("已领取" + bean.give_info.num_given+"/"+bean.give_info.num);
-        tv_date.setText(DateUtil.getDateToString(Long.parseLong(bean.created)*1000));
+        tv_date.setText(DateUtil.getDateToString(bean.created));
     }
 
     public void setCouponsContent(String couponsContent) {

@@ -12,7 +12,7 @@ public class Test {
 
         String time = "1479804948";
 
-        System.out.println(DateUtil.getDateToString(Long.parseLong(time)));
+        System.out.println(DateUtil.getDateToString(time));
 
     }
 

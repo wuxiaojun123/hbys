@@ -33,7 +33,7 @@ public class HelpSeekAdapter extends BaseRecyclerAdapter<HelpSeekBean> {
         TextView item_help1_type = holder.getView(R.id.item_help1_type);
         item_help1_type.setText(item.board_name);
         TextView item_help1_date = holder.getView(R.id.item_help1_date);
-        item_help1_date.setText(DateUtil.getDateToString(item.create_time*1000));
+        item_help1_date.setText(DateUtil.getDateToString(item.create_time+""));
         TextView item_help1_score = holder.getView(R.id.item_help1_score);
         item_help1_score.setText("悬赏 " + item.offer);
         TextView item_help1_count = holder.getView(R.id.item_help1_count);

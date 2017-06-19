@@ -12,6 +12,7 @@ public class MyOrderListBean {
 
     public class OrderList{
 
+        public String pay_sn; // 支付单号
         public String order_id; // 订单id
         public String order_amount; // 订单总价
         public String shipping_fee; // 运费

@@ -120,7 +120,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private Subscription subscribeRxbusWeixin;
 
-    private void getLoginSuccessInfo(){
+    private void getLoginSuccessInfo() {
         subscribeRxbusWeixin = RxBus.getDefault().toObservable(WeiXinLoginRxbusType.class).subscribe(new Action1<WeiXinLoginRxbusType>() {
             @Override
             public void call(WeiXinLoginRxbusType type) {
@@ -128,7 +128,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     finish();
                     ActivitySlideAnim.slideOutAnim(LoginActivity.this);
                 }
-                if(!subscribeRxbusWeixin.isUnsubscribed()){
+                if (!subscribeRxbusWeixin.isUnsubscribed()) {
                     subscribeRxbusWeixin.unsubscribe();
                 }
             }
@@ -199,7 +199,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 MyProcessDialog.closeDialog();
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
-                Log.d("main", "登录聊天服务器成功！");
+                LogUtils.e("onSuccess--登录聊天服务器成功！");
 
                 finish();
                 ActivitySlideAnim.slideOutAnim(LoginActivity.this);
@@ -207,14 +207,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onProgress(int progress, String status) {
-
+                LogUtils.e("onProgress中" + progress + "--status" + status);
             }
 
             @Override
             public void onError(int code, String message) {
                 MyProcessDialog.closeDialog();
 //                ToastUtils.show(LoginActivity.this,"登录聊天服务器失败！");
-                Log.d("main", "登录聊天服务器失败！");
+                LogUtils.e("onError  登录聊天服务器失败！");
 
                 finish();
                 ActivitySlideAnim.slideOutAnim(LoginActivity.this);

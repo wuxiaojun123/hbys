@@ -1,5 +1,6 @@
 package com.help.reward.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.activity.BaseActivity;
+import com.help.reward.activity.ConfirmOrderActivity;
 import com.help.reward.activity.OrderDetailsActivity;
 import com.help.reward.activity.OrderPulishedEvaluateActivity;
+import com.help.reward.activity.PayTypeActivity;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
@@ -40,7 +43,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
 
     public MyOrderAdapter(Context context) {
         super(context);
-        mOperationManager = new OrderOperationManager(context,this);
+        mOperationManager = new OrderOperationManager(context, this);
     }
 
     @Override
@@ -98,6 +101,10 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
                     String tag = (String) tv_evaluate_order.getTag();
                     if (tag != null) {
                         if ("1".equals(tag)) { // 立即付款
+                            Intent mIntent = new Intent(mContext, PayTypeActivity.class);
+                            mIntent.putExtra("pay_sn", bean.pay_sn);
+                            mContext.startActivity(mIntent);
+                            ActivitySlideAnim.slideInAnim((Activity) mContext);
 
                         } else if ("2".equals(tag)) {// 确认收货
 
@@ -108,7 +115,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
                             mIntent.putExtra("goods_img", goods_img);
                             mIntent.putExtra("goods_name", goods_name);
                             mContext.startActivity(mIntent);
-                            ActivitySlideAnim.slideInAnim((BaseActivity) mContext);
+                            ActivitySlideAnim.slideInAnim((Activity) mContext);
                         }
                     }
                 }
