@@ -154,4 +154,14 @@ public class MyCollectionPostFragment extends BaseFragment {
                 });
     }
 
+    public void refreshRecycler(){
+        if(mCollectionPostAdapter != null){
+            mCollectionPostAdapter.clear();
+        }
+    }
+
+    public MyCollectionPostAdapter getMyCollectionPostAdapter(){
+        return mCollectionPostAdapter;
+    }
+
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.OrderInfoBean;
 import com.help.reward.bean.Response.OrderInfoResponse;
@@ -135,6 +136,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                                 bindData(bean);
                                 setShopText(bean);
                                 setOrderState(bean);
+                                setEvaluationState(tv_evaluate_order, response.data.order_info);
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
@@ -275,6 +277,30 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             tv_evaluate_order.setVisibility(View.VISIBLE);
             tv_evaluate_order.setText("确认收货");
             tv_evaluate_order.setTag("2");
+        }
+    }
+
+    /***
+     * 设置评论状态
+     */
+    private void setEvaluationState(TextView tv_evaluate_order, OrderInfoBean bean) {
+        boolean isEvaluated = false;
+        if (bean.evaluation_state.equals("0")) {//评价状态 0未评价，1已评价，2已过期未评价
+//            tv_shop_state.setText("未评价");
+            isEvaluated = true;
+        } else if (bean.evaluation_state.equals("1")) {
+//            tv_shop_state.setText("已评价");
+        } else {
+//            tv_shop_state.setText("已过期未评价");
+        }
+        if (tv_evaluate_order.getTag().equals("3")) {
+            if (isEvaluated) {
+                tv_evaluate_order.setVisibility(View.VISIBLE);
+            } else {
+                if (tv_evaluate_order.getVisibility() != View.GONE) {
+                    tv_evaluate_order.setVisibility(View.GONE);
+                }
+            }
         }
     }
 

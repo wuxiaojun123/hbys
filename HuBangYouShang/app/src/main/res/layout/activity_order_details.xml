@@ -109,7 +109,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:gravity="center_vertical"
-                        android:text="15911047043"
+                        android:text="手机号码"
                         android:textColor="@color/color_3a"
                         android:textSize="@dimen/dimen_13" />
 

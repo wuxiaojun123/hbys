@@ -6,6 +6,7 @@ import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.adapter.MyCollectionPostAdapter;
 import com.help.reward.bean.MyCollectionGoodsBean;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
@@ -152,6 +153,16 @@ public class MyCollectionGoodsFragment extends BaseFragment {
                         }
                     }
                 });
+    }
+
+    public void refreshRecycler(){
+        if(mCollectionGoodsAdapter != null){
+            mCollectionGoodsAdapter.clear();
+        }
+    }
+
+    public MyCollectionGoodsAdapter getMyCollectionGoodsAdapter(){
+        return mCollectionGoodsAdapter;
     }
 
 }

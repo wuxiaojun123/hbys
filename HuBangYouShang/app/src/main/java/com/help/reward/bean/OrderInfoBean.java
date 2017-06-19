@@ -22,6 +22,7 @@ public class OrderInfoBean {
     public String goods_amount; // 商品总价
     public String order_amount; // 订单总价
     public String store_phone; // 商家电话
+    public String evaluation_state;// 评价状态 0未评价，1已评价，2已过期未评价
 
     public Extend_order_common extend_order_common; //
     public List<MyOrderShopBean> goods_list; // 商品列表

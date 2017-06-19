@@ -217,12 +217,23 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
      * @param bean
      */
     private void setEvaluationState(TextView tv_shop_state, TextView tv_evaluate_order, MyOrderListBean.OrderList bean) {
+        boolean isEvaluated = false;
         if (bean.evaluation_state.equals("0")) {//评价状态 0未评价，1已评价，2已过期未评价
             tv_shop_state.setText("未评价");
+            isEvaluated = true;
         } else if (bean.evaluation_state.equals("1")) {
             tv_shop_state.setText("已评价");
         } else {
             tv_shop_state.setText("已过期未评价");
+        }
+        if (tv_evaluate_order.getTag().equals("3")) {
+            if (isEvaluated) {
+                tv_evaluate_order.setVisibility(View.VISIBLE);
+            }else{
+                if (tv_evaluate_order.getVisibility() != View.GONE) {
+                    tv_evaluate_order.setVisibility(View.GONE);
+                }
+            }
         }
     }
 

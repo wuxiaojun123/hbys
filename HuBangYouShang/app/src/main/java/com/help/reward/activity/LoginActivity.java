@@ -1,5 +1,6 @@
 package com.help.reward.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -170,7 +171,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     @Override
                     public void onNext(LoginResponse res) {
-                        //MyProcessDialog.closeDialog();
                         if (res.code == 200) {
                             LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
                             App.APP_CLIENT_KEY = res.data.key;
@@ -179,8 +179,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             App.mLoginReponse = res.data;
                             RxBus.getDefault().post("loginSuccess");
                             LoginToHuanxin(App.mLoginReponse.easemobId, password);
-                            //finish();
-                            //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
                         } else {
                             MyProcessDialog.closeDialog();
                             ToastUtils.show(mContext, res.msg);
@@ -191,8 +189,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     private void LoginToHuanxin(String username, String password) {
-        //String userName = "hbys3";
-        //String password = "123456";
         EMClient.getInstance().login(username, password, new EMCallBack() {//回调
             @Override
             public void onSuccess() {
@@ -201,8 +197,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 EMClient.getInstance().chatManager().loadAllConversations();
                 LogUtils.e("onSuccess--登录聊天服务器成功！");
 
-                finish();
-                ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                finishActivity();
             }
 
             @Override
@@ -216,7 +211,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //                ToastUtils.show(LoginActivity.this,"登录聊天服务器失败！");
                 LogUtils.e("onError  登录聊天服务器失败！");
 
-                finish();
+                finishActivity();
+            }
+        });
+    }
+
+    private void finishActivity() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LoginActivity.this.finish();
                 ActivitySlideAnim.slideOutAnim(LoginActivity.this);
             }
         });
