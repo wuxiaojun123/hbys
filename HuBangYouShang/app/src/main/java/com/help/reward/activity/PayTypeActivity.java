@@ -2,6 +2,7 @@ package com.help.reward.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,8 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
+import com.base.recyclerview.LRecyclerViewAdapter;
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.adapter.PayTypeAdapter;
 import com.help.reward.bean.Response.PayTypeResponse;
 import com.help.reward.bean.Response.PayTypeWchatResponse;
 import com.help.reward.network.PersonalNetwork;
@@ -54,10 +57,11 @@ public class PayTypeActivity extends BaseActivity {
     RelativeLayout layoutPaytypeYinlian;
 
     @BindView(R.id.id_recycler_view)
-    LRecyclerView recyclerView;
+    LRecyclerView lRecyclerview;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
+    private PayTypeAdapter mPayTypeAdapter;
 
     private String pay_sn; // 支付单号
-//    private String pay_acount; // 支付金额
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,7 +89,8 @@ public class PayTypeActivity extends BaseActivity {
                         if (payTypeResponse.code == 200) {
                             pay_sn = payTypeResponse.data.pay_sn;
                             tvPaytypeMoney.setText("￥" + payTypeResponse.data.api_pay_amount);
-                            // 显示各种
+                            // 显示各种订单
+                            mPayTypeAdapter.setDataList(payTypeResponse.data.order_list);
 
                         } else {
                             ToastUtils.show(mContext, payTypeResponse.msg);
@@ -97,6 +102,13 @@ public class PayTypeActivity extends BaseActivity {
     private void initView() {
         tvTitle.setText("选择支付方式");
         tvTitleRight.setVisibility(View.GONE);
+
+        lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+        mPayTypeAdapter = new PayTypeAdapter(mContext);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mPayTypeAdapter);
+        lRecyclerview.setAdapter(mLRecyclerViewAdapter);
+        lRecyclerview.setPullRefreshEnabled(false);
+        lRecyclerview.setLoadMoreEnabled(false);
     }
 
     @OnClick({R.id.iv_title_back, R.id.layout_paytype_wchat, R.id.layout_paytype_alipay, R.id.layout_paytype_yinlian})

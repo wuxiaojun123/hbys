@@ -80,8 +80,6 @@ public class PayendActivity extends BaseActivity {
     }
 
     private void initData() {
-
-
         lRecyclerview.setLayoutManager(new GridLayoutManager(mContext, 2));
         adapter = new PayEndGoodsAdapter(mContext);
         adapter.setDataList(mDatas);
