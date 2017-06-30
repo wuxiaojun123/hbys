@@ -1,5 +1,7 @@
 package com.help.reward.bean.Response;
 
+import com.help.reward.bean.AddressBean;
+
 import java.util.List;
 
 /**
@@ -103,7 +105,7 @@ public class ConfirmOrderResponse extends BaseResponse<ConfirmOrderResponse.Conf
         public String freight_hash;
 
         public InvInfoBean inv_info;
-        public ConfirmAddressBean address_info;
+        public AddressBean address_info;
         public AddressApi address_api;
 
     }
@@ -147,7 +149,7 @@ public class ConfirmOrderResponse extends BaseResponse<ConfirmOrderResponse.Conf
      "dlyp_id": "0"
      }
      */
-    public class ConfirmAddressBean{
+    /*public class ConfirmAddressBean{
         public String address_id;
         public String member_id;
         public String true_name;
@@ -159,7 +161,11 @@ public class ConfirmOrderResponse extends BaseResponse<ConfirmOrderResponse.Conf
         public String mob_phone;
         public String is_default;
         public String dlyp_id;
-    }
+
+        public ConfirmAddressBean(){
+
+        }
+    }*/
 
 
     public class InvInfoBean{

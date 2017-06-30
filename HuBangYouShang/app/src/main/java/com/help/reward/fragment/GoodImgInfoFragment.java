@@ -177,4 +177,18 @@ public class GoodImgInfoFragment extends BaseFragment {
                     }
                 });
     }
+
+    @Override
+    public void onDestroy() {
+        if(webView != null){
+            ViewGroup viewGroup = (ViewGroup) webView.getParent();
+            if(viewGroup != null){
+                viewGroup.removeView(webView);
+            }
+            webView.removeAllViews();
+            webView.destroy();
+            webView = null;
+        }
+        super.onDestroy();
+    }
 }

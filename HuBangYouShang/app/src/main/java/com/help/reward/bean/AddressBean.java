@@ -1,5 +1,6 @@
 package com.help.reward.bean;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -20,7 +21,7 @@ import android.os.Parcelable;
  * Created by wuxiaojun on 2017/3/20.
  */
 
-public class AddressBean implements Parcelable {
+public class AddressBean extends Intent implements Parcelable {
 
     public String address_id;
     public String member_id;

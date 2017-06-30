@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
+import com.help.reward.bean.AddressBean;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.Response.CartInfoBean;
@@ -37,7 +38,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
     protected Context mContext;
 
     protected LayoutInflater mInflater;
-    private ConfirmOrderResponse.ConfirmAddressBean address_info;
+    private AddressBean address_info;
 
     private String discount_level;
 
@@ -171,7 +172,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
         return mDataList.size() + 2;
     }
 
-    public void setAddressInfo(ConfirmOrderResponse.ConfirmAddressBean address_info) {
+    public void setAddressInfo(AddressBean address_info) {
         this.address_info = address_info;
     }
 

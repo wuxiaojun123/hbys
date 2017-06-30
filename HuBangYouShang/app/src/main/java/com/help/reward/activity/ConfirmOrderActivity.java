@@ -16,6 +16,7 @@ import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.adapter.ConfirmOrderAdapter;
 import com.help.reward.adapter.MyOrderAdapter;
+import com.help.reward.bean.AddressBean;
 import com.help.reward.bean.Response.CommitOrderResponse;
 import com.help.reward.bean.Response.ConfirmOrderResponse;
 import com.help.reward.bean.Response.ShopCartResponse;
@@ -42,6 +43,7 @@ import rx.schedulers.Schedulers;
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener {
 
     protected final static int REQ_CODE = 1;
+    protected final static int RES_CODE = 2;
 
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
@@ -94,6 +96,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                     Intent intent = new Intent(ConfirmOrderActivity.this, AddressManagerActivity.class);
                     intent.putExtra("from", "confirm_order");
                     startActivityForResult(intent, REQ_CODE);
+                    ActivitySlideAnim.slideInAnim(ConfirmOrderActivity.this);
                 }
             }
         });
@@ -105,6 +108,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.iv_title_back:
                 finish();
+                ActivitySlideAnim.slideOutAnim(ConfirmOrderActivity.this);
+
                 break;
             case R.id.tv_commit_order:
                 commitOrderRequest();
@@ -179,7 +184,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                     adapter.setDataList(store_cart_list);
                                     lRecyclerview.setVisibility(View.VISIBLE);
 
-
                                 }
 
                                 if (!TextUtils.isEmpty(response.data.order_amount)) {
@@ -196,7 +200,15 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_CODE && resultCode == RES_CODE) {
+            // 表示从地址页面过来 设置地址view
+            AddressBean bean = data.getParcelableExtra("confirmAddress");
+            if (adapter != null && bean != null) {
+                adapter.setAddressInfo(bean);
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     @Override
