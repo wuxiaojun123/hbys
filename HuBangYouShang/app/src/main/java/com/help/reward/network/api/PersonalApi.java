@@ -603,6 +603,15 @@ public interface PersonalApi {
             @Field("key") String key
     );
 
+    // 帮助中心详细 &article_id=38  ?act=article&op=article_content
+    @GET("mobile/index.php")
+    Observable<BaseResponse<String>> getHelpCenterInfoResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("article_id") String article_id
+//            @Field("key") String key
+    );
+
     // 意见反馈
     @FormUrlEncoded
     @POST("mobile/index.php?act=consult&op=feedback")

@@ -138,6 +138,11 @@
             android:name="com.help.reward.activity.HelpCenterActivity"
             android:screenOrientation="portrait" />
 
+        <!--帮助中心详细-->
+        <activity
+            android:name="com.help.reward.activity.HelpCenterInfoActivity"
+            android:screenOrientation="portrait" />
+
         <!--我的账户-->
         <activity
             android:name="com.help.reward.activity.MyAccountActivity"
@@ -458,8 +463,7 @@
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@style/style_transparent"
-            />
+            android:theme="@style/style_transparent" />
 
         <!-- 国内 key -->
         <meta-data

@@ -98,7 +98,7 @@
 
             <TextView
                 style="@style/style_my_function_quantity_title"
-                android:text="通用卷" />
+                android:text="通用劵" />
 
         </LinearLayout>
 

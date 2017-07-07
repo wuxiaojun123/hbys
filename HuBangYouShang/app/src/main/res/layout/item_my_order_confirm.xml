@@ -4,10 +4,10 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:layout_marginTop="10dp"
+    android:background="@color/color_while"
     android:divider="@drawable/shape_divider_line"
     android:orientation="vertical"
-    android:showDividers="end|beginning|middle"
-    android:background="@color/color_while">
+    android:showDividers="end|beginning|middle">
 
 
     <LinearLayout
@@ -39,7 +39,7 @@
             android:text="商品状态"
             android:textColor="@color/color_ffb258"
             android:textSize="@dimen/dimen_12"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -70,40 +70,42 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="配送方式"
-            android:textSize="@dimen/dimen_14"
-            android:textColor="@color/color_3a"/>
+            android:textColor="@color/color_3a"
+            android:textSize="@dimen/dimen_14" />
 
         <TextView
+            android:id="@+id/tv_shipping_methods"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="包邮"
-            android:textSize="@dimen/dimen_14"
-            android:textColor="@color/color_8a"/>
+            android:textColor="@color/color_8a"
+            android:textSize="@dimen/dimen_14" />
 
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dimen_10">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:padding="@dimen/dimen_10"
             android:text="留言备注:"
-            android:textSize="@dimen/dimen_14"
-            android:textColor="@color/color_3a"/>
+            android:textColor="@color/color_3a"
+            android:textSize="@dimen/dimen_14" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/et_remarks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:text="这里可以给买家留言"
-            android:textSize="@dimen/dimen_14"
-            android:textColor="@color/color_8a"/>
+            android:background="@null"
+            android:hint="这里可以给买家留言"
+            android:textColor="@color/color_8a"
+            android:textSize="@dimen/dimen_14" />
 
     </LinearLayout>
 
@@ -117,18 +119,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="优惠券"
-            android:textSize="@dimen/dimen_14"
-            android:textColor="@color/color_3a"/>
+            android:textColor="@color/color_3a"
+            android:textSize="@dimen/dimen_14" />
 
         <TextView
+            android:id="@+id/tv_coupon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="无可用"
-            android:textSize="@dimen/dimen_14"
-            android:textColor="@color/color_8a"
             android:drawablePadding="@dimen/dimen_4"
-            android:drawableRight="@mipmap/img_goods_detail_allow_right"/>
+            android:drawableRight="@mipmap/img_goods_detail_allow_right"
+            android:textColor="@color/color_8a"
+            android:textSize="@dimen/dimen_14" />
 
     </RelativeLayout>
 
@@ -138,7 +140,7 @@
         android:layout_height="40dp"
         android:gravity="right|center_vertical"
         android:paddingRight="10dp"
-        android:text="共计：4件商品  合计：￥235元(含运费12元)"
+        android:text="共计：0件商品  合计：￥0元(含运费0元)"
         android:textColor="@color/color_3a"
         android:textSize="@dimen/dimen_13" />
 

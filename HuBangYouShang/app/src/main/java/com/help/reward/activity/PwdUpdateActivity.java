@@ -65,6 +65,7 @@ public class PwdUpdateActivity extends BaseActivity implements View.OnClickListe
     private void initView() {
         tv_title.setText(R.string.string_pwd_update_title);
         tv_title_right.setVisibility(View.GONE);
+        et_phone_number.setHint("请输入预留手机号码");
     }
 
     private void initData() {

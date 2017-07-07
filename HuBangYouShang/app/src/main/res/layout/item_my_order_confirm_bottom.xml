@@ -20,11 +20,11 @@
         android:drawableRight="@null"
         android:text="商家设置的通用券抵扣比例为:"/>
 
-    <RelativeLayout
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="@dimen/dimen_10"
-        android:background="@drawable/shape_divider_line"></RelativeLayout>
+        android:background="@drawable/shape_divider_line" />
 
     <RelativeLayout
         android:id="@+id/layout"

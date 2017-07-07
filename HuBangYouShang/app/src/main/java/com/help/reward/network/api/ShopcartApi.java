@@ -82,6 +82,22 @@ public interface ShopcartApi {
             @Field("address_id") String address_id
     );
 
+
+    /***
+     * cart_id;ifcart;address_id;vat_hash;offpay_hash;offpay_hash_batch;pay_name(字符串’online’)，
+     * voucher 类似‘t_id|store_id|price,t_id|store_id|price,...’格式
+     * general_voucher类似‘store_id|num,store_id|num,...’格式
+     * pay_message 格式 店铺id|备注内容,店铺id|备注内容
+     * @param key
+     * @param cart_id
+     * @param ifcart
+     * @param address_id
+     * @param vat_hash
+     * @param offpay_hash
+     * @param offpay_hash_batch
+     * @param pay_name
+     * @return
+     */
     @FormUrlEncoded
     @POST(Constant.URL_BUY_STEP_TWO)
     Observable<CommitOrderResponse> commitComfirmOrderList(
@@ -92,7 +108,10 @@ public interface ShopcartApi {
             @Field("vat_hash") String vat_hash,
             @Field("offpay_hash") String offpay_hash,
             @Field("offpay_hash_batch") String offpay_hash_batch,
-            @Field("pay_name") String pay_name
+            @Field("pay_name") String pay_name,
+            @Field("voucher") String voucher,
+            @Field("general_voucher") String general_voucher,
+            @Field("pay_message") String pay_message
     );
 
     // 选择支付方式

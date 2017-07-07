@@ -2,12 +2,16 @@ package com.help.reward.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
@@ -16,17 +20,20 @@ import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.Response.CartInfoBean;
 import com.help.reward.bean.Response.ConfirmOrderResponse;
+import com.help.reward.bean.VoucherBean;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.view.VoucherDialog;
+import com.idotools.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ADBrian on 04/04/2017.
  */
 
 public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
-
 
 
     public static final int ITEM_HEAD = 1;
@@ -41,8 +48,9 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
     private AddressBean address_info;
 
     private String discount_level;
-
     private String available_general_voucher;
+    private ConfirmOrderResponse.AddressApi addressApi; // 里面包含了邮费
+
 
     public ConfirmOrderAdapter(Context mContext) {
         this.mContext = mContext;
@@ -50,7 +58,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
 
     }
 
-    public void setDataList(List<ConfirmOrderResponse.ConfirmCartList> mDataList){
+    public void setDataList(List<ConfirmOrderResponse.ConfirmCartList> mDataList) {
         if (mDataList != null) {
             this.mDataList.clear();
             this.mDataList.addAll(mDataList);
@@ -62,7 +70,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
     public int getItemViewType(int position) {
 
         if (position == 0) {
-             return ITEM_HEAD;
+            return ITEM_HEAD;
         } else if (position == mDataList.size() + 1) {
             return ITEM_BOTTOM;
         } else {
@@ -81,9 +89,9 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             case ITEM_BOTTOM:
                 itemView = mInflater.inflate(R.layout.item_my_order_confirm_bottom, parent, false);
                 break;
-           default:
-               itemView = mInflater.inflate(R.layout.item_my_order_confirm, parent, false);
-               break;
+            default:
+                itemView = mInflater.inflate(R.layout.item_my_order_confirm, parent, false);
+                break;
         }
         return new SuperViewHolder(itemView);
     }
@@ -94,13 +102,13 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
 
         switch (getItemViewType(position)) {
             case ITEM_HEAD:
-                doHeadView(holder,position);
+                doHeadView(holder, position);
                 break;
             case ITEM_BOTTOM:
-                doBottomView(holder,position);
+                doBottomView(holder, position);
                 break;
             default:
-                doNormalView(holder,position);
+                doNormalView(holder, position);
                 break;
         }
 
@@ -108,11 +116,14 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
 
     private void doNormalView(SuperViewHolder holder, int position) {
         TextView tv_store_name = holder.getView(R.id.tv_store_name); // 商家名称
+        TextView tv_shipping_methods = holder.getView(R.id.tv_shipping_methods); // 配送方式
+        EditText et_remarks = holder.getView(R.id.et_remarks); // 留言备注
+        TextView tv_coupon = holder.getView(R.id.tv_coupon); // 优惠劵
         TextView tv_total_shop_and_money = holder.getView(R.id.tv_total_shop_and_money); // 共计：4件商品  合计：￥235元(含运费12元)
 
         LinearLayout ll_shop = holder.getView(R.id.ll_shop); // 商品列表
 
-        ConfirmOrderResponse.ConfirmCartList bean = mDataList.get(position - 1);
+        final ConfirmOrderResponse.ConfirmCartList bean = mDataList.get(position - 1);
 
         int size = 0;
         if (ll_shop.getTag() == null && bean.goods_list != null) {
@@ -121,12 +132,40 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             ll_shop.setTag(bean.store_id);
         }
 
-        tv_store_name.setText(bean.store_name);
-        tv_total_shop_and_money.setText(bean.store_goods_total);
+        if (bean.store_voucher_info == null) {
+            tv_coupon.setText("无可用");
+        } else {
+            tv_coupon.setText("可用优惠劵");
+            tv_coupon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    List<VoucherBean> list = new ArrayList<VoucherBean>();
+                    list.addAll(bean.store_voucher_list);
+                    list.addAll(bean.store_voucher_list2);
+                    VoucherDialog dialog = new VoucherDialog(mContext, list);
+                    dialog.showDialog();
+                }
+            });
+        }
+
+        tv_store_name.setText(bean.store_name); // 店铺名称
+        // 根据店铺id拿到邮费
+        Map<String, String> postageMap = addressApi.content;
+        if (postageMap != null) {
+            String expressCharges = postageMap.get(bean.store_id); // 快递费用
+//            LogUtils.e("快递费用是：" + expressCharges);
+            if (TextUtils.isEmpty(expressCharges) || "0.00".equals(expressCharges)) {
+                tv_shipping_methods.setText("包邮"); //
+                tv_total_shop_and_money.setText("共计：" + size + "件商品  合计：￥" + bean.store_goods_total + "元(含运费0元)");
+            } else {
+                tv_shipping_methods.setText(expressCharges + "元");
+                tv_total_shop_and_money.setText("共计：" + size + "件商品  合计：￥" + bean.store_goods_total + "元(含运费" + expressCharges + "元)");
+            }
+        }
+
     }
 
     private void setShopText(LinearLayout ll_shop, ConfirmOrderResponse.ConfirmCartList bean, int size) {
-
         for (int i = 0; i < size; i++) {
             View shopView = mInflater.inflate(R.layout.layout_my_order_shop, ll_shop, false);
             ImageView iv_shop_img = (ImageView) shopView.findViewById(R.id.iv_shop_img); // 商品图片
@@ -147,12 +186,27 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
     }
 
     private void doBottomView(SuperViewHolder holder, int position) {
-
         TextView mOrderDiscountPer = (TextView) holder.itemView.findViewById(R.id.tv_confim_order_discount);
         TextView mOrderDiscount = (TextView) holder.itemView.findViewById(R.id.tv_confim_order_discount_name);
+        ToggleButton btn_switch = (ToggleButton) holder.itemView.findViewById(R.id.btn_switch); // 开关按钮
+        // 有可能没有通用劵的情况，应该进行区分
+        mOrderDiscountPer.setText("商家设置的通用券抵扣比例为:" + discount_level + "%");
+        if (TextUtils.isEmpty(available_general_voucher) || "".equals(available_general_voucher)
+                || "0".equals(available_general_voucher)) {
+            mOrderDiscount.setText("无可用通用劵");
+            btn_switch.setEnabled(false);
+        } else {
+            double amount = Double.parseDouble(available_general_voucher) * Double.parseDouble(discount_level);
+            mOrderDiscount.setText("可用" + available_general_voucher + "通用劵 抵" + amount + "元");
+            btn_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) { // 开,通用劵兑换
 
-        mOrderDiscountPer.setText("商家设置的通用券抵扣比例为:" + discount_level);
-        mOrderDiscount.setText(available_general_voucher);
+                    }
+                }
+            });
+        }
     }
 
     private void doHeadView(SuperViewHolder holder, int position) {
@@ -174,6 +228,10 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
 
     public void setAddressInfo(AddressBean address_info) {
         this.address_info = address_info;
+    }
+
+    public void setAddressApi(ConfirmOrderResponse.AddressApi addressApi) {
+        this.addressApi = addressApi;
     }
 
     public void setDiscount_level(String discount_level) {

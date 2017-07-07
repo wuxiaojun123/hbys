@@ -119,9 +119,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private void commitOrderRequest() {
 
-        MyProcessDialog.showDialog(mContext);
+        /*MyProcessDialog.showDialog(mContext);
         ShopcartNetwork.getShopcartCookieApi().commitComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, confirmOrderBean.address_info.address_id
-                , confirmOrderBean.vat_hash, confirmOrderBean.address_api.offpay_hash, confirmOrderBean.address_api.offpay_hash_batch, "online")
+                , confirmOrderBean.vat_hash, confirmOrderBean.address_api.offpay_hash, confirmOrderBean.address_api.offpay_hash_batch, "online",
+
+                )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CommitOrderResponse>() {
@@ -151,10 +153,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                             ToastUtils.show(mContext, response.msg);
                         }
                     }
-                });
+                });*/
     }
 
     private void initData() {
+        // cart_id=66|1,67|1,68|1,69|1---if_cart=1
+        LogUtils.e("确认订单页面 cart_id="+cart_id+"---if_cart="+if_cart);
         MyProcessDialog.showDialog(mContext);
         ShopcartNetwork.getShopcartCookieApi().getComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, null)
                 .subscribeOn(Schedulers.io())
@@ -179,6 +183,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                     adapter.setAddressInfo(response.data.address_info);
                                     adapter.setDiscount_level(response.data.discount_level);
                                     adapter.setAvailable_general_voucher(response.data.available_general_voucher);
+                                    adapter.setAddressApi(response.data.address_api);
                                     store_cart_list.clear();
                                     store_cart_list.addAll(response.data.store_cart_list);
                                     adapter.setDataList(store_cart_list);

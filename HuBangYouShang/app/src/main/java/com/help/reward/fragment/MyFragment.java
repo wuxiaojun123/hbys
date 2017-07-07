@@ -55,8 +55,6 @@ import rx.schedulers.Schedulers;
 
 public class MyFragment extends BaseFragment implements View.OnClickListener {
 
-    private View contentView;
-
     @BindView(R.id.ll_not_logged_in)
     LinearLayout ll_not_logged_in;
     @BindView(R.id.rl_user_info)
@@ -117,9 +115,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         RxBus.getDefault().toObservable(UpdateLoginDataRxbusType.class).subscribe(new Action1<UpdateLoginDataRxbusType>() {
             @Override
             public void call(UpdateLoginDataRxbusType type) {
-                LogUtils.e("更新个人中心数据11111111");
+//                LogUtils.e("更新个人中心数据11111111");
                 if (type.isUpdate) { // 更新数据
-                    LogUtils.e("更新个人中心数据2222222222");
+//                    LogUtils.e("更新个人中心数据2222222222");
                     getPersonData();
                 }
             }
@@ -129,7 +127,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             public void call(UpdateMessageDataRxbusType type) {
                 if (type.hasNew) { // 更新数据
                     tv_title_help_msgcount.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     tv_title_help_msgcount.setVisibility(View.INVISIBLE);
                 }
             }
@@ -141,7 +139,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         if (App.APP_CLIENT_KEY == null) {
             return;
         }
-        LogUtils.e("更新个人中心数据333333333333");
+//        LogUtils.e("更新个人中心数据333333333333");
         PersonalNetwork.getResponseApi()
                 .getLoggedInResponse(App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
@@ -388,9 +386,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             tv_general_voucher.setText(App.mLoginReponse.general_voucher);
             tv_discount_level.setText(App.mLoginReponse.discount_level);
 
-            if(App.mLoginReponse.new_message){
+            if (App.mLoginReponse.new_message) {
                 tv_title_help_msgcount.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 tv_title_help_msgcount.setVisibility(View.INVISIBLE);
             }
             RxBus.getDefault().post(new UpdateMessageDataRxbusType(App.mLoginReponse.new_message));

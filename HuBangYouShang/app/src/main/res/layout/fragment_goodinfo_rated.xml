@@ -8,8 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="@dimen/layout_margin"
-        android:layout_marginRight="@dimen/layout_margin"
+        android:layout_marginLeft="@dimen/layout_margin_8"
+        android:layout_marginRight="@dimen/layout_margin_8"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -24,7 +24,7 @@
             android:text="全部评价(0)" />
 
         <Space
-            android:layout_width="@dimen/layout_margin"
+            android:layout_width="@dimen/layout_margin_8"
             android:layout_height="match_parent" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:text="好评(0)" />
 
         <Space
-            android:layout_width="@dimen/layout_margin"
+            android:layout_width="@dimen/layout_margin_8"
             android:layout_height="match_parent" />
 
         <TextView
@@ -52,7 +52,7 @@
             android:text="中评(0)" />
 
         <Space
-            android:layout_width="@dimen/layout_margin"
+            android:layout_width="@dimen/layout_margin_8"
             android:layout_height="match_parent" />
 
         <TextView

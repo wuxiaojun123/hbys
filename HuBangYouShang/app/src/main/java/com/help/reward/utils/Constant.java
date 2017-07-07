@@ -117,7 +117,7 @@ public class Constant {
     public static final String URL_SHOPCART_EDIT = "mobile/index.php?act=member_cart&op=cart_edit_quantity";
 
     public static final String URL_BUY_STEP_ONE = "mobile/index.php?act=member_buy&op=buy_step1";
-    public static final String URL_BUY_STEP_TWO = "/mobile/index.php?act=member_buy&op=buy_step2";
+    public static final String URL_BUY_STEP_TWO = "mobile/index.php?act=member_buy&op=buy_step2";
 
 
     public static final String URL_STORE = "mobile/index.php?act=store";
