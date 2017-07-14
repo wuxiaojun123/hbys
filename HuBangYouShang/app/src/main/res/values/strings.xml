@@ -19,6 +19,7 @@
 
     <!--商城 看广告-->
     <string name="string_watch_ad">看广告</string>
+    <string name="string_search_like_ad">搜素关键字相关商品</string>
 
     <!--个人中心 我的获赏，我的求助-->
     <string name="string_comment">跟帖</string>

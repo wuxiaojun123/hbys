@@ -134,7 +134,7 @@ public class ConsumptionFragment extends BaseFragment {
     }
 
     private void initView() {
-        tv_search.setText("搜素关键字相关商品");
+        tv_search.setText(R.string.string_search_like_ad);
     }
 
     private void initNetwork() {

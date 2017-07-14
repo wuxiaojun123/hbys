@@ -91,6 +91,7 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
 
     private void initView() {
         colorTextBg = getResources().getColor(R.color.color_3a);
+        et_search.setHint(R.string.string_search_like_ad);
         et_search.setOnKeyListener(new SearchEditTextView.onKeyListener() {
             @Override
             public void onKey() {
