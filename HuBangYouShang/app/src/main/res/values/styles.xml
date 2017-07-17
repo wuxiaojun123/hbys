@@ -371,7 +371,7 @@
     <!--标题栏右边文字样式-->
     <style name="style_text_title_right">
         <item name="android:textSize">@dimen/dimen_18</item>
-        <item name="android:textColor">#d17171</item>
+        <item name="android:textColor">#ffffff</item>
     </style>
     <!-- 订单详情 -->
     <style name="style_order_details_bottom_tv">

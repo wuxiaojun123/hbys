@@ -1,5 +1,6 @@
 package com.help.reward.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.HelpCommitRxbusType;
 import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
 import com.help.reward.utils.ChooseCameraPopuUtils;
+import com.help.reward.utils.DialogUtil;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.utils.PickerUtils;
 import com.help.reward.utils.StringUtils;
@@ -246,10 +248,10 @@ public class ReleaseHelpActivity extends BaseActivity {
 
 
     private void subHelp() {
-        String title = etReleaseHelpTitle.getText().toString().trim();
+       final String title = etReleaseHelpTitle.getText().toString().trim();
 //        String endTimeStr = tvReleaseHelpData.getText().toString().trim();
-        String content = etReleaseHelpContent.getText().toString().trim();
-        String score = tv_release_help_score.getText().toString().trim();
+        final  String content = etReleaseHelpContent.getText().toString().trim();
+        final   String score = tv_release_help_score.getText().toString().trim();
         if (!StringUtils.checkStr(title)) {
             ToastUtils.show(mContext, "请输入标题");
             return;
@@ -274,7 +276,15 @@ public class ReleaseHelpActivity extends BaseActivity {
             ToastUtils.show(mContext, "请选择有效时间");
             return;
         }
-        subHelpData(title, content, score, end_time);
+        DialogUtil.showConfirmCancleDialog(this, "您的求助帖即将发布，需扣除"+score+"帮赏分冻结，确认发布？", new DialogUtil.OnDialogUtilClickListener() {
+            @Override
+            public void onClick(boolean isLeft) {
+                if (isLeft) {
+                    subHelpData(title, content, score, end_time);
+                }
+            }
+        });
+
     }
 
     protected Subscription subscribe;

@@ -10,6 +10,7 @@ import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.HelpSeekCommentBean;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.utils.IntentUtil;
 import com.idotools.utils.DateUtil;
 
 
@@ -56,6 +57,7 @@ public class HelpSeekInfoCommentDetailAdapter extends BaseRecyclerAdapter<HelpSe
 
         ImageView iv_helpinfo_headimg = holder.getView(R.id.iv_helpinfo_headimg);
         GlideUtils.loadCircleImage(item.member_avatar, iv_helpinfo_headimg);
+        IntentUtil.startPersonalHomePage(mActivity,item.u_id,iv_helpinfo_headimg);
         TextView tv_helpinfo_uname = holder.getView(R.id.tv_helpinfo_uname);
         tv_helpinfo_uname.setText(item.u_name);
         TextView tv_helpinfo_date = holder.getView(R.id.tv_helpinfo_date);

@@ -62,6 +62,7 @@ public class HelpRewardChatDetailActivity extends BaseActivity {
     String id, post_id;
     int curpage = 1;
     LRecyclerViewAdapter mLRecyclerViewAdapter;
+    String hint;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class HelpRewardChatDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         id = getIntent().getExtras().getString("id");
         post_id = getIntent().getExtras().getString("post_id");
+        hint = getIntent().getExtras().getString("hint");
         initView();
         initRecycler();
 
@@ -83,6 +85,7 @@ public class HelpRewardChatDetailActivity extends BaseActivity {
     private void initView() {
         tvTitle.setText("详情页");
         tvTitleRight.setVisibility(View.GONE);
+        et_comment.setHint(hint);
     }
 
     private void initRecycler() {
@@ -200,7 +203,7 @@ public class HelpRewardChatDetailActivity extends BaseActivity {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             et_comment.setText("");
-                            ToastUtils.show(mContext, "评论成功");
+                            ToastUtils.show(mContext, "回复成功");
                             if (!StringUtils.checkStr(id)) {
                                 setResult(RESULT_OK);
                                 finish();

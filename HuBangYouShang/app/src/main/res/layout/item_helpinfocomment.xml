@@ -125,6 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
+                    android:layout_marginRight="5dp"
                     android:paddingLeft="15dp"
                     android:src="@mipmap/fabulous_normal" />
 
@@ -133,6 +134,7 @@
                     android:id="@+id/iv_awful"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:paddingLeft="15dp"
                     android:paddingTop="10dp"
                     android:src="@mipmap/awful_normal" />
@@ -143,6 +145,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
                     android:paddingTop="10dp"
+                    android:layout_marginRight="5dp"
                     android:src="@mipmap/reply_normal" />
 
                 <ImageView

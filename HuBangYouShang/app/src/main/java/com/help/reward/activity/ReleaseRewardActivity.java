@@ -22,6 +22,7 @@ import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.HelpCommitRxbusType;
 import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
 import com.help.reward.utils.ChooseCameraPopuUtils;
+import com.help.reward.utils.DialogUtil;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.utils.PickerUtils;
 import com.help.reward.utils.StringUtils;
@@ -129,7 +130,7 @@ public class ReleaseRewardActivity extends BaseActivity {
             }
 
             @Override
-            public void onLoadSucced(String file_name,String url) {
+            public void onLoadSucced(String file_name, String url) {
                 photoUrl.add(url);
                 file_names.add(file_name);
                 showPhoto();
@@ -153,26 +154,26 @@ public class ReleaseRewardActivity extends BaseActivity {
                 ivReleaseAddphoto.setVisibility(View.GONE);
                 iv_photo4.setVisibility(View.VISIBLE);
                 iv_delete4.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(photoUrl.get(3),iv_photo4);
+                GlideUtils.loadImage(photoUrl.get(3), iv_photo4);
             case 3:
                 iv_photo3.setVisibility(View.VISIBLE);
                 iv_delete3.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(photoUrl.get(2),iv_photo3);
+                GlideUtils.loadImage(photoUrl.get(2), iv_photo3);
             case 2:
                 iv_photo2.setVisibility(View.VISIBLE);
                 iv_delete2.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(photoUrl.get(1),iv_photo2);
+                GlideUtils.loadImage(photoUrl.get(1), iv_photo2);
             case 1:
                 iv_photo1.setVisibility(View.VISIBLE);
                 iv_delete1.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(photoUrl.get(0),iv_photo1);
+                GlideUtils.loadImage(photoUrl.get(0), iv_photo1);
                 break;
         }
-        tv_photonum.setText("还可上传（"+(4-photoUrl.size())+"）张");
+        tv_photonum.setText("还可上传（" + (4 - photoUrl.size()) + "）张");
     }
 
     @OnClick({R.id.iv_title_back, R.id.tv_title_right, R.id.tv_release_help_address, R.id.tv_release_help_type,
-            tv_release_help_data, R.id.iv_release_addphoto,R.id.iv_delete1,R.id.iv_delete2,R.id.iv_delete3,R.id.iv_delete4})
+            tv_release_help_data, R.id.iv_release_addphoto, R.id.iv_delete1, R.id.iv_delete2, R.id.iv_delete3, R.id.iv_delete4})
     void click(View v) {
         switch (v.getId()) {
             case R.id.iv_title_back:
@@ -222,9 +223,9 @@ public class ReleaseRewardActivity extends BaseActivity {
     }
 
     private void subHelp() {
-        String title = etReleaseHelpTitle.getText().toString().trim();
+        final String title = etReleaseHelpTitle.getText().toString().trim();
         String end_time = etReleaseHelpTitle.getText().toString().trim();
-        String content = etReleaseHelpContent.getText().toString().trim();
+        final String content = etReleaseHelpContent.getText().toString().trim();
 //        String score = tv_release_help_score.getText().toString().trim();
         if (!StringUtils.checkStr(title)) {
             ToastUtils.show(mContext, "请输入标题");
@@ -242,7 +243,15 @@ public class ReleaseRewardActivity extends BaseActivity {
             ToastUtils.show(mContext, "请选择分类");
             return;
         }
-        subHelpData(title, content);
+        DialogUtil.showConfirmCancleDialog(this, "确认发布？", new DialogUtil.OnDialogUtilClickListener() {
+            @Override
+            public void onClick(boolean isLeft) {
+                if (isLeft) {
+                    subHelpData(title, content);
+                }
+            }
+        });
+
     }
 
 

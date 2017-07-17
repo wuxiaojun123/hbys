@@ -29,6 +29,7 @@ import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.HelpSeekInfoRefreshRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.utils.IntentUtil;
 import com.help.reward.utils.StringUtils;
 import com.help.reward.view.ChooseCommentTypePop;
 import com.help.reward.view.MyProcessDialog;
@@ -95,18 +96,19 @@ public class HelpSeekInfoActivity extends BaseActivity {
 
     String has_commented, status;
     String from;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helpseekinfo);
         ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null) {
+        if (bundle != null) {
             id = bundle.getString("id");
             if (!StringUtils.checkStr(id)) {
                 finish();
             }
-            if(bundle.containsKey("from")){
+            if (bundle.containsKey("from")) {
                 from = bundle.getString("from");
             }
         }
@@ -165,6 +167,7 @@ public class HelpSeekInfoActivity extends BaseActivity {
                 }
             }
         });
+
         mLRecyclerViewAdapter.addHeaderView(view);
 
     }
@@ -188,10 +191,11 @@ public class HelpSeekInfoActivity extends BaseActivity {
             }
         });
     }
+
     @Override
     public void onBackPressed() {
 
-        if("ReleaseHelpActivity".equals(from)){
+        if ("ReleaseHelpActivity".equals(from)) {
             startActivity(new Intent(mContext, MyHelpActivity.class));
         }
         super.onBackPressed();
@@ -357,6 +361,7 @@ public class HelpSeekInfoActivity extends BaseActivity {
         HelpSeekInfoBean info = response.data.info;
         GlideUtils.loadCircleImage(info.member_avatar, iv_helpinfo_headimg);
         tv_helpinfo_uname.setText(info.u_name);
+        IntentUtil.startPersonalHomePage(HelpSeekInfoActivity.this,info.u_id,iv_helpinfo_headimg);
         tv_helpinfo_date.setText(DateUtil.getDateToString(info.create_time + ""));
         tv_helpinfo_count.setText("跟帖" + response.data.comment_num);
         tv_helpinfo_title.setText(info.title);
@@ -384,9 +389,9 @@ public class HelpSeekInfoActivity extends BaseActivity {
         }
 
         has_commented = response.data.has_commented;
-        if(response.data.comment.size()>0){
-            if(!"0".equals(response.data.comment.get(0).best_re)){
-                info.status="结帖";
+        if (response.data.comment.size() > 0) {
+            if (!"0".equals(response.data.comment.get(0).best_re)) {
+                info.status = "结帖";
             }
         }
         status = info.status;
@@ -395,7 +400,7 @@ public class HelpSeekInfoActivity extends BaseActivity {
             comment_layout.setVisibility(View.GONE);
             tv_comment.setVisibility(View.GONE);
         } else {
-            if (!"0".equals(response.data.has_commented)&&!"False".equalsIgnoreCase(response.data.has_commented)) {
+            if (!"0".equals(response.data.has_commented) && !"False".equalsIgnoreCase(response.data.has_commented)) {
                 comment_layout.setVisibility(View.GONE);
                 tv_comment.setVisibility(View.VISIBLE);
             } else {
@@ -413,7 +418,7 @@ public class HelpSeekInfoActivity extends BaseActivity {
         if (!info.u_id.equals(App.APP_USER_ID)) {
             iv_title_favorites.setVisibility(View.VISIBLE);
             iv_title_complaint.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             comment_layout.setVisibility(View.GONE);
             tv_comment.setVisibility(View.GONE);
         }

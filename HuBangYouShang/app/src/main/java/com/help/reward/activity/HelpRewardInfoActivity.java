@@ -33,6 +33,7 @@ import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.DialogUtil;
 import com.help.reward.utils.DisplayUtil;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.utils.IntentUtil;
 import com.help.reward.utils.ScreenUtils;
 import com.help.reward.utils.StringUtils;
 import com.help.reward.view.HelpRewardInfoMorePop;
@@ -254,6 +255,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
                                 Intent intentDetail = new Intent(mContext, HelpRewardChatDetailActivity.class);
                                 intentDetail.putExtra("id", has_chatted);
                                 intentDetail.putExtra("post_id", id);
+                                intentDetail.putExtra("hint", "跟帖");
                                 startActivityForResult(intentDetail,200);
                                 ActivitySlideAnim.slideInAnim(HelpRewardInfoActivity.this);
                             }
@@ -263,6 +265,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
                     Intent intentDetail = new Intent(this, HelpRewardChatDetailActivity.class);
                     intentDetail.putExtra("id", has_chatted);
                     intentDetail.putExtra("post_id", id);
+                    intentDetail.putExtra("hint", "继续跟帖");
                     startActivityForResult(intentDetail,200);
                     ActivitySlideAnim.slideInAnim(this);
                 }
@@ -429,6 +432,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
         lRecyclerview.setVisibility(View.VISIBLE);
         HelpRewardInfoBean info = response.data.info;
         GlideUtils.loadCircleImage(info.member_avatar, iv_helpinfo_headimg);
+        IntentUtil.startPersonalHomePage(HelpRewardInfoActivity.this,info.u_id,iv_helpinfo_headimg);
         u_name = info.u_name;
         content = info.content;
         tv_helpinfo_uname.setText(info.u_name);
@@ -587,6 +591,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
             params.setMargins(DisplayUtil.dipToPixel(mContext, 5), 0, 0, 0);
             circle_img.setLayoutParams(params);
             GlideUtils.loadCircleImage(info.admiration_list.get(i).avatar, circle_img);
+            IntentUtil.startPersonalHomePage(HelpRewardInfoActivity.this,info.admiration_list.get(i).id,circle_img);
             if (i < 8) {
                 collect_layout1.addView(circle_img);
             } else {

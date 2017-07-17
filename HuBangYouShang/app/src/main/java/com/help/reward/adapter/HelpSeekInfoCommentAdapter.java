@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.activity.HelpSeekCommentDetailActivity;
+import com.help.reward.activity.HelpSeekInfoActivity;
+import com.help.reward.activity.OrderDetailsActivity;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.HelpSeekCommentBean;
 import com.help.reward.bean.Response.StringResponse;
@@ -18,6 +20,7 @@ import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.DialogUtil;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.utils.IntentUtil;
 import com.help.reward.view.HelpSeekInfoCommentMorePop;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.DateUtil;
@@ -97,6 +100,8 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
 
         ImageView iv_helpinfo_headimg = holder.getView(R.id.iv_helpinfo_headimg);
         GlideUtils.loadCircleImage(item.member_avatar, iv_helpinfo_headimg);
+        IntentUtil.startPersonalHomePage(mActivity,item.u_id,iv_helpinfo_headimg);
+
         TextView tv_helpinfo_uname = holder.getView(R.id.tv_helpinfo_uname);
         tv_helpinfo_uname.setText(item.u_name);
         TextView tv_helpinfo_date = holder.getView(R.id.tv_helpinfo_date);
@@ -124,8 +129,20 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
         }
 
         if (!"0".equals(item.useful) || !"0".equals(item.useless)||!isMyPost) {
-            iv_fabulous.setEnabled(false);
-            iv_awful.setEnabled(false);
+            iv_fabulous.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ToastUtils.show(mContext, "此按钮仅发帖人点击");
+
+                }
+            });
+            iv_awful.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    ToastUtils.show(mContext, "此按钮仅发帖人点击");
+                }
+            });
         } else {
             iv_fabulous.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -179,7 +196,7 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
                 intentDetail.putExtra("status", status);
                 mActivity.startActivity(intentDetail);
                 ActivitySlideAnim.slideInAnim(mActivity);
-                if ("true".equalsIgnoreCase(item.new_unread)) {
+                if ("true".equalsIgnoreCase(item.new_unread)&&!"结帖".equals(status)) {
                     iv_reply.setImageResource(R.mipmap.reply_normal);
                 }
 
@@ -199,7 +216,7 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
                 intentDetail.putExtra("status", status);
                 mActivity.startActivity(intentDetail);
                 ActivitySlideAnim.slideInAnim(mActivity);
-                if ("true".equalsIgnoreCase(item.new_unread)) {
+                if ("true".equalsIgnoreCase(item.new_unread)&&!"结帖".equals(status)) {
                     iv_reply.setImageResource(R.mipmap.reply_normal);
                 }
 
@@ -221,7 +238,7 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
         } else {
             iv_helpinfo_private.setVisibility(View.GONE);
         }
-        if (isMyPost && !"结帖".equals(status)) {
+        if (isMyPost) {
             iv_more.setVisibility(View.VISIBLE);
         } else {
             iv_more.setVisibility(View.GONE);
@@ -234,6 +251,7 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
         }
 
         if ("结帖".equals(status)) {
+            iv_reply.setImageResource(R.mipmap.review_normal);
             iv_fabulous.setEnabled(false);
             iv_awful.setEnabled(false);
             if ("0".equals(item.complained)) {
