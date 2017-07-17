@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,14 +62,24 @@ public class PersonHomepageActivity extends BaseActivity {
         setContentView(R.layout.activity_person_homepage);
         ButterKnife.bind(this);
 
-        initData();
+
+        String memberId = getIntent().getStringExtra("u_id");
+        if(!TextUtils.isEmpty(memberId)){
+            initData(memberId);
+        }
 
     }
 
-    private void initData() {
+    private void initData(String memberId) {
         initRus();
-        seekFragment = new PersonHomepageSeekFragment();
-        helpFragment = new PersonHomepageHelpFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("member_id",memberId);
+
+        PersonHomepageSeekFragment seekFragment = new PersonHomepageSeekFragment();
+        seekFragment.setArguments(bundle);
+
+        PersonHomepageHelpFragment helpFragment = new PersonHomepageHelpFragment();
+        helpFragment.setArguments(bundle);
         fragments[0] = seekFragment;
         fragments[1] = helpFragment;
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));

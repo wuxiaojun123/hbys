@@ -60,7 +60,9 @@ public class PersonHomepageSeekFragment extends BaseFragment {
     View ll_empty;
     @BindView(R.id.tv_no_result)
     TextView tv_no_result;
-    String type;
+
+    String member_id;
+
 
     @Nullable
     @Override
@@ -69,15 +71,15 @@ public class PersonHomepageSeekFragment extends BaseFragment {
             contentView = inflater.inflate(R.layout.fragment_help2, null);
         }
         ButterKnife.bind(this, contentView);
+        Bundle bundle = getArguments();
+        member_id = bundle.getString("member_id");
+
         initData();
         return contentView;
     }
 
     private void initData() {
         tv_no_result.setText("抱歉没有找到符合条件的帖子");
-        if ("search".equalsIgnoreCase(type)) {
-            lRecyclerview.setEmptyView(ll_empty);
-        }
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new PersonHomepageSeekAdapter(mContext);
         adapter.setDataList(mDatas);
@@ -133,7 +135,7 @@ public class PersonHomepageSeekFragment extends BaseFragment {
 
         subscribe = PersonalNetwork
                 .getResponseApi()
-                .getHomepageSeekResponse(App.APP_CLIENT_KEY, App.APP_USER_ID, "get_reward")
+                .getHomepageSeekResponse(App.APP_CLIENT_KEY, member_id, "get_reward")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomepageSeekResponse>() {

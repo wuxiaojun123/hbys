@@ -63,8 +63,8 @@ public class PersonHomepageHelpFragment extends BaseFragment {
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     List<HomepageBean> mDatas = new ArrayList<>();
     int curpage = 1;
-    String type;
-
+//    String type;
+    String member_id;
 
     @Nullable
     @Override
@@ -73,6 +73,8 @@ public class PersonHomepageHelpFragment extends BaseFragment {
             contentView = inflater.inflate(R.layout.fragment_help1, null);
         }
         ButterKnife.bind(this, contentView);
+        Bundle bundle = getArguments();
+        member_id = bundle.getString("member_id");
 
         initData();
         return contentView;
@@ -81,9 +83,9 @@ public class PersonHomepageHelpFragment extends BaseFragment {
     private void initData() {
 
         tv_no_result.setText("抱歉没有找到符合条件的帖子");
-        if ("search".equalsIgnoreCase(type)) {
-            lRecyclerview.setEmptyView(ll_empty);
-        }
+//        if ("search".equalsIgnoreCase(type)) {
+//            lRecyclerview.setEmptyView(ll_empty);
+//        }
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new PersonHomepageHelpAdapter(mContext);
         adapter.setDataList(mDatas);
@@ -142,7 +144,7 @@ public class PersonHomepageHelpFragment extends BaseFragment {
 
         subscribe = PersonalNetwork
                 .getResponseApi()
-                .getHomepageHelpResponse(App.APP_CLIENT_KEY, App.APP_USER_ID, "seek_help")
+                .getHomepageHelpResponse(App.APP_CLIENT_KEY, member_id, "seek_help")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomepageHelpResponse>() {
