@@ -51,10 +51,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     TextView tv_title;
     @BindView(R.id.tv_title_right)
     TextView tv_title_right;
-
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
-
     @BindView(R.id.tv_total)
     TextView mTvTotal;
 
@@ -63,7 +61,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String cart_id;
     private String if_cart;
     private List<ConfirmOrderResponse.ConfirmCartList> store_cart_list = new ArrayList<>();
-    ConfirmOrderResponse.ConfirmOrderBean confirmOrderBean;
+    private ConfirmOrderResponse.ConfirmOrderBean confirmOrderBean;
+    private String voucher; // t_id|store_id|price,
+    private String general_voucher; // store_id|num,store_id|num
+    private String pay_message; // 店铺id|备注内容
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -188,14 +190,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                     store_cart_list.addAll(response.data.store_cart_list);
                                     adapter.setDataList(store_cart_list);
                                     lRecyclerview.setVisibility(View.VISIBLE);
-
                                 }
-
                                 if (!TextUtils.isEmpty(response.data.order_amount)) {
                                     mTvTotal.setText("¥" + response.data.order_amount);
                                 }
                             }
-
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

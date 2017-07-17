@@ -297,6 +297,10 @@
         <activity
             android:name="com.help.reward.activity.TradeActivity"
             android:screenOrientation="portrait" />
+        <!--个人主页-->
+        <activity android:name=".activity.PersonHomepageActivity"
+            android:screenOrientation="portrait" />
+
         <!--选择支付方式-->
         <activity
             android:name="com.help.reward.activity.PayTypeActivity"

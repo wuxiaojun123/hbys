@@ -16,6 +16,8 @@ import com.help.reward.bean.Response.GeneralExchangeVolumeResponse;
 import com.help.reward.bean.Response.GeneralVolumeResponse;
 import com.help.reward.bean.Response.HelpCenterResponse;
 import com.help.reward.bean.Response.HelpRewardResponse;
+import com.help.reward.bean.Response.HomepageHelpResponse;
+import com.help.reward.bean.Response.HomepageSeekResponse;
 import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.bean.Response.MemberInfoResponse;
 import com.help.reward.bean.Response.MyBalanceResponse;
@@ -619,6 +621,24 @@ public interface PersonalApi {
             @Field("key") String key,
             @Field("content") String content,
             @Field("mobile") String mobile
+    );
+
+    // 个人主页--求助
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=index&op=member_index")
+    Observable<HomepageHelpResponse> getHomepageHelpResponse(
+            @Field("key") String key,
+            @Field("member_id") String member_id,
+            @Field("type") String type
+    );
+
+    // 个人主页--获赏
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=index&op=member_index")
+    Observable<HomepageSeekResponse> getHomepageSeekResponse(
+            @Field("key") String key,
+            @Field("member_id") String member_id,
+            @Field("type") String type
     );
 
 }
