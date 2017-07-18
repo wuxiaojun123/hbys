@@ -18,15 +18,26 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_centerVertical="true" />
-
+        <TextView
+            android:id="@+id/tv_hashelp"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#85b2f6"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/layout_margin"
+            android:text="已帮助过" />
         <TextView
             android:id="@+id/tv_helpinfo_uname"
             style="@style/style_text_lable"
             android:layout_width="match_parent"
+            android:layout_toLeftOf="@+id/tv_hashelp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/layout_margin"
             android:layout_toRightOf="@id/iv_helpinfo_headimg"
             android:text="哈哈哈哈" />
+
 
         <TextView
             android:id="@+id/tv_helpinfo_date"
