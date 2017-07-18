@@ -89,6 +89,7 @@ public class HelpSeekInfoActivity extends BaseActivity {
     TextView tv_helpinfo_count;
     TextView tv_helpinfo_title;
     TextView tv_helpinfo_content;
+    TextView tv_hashelp;
     ImageView iv_image1, iv_image2, iv_image3, iv_image4;
     TextView tv_showAll;
     LRecyclerViewAdapter mLRecyclerViewAdapter;
@@ -149,6 +150,7 @@ public class HelpSeekInfoActivity extends BaseActivity {
         tv_helpinfo_count = (TextView) view.findViewById(R.id.tv_helpinfo_count);
         tv_helpinfo_title = (TextView) view.findViewById(R.id.tv_helpinfo_title);
         tv_helpinfo_content = (TextView) view.findViewById(R.id.tv_helpinfo_content);
+        tv_hashelp  = (TextView) view.findViewById(R.id.tv_hashelp);
         iv_image1 = (ImageView) view.findViewById(R.id.iv_image1);
         iv_image2 = (ImageView) view.findViewById(R.id.iv_image2);
         iv_image3 = (ImageView) view.findViewById(R.id.iv_image3);
@@ -386,6 +388,11 @@ public class HelpSeekInfoActivity extends BaseActivity {
                     GlideUtils.loadImage(info.img_url.get(0), iv_image1);
                     break;
             }
+        }
+        if(response.data.has_helped){
+            tv_hashelp.setVisibility(View.VISIBLE);
+        }else{
+            tv_hashelp.setVisibility(View.GONE);
         }
 
         has_commented = response.data.has_commented;
