@@ -21,6 +21,7 @@ import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.ComplaintStatusResponse;
 import com.help.reward.bean.Response.DeleteMessageResponse;
 import com.help.reward.bean.Response.MessageResponse;
+import com.help.reward.manager.GotoHelpVoteInfoUtils;
 import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.MessageNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -127,12 +128,16 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
         switch (view.getId()) {
             case R.id.iv_title_back:
                 finish();
+                ActivitySlideAnim.slideOutAnim(PostActivity.this);
+
                 break;
             case R.id.tv_title_right:
                 clearMessage();
                 break;
         }
     }
+
+    private GotoHelpVoteInfoUtils gotoHelpVoteInfoUtils;
 
     @Override
     public void onItemClick(View view, int position) {
@@ -153,8 +158,10 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
             startActivity(intent);
             ActivitySlideAnim.slideInAnim(this);
         } else if ("6".equals(type)) {
-
-            getComplaintStatus(adapter.getDataList().get(position).related_id);
+            if (gotoHelpVoteInfoUtils == null) {
+                gotoHelpVoteInfoUtils = new GotoHelpVoteInfoUtils(PostActivity.this);
+            }
+            gotoHelpVoteInfoUtils.gotoHelpVoteInfo(adapter.getDataList().get(position).related_id);
 
         } else if ("1".equals(type)) {
 
@@ -278,7 +285,7 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
                 });
     }
 
-    public void getComplaintStatus(final String id) {
+    /*public void getComplaintStatus(final String id) {
         MyProcessDialog.showDialog(mContext);
         HelpNetwork
                 .getHelpApi()
@@ -314,7 +321,7 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
                         }
                     }
                 });
-    }
+    }*/
 
 
     private Subscription subscribe;

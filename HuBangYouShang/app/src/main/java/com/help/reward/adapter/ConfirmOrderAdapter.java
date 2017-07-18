@@ -150,16 +150,18 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
 
         tv_store_name.setText(bean.store_name); // 店铺名称
         // 根据店铺id拿到邮费
-        Map<String, String> postageMap = addressApi.content;
-        if (postageMap != null) {
-            String expressCharges = postageMap.get(bean.store_id); // 快递费用
+        if (addressApi != null) {
+            Map<String, String> postageMap = addressApi.content;
+            if (postageMap != null) {
+                String expressCharges = postageMap.get(bean.store_id); // 快递费用
 //            LogUtils.e("快递费用是：" + expressCharges);
-            if (TextUtils.isEmpty(expressCharges) || "0.00".equals(expressCharges)) {
-                tv_shipping_methods.setText("包邮"); //
-                tv_total_shop_and_money.setText("共计：" + size + "件商品  合计：￥" + bean.store_goods_total + "元(含运费0元)");
-            } else {
-                tv_shipping_methods.setText(expressCharges + "元");
-                tv_total_shop_and_money.setText("共计：" + size + "件商品  合计：￥" + bean.store_goods_total + "元(含运费" + expressCharges + "元)");
+                if (TextUtils.isEmpty(expressCharges) || "0.00".equals(expressCharges)) {
+                    tv_shipping_methods.setText("包邮"); //
+                    tv_total_shop_and_money.setText("共计：" + size + "件商品  合计：￥" + bean.store_goods_total + "元(含运费0元)");
+                } else {
+                    tv_shipping_methods.setText(expressCharges + "元");
+                    tv_total_shop_and_money.setText("共计：" + size + "件商品  合计：￥" + bean.store_goods_total + "元(含运费" + expressCharges + "元)");
+                }
             }
         }
 

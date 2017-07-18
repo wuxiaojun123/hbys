@@ -15,7 +15,8 @@ public class MessageBean {
     public String message_type;
     public Remark noteObject;
     public String noteString;//help,admiration
-    public class Remark{
+
+    public class Remark {
         public String goods_image;
         public String goods_name;
         public String order_sn;

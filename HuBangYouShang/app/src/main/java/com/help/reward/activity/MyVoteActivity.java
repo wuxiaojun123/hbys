@@ -1,5 +1,6 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,10 @@ import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.bean.Response.ComplaintStatusResponse;
+import com.help.reward.manager.GotoHelpVoteInfoUtils;
+import com.help.reward.network.HelpNetwork;
+import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
 import com.help.reward.R;
@@ -30,7 +35,7 @@ import rx.schedulers.Schedulers;
  * 我的投票
  * Created by wuxiaojun on 2017/2/11.
  */
-public class MyVoteActivity extends BaseActivity implements View.OnClickListener {
+public class MyVoteActivity extends BaseActivity implements View.OnClickListener, MyVoteAdapter.OnMyVoteClickListener {
 
     private int numSize = 15;
     private int currentPage = 1;
@@ -54,6 +59,11 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
         initView();
         initNet();
         initRecyclerView();
+        initEvent();
+    }
+
+    private void initEvent() {
+        mHelpPostAdapter.setOnMyVoteClickListener(this);
     }
 
     private void initNet() {
@@ -63,7 +73,7 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
         //  ?act=member_vote&op=list
         PersonalNetwork
                 .getResponseApi()
-                .getMyVoteResponse("member_vote","list",currentPage+"",App.APP_CLIENT_KEY)
+                .getMyVoteResponse("member_vote", "list", currentPage + "", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyVoteResponse>() {
@@ -79,15 +89,15 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                if(currentPage == 1){
+                                if (currentPage == 1) {
                                     mHelpPostAdapter.setDataList(response.data);
-                                }else{
+                                } else {
                                     mHelpPostAdapter.addAll(response.data);
                                 }
                             }
-                            if(!response.hasmore){
+                            if (!response.hasmore) {
                                 lRecyclerview.setNoMore(true);
-                            }else{
+                            } else {
                                 currentPage += 1;
                             }
                         } else {
@@ -101,6 +111,16 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
     private void initView() {
         tv_title.setText(R.string.string_my_vote_title);
         tv_title_right.setVisibility(View.GONE);
+    }
+
+    private GotoHelpVoteInfoUtils gotoHelpVoteInfoUtils;
+
+    @Override
+    public void onItemClick(int position) {
+        if (gotoHelpVoteInfoUtils == null) {
+            gotoHelpVoteInfoUtils = new GotoHelpVoteInfoUtils(MyVoteActivity.this);
+        }
+        gotoHelpVoteInfoUtils.gotoHelpVoteInfo(mHelpPostAdapter.getDataList().get(position).id);
     }
 
     @OnClick({R.id.iv_title_back})
