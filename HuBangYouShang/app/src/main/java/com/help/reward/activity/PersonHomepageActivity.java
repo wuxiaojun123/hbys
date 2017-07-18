@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,10 +20,13 @@ import com.help.reward.fragment.PersonHomepageHelpFragment;
 import com.help.reward.fragment.PersonHomepageSeekFragment;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.HomepageMemInfoRxbusType;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.Subscription;
 import rx.functions.Action1;
 
 /**
@@ -75,10 +79,10 @@ public class PersonHomepageActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putString("member_id",memberId);
 
-        PersonHomepageSeekFragment seekFragment = new PersonHomepageSeekFragment();
+        seekFragment = new PersonHomepageSeekFragment();
         seekFragment.setArguments(bundle);
 
-        PersonHomepageHelpFragment helpFragment = new PersonHomepageHelpFragment();
+        helpFragment = new PersonHomepageHelpFragment();
         helpFragment.setArguments(bundle);
         fragments[0] = seekFragment;
         fragments[1] = helpFragment;
@@ -88,21 +92,39 @@ public class PersonHomepageActivity extends BaseActivity {
 
     }
 
+    private Subscription subscribe;
+
     private void initRus() {
-        RxBus.getDefault().toObservable(HomepageMemInfoRxbusType.class).subscribe(new Action1<HomepageMemInfoRxbusType>() {
+        subscribe = RxBus.getDefault().toObservable(HomepageMemInfoRxbusType.class).subscribe(new Action1<HomepageMemInfoRxbusType>() {
             @Override
             public void call(HomepageMemInfoRxbusType memInfo) {
-                if(memInfo != null){
-                    GlideUtils.loadCircleImage(memInfo.member_avatar,iv_photo);
+                if (memInfo != null) {
+                    GlideUtils.loadCircleImage(memInfo.member_avatar, iv_photo);
                     tv_title.setText(memInfo.member_name);
                     tv_subscibe.setText(memInfo.description);
                     tv_help_count.setText(memInfo.help_people);
                     tv_complaint.setText(memInfo.complaint);
                     tv_complainted.setText(memInfo.complained);
+                    if(subscribe != null && !subscribe.isUnsubscribed()){
+                        subscribe.unsubscribe();
+                    }
                 }
             }
         });
 
+    }
+
+    @OnClick({R.id.id_back})
+    void click(View view){
+        int id = view.getId();
+        switch (id){
+            case R.id.id_back:
+                finish();
+                ActivitySlideAnim.slideOutAnim(PersonHomepageActivity.this);
+
+                break;
+
+        }
     }
 
 
@@ -142,6 +164,14 @@ public class PersonHomepageActivity extends BaseActivity {
         public void unregisterDataSetObserver(DataSetObserver observer) {
             if (observer != null)
                 super.unregisterDataSetObserver(observer);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(subscribe != null && !subscribe.isUnsubscribed()){
+            subscribe.unsubscribe();
         }
     }
 

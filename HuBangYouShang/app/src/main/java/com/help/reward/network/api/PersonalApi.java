@@ -623,19 +623,25 @@ public interface PersonalApi {
             @Field("mobile") String mobile
     );
 
-    // 个人主页--求助
+    // 个人主页--求助 ?act=index&op=member_index
     @FormUrlEncoded
-    @POST("mobile/index.php?act=index&op=member_index")
+    @POST("mobile/index.php")
     Observable<HomepageHelpResponse> getHomepageHelpResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
             @Field("key") String key,
             @Field("member_id") String member_id,
             @Field("type") String type
     );
 
-    // 个人主页--获赏
+    // 个人主页--获赏 ?act=index&op=member_index
     @FormUrlEncoded
-    @POST("mobile/index.php?act=index&op=member_index")
+    @POST("mobile/index.php")
     Observable<HomepageSeekResponse> getHomepageSeekResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
             @Field("key") String key,
             @Field("member_id") String member_id,
             @Field("type") String type

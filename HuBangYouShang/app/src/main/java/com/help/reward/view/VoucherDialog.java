@@ -26,6 +26,7 @@ import com.idotools.utils.MobileScreenUtils;
 import java.util.List;
 
 /**
+ * 可用优惠卷
  * Created by wuxiaojun on 17-7-7.
  */
 

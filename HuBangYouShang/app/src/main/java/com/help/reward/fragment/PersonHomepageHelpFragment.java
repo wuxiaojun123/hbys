@@ -63,7 +63,7 @@ public class PersonHomepageHelpFragment extends BaseFragment {
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     List<HomepageBean> mDatas = new ArrayList<>();
     int curpage = 1;
-//    String type;
+    //    String type;
     String member_id;
 
     @Nullable
@@ -141,10 +141,13 @@ public class PersonHomepageHelpFragment extends BaseFragment {
 
 
     private void requestData() {
-
+        if(App.APP_CLIENT_KEY == null){
+            ToastUtils.show(mContext,R.string.string_please_login);
+            return;
+        }
         subscribe = PersonalNetwork
                 .getResponseApi()
-                .getHomepageHelpResponse(App.APP_CLIENT_KEY, member_id, "seek_help")
+                .getHomepageHelpResponse("index", "member_index",curpage+"", App.APP_CLIENT_KEY, member_id, "seek_help")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomepageHelpResponse>() {
@@ -170,7 +173,7 @@ public class PersonHomepageHelpFragment extends BaseFragment {
                                     if (adapter.getDataList().size() == 0) {
 //                                        ToastUtils.show(mContext, "暂无数据");
                                     }
-                                    if(!isFirst){
+                                    if (!isFirst) {
                                         isFirst = true;
                                         HomepageMemberInfoBean memberInfoBean = response.data.member_info;
                                         RxBus.getDefault().post(new HomepageMemInfoRxbusType(memberInfoBean.member_avatar, memberInfoBean.member_name,

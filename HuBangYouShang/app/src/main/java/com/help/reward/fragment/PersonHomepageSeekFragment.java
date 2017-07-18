@@ -132,10 +132,13 @@ public class PersonHomepageSeekFragment extends BaseFragment {
     }
 
     private void requestData() {
-
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, R.string.string_please_login);
+            return;
+        }
         subscribe = PersonalNetwork
                 .getResponseApi()
-                .getHomepageSeekResponse(App.APP_CLIENT_KEY, member_id, "get_reward")
+                .getHomepageSeekResponse("index", "member_index", curpage + "", App.APP_CLIENT_KEY, member_id, "get_reward")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomepageSeekResponse>() {
