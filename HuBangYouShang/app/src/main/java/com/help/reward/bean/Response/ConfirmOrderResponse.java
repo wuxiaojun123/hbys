@@ -176,7 +176,7 @@ public class ConfirmOrderResponse extends BaseResponse<ConfirmOrderResponse.Conf
         public String store_id;
         public VoucherBean store_voucher_info; // 默认使用的优惠卷
         public List<VoucherBean> store_voucher_list; // 店铺全部可用优惠卷
-        public List<VoucherBean> store_voucher_list2; // 店铺全部不可能优惠卷
+        public List<VoucherBean> store_voucher_list2; // 店铺全部不可用优惠卷
 
         public List<GoodInfo> goods_list;
     }

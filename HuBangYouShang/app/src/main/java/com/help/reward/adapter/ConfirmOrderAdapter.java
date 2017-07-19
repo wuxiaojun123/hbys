@@ -139,9 +139,26 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             tv_coupon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // 全部可用优惠卷  bean.store_voucher_list  全部不可用优惠卷 bean.store_voucher_list2
+                    String defaultId = null;
+                    if (bean.store_voucher_info != null) {
+                        defaultId = bean.store_voucher_info.voucher_id;
+                    }
                     List<VoucherBean> list = new ArrayList<VoucherBean>();
-                    list.addAll(bean.store_voucher_list);
-                    list.addAll(bean.store_voucher_list2);
+                    for (VoucherBean voucherBean : bean.store_voucher_list) {
+                        voucherBean.useable = true;
+                        if (defaultId != null) {
+                            if (voucherBean.voucher_id.equals(defaultId)) {
+                                voucherBean.isChecked = true;
+                            }
+                        }
+                        list.add(voucherBean);
+                    }
+                    for (VoucherBean voucherBean : bean.store_voucher_list2) {
+                        voucherBean.useable = false;
+                        list.add(voucherBean);
+                    }
+                    LogUtils.e("可用优惠卷长度" + bean.store_voucher_list.size() + "--不可用长度" + bean.store_voucher_list2.size());
                     VoucherDialog dialog = new VoucherDialog(mContext, list);
                     dialog.showDialog();
                 }

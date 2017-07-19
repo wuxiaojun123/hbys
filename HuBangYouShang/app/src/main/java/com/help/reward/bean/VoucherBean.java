@@ -36,7 +36,7 @@ public class VoucherBean {
     public String voucher_end_date;
     public String voucher_price;
     public String voucher_limit;
-    public String voucher_store_id;
+
     public String voucher_state;
     public String voucher_active_date;
     public String voucher_type;
@@ -46,5 +46,9 @@ public class VoucherBean {
     public String voucher_from;
     public String voucher_owner_setting;
     public String desc;
+    public String store_name; // 店铺名称
+    public String voucher_store_id; // 店铺id
+    public boolean useable; // 可用的
+    public boolean isChecked; // 默认选中的
 
 }

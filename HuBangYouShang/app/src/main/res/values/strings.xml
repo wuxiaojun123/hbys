@@ -219,6 +219,9 @@
     <string name="canclebtn">取消</string>
     <string name="surebtn">确定</string>
 
+    <string name="string_available_coupon">可用优惠劵</string>
+    <string name="string_not_available_coupon">不可用优惠劵</string>
+
     <!--微信-->
     <string name="app_back">返回</string>
     <string name="app_ok">确定</string>
