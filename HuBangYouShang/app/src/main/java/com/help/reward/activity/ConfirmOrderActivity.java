@@ -126,20 +126,18 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         String voucher = adapter.getVoucher();
-        String general_voucher = null;
         String pay_message = adapter.getPay_message();
         LogUtils.e("优惠卷的值是:" + voucher);
         LogUtils.e("备注留言的值是:" + pay_message);
 
+        String general_voucher = null;
         if (adapter.getGeneral_voucher()) { // 用户使用通用卷
             general_voucher = confirmOrderBean.general_voucher_allocation;
         }
-
         /*MyProcessDialog.showDialog(mContext);
         ShopcartNetwork.getShopcartCookieApi().commitComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, confirmOrderBean.address_info.address_id
                 , confirmOrderBean.vat_hash, confirmOrderBean.address_api.offpay_hash, confirmOrderBean.address_api.offpay_hash_batch, "online",
-                voucher,
-                )
+                voucher, general_voucher, pay_message)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CommitOrderResponse>() {
