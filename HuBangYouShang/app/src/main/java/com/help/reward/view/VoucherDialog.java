@@ -27,7 +27,10 @@ import com.idotools.utils.LogUtils;
 import com.idotools.utils.MetricsUtils;
 import com.idotools.utils.MobileScreenUtils;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 可用优惠卷
@@ -44,10 +47,12 @@ public class VoucherDialog {
 
     private List<VoucherBean> mList;
     private VoucherAdapter mAdapter;
+    private HashMap<String, String> mVoucherMap;
 
-    public VoucherDialog(Context context, List<VoucherBean> list) {
+    public VoucherDialog(Context context, List<VoucherBean> list, HashMap<String, String> mVoucherMap) {
         this.mContext = context;
         this.mList = list;
+        this.mVoucherMap = mVoucherMap;
         build();
     }
 
@@ -101,12 +106,32 @@ public class VoucherDialog {
             @Override
             public void onClick(View v) {
                 if (id_cb_use_voucher.isChecked()) {
-                    // 不使用优惠卷
-                    LogUtils.e("不使用优惠卷");
+                    // 不使用优惠卷,则需要把hashmap集合中可能包含的key删除掉
+                    Iterator<HashMap.Entry<String, String>> iterator = mVoucherMap.entrySet().iterator();
+                    while (iterator.hasNext()) {
+                        HashMap.Entry<String, String> map = iterator.next();
+                        String key = map.getKey();
+                        boolean removeFlag = false;
+                        for (VoucherBean voucherBean : mList) {
+                            if (voucherBean.voucher_id.equals(key)) {
+                                removeFlag = true;
+                                break;
+                            }
+                        }
+                        if (removeFlag) {
+                            iterator.remove();
+                        }
+                    }
+                    LogUtils.e("不使用优惠卷,map集合长度是" + mVoucherMap.size());
+
                 } else {
                     for (VoucherBean voucherBean : mList) {
                         if (voucherBean.isChecked) {
-                            LogUtils.e("选中的优惠卷id是：" + voucherBean.voucher_id);
+//                            LogUtils.e("选中的优惠卷id是：" + voucherBean.voucher_id + "--" + voucherBean.voucher_store_id + "--" + voucherBean.voucher_price);
+                            if (mVoucherMap.containsKey(voucherBean.voucher_id)) {
+                                mVoucherMap.remove(voucherBean.voucher_id);
+                            }
+                            mVoucherMap.put(voucherBean.voucher_id, voucherBean.voucher_id + "|" + voucherBean.voucher_store_id + "|" + voucherBean.voucher_price);
                             break;
                         }
                     }
@@ -160,9 +185,8 @@ public class VoucherDialog {
                     if (itemView != null) {
                         if (itemView.getTop() <= mTypeHeight) {
                             // 需要滑动悬浮view
-                            LogUtils.e("距离getTop是：" + itemView.getTop() + "===" + (-(mTypeHeight - itemView.getTop())));
-                            tv_type.setY(-(mTypeHeight - itemView.getTop()));
-//                            tv_type.setTranslationY((mTypeHeight - itemView.getTop()));
+//                            tv_type.setY(-(mTypeHeight - itemView.getTop()));
+                            tv_type.setTranslationY((itemView.getTop() - mTypeHeight));
 
                         } else {
                             tv_type.setY(0);

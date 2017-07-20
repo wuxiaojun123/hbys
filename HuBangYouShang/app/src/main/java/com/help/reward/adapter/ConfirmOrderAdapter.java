@@ -2,7 +2,9 @@ package com.help.reward.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.help.reward.view.VoucherDialog;
 import com.idotools.utils.LogUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +54,9 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
     private String available_general_voucher;
     private ConfirmOrderResponse.AddressApi addressApi; // 里面包含了邮费
 
+    private StringBuilder voucher = new StringBuilder(); // t_id|store_id|price, 优惠卷
+    private boolean useGeneralVoucher = false; // 是否使用通用卷
+    private StringBuilder pay_message = new StringBuilder(); // 店铺id|备注内容
 
     public ConfirmOrderAdapter(Context mContext) {
         this.mContext = mContext;
@@ -132,40 +138,11 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             ll_shop.setTag(bean.store_id);
         }
 
-        if (bean.store_voucher_info == null) {
-            tv_coupon.setText("无可用");
-        } else {
-            tv_coupon.setText("可用优惠劵");
-            tv_coupon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 全部可用优惠卷  bean.store_voucher_list  全部不可用优惠卷 bean.store_voucher_list2
-                    String defaultId = null;
-                    if (bean.store_voucher_info != null) {
-                        defaultId = bean.store_voucher_info.voucher_id;
-                    }
-                    List<VoucherBean> list = new ArrayList<VoucherBean>();
-                    for (VoucherBean voucherBean : bean.store_voucher_list) {
-                        voucherBean.useable = true;
-                        if (defaultId != null) {
-                            if (voucherBean.voucher_id.equals(defaultId)) {
-                                voucherBean.isChecked = true;
-                            }
-                        }
-                        list.add(voucherBean);
-                    }
-                    for (VoucherBean voucherBean : bean.store_voucher_list2) {
-                        voucherBean.useable = false;
-                        list.add(voucherBean);
-                    }
-                    LogUtils.e("可用优惠卷长度" + bean.store_voucher_list.size() + "--不可用长度" + bean.store_voucher_list2.size());
-                    VoucherDialog dialog = new VoucherDialog(mContext, list);
-                    dialog.showDialog();
-                }
-            });
-        }
-
         tv_store_name.setText(bean.store_name); // 店铺名称
+        bindVoucherView(tv_coupon, bean);
+
+        bindRemarksView(et_remarks, bean);
+
         // 根据店铺id拿到邮费
         if (addressApi != null) {
             Map<String, String> postageMap = addressApi.content;
@@ -182,6 +159,85 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             }
         }
 
+    }
+
+    private HashMap<String, String> mPayMsgMap = new HashMap<>();
+
+    /***
+     * 绑定备注留言信息
+     *
+     * @param et_remarks
+     * @param bean
+     */
+    private void bindRemarksView(EditText et_remarks, final ConfirmOrderResponse.ConfirmCartList bean) {
+        et_remarks.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s != null) {
+                    String content = s.toString();
+                    if (content != null) {
+                        if (mPayMsgMap.containsKey(bean.store_id)) {
+                            mPayMsgMap.remove(bean.store_id);
+                        }
+                        mPayMsgMap.put(bean.store_id, content + ",");
+//                        pay_message.append(bean.store_id + "|" + content+",");
+                    }
+                }
+            }
+        });
+    }
+
+    private HashMap<String, String> mVoucherMap = new HashMap<>();
+
+    /***
+     * 绑定优惠卷ui
+     *
+     * @param tv_coupon
+     * @param bean
+     */
+    private void bindVoucherView(TextView tv_coupon, final ConfirmOrderResponse.ConfirmCartList bean) {
+        VoucherBean defaultVoucherBean = bean.store_voucher_info;
+        if (defaultVoucherBean == null) {
+            tv_coupon.setText("无可用");
+        } else {
+            tv_coupon.setText("可用优惠劵");
+            // 全部可用优惠卷  bean.store_voucher_list  全部不可用优惠卷 bean.store_voucher_list2
+            String defaultId = defaultVoucherBean.voucher_id;
+            mVoucherMap.put(defaultVoucherBean.voucher_id,
+                    defaultVoucherBean.voucher_id + "|" + defaultVoucherBean.voucher_store_id + "|" + defaultVoucherBean.voucher_price);
+
+            List<VoucherBean> list = new ArrayList<>();
+            for (VoucherBean voucherBean : bean.store_voucher_list) {
+                voucherBean.useable = true;
+                if (defaultId != null) {
+                    if (voucherBean.voucher_id.equals(defaultId)) {
+                        voucherBean.isChecked = true;
+                    }
+                }
+                list.add(voucherBean);
+            }
+            for (VoucherBean voucherBean : bean.store_voucher_list2) {
+                voucherBean.useable = false;
+                list.add(voucherBean);
+            }
+            final VoucherDialog dialog = new VoucherDialog(mContext, list, mVoucherMap);
+            tv_coupon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.showDialog();
+                }
+            });
+        }
     }
 
     private void setShopText(LinearLayout ll_shop, ConfirmOrderResponse.ConfirmCartList bean, int size) {
@@ -215,14 +271,12 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             mOrderDiscount.setText("无可用通用劵");
             btn_switch.setEnabled(false);
         } else {
-            double amount = Double.parseDouble(available_general_voucher) * Double.parseDouble(discount_level);
-            mOrderDiscount.setText("可用" + available_general_voucher + "通用劵 抵" + amount + "元");
+//            final double amount = Double.parseDouble(available_general_voucher) * Double.parseDouble(discount_level);
+//            mOrderDiscount.setText("可用" + available_general_voucher + "通用劵 抵" + amount + "元");
             btn_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) { // 开,通用劵兑换
-
-                    }
+                    useGeneralVoucher = isChecked;
                 }
             });
         }
@@ -260,4 +314,31 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
     public void setAvailable_general_voucher(String available_general_voucher) {
         this.available_general_voucher = available_general_voucher;
     }
+
+    public String getVoucher() {
+        if (voucher.length() > 0) {
+            voucher.delete(0, voucher.length() - 1);
+        }
+        for (Map.Entry<String, String> map : mVoucherMap.entrySet()) {
+            voucher.append(map.getValue() + ",");
+        }
+        return voucher.toString();
+    }
+
+    public boolean getGeneral_voucher() {
+        return useGeneralVoucher;
+    }
+
+    public String getPay_message() {
+        // 遍历map
+        if (pay_message.length() > 0) {
+            pay_message.delete(0, pay_message.length() - 1);
+        }
+        for (Map.Entry<String, String> map : mPayMsgMap.entrySet()) {
+            pay_message.append(map.getKey() + "|" + map.getValue());
+        }
+        return pay_message.toString();
+    }
+
+
 }

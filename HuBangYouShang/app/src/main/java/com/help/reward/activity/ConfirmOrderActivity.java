@@ -62,9 +62,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String if_cart;
     private List<ConfirmOrderResponse.ConfirmCartList> store_cart_list = new ArrayList<>();
     private ConfirmOrderResponse.ConfirmOrderBean confirmOrderBean;
-    private String voucher; // t_id|store_id|price,
-    private String general_voucher; // store_id|num,store_id|num
-    private String pay_message; // 店铺id|备注内容
 
 
     @Override
@@ -114,17 +111,34 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.tv_commit_order:
+
                 commitOrderRequest();
                 break;
         }
     }
 
+    /***
+     * 提交确认订单
+     */
     private void commitOrderRequest() {
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, R.string.string_please_login);
+            return;
+        }
+        String voucher = adapter.getVoucher();
+        String general_voucher = null;
+        String pay_message = adapter.getPay_message();
+        LogUtils.e("优惠卷的值是:" + voucher);
+        LogUtils.e("备注留言的值是:" + pay_message);
+
+        if (adapter.getGeneral_voucher()) { // 用户使用通用卷
+            general_voucher = confirmOrderBean.general_voucher_allocation;
+        }
 
         /*MyProcessDialog.showDialog(mContext);
         ShopcartNetwork.getShopcartCookieApi().commitComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, confirmOrderBean.address_info.address_id
                 , confirmOrderBean.vat_hash, confirmOrderBean.address_api.offpay_hash, confirmOrderBean.address_api.offpay_hash_batch, "online",
-
+                voucher,
                 )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -160,7 +174,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private void initData() {
         // cart_id=66|1,67|1,68|1,69|1---if_cart=1
-        LogUtils.e("确认订单页面 cart_id="+cart_id+"---if_cart="+if_cart);
+        LogUtils.e("确认订单页面 cart_id=" + cart_id + "---if_cart=" + if_cart);
         MyProcessDialog.showDialog(mContext);
         ShopcartNetwork.getShopcartCookieApi().getComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, null)
                 .subscribeOn(Schedulers.io())
@@ -182,6 +196,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                 if (response.data.store_cart_list != null) {
                                     //expandChild();
                                     confirmOrderBean = response.data;
+
                                     adapter.setAddressInfo(response.data.address_info);
                                     adapter.setDiscount_level(response.data.discount_level);
                                     adapter.setAvailable_general_voucher(response.data.available_general_voucher);

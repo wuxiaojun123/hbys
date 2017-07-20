@@ -31,7 +31,7 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
 
     private int mDefaultIndex = -1;
 
-    public VoucherAdapter(Context context,List<VoucherBean> mDataList) {
+    public VoucherAdapter(Context context, List<VoucherBean> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
     }
@@ -39,7 +39,7 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
 
     @Override
     public VoucherViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new VoucherViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_dialog_voucher,null));
+        return new VoucherViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_dialog_voucher, null));
     }
 
     @Override
@@ -81,6 +81,17 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
                     VoucherBean currentBean = mDataList.get(position);
                     currentBean.isChecked = true;
                     mDataList.set(position, currentBean);
+                    /*int size = mDataList.size();
+                    String checkedId = mDataList.get(position).voucher_id;
+                    for (int i = 0; i < size; i++) {
+                        VoucherBean bean = mDataList.get(i);
+                        if (checkedId.equals(bean.voucher_id)) {
+                            bean.isChecked = true;
+                        } else {
+                            bean.isChecked = false;
+                        }
+                        mDataList.set(i, bean);
+                    }*/
                     // 刷新界面
                     notifyDataSetChanged();
                     // 更新索引
@@ -100,9 +111,12 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
      */
     private void setType(int position, TextView tv_type, CheckBox checkBox, VoucherBean bean, VoucherBean lastBean, int itemType) {
         if (itemType == TYPE_VIEW_1) {
+            checkBox.setVisibility(View.VISIBLE);
             if (bean.isChecked) {
                 checkBox.setChecked(true);
                 mDefaultIndex = position;
+            } else {
+                checkBox.setChecked(false);
             }
             if (lastBean == null) {
                 tv_type.setVisibility(View.VISIBLE);
@@ -127,6 +141,7 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
                     tv_type.setVisibility(View.VISIBLE);
                 }
             }
+            checkBox.setVisibility(View.GONE);
         }
         /*if (bean.useable) {
             if (bean.isChecked) {
@@ -193,7 +208,6 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
             checkBox = (CheckBox) itemView.findViewById(R.id.id_cb_use_voucher);
 
         }
-
 
 
     }
