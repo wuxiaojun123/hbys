@@ -129,20 +129,8 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
         }
 
         if (!"0".equals(item.useful) || !"0".equals(item.useless)||!isMyPost) {
-            iv_fabulous.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ToastUtils.show(mContext, "此按钮仅发帖人点击");
-
-                }
-            });
-            iv_awful.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    ToastUtils.show(mContext, "此按钮仅发帖人点击");
-                }
-            });
+            iv_fabulous.setEnabled(false);
+            iv_awful.setEnabled(false);
         } else {
             iv_fabulous.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -254,14 +242,17 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
             iv_reply.setImageResource(R.mipmap.review_normal);
             iv_fabulous.setEnabled(false);
             iv_awful.setEnabled(false);
-            if ("0".equals(item.complained)) {
+           // if ("0".equals(item.complained)) {
                 iv_fabulous.setVisibility(View.GONE);
-            }
-            if ("0".equals(item.given_points)) {
+            //   }
+            //    if ("0".equals(item.given_points)) {
                 iv_awful.setVisibility(View.GONE);
-            }
+            //    }
         }
-
+        if(!isMyPost){
+            iv_fabulous.setVisibility(View.GONE);
+            iv_awful.setVisibility(View.GONE);
+        }
     }
 
     private void setUseFulOrUseless(final String op, String parent_id, final int position) {
