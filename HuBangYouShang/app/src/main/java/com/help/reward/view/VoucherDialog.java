@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,7 @@ import java.util.Map;
  * Created by wuxiaojun on 17-7-7.
  */
 
-public class VoucherDialog {
+public class VoucherDialog implements VoucherAdapter.OnVoucherCheckedChangedListener {
 
     private Context mContext;
     private Dialog mDialog;
@@ -93,12 +94,22 @@ public class VoucherDialog {
 
     private void initListener() {
         mAdapter = new VoucherAdapter(mContext, mList);
+        mAdapter.setOnVoucherCheckedChangedListener(this);
         mLinearLayoutManager = new LinearLayoutManager(mContext);
         mLRecyclerView.setLayoutManager(mLinearLayoutManager);
         mLRecyclerView.setAdapter(mAdapter);
         initDismissListener();
         initCheckListener();
         initScrollListener();
+    }
+
+    @Override
+    public void onCheckedChangedListener(String voucherId) {
+        if (!TextUtils.isEmpty(voucherId)) {
+            if (mVoucherMap.containsKey(voucherId)) {
+                mVoucherMap.remove(voucherId);
+            }
+        }
     }
 
     private void initDismissListener() {
@@ -131,7 +142,7 @@ public class VoucherDialog {
                             if (mVoucherMap.containsKey(voucherBean.voucher_id)) {
                                 mVoucherMap.remove(voucherBean.voucher_id);
                             }
-                            mVoucherMap.put(voucherBean.voucher_id, voucherBean.voucher_id + "|" + voucherBean.voucher_store_id + "|" + voucherBean.voucher_price);
+                            mVoucherMap.put(voucherBean.voucher_id, voucherBean.voucher_id + "|" + voucherBean.voucher_store_id + "|" + voucherBean.voucher_price + ",");
                             break;
                         }
                     }
@@ -220,6 +231,5 @@ public class VoucherDialog {
             mDialog.dismiss();
         }
     }
-
 
 }

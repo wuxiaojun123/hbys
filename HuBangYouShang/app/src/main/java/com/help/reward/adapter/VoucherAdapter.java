@@ -45,7 +45,6 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
     @Override
     public void onBindViewHolder(VoucherViewHolder holder, int position) {
 
-
         VoucherBean bean = mDataList.get(position);
         VoucherBean lastBean = null;
         if (position != 0) {
@@ -76,6 +75,9 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
                         VoucherBean lastDefaultBean = mDataList.get(mDefaultIndex);
                         lastDefaultBean.isChecked = false;
                         mDataList.set(mDefaultIndex, lastDefaultBean);
+                        if(onVoucherCheckedChangedListener != null){
+                            onVoucherCheckedChangedListener.onCheckedChangedListener(lastDefaultBean.voucher_id);
+                        }
                     }
                     // 设置当前对象为选中对象
                     VoucherBean currentBean = mDataList.get(position);
@@ -209,8 +211,16 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
 
         }
 
-
     }
 
+    public OnVoucherCheckedChangedListener onVoucherCheckedChangedListener;
+
+    public void setOnVoucherCheckedChangedListener(OnVoucherCheckedChangedListener mListener) {
+        this.onVoucherCheckedChangedListener = mListener;
+    }
+
+    public interface OnVoucherCheckedChangedListener {
+        void onCheckedChangedListener(String voucherId);
+    }
 
 }

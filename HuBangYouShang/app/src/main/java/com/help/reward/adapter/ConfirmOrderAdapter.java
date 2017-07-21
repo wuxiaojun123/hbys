@@ -214,7 +214,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             // 全部可用优惠卷  bean.store_voucher_list  全部不可用优惠卷 bean.store_voucher_list2
             String defaultId = defaultVoucherBean.voucher_id;
             mVoucherMap.put(defaultVoucherBean.voucher_id,
-                    defaultVoucherBean.voucher_id + "|" + defaultVoucherBean.voucher_store_id + "|" + defaultVoucherBean.voucher_price);
+                    defaultVoucherBean.voucher_id + "|" + defaultVoucherBean.voucher_store_id + "|" + defaultVoucherBean.voucher_price+",");
 
             List<VoucherBean> list = new ArrayList<>();
             for (VoucherBean voucherBean : bean.store_voucher_list) {
@@ -320,7 +320,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             voucher.delete(0, voucher.length() - 1);
         }
         for (Map.Entry<String, String> map : mVoucherMap.entrySet()) {
-            voucher.append(map.getValue() + ",");
+            voucher.append(map.getValue());
         }
         return voucher.toString();
     }
