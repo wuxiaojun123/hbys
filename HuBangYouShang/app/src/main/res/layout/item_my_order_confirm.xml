@@ -103,7 +103,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@null"
-            android:hint="这里可以给买家留言"
+            android:hint="这里可以给买家留言，例如推荐人的邀请码"
             android:textColor="@color/color_8a"
             android:textSize="@dimen/dimen_14" />
 
