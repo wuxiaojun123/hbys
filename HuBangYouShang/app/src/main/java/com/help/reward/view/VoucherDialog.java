@@ -140,6 +140,7 @@ public class VoucherDialog implements VoucherAdapter.OnVoucherCheckedChangedList
                         if (voucherBean.isChecked) {
 //                            LogUtils.e("选中的优惠卷id是：" + voucherBean.voucher_id + "--" + voucherBean.voucher_store_id + "--" + voucherBean.voucher_price);
                             if (mVoucherMap.containsKey(voucherBean.voucher_id)) {
+                                LogUtils.e("选中的优惠劵id是:" + voucherBean.voucher_id);
                                 mVoucherMap.remove(voucherBean.voucher_id);
                             }
                             mVoucherMap.put(voucherBean.voucher_id, voucherBean.voucher_id + "|" + voucherBean.voucher_store_id + "|" + voucherBean.voucher_price + ",");
