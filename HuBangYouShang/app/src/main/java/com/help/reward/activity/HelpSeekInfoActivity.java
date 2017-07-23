@@ -34,6 +34,7 @@ import com.help.reward.utils.StringUtils;
 import com.help.reward.view.ChooseCommentTypePop;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.DateUtil;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -150,7 +151,7 @@ public class HelpSeekInfoActivity extends BaseActivity {
         tv_helpinfo_count = (TextView) view.findViewById(R.id.tv_helpinfo_count);
         tv_helpinfo_title = (TextView) view.findViewById(R.id.tv_helpinfo_title);
         tv_helpinfo_content = (TextView) view.findViewById(R.id.tv_helpinfo_content);
-        tv_hashelp  = (TextView) view.findViewById(R.id.tv_hashelp);
+        tv_hashelp = (TextView) view.findViewById(R.id.tv_hashelp);
         iv_image1 = (ImageView) view.findViewById(R.id.iv_image1);
         iv_image2 = (ImageView) view.findViewById(R.id.iv_image2);
         iv_image3 = (ImageView) view.findViewById(R.id.iv_image3);
@@ -363,7 +364,7 @@ public class HelpSeekInfoActivity extends BaseActivity {
         HelpSeekInfoBean info = response.data.info;
         GlideUtils.loadCircleImage(info.member_avatar, iv_helpinfo_headimg);
         tv_helpinfo_uname.setText(info.u_name);
-        IntentUtil.startPersonalHomePage(HelpSeekInfoActivity.this,info.u_id,iv_helpinfo_headimg);
+        IntentUtil.startPersonalHomePage(HelpSeekInfoActivity.this, info.u_id, iv_helpinfo_headimg);
         tv_helpinfo_date.setText(DateUtil.getDateToString(info.create_time + ""));
         tv_helpinfo_count.setText("跟帖" + response.data.comment_num);
         tv_helpinfo_title.setText(info.title);
@@ -389,9 +390,9 @@ public class HelpSeekInfoActivity extends BaseActivity {
                     break;
             }
         }
-        if(response.data.has_helped){
+        if (response.data.has_helped) {
             tv_hashelp.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             tv_hashelp.setVisibility(View.GONE);
         }
 
@@ -428,6 +429,12 @@ public class HelpSeekInfoActivity extends BaseActivity {
         } else {
             comment_layout.setVisibility(View.GONE);
             tv_comment.setVisibility(View.GONE);
+        }
+        LogUtils.e("是否收藏" + response.has_collected);
+        if ("YES".equals(response.has_collected)) { // 已收藏
+            iv_title_favorites.setImageResource(R.mipmap.title_favorited);
+        } else {
+            iv_title_favorites.setImageResource(R.mipmap.title_favorites);
         }
         adapter.setStatus(info.status);
         if (curpage == 1) {

@@ -21,7 +21,10 @@ import java.util.Map;
 public class Test {
 
     public static void main(String[] args) throws ParseException {
-
+        boolean isPost = false;
+        if(!isPost){
+            System.out.print("哈哈哈"+isPost);
+        }
 
     }
 

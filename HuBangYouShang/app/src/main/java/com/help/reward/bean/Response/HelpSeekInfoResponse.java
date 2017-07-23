@@ -19,4 +19,6 @@ public class HelpSeekInfoResponse extends BaseResponse<HelpSeekInfoResponse> {
     public int page_total;
     public HelpSeekInfoBean info;
     public List<HelpSeekCommentBean> comment;
+    public String has_collected; // 当前帖子是否收藏过  0/1 没收藏/已收藏
+
 }

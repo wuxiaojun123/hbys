@@ -27,4 +27,5 @@ public class HelpSeekCommentBean {
     public String useful;// 0
     public String useless;// 0
 
+
 }

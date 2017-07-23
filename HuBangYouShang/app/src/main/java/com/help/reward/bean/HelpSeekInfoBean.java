@@ -25,4 +25,5 @@ public class HelpSeekInfoBean {
     public String area_id;
     public long end_time;
     public List<String> img_url;
+
 }
