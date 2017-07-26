@@ -140,7 +140,7 @@
                         android:drawablePadding="1dp"
                         android:drawableRight="@mipmap/up_to_down"
                         android:text="价格"
-                        android:textColor="#f9372d"
+                        android:textColor="@color/color_f9372d"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
 

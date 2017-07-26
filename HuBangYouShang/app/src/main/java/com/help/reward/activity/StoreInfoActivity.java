@@ -141,7 +141,7 @@ public class StoreInfoActivity extends BaseActivity implements ShopInfoHomeFragm
                 String searchStr = et_shop_search.getText().toString().trim();
                 if (!TextUtils.isEmpty(searchStr)) {
                     InputWindowUtils.closeInputWindow(et_shop_search, mContext);
-                    Intent intent = new Intent(mContext, SearchHelpActivity.class);
+                    Intent intent = new Intent(mContext, SearchShopResultActivity.class);
                     intent.putExtra("keyword", searchStr);
                     mContext.startActivity(intent);
                     ActivitySlideAnim.slideInAnim(StoreInfoActivity.this);
@@ -176,8 +176,14 @@ public class StoreInfoActivity extends BaseActivity implements ShopInfoHomeFragm
                 break;
             case R.id.tv_zonghe:
                 shopInfoAllFragment.setKey("","");
+                tv_zonghe.setTextColor(getResources().getColor(R.color.color_f9372d));
+                tv_salenum.setTextColor(getResources().getColor(R.color.color_3a));
+                tv_price.setTextColor(getResources().getColor(R.color.color_3a));
                 break;
             case R.id.tv_salenum:
+                tv_zonghe.setTextColor(getResources().getColor(R.color.color_3a));
+                tv_salenum.setTextColor(getResources().getColor(R.color.color_f9372d));
+                tv_price.setTextColor(getResources().getColor(R.color.color_3a));
                 if("asc".equals(saleOrder)){
                     saleOrder="desc";
                 }else{
@@ -186,6 +192,9 @@ public class StoreInfoActivity extends BaseActivity implements ShopInfoHomeFragm
                 shopInfoAllFragment.setKey("salenum",saleOrder);
                 break;
             case R.id.tv_price:
+                tv_zonghe.setTextColor(getResources().getColor(R.color.color_3a));
+                tv_salenum.setTextColor(getResources().getColor(R.color.color_3a));
+                tv_price.setTextColor(getResources().getColor(R.color.color_f9372d));
                 if("asc".equals(priceOrder)){
                     priceOrder="desc";
                     Drawable drawable = mContext.getResources().getDrawable(R.mipmap.up_to_down);

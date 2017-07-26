@@ -37,6 +37,7 @@
         android:drawableRight="@mipmap/img_search_close"
         android:imeOptions="actionSearch"
         android:textColor="@color/color_while"
+        android:inputType="text"
         android:maxLines="1"
         android:textSize="@dimen/dimen_13"
         android:textColorHint="@color/color_while"
