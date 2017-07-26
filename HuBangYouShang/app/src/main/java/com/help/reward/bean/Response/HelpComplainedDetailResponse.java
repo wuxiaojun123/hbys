@@ -1,5 +1,7 @@
 package com.help.reward.bean.Response;
 
+import java.util.List;
+
 /**
  *
  */
@@ -26,8 +28,10 @@ public class HelpComplainedDetailResponse extends BaseResponse<HelpComplainedDet
     public String content;//投诉理由
     public String complainant_explain;//投诉人解释
     public String com_explain_time;
-
-
+    public List<String> content_img;
+    public List<String> appeal_img;
+    public List<String> respondent_explain_img;
+    public List<String> complainant_explain_img;
     public String appeal;//申诉理由
     public String appeal_time;
     public String respondent_explain;//被投诉者解释
@@ -36,7 +40,6 @@ public class HelpComplainedDetailResponse extends BaseResponse<HelpComplainedDet
 
     public String update_time;
     public String status;
-
 
 
 }

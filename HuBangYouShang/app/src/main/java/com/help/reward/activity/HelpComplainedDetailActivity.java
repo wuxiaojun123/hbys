@@ -104,6 +104,40 @@ public class HelpComplainedDetailActivity extends BaseActivity {
     ImageView iv_delete4;
     @BindView(R.id.tv_photonum)
     TextView tv_photonum;
+
+    @BindView(R.id.iv_content_image1)
+    ImageView iv_content_image1;
+    @BindView(R.id.iv_content_image2)
+    ImageView iv_content_image2;
+    @BindView(R.id.iv_content_image3)
+    ImageView iv_content_image3;
+    @BindView(R.id.iv_content_image4)
+    ImageView iv_content_image4;
+    @BindView(R.id.iv_appel_image1)
+    ImageView iv_appel_image1;
+    @BindView(R.id.iv_appel_image2)
+    ImageView iv_appel_image2;
+    @BindView(R.id.iv_appel_image3)
+    ImageView iv_appel_image3;
+    @BindView(R.id.iv_appel_image4)
+    ImageView iv_appel_image4;
+    @BindView(R.id.iv_complainant_explain_image1)
+    ImageView iv_complainant_explain_image1;
+    @BindView(R.id.iv_complainant_explain_image2)
+    ImageView iv_complainant_explain_image2;
+    @BindView(R.id.iv_complainant_explain_image3)
+    ImageView iv_complainant_explain_image3;
+    @BindView(R.id.iv_complainant_explain_image4)
+    ImageView iv_complainant_explain_image4;
+    @BindView(R.id.iv_respondent_explain_image1)
+    ImageView iv_respondent_explain_image1;
+    @BindView(R.id.iv_respondent_explain_image2)
+    ImageView iv_respondent_explain_image2;
+    @BindView(R.id.iv_respondent_explain_image3)
+    ImageView iv_respondent_explain_image3;
+    @BindView(R.id.iv_respondent_explain_image4)
+    ImageView iv_respondent_explain_image4;
+
     List<String> photoUrl = new ArrayList<>();
     List<String> file_names = new ArrayList<>();
     String complaint_id;
@@ -347,7 +381,58 @@ public class HelpComplainedDetailActivity extends BaseActivity {
             }
 
         }
-
+        if (response.data.content_img != null &&response.data.content_img.size() > 0) {
+            switch (response.data.content_img.size()) {
+                case 4:
+                    bindImage(iv_content_image4,response.data.content_img.get(3));
+                case 3:
+                    bindImage(iv_content_image3,response.data.content_img.get(2));
+                case 2:
+                    bindImage(iv_content_image2,response.data.content_img.get(1));
+                case 1:
+                    bindImage(iv_content_image1,response.data.content_img.get(0));
+                    break;
+            }
+        }
+        if (response.data.appeal_img!= null && response.data.appeal_img.size() > 0) {
+            switch (response.data.appeal_img.size()) {
+                case 4:
+                    bindImage(iv_appel_image4,response.data.appeal_img.get(3));
+                case 3:
+                    bindImage(iv_appel_image3,response.data.appeal_img.get(2));
+                case 2:
+                    bindImage(iv_appel_image2,response.data.appeal_img.get(1));
+                case 1:
+                    bindImage(iv_appel_image1,response.data.appeal_img.get(0));
+                    break;
+            }
+        }
+        if (response.data.respondent_explain_img != null && response.data.respondent_explain_img.size() > 0) {
+            switch (response.data.respondent_explain_img.size()) {
+                case 4:
+                    bindImage(iv_respondent_explain_image4,response.data.respondent_explain_img.get(3));
+                case 3:
+                    bindImage(iv_respondent_explain_image3,response.data.respondent_explain_img.get(2));
+                case 2:
+                    bindImage(iv_respondent_explain_image2,response.data.respondent_explain_img.get(1));
+                case 1:
+                    bindImage(iv_respondent_explain_image1,response.data.respondent_explain_img.get(0));
+                    break;
+            }
+        }
+        if (response.data.complainant_explain_img != null && response.data.complainant_explain_img.size() > 0) {
+            switch (response.data.complainant_explain_img.size()) {
+                case 4:
+                    bindImage(iv_complainant_explain_image4,response.data.complainant_explain_img.get(3));
+                case 3:
+                    bindImage(iv_complainant_explain_image3,response.data.complainant_explain_img.get(2));
+                case 2:
+                    bindImage(iv_complainant_explain_image2,response.data.complainant_explain_img.get(1));
+                case 1:
+                    bindImage(iv_complainant_explain_image1,response.data.complainant_explain_img.get(0));
+                    break;
+            }
+        }
         tv_post_title.setText(response.data.post_title);
         tv_name.setText(response.data.complainant_name + "投诉");
 
@@ -373,7 +458,32 @@ public class HelpComplainedDetailActivity extends BaseActivity {
         }
 
     }
+    private void bindImage(ImageView imageView,String url){
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setOnClickListener(new onShowBigeImageCick(url));
+        GlideUtils.loadImage(url, imageView);
+    }
 
+    private class onShowBigeImageCick implements View.OnClickListener {
+        String url;
+
+        private onShowBigeImageCick(String url) {
+            this.url = url;
+        }
+
+        @Override
+        public void onClick(View view) {
+            showBigImage(url);
+        }
+    }
+
+    private void showBigImage(String url) {
+        Intent intent = new Intent(this, ShowBigImageActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("imageUrl", url);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 
     @Override
     protected void onDestroy() {
