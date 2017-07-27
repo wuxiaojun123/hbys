@@ -430,8 +430,7 @@ public class HelpSeekInfoActivity extends BaseActivity {
             comment_layout.setVisibility(View.GONE);
             tv_comment.setVisibility(View.GONE);
         }
-        LogUtils.e("是否收藏" + response.has_collected);
-        if (response.has_collected) { // 已收藏
+        if (response.data.has_collected) { // 已收藏
             iv_title_favorites.setImageResource(R.mipmap.title_favorited);
         } else {
             iv_title_favorites.setImageResource(R.mipmap.title_favorites);

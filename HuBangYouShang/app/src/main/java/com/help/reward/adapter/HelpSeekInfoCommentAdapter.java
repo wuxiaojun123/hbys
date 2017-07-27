@@ -186,6 +186,7 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
                 ActivitySlideAnim.slideInAnim(mActivity);
                 if ("true".equalsIgnoreCase(item.new_unread)&&!"结帖".equals(status)) {
                     iv_reply.setImageResource(R.mipmap.reply_normal);
+                    item.new_unread="false";
                 }
 
             }
