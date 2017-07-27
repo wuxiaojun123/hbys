@@ -126,6 +126,7 @@ public interface ShopMallApi {
             @Field("b_id") String b_id,
             @Field("service[]") String[] service,
             @Field("keyword") String keyword,
+            @Field("gc_id") String gc_id,
             @Field("curpage") int curpage
     );
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -33,6 +34,7 @@ import com.help.reward.bean.ShopMallHotBean;
 import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.StatusBarUtil;
 import com.help.reward.utils.StringUtils;
 import com.help.reward.view.GoodsTypeSearchPop;
 import com.help.reward.view.MyGridView;
@@ -130,6 +132,7 @@ public class SearchShopResultActivity extends BaseActivity {
     String key;//salenum 销量 clicknum 人气 price 价格order desc降序asc升序；默认降序
     String price_from, price_to;
     String b_id = "";// 品牌id
+    String gc_id; // 商品分类id  表示从店铺信息页面到店铺所有商品的分类页面再到这个页面
     List<String> service = new ArrayList<>();//freight 包邮 COD 货到付款 refund 急速退款 protection 消费者保障quality 正品保障 sevenDay 7天无理由退货
     String order;
     String type = "gird";
@@ -145,11 +148,17 @@ public class SearchShopResultActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             keyword = bundle.getString("keyword");
+            gc_id = bundle.getString("gc_id");
             searchType = bundle.getString("searchType", "goods"); // 店铺 store
         }
 
         initView();
         initData();
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setColorForDrawerLayout(this, mDrawerlayout, ContextCompat.getColor(mContext, R.color.colorPrimary), StatusBarUtil.DEFAULT_ALPHA);
     }
 
     void initView() {
@@ -233,12 +242,9 @@ public class SearchShopResultActivity extends BaseActivity {
             lRecyclerview.setVisibility(View.GONE);
             lStoreRecyclerview.setVisibility(View.VISIBLE);
             requestStoreData(true);
-        }else{
+        } else {
             requestData(true);
         }
-
-
-
 
     }
 
@@ -472,7 +478,7 @@ public class SearchShopResultActivity extends BaseActivity {
 
         subscribe = ShopMallNetwork
                 .getShopMallMainApi()
-                .getSearchGoodsResponse(key, order, price_from, price_to, b_id, (String[]) service.toArray(new String[service.size()]), keyword, curpage)
+                .getSearchGoodsResponse(key, order, price_from, price_to, b_id, (String[]) service.toArray(new String[service.size()]), keyword, gc_id, curpage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<StoreDetailAllResponse>() {

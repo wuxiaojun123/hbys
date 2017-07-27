@@ -154,9 +154,7 @@ public class GoodsTypeActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
                     requestSecondData(adapter.getDataList().get(position).gc_id);
                 }
-
             }
-
         });
     }
 

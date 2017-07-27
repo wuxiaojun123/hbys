@@ -15,6 +15,7 @@
         android:background="@drawable/bg_msgcenter_item">
 
         <TextView
+            android:id="@+id/id_tv_all_shop"
             style="@style/style_text_lable"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
