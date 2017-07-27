@@ -106,7 +106,7 @@ public class HelpRewardnfoCommentAdapter extends BaseRecyclerAdapter<HelpRewardC
         TextView tv_helpinfo_content = holder.getView(R.id.tv_helpinfo_content);
         tv_helpinfo_content.setText(item.content);
 
-        ImageView iv_reply = holder.getView(R.id.iv_reply);
+        final ImageView iv_reply = holder.getView(R.id.iv_reply);
 
         if (!"0".equalsIgnoreCase(item.has_read)) {
             iv_reply.setImageResource(R.mipmap.reply_selected);
@@ -125,6 +125,10 @@ public class HelpRewardnfoCommentAdapter extends BaseRecyclerAdapter<HelpRewardC
                 intentDetail.putExtra("hint", "继续跟帖");
                 mActivity.startActivity(intentDetail);
                 ActivitySlideAnim.slideInAnim(mActivity);
+                if (!"0".equalsIgnoreCase(item.has_read)) {
+                    iv_reply.setImageResource(R.mipmap.reply_normal);
+                    item.has_read= "0";
+                }
 
             }
         });
