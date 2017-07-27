@@ -73,7 +73,7 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
         if (!TextUtils.isEmpty(title)) {
             // 忘记密码
             tv_title.setText(title);
-            et_phone_number.setHint("请输入您注册时的手机");
+            et_phone_number.setHint("请输入您注册时的手机号");
         } else {
             tv_title.setText(R.string.string_identity_title);
         }

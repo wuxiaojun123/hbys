@@ -237,9 +237,6 @@ public class SearchShopResultActivity extends BaseActivity {
             requestData(true);
         }
 
-
-
-
     }
 
     @OnClick({R.id.iv_title_back, R.id.iv_search_type, R.id.ll_zonghe,
