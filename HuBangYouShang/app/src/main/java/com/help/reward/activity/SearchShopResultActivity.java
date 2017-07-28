@@ -41,6 +41,7 @@ import com.help.reward.view.MyGridView;
 import com.help.reward.view.MyProcessDialog;
 import com.help.reward.view.SearchEditTextView;
 import com.help.reward.view.SearchGoodsZonghePop;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -149,6 +150,7 @@ public class SearchShopResultActivity extends BaseActivity {
         if (bundle != null) {
             keyword = bundle.getString("keyword");
             gc_id = bundle.getString("gc_id");
+            store_id = bundle.getString("store_id");
             searchType = bundle.getString("searchType", "goods"); // 店铺 store
         }
 
@@ -159,6 +161,8 @@ public class SearchShopResultActivity extends BaseActivity {
     @Override
     protected void setStatusBar() {
         StatusBarUtil.setColorForDrawerLayout(this, mDrawerlayout, ContextCompat.getColor(mContext, R.color.colorPrimary), StatusBarUtil.DEFAULT_ALPHA);
+//        StatusBarUtil.setTranslucentForDrawerLayout(this, mDrawerlayout,StatusBarUtil.DEFAULT_ALPHA);
+//        StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, mDrawerlayout,ContextCompat.getColor(mContext, R.color.colorPrimary));
     }
 
     void initView() {
@@ -475,10 +479,9 @@ public class SearchShopResultActivity extends BaseActivity {
             curpage = 1;
             MyProcessDialog.showDialog(this);
         }
-
         subscribe = ShopMallNetwork
                 .getShopMallMainApi()
-                .getSearchGoodsResponse(key, order, price_from, price_to, b_id, (String[]) service.toArray(new String[service.size()]), keyword, gc_id, curpage)
+                .getSearchGoodsResponse(key, order, price_from, price_to, b_id, (String[]) service.toArray(new String[service.size()]), keyword, gc_id, store_id, curpage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<StoreDetailAllResponse>() {

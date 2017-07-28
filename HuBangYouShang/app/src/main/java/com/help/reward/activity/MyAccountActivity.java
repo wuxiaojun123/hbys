@@ -113,7 +113,7 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 
                 break;
-            case R.id.tv_general_volume: // 通用卷
+            case R.id.tv_general_volume: // 通用劵
                 startActivity(new Intent(MyAccountActivity.this, MyGeneralVolumeActivity.class));
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 
@@ -123,27 +123,23 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 
                 break;
-            case R.id.tv_balance_recharge:
-                // 余额充值
+            case R.id.tv_balance_recharge:// 余额充值
                 startActivity(new Intent(MyAccountActivity.this, PrepaidBalanceActivity.class));
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 
 
                 break;
-            case R.id.tv_coupon_trading:
-                // 优惠劵交易
+            case R.id.tv_coupon_trading:// 优惠劵交易
                 startActivity(new Intent(MyAccountActivity.this, CouponTradingActivity.class));
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 
                 break;
-            case R.id.tv_coupon_generic:
-                // 通用卷兑换
+            case R.id.tv_coupon_generic:// 通用卷兑换
                 startActivity(new Intent(MyAccountActivity.this, ExchangeOptionActivity.class));
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 
                 break;
-            case R.id.tv_exchange:
-                // 帮赏分兑换----跳转到余额兑换帮赏分界面
+            case R.id.tv_exchange:// 帮赏分兑换----跳转到余额兑换帮赏分界面
                 startActivity(new Intent(MyAccountActivity.this, BalanceExchangeHelpScoreActivity.class));
                 ActivitySlideAnim.slideInAnim(MyAccountActivity.this);
 

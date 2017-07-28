@@ -92,15 +92,11 @@ public class StoreKindsListActivity extends BaseActivity {
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent mIntent = new Intent(mContext, SearchShopResultActivity.class);
-                mIntent.putExtra("gc_id", adapter.getDataList().get(position).id); // 商品分类id
-                mIntent.putExtra("searchType", "goods");
-                startActivity(mIntent);
-                ActivitySlideAnim.slideInAnim(StoreKindsListActivity.this);
+                String gc_id = adapter.getDataList().get(position).id;
+                goToSearchShopResultActivity(gc_id);
             }
         });
     }
-
 
     @OnClick({R.id.iv_title_back, R.id.layout_all})
     void click(View v) {
@@ -109,7 +105,7 @@ public class StoreKindsListActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.layout_all:
-
+                goToSearchShopResultActivity(null);
 
                 break;
         }
@@ -141,6 +137,21 @@ public class StoreKindsListActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    /***
+     * 跳转到商品搜索页面
+     * @param gc_id
+     */
+    private void goToSearchShopResultActivity(String gc_id) {
+        Intent mIntent = new Intent(mContext, SearchShopResultActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("gc_id", gc_id); // 商品分类id
+        bundle.putString("store_id", store_id);
+        bundle.putString("searchType", "goods");
+        mIntent.putExtras(bundle);
+        startActivity(mIntent);
+        ActivitySlideAnim.slideInAnim(StoreKindsListActivity.this);
     }
 
     @Override

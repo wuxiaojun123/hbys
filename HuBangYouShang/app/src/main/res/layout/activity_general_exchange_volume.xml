@@ -87,7 +87,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
-        android:text="兑换公式：帮赏分x优惠百分比=通用卷"
+        android:text="兑换公式：帮赏分x优惠百分比=通用劵"
         android:textColor="@color/color_bf"
         android:textSize="@dimen/dimen_14" />
 

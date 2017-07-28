@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.help.reward.R;
+import com.idotools.utils.LogUtils;
 
 /**
  * Created by Jaeger on 16/2/14.

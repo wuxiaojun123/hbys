@@ -5,8 +5,10 @@ package com.help.reward.bean;
  */
 
 public class StoreKindsBean {
+
     public String id;
     public String name;
     public String level;
     public String pid;
+
 }

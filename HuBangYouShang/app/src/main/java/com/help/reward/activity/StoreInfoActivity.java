@@ -89,9 +89,10 @@ public class StoreInfoActivity extends BaseActivity implements ShopInfoHomeFragm
     ShopInfoHomeFragment shopInfoHomeFragment;
     ShopInfoAllFragment shopInfoAllFragment;
     ShopInfoNewFragment shopInfoNewFragment;
-    String saleOrder="asc";
-    String priceOrder="asc";
-    String type="gird";
+    String saleOrder = "asc";
+    String priceOrder = "asc";
+    String type = "gird";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,9 +121,9 @@ public class StoreInfoActivity extends BaseActivity implements ShopInfoHomeFragm
             public void onPageSelected(int position) {
                 if (position == 1) {
                     layout_alltitle.setVisibility(View.VISIBLE);
-                } else if (position == 0){
+                } else if (position == 0) {
                     layout_alltitle.setVisibility(View.GONE);
-                }else{
+                } else {
                     layout_alltitle.setVisibility(View.GONE);
                 }
             }
@@ -134,7 +135,8 @@ public class StoreInfoActivity extends BaseActivity implements ShopInfoHomeFragm
         });
         pstbShopinfo.setViewPager(vpShopinfo);
     }
-    void initView(){
+
+    void initView() {
         et_shop_search.setOnKeyListener(new SearchEditTextView.onKeyListener() {
             @Override
             public void onKey() {
@@ -142,7 +144,11 @@ public class StoreInfoActivity extends BaseActivity implements ShopInfoHomeFragm
                 if (!TextUtils.isEmpty(searchStr)) {
                     InputWindowUtils.closeInputWindow(et_shop_search, mContext);
                     Intent intent = new Intent(mContext, SearchShopResultActivity.class);
-                    intent.putExtra("keyword", searchStr);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("keyword", searchStr);
+                    bundle.putString("store_id", store_id);
+                    bundle.putString("searchType", "goods");
+                    intent.putExtras(bundle);
                     mContext.startActivity(intent);
                     ActivitySlideAnim.slideInAnim(StoreInfoActivity.this);
                 } else {
@@ -162,20 +168,20 @@ public class StoreInfoActivity extends BaseActivity implements ShopInfoHomeFragm
                 ActivitySlideAnim.slideOutAnim(this);
                 break;
             case R.id.iv_shopinfo_title_type:
-                Intent intent = new Intent(this,StoreKindsListActivity.class);
-                intent.putExtra("store_id",store_id);
+                Intent intent = new Intent(this, StoreKindsListActivity.class);
+                intent.putExtra("store_id", store_id);
                 startActivity(intent);
                 ActivitySlideAnim.slideInAnim(this);
                 break;
             case R.id.iv_shopinfo_title_more:
-                StoreInfoMenuPop.showPopupWindow(this,iv_shopinfo_title_more);
+                StoreInfoMenuPop.showPopupWindow(this, iv_shopinfo_title_more);
                 break;
             case R.id.tv_collect:
                 tv_collect.setEnabled(false);
                 collectStore();
                 break;
             case R.id.tv_zonghe:
-                shopInfoAllFragment.setKey("","");
+                shopInfoAllFragment.setKey("", "");
                 tv_zonghe.setTextColor(getResources().getColor(R.color.color_f9372d));
                 tv_salenum.setTextColor(getResources().getColor(R.color.color_3a));
                 tv_price.setTextColor(getResources().getColor(R.color.color_3a));
@@ -184,37 +190,37 @@ public class StoreInfoActivity extends BaseActivity implements ShopInfoHomeFragm
                 tv_zonghe.setTextColor(getResources().getColor(R.color.color_3a));
                 tv_salenum.setTextColor(getResources().getColor(R.color.color_f9372d));
                 tv_price.setTextColor(getResources().getColor(R.color.color_3a));
-                if("asc".equals(saleOrder)){
-                    saleOrder="desc";
-                }else{
-                    saleOrder="asc";
+                if ("asc".equals(saleOrder)) {
+                    saleOrder = "desc";
+                } else {
+                    saleOrder = "asc";
                 }
-                shopInfoAllFragment.setKey("salenum",saleOrder);
+                shopInfoAllFragment.setKey("salenum", saleOrder);
                 break;
             case R.id.tv_price:
                 tv_zonghe.setTextColor(getResources().getColor(R.color.color_3a));
                 tv_salenum.setTextColor(getResources().getColor(R.color.color_3a));
                 tv_price.setTextColor(getResources().getColor(R.color.color_f9372d));
-                if("asc".equals(priceOrder)){
-                    priceOrder="desc";
+                if ("asc".equals(priceOrder)) {
+                    priceOrder = "desc";
                     Drawable drawable = mContext.getResources().getDrawable(R.mipmap.up_to_down);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
                     tv_price.setCompoundDrawables(null, null, drawable, null);
-                }else{
-                    priceOrder="asc";
+                } else {
+                    priceOrder = "asc";
                     Drawable drawable = mContext.getResources().getDrawable(R.mipmap.down_to_up);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
                     tv_price.setCompoundDrawables(null, null, drawable, null);
                 }
-                shopInfoAllFragment.setKey("price",priceOrder);
+                shopInfoAllFragment.setKey("price", priceOrder);
                 break;
             case R.id.iv_style:
-                if("list".equals(type)){
-                    type ="gird";
+                if ("list".equals(type)) {
+                    type = "gird";
                     iv_style.setImageResource(R.mipmap.list_piece);
                     shopInfoAllFragment.setGridAdapter();
-                }else{
-                    type ="list";
+                } else {
+                    type = "list";
                     iv_style.setImageResource(R.mipmap.list_grid);
                     shopInfoAllFragment.setListAdapter();
                 }

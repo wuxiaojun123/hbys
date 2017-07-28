@@ -78,6 +78,7 @@ public class SearchHelpActivity extends BaseActivity implements View.OnClickList
         iv_email.setVisibility(View.GONE);
         tv_text.setVisibility(View.VISIBLE);
         tv_text.setText("取消");
+        et_search.setHint(R.string.help_lable2);
         et_search.setText(searchStr);
         et_search.setOnKeyListener(new SearchEditTextView.onKeyListener() {
             @Override

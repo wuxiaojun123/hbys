@@ -135,7 +135,7 @@
 
         <TextView
             android:id="@+id/tv_coupon_generic"
-            android:text="通用卷兑换"
+            android:text="通用劵兑换"
             style="@style/style_my_account_text_item"
             />
 

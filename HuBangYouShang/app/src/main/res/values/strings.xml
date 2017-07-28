@@ -153,9 +153,9 @@
     <!--余额兑换帮赏分-->
     <string name="string_yue_duihuan_bangshangfen_title">余额兑换帮赏分</string>
     <!--帮赏分兑换通用卷-->
-    <string name="string_bangshangfen_duihuan_tongyongjuan_title">帮赏分兑换通用卷</string>
+    <string name="string_bangshangfen_duihuan_tongyongjuan_title">帮赏分兑换通用劵</string>
     <!--余额兑换通用卷-->
-    <string name="string_yue_duihuan_tongyongjuan_title">余额兑换通用卷</string>
+    <string name="string_yue_duihuan_tongyongjuan_title">余额兑换通用劵</string>
     <!--充值余额-->
     <string name="string_chongzhi_yue_title">充值余额</string>
 
@@ -221,6 +221,10 @@
 
     <string name="string_available_coupon">可用优惠劵</string>
     <string name="string_not_available_coupon">不可用优惠劵</string>
+
+    <!--通用劵-->
+    <string name="string_general_volume">通用劵</string>
+    <string name="string_general_volume_acount">通用劵账户</string>
 
     <!--微信-->
     <string name="app_back">返回</string>
