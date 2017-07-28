@@ -1,5 +1,6 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -86,18 +87,17 @@ public class StoreKindsListActivity extends BaseActivity {
         lRecyclerview.setVisibility(View.GONE);
         initItemClickListener();
     }
+
     private void initItemClickListener() {
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Intent intent = new Intent(mContext, GoodInfoActivity.class);
-//                intent.putExtra("id", adapter.getDataList().get(position).id);
-//                startActivity(intent);
-//                ActivitySlideAnim.slideInAnim(StoreKindsListActivity.this);
-                ToastUtils.show(mContext, adapter.getDataList().get(position).id);
-
+                Intent mIntent = new Intent(mContext, SearchShopResultActivity.class);
+                mIntent.putExtra("gc_id", adapter.getDataList().get(position).id); // 商品分类id
+                mIntent.putExtra("searchType", "goods");
+                startActivity(mIntent);
+                ActivitySlideAnim.slideInAnim(StoreKindsListActivity.this);
             }
-
         });
     }
 
@@ -109,7 +109,7 @@ public class StoreKindsListActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.layout_all:
-                ToastUtils.show(mContext, "所有商品");
+
 
                 break;
         }
