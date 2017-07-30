@@ -147,6 +147,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         if (is_in_group && !TextUtils.isEmpty(member_id)) { // 已经加入到商家群了，直接跳转到群页面
             Intent intent = new Intent(GoodInfoActivity.this, ChatActivity.class);
             intent.putExtra(Constant.EXTRA_USER_ID, member_id);
+            intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
             startActivity(intent);
 
         } else {
