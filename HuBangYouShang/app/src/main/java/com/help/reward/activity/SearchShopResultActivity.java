@@ -2,6 +2,7 @@ package com.help.reward.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -41,7 +42,6 @@ import com.help.reward.view.MyGridView;
 import com.help.reward.view.MyProcessDialog;
 import com.help.reward.view.SearchEditTextView;
 import com.help.reward.view.SearchGoodsZonghePop;
-import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -303,6 +303,11 @@ public class SearchShopResultActivity extends BaseActivity {
                             order = "";
                         }
                         requestData(true);
+                        Drawable drawable = getResources().getDrawable(R.mipmap.menu_zonghe_down);
+                        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                        tv_zonghe.setCompoundDrawables(null, null, drawable, null);
+                        tv_zonghe.setTextColor(getResources().getColor(R.color.color_f9372d));
+                        tv_salenum.setTextColor(getResources().getColor(R.color.color_3a));
                     }
                 });
                 break;
@@ -314,6 +319,11 @@ public class SearchShopResultActivity extends BaseActivity {
                     order = "asc";
                 }
                 requestData(true);
+                Drawable drawable = getResources().getDrawable(R.mipmap.menu_shaixuan);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                tv_zonghe.setCompoundDrawables(null, null, drawable, null);
+                tv_zonghe.setTextColor(getResources().getColor(R.color.color_3a));
+                tv_salenum.setTextColor(getResources().getColor(R.color.color_f9372d));
                 break;
             case R.id.ll_shaixuan:
                 if (brandList == null || brandList.size() == 0) {

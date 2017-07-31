@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.help.reward.R;
 
@@ -33,14 +34,34 @@ public class SearchGoodsZonghePop {
                 new ClickListener(activity, popupWindow));
         popupWindow_view.findViewById(R.id.tv_clicknum).setOnClickListener(
                 new ClickListener(activity, popupWindow));
+        TextView tv_zonghe = (TextView) popupWindow_view.findViewById(R.id.tv_zonghe);
+        TextView tv_price1 = (TextView) popupWindow_view.findViewById(R.id.tv_price1);
+        TextView tv_price2 = (TextView) popupWindow_view.findViewById(R.id.tv_price2);
+        TextView tv_clicknum = (TextView) popupWindow_view.findViewById(R.id.tv_clicknum);
         if ("pricedesc".equals(type)) {
             popupWindow_view.findViewById(R.id.iv_price1).setVisibility(View.VISIBLE);
-        } else if ("pricedasc".equals(type)) {
+            tv_zonghe.setTextColor(activity.getResources().getColor(R.color.color_3a));
+            tv_price1.setTextColor(activity.getResources().getColor(R.color.color_f9372d));
+            tv_price2.setTextColor(activity.getResources().getColor(R.color.color_3a));
+            tv_clicknum.setTextColor(activity.getResources().getColor(R.color.color_3a));
+        } else if ("priceasc".equals(type)) {
             popupWindow_view.findViewById(R.id.iv_price2).setVisibility(View.VISIBLE);
+            tv_zonghe.setTextColor(activity.getResources().getColor(R.color.color_3a));
+            tv_price1.setTextColor(activity.getResources().getColor(R.color.color_3a));
+            tv_price2.setTextColor(activity.getResources().getColor(R.color.color_f9372d));
+            tv_clicknum.setTextColor(activity.getResources().getColor(R.color.color_3a));
         } else if ("clicknum".equals(type)) {
             popupWindow_view.findViewById(R.id.iv_clicknum).setVisibility(View.VISIBLE);
+            tv_zonghe.setTextColor(activity.getResources().getColor(R.color.color_3a));
+            tv_price1.setTextColor(activity.getResources().getColor(R.color.color_3a));
+            tv_price2.setTextColor(activity.getResources().getColor(R.color.color_3a));
+            tv_clicknum.setTextColor(activity.getResources().getColor(R.color.color_f9372d));
         } else {
             popupWindow_view.findViewById(R.id.iv_zonghe).setVisibility(View.VISIBLE);
+            tv_zonghe.setTextColor(activity.getResources().getColor(R.color.color_f9372d));
+            tv_price1.setTextColor(activity.getResources().getColor(R.color.color_3a));
+            tv_price2.setTextColor(activity.getResources().getColor(R.color.color_3a));
+            tv_clicknum.setTextColor(activity.getResources().getColor(R.color.color_3a));
         }
         popupWindow.showAsDropDown(root);
         return this;
