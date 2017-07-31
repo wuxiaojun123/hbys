@@ -24,7 +24,7 @@
             android:drawableRight="@mipmap/menu_zonghe_down"
             android:gravity="center"
             android:text="综合"
-            android:textColor="#fa372d"
+            android:textColor="@color/color_f9372d"
             android:textSize="@dimen/sp_14" />
 
     </LinearLayout>

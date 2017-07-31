@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnItemClickListener;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.bean.Response.ComplaintStatusResponse;
@@ -50,6 +51,8 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
     private MyVoteAdapter mHelpPostAdapter;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,10 +142,23 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
     private void initRecyclerView() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         mHelpPostAdapter = new MyVoteAdapter(mContext);
-        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
         initLoadMoreListener();
+        initOnItemClickListener();
+    }
+
+    private void initOnItemClickListener() {
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(mContext, HelpVoteInfoActivity.class);
+                intent.putExtra("id", mHelpPostAdapter.getDataList().get(position).post_id);
+                startActivity(intent);
+                ActivitySlideAnim.slideInAnim(MyVoteActivity.this);
+            }
+        });
     }
 
     private void initLoadMoreListener() {
@@ -152,7 +168,6 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
                 initNet();
             }
         });
-
     }
 
     private void initRefreshListener() {

@@ -1,5 +1,6 @@
 package com.help.reward.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,8 +10,11 @@ import android.view.ViewGroup;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnItemClickListener;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.activity.HelpRewardInfoActivity;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
@@ -38,7 +42,7 @@ public class MyHelpCommentFragment extends BaseFragment {
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
-
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
     @Nullable
     @Override
@@ -101,10 +105,23 @@ public class MyHelpCommentFragment extends BaseFragment {
     private void initRecyclerView() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         myHelpCommentAdapter = new MyHelpCommentAdapter(mContext);
-        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(myHelpCommentAdapter);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(myHelpCommentAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
         initLoadMoreListener();
+        initOnItemListener();
+    }
+
+    private void initOnItemListener() {
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(mContext, HelpRewardInfoActivity.class);
+                intent.putExtra("id", myHelpCommentAdapter.getDataList().get(position).id);
+                startActivity(intent);
+                ActivitySlideAnim.slideInAnim(getActivity());
+            }
+        });
     }
 
     private void initLoadMoreListener() {

@@ -12,7 +12,7 @@ import com.help.reward.bean.Response.MyHelpCommentResponse;
  * Created by wuxiaojun on 2017/2/26.
  */
 
-public class MyHelpCommentAdapter extends BaseRecyclerAdapter {
+public class MyHelpCommentAdapter extends BaseRecyclerAdapter<MyHelpCommentResponse.MyHelpCommentBean> {
 
     public MyHelpCommentAdapter(Context context) {
         super(context);
@@ -34,7 +34,7 @@ public class MyHelpCommentAdapter extends BaseRecyclerAdapter {
         TextView tv_help = holder.getView(R.id.tv_help);
 
 
-        MyHelpCommentResponse.MyHelpCommentBean bean = (MyHelpCommentResponse.MyHelpCommentBean) mDataList.get(position);
+        MyHelpCommentResponse.MyHelpCommentBean bean = mDataList.get(position);
 
         tv_content.setText(bean.title);
         tv_title.setText(bean.board_name);

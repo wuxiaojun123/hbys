@@ -19,7 +19,7 @@
 
     <!--商城 看广告-->
     <string name="string_watch_ad">看广告</string>
-    <string name="string_search_like_ad">搜素关键字相关商品</string>
+    <string name="string_search_like_ad">搜索关键字相关商品</string>
 
     <!--个人中心 我的获赏，我的求助-->
     <string name="string_comment">跟帖</string>
@@ -102,6 +102,7 @@
 
     <!--我的求助-->
     <string name="string_my_help_title">我的求助</string>
+    
     <!--我的获赏-->
     <string name="string_my_help_reward">我的获赏</string>
     <!--我的投票-->
@@ -109,6 +110,8 @@
     <!--我的收藏-->
     <string name="string_my_collection_title">我的收藏</string>
     <string name="string_my_clean">清空</string>
+    <string name="string_offer_reward">悬赏</string>
+    <string name="string_reward">获赏</string>
     <!--我的分享-->
     <string name="string_my_share_title">我的分享</string>
 

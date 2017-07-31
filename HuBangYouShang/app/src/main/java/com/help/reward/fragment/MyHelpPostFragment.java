@@ -1,12 +1,17 @@
 package com.help.reward.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnItemClickListener;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.activity.HelpSeekInfoActivity;
 import com.help.reward.network.api.PersonalApi;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
 import com.help.reward.R;
@@ -30,6 +35,7 @@ public class MyHelpPostFragment extends BaseFragment {
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private MyHelpPostAdapter mHelpPostAdapter;
 
     @Override
@@ -87,10 +93,23 @@ public class MyHelpPostFragment extends BaseFragment {
     private void initRecyclerView() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         mHelpPostAdapter = new MyHelpPostAdapter(mContext);
-        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
         initLoadMoreListener();
+        initOnItemListener();
+    }
+
+    private void initOnItemListener() {
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(mContext, HelpSeekInfoActivity.class);
+                intent.putExtra("id", mHelpPostAdapter.getDataList().get(position).id);
+                startActivity(intent);
+                ActivitySlideAnim.slideInAnim(getActivity());
+            }
+        });
     }
 
     private void initLoadMoreListener() {

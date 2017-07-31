@@ -588,6 +588,15 @@ public class SwipeMenuView extends ViewGroup {
         return super.performLongClick();
     }
 
+    /*@Override
+    public boolean performClick() {
+        LogUtils.equals("mScaleTouchSlop="+mScaleTouchSlop);
+        if(Math.abs(getScaleX()) < mScaleTouchSlop){
+            return true;
+        }
+        return super.performClick();
+    }*/
+
     //平滑滚动 弃用 改属性动画实现
 /*    @Override
     public void computeScroll() {

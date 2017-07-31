@@ -1,11 +1,18 @@
 package com.help.reward.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnItemClickListener;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.activity.HelpRewardInfoActivity;
+import com.help.reward.activity.HelpSeekInfoActivity;
+import com.help.reward.minterface.OnMyItemClickListener;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
@@ -36,7 +43,7 @@ public class MyCollectionPostFragment extends BaseFragment {
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
     private MyCollectionPostAdapter mCollectionPostAdapter;
-
+    private LRecyclerViewAdapter lRecyclerViewAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -53,11 +60,12 @@ public class MyCollectionPostFragment extends BaseFragment {
     private void initRecycler() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         mCollectionPostAdapter = new MyCollectionPostAdapter(mContext);
-        LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mCollectionPostAdapter);
-        lRecyclerview.setAdapter(adapter);
+        lRecyclerViewAdapter = new LRecyclerViewAdapter(mCollectionPostAdapter);
+        lRecyclerview.setAdapter(lRecyclerViewAdapter);
         initDeleteListener();
         initRefreshListener();
         initLoadMoreListener();
+        initOnItemClickListener();
     }
 
     private void initDeleteListener() {
@@ -90,6 +98,25 @@ public class MyCollectionPostFragment extends BaseFragment {
                             });
 
                 }
+            }
+        });
+    }
+
+    private void initOnItemClickListener() {
+        mCollectionPostAdapter.setOnMyItemClickListener(new OnMyItemClickListener() {
+            @Override
+            public void onMyItemClickListener(int position) {
+                LogUtils.e("点击事件" + position);
+                MyCollectionPostBean bean = mCollectionPostAdapter.getDataList().get(position);
+                Intent intent = null;
+                if (bean.log_msg.equals("reward")) { // 获赏
+                    intent = new Intent(mContext, HelpRewardInfoActivity.class);
+                } else { // 求助
+                    intent = new Intent(mContext, HelpSeekInfoActivity.class);
+                }
+                intent.putExtra("id", bean.log_id);
+                startActivity(intent);
+                ActivitySlideAnim.slideInAnim(getActivity());
             }
         });
     }
@@ -154,13 +181,13 @@ public class MyCollectionPostFragment extends BaseFragment {
                 });
     }
 
-    public void refreshRecycler(){
-        if(mCollectionPostAdapter != null){
+    public void refreshRecycler() {
+        if (mCollectionPostAdapter != null) {
             mCollectionPostAdapter.clear();
         }
     }
 
-    public MyCollectionPostAdapter getMyCollectionPostAdapter(){
+    public MyCollectionPostAdapter getMyCollectionPostAdapter() {
         return mCollectionPostAdapter;
     }
 
