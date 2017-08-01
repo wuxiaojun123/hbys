@@ -93,10 +93,10 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
-                return pointsRecordFragment;
-            } else {
-                return couponsRecordFragment;
+            if(position == 0){
+                return new MyRewardPostFragment();
+            }else{
+                return new MyRewardCommentFragment();
             }
         }
 
