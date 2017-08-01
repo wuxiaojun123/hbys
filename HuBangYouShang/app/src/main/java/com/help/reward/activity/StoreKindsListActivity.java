@@ -141,6 +141,7 @@ public class StoreKindsListActivity extends BaseActivity {
 
     /***
      * 跳转到商品搜索页面
+     *
      * @param gc_id
      */
     private void goToSearchShopResultActivity(String gc_id) {
@@ -149,6 +150,7 @@ public class StoreKindsListActivity extends BaseActivity {
         bundle.putString("gc_id", gc_id); // 商品分类id
         bundle.putString("store_id", store_id);
         bundle.putString("searchType", "goods");
+        bundle.putBoolean("showShop", true);
         mIntent.putExtras(bundle);
         startActivity(mIntent);
         ActivitySlideAnim.slideInAnim(StoreKindsListActivity.this);

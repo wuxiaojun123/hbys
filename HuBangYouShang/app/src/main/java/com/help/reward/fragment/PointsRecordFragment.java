@@ -1,13 +1,17 @@
 package com.help.reward.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnItemClickListener;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.activity.HelpRewardInfoActivity;
 import com.help.reward.adapter.MyRewardCommentAdapter;
 import com.help.reward.adapter.PointsRecordAdapter;
 import com.help.reward.bean.Response.MyRewardCommentResponse;
@@ -15,6 +19,7 @@ import com.help.reward.bean.Response.PointsRecordResponse;
 import com.help.reward.network.CouponPointsNetwork;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -34,6 +39,8 @@ public class PointsRecordFragment extends BaseFragment {
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
     private PointsRecordAdapter mHelpPostAdapter;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
+
 
     @Override
     protected int getLayoutId() {
@@ -87,14 +94,30 @@ public class PointsRecordFragment extends BaseFragment {
                 });
     }
 
+
     private void initRecyclerView() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         mHelpPostAdapter = new PointsRecordAdapter(mContext);
-        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
         initLoadMoreListener();
+//        initOnItemClickListener();
     }
+
+    /*private void initOnItemClickListener() {
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Intent intent = new Intent(mContext, HelpRewardInfoActivity.class);
+                intent.putExtra("id", adapter.getDataList().get(position).id);
+                startActivity(intent);
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+            }
+        });
+    }*/
 
     private void initLoadMoreListener() {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.help.reward.view.SwipeMenuView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="81dp"
     android:background="@drawable/bg_bottom_line"
     android:clickable="true"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:id="@+id/left_layout"
+        android:id="@+id/id_ll_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:divider="@drawable/shape_divider_line"
+        android:orientation="horizontal"
+        android:showDividers="beginning"
+        >
 
         <ImageView
             android:id="@+id/iv_store"

@@ -67,6 +67,8 @@ public class SearchShopResultActivity extends BaseActivity {
     ImageView iv_title_back;
     @BindView(R.id.iv_search_type)
     TextView iv_search_type;
+    @BindView(R.id.iv_search_line)
+    ImageView iv_search_line;
     @BindView(R.id.et_search)
     SearchEditTextView et_search;
     @BindView(R.id.tv_text)
@@ -152,6 +154,11 @@ public class SearchShopResultActivity extends BaseActivity {
             gc_id = bundle.getString("gc_id");
             store_id = bundle.getString("store_id");
             searchType = bundle.getString("searchType", "goods"); // 店铺 store
+            boolean showShop = bundle.getBoolean("showShop"); // 表示从店铺点击分类过来的，需要隐藏搜索栏前边的店铺文本
+            if (showShop) {
+                iv_search_type.setVisibility(View.GONE);
+                iv_search_line.setVisibility(View.GONE);
+            }
         }
 
         initView();
@@ -161,14 +168,12 @@ public class SearchShopResultActivity extends BaseActivity {
     @Override
     protected void setStatusBar() {
         StatusBarUtil.setColorForDrawerLayout(this, mDrawerlayout, ContextCompat.getColor(mContext, R.color.colorPrimary), StatusBarUtil.DEFAULT_ALPHA);
-//        StatusBarUtil.setTranslucentForDrawerLayout(this, mDrawerlayout,StatusBarUtil.DEFAULT_ALPHA);
-//        StatusBarUtil.setColorNoTranslucentForDrawerLayout(this, mDrawerlayout,ContextCompat.getColor(mContext, R.color.colorPrimary));
     }
 
     void initView() {
         iv_title_back.setVisibility(View.VISIBLE);
         tv_text.setVisibility(View.GONE);
-        et_search.setHint("搜索关键字相关商品");
+        et_search.setHint(R.string.string_search_al_shop);
         et_search.setText(keyword);
         et_search.setOnKeyListener(new SearchEditTextView.onKeyListener() {
             @Override

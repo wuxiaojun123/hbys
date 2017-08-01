@@ -145,7 +145,7 @@ public class GoodFragment extends BaseFragment {
 
     private void initProperty(GoodsInfoBean goods_info) {
         propertyBean.setGoods_name(goods_info.goods_name);
-        propertyBean.setGoods_num(goods_info.goods_discount);
+        propertyBean.setGoods_num(goods_info.goods_storage);
         propertyBean.setGoods_price(goods_info.goods_price);
 
         List<PropertyValueBean> propertyValueBeen = new ArrayList<>();

@@ -16,6 +16,7 @@ public class GoodsInfoBean implements Serializable{
     public String goods_marketprice; // 原价
     public String goods_discount; // 折扣
     public String goods_salenum;// 多少人付款
+    public String goods_storage; // 库存
     public String goods_url;
     public List<PropertyName> spec_name;
     public List<PropertyValue> spec_value;

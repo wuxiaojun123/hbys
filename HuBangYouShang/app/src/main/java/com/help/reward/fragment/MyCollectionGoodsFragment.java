@@ -1,13 +1,17 @@
 package com.help.reward.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.activity.GoodInfoActivity;
 import com.help.reward.adapter.MyCollectionPostAdapter;
 import com.help.reward.bean.MyCollectionGoodsBean;
+import com.help.reward.minterface.OnMyItemClickListener;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
@@ -58,6 +62,7 @@ public class MyCollectionGoodsFragment extends BaseFragment {
         initDeleteListener();
         initRefreshListener();
         initLoadMoreListener();
+        initOnItemClickListener();
     }
 
     private void initDeleteListener() {
@@ -90,6 +95,20 @@ public class MyCollectionGoodsFragment extends BaseFragment {
                             });
 
                 }
+            }
+        });
+    }
+
+    private void initOnItemClickListener() {
+        mCollectionGoodsAdapter.setOnMyItemClickListener(new OnMyItemClickListener() {
+            @Override
+            public void onMyItemClickListener(int position) {
+                MyCollectionGoodsBean bean = mCollectionGoodsAdapter.getDataList().get(position);
+                Intent mIntent = new Intent(mContext, GoodInfoActivity.class);
+                mIntent.putExtra("goods_id", bean.goods_id);
+                mIntent.putExtra("store_id", bean.store_id);
+                startActivity(mIntent);
+                ActivitySlideAnim.slideInAnim(getActivity());
             }
         });
     }

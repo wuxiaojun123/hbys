@@ -12,6 +12,7 @@
     <string name="string_search_hint">搜索关键字广告</string>
 
     <string name="string_please_login">请先登录</string>
+    <string name="string_login">登录</string>
 
     <!--首页 积分-->
     <string name="string_watch_point_praise">看完点赞</string>
@@ -182,7 +183,7 @@
     <string name="shop_lable4">分类</string>
     <string name="shop_lable5">推荐店铺</string>
     <string name="shop_lable6">热门商品</string>
-
+    <string name="string_search_al_shop">搜索关键字相关商品</string>
     <string name="string_error">获取数据失败</string>
 
     <!--店铺-->

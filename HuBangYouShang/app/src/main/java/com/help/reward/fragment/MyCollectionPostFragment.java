@@ -106,7 +106,6 @@ public class MyCollectionPostFragment extends BaseFragment {
         mCollectionPostAdapter.setOnMyItemClickListener(new OnMyItemClickListener() {
             @Override
             public void onMyItemClickListener(int position) {
-                LogUtils.e("点击事件" + position);
                 MyCollectionPostBean bean = mCollectionPostAdapter.getDataList().get(position);
                 Intent intent = null;
                 if (bean.log_msg.equals("reward")) { // 获赏

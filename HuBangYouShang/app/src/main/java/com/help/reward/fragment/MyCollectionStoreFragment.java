@@ -1,13 +1,19 @@
 package com.help.reward.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.activity.GoodInfoActivity;
+import com.help.reward.activity.StoreInfoActivity;
 import com.help.reward.adapter.MyCollectionPostAdapter;
+import com.help.reward.bean.MyCollectionGoodsBean;
 import com.help.reward.bean.MyCollectionStoreBean;
+import com.help.reward.minterface.OnMyItemClickListener;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
@@ -58,17 +64,18 @@ public class MyCollectionStoreFragment extends BaseFragment {
         initDeleteListener();
         initRefreshListener();
         initLoadMoreListener();
+        initOnItemClickListener();
     }
 
     private void initDeleteListener() {
         myCollectionStoreAdapter.setOnItemDeleteListener(new OnItemDeleteListener() {
             @Override
             public void deleteItem(final int position) {
-                MyCollectionStoreBean bean = (MyCollectionStoreBean) myCollectionStoreAdapter.getDataList().get(position);
-                if(bean != null){
+                MyCollectionStoreBean bean = myCollectionStoreAdapter.getDataList().get(position);
+                if (bean != null) {
                     PersonalNetwork
                             .getResponseApi()
-                            .getDeleteMyCollectionStoreResponse(App.APP_CLIENT_KEY,bean.store_id)
+                            .getDeleteMyCollectionStoreResponse(App.APP_CLIENT_KEY, bean.store_id)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -80,7 +87,7 @@ public class MyCollectionStoreFragment extends BaseFragment {
 
                                 @Override
                                 public void onNext(BaseResponse response) {
-                                    LogUtils.e("删除我的收藏中的店铺："+response.toString());
+                                    //LogUtils.e("删除我的收藏中的店铺："+response.toString());
                                     if (response.code == 200) { // 删除成功
                                         myCollectionStoreAdapter.remove(position);
                                     } else {
@@ -90,6 +97,19 @@ public class MyCollectionStoreFragment extends BaseFragment {
                             });
 
                 }
+            }
+        });
+    }
+
+    private void initOnItemClickListener() {
+        myCollectionStoreAdapter.setOnMyItemClickListener(new OnMyItemClickListener() {
+            @Override
+            public void onMyItemClickListener(int position) {
+                MyCollectionStoreBean bean = myCollectionStoreAdapter.getDataList().get(position);
+                Intent intent = new Intent(mContext, StoreInfoActivity.class);
+                intent.putExtra("store_id", bean.store_id);
+                startActivity(intent);
+                ActivitySlideAnim.slideInAnim(getActivity());
             }
         });
     }
@@ -120,7 +140,7 @@ public class MyCollectionStoreFragment extends BaseFragment {
         //?act=member_favorites_store&op=favorites_list
         PersonalNetwork
                 .getResponseApi()
-                .getMyCollectionStoreResponse("member_favorites_store","favorites_list",currentPage+"",App.APP_CLIENT_KEY)
+                .getMyCollectionStoreResponse("member_favorites_store", "favorites_list", currentPage + "", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyCollectionStoreResponse>() {
@@ -137,9 +157,9 @@ public class MyCollectionStoreFragment extends BaseFragment {
                         if (response.code == 200) {
                             LogUtils.e("获取数据成功。。。" + response.data.favorites_list.size());
                             if (response.data != null) {
-                                if(currentPage == 1){
+                                if (currentPage == 1) {
                                     myCollectionStoreAdapter.setDataList(response.data.favorites_list);
-                                }else{
+                                } else {
                                     myCollectionStoreAdapter.addAll(response.data.favorites_list);
                                 }
                             }
@@ -155,13 +175,13 @@ public class MyCollectionStoreFragment extends BaseFragment {
                 });
     }
 
-    public void refreshRecycler(){
-        if(myCollectionStoreAdapter != null){
+    public void refreshRecycler() {
+        if (myCollectionStoreAdapter != null) {
             myCollectionStoreAdapter.clear();
         }
     }
 
-    public MyCollectionStoreAdapter getMyCollectionStoreAdapter(){
+    public MyCollectionStoreAdapter getMyCollectionStoreAdapter() {
         return myCollectionStoreAdapter;
     }
 

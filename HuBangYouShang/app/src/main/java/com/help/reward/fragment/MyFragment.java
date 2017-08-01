@@ -345,7 +345,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
             iv_photo.setImageResource(R.mipmap.img_my_default_photo);
             tv_register.setVisibility(View.VISIBLE);
-            tv_login.setText("登陆/");
+            tv_login.setText("登录/");
             tv_user_level.setText("这里是用户等级");
             tv_help_num.setText("0");
             tv_account_help_reward.setText(null);

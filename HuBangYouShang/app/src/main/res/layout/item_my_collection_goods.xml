@@ -6,24 +6,24 @@
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/id_ll_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/shape_divider_line"
         android:orientation="horizontal"
-        >
+        android:showDividers="beginning">
 
         <ImageView
             android:id="@+id/iv_goods"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:scaleType="fitXY"
-            />
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_margin="10dp"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -40,8 +40,8 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="bottom"
                 android:layout_gravity="bottom"
+                android:gravity="bottom"
                 android:text="¥ 175.00"
                 android:textColor="@color/color_fa"
                 android:textSize="@dimen/dimen_13" />
@@ -55,9 +55,9 @@
         android:layout_width="70dp"
         android:layout_height="match_parent"
         android:background="@color/color_fa"
-        android:text="@string/string_remove"
-        android:textSize="@dimen/dimen_15"
         android:gravity="center"
-        android:textColor="@android:color/white" />
+        android:text="@string/string_remove"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/dimen_15" />
 
 </com.help.reward.view.SwipeMenuView>

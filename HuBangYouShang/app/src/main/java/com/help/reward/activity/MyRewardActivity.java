@@ -27,7 +27,7 @@ import butterknife.OnClick;
  * Created by wuxiaojun on 2017/2/8.
  */
 
-public class MyRewardActivity extends BaseActivity implements View.OnClickListener{
+public class MyRewardActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -41,7 +41,7 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
     PagerSlidingTabStrip tabStrip;
 
     private PointsRecordFragment pointsRecordFragment;
-    private CouponsRecordFragment couponsRecordFragment ;
+    private CouponsRecordFragment couponsRecordFragment;
 
 
     @Override
@@ -67,7 +67,7 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.iv_title_back:
                 finish();
                 ActivitySlideAnim.slideOutAnim(MyRewardActivity.this);
@@ -76,7 +76,7 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private class MyPagerAdapter extends FragmentPagerAdapter{
+    private class MyPagerAdapter extends FragmentPagerAdapter {
 
         private String[] TITLES = new String[2];
 
@@ -93,9 +93,9 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0){
+            if (position == 0) {
                 return pointsRecordFragment;
-            }else{
+            } else {
                 return couponsRecordFragment;
             }
         }

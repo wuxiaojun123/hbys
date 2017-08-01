@@ -95,6 +95,11 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
         initView();
     }
 
+    @Override
+    protected void setStatusBar() {
+        // 不需要状态栏变色
+    }
+
     private void initView() {
         PropertyAdapter propertyAdapter = new PropertyAdapter(GoodPropertyActivity.this);
         mList.setAdapter(propertyAdapter);

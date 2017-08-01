@@ -13,7 +13,7 @@ import com.idotools.utils.DateUtil;
  * Created by wuxiaojun on 2017/2/26.
  */
 
-public class PointsRecordAdapter extends BaseRecyclerAdapter {
+public class PointsRecordAdapter extends BaseRecyclerAdapter<PointRecordBean> {
 
 
     public PointsRecordAdapter(Context context) {

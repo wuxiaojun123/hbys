@@ -15,7 +15,7 @@ import com.idotools.utils.DateUtil;
  * Created by wuxiaojun on 2017/2/26.
  */
 
-public class CouponRecordAdapter extends BaseRecyclerAdapter {
+public class CouponRecordAdapter extends BaseRecyclerAdapter<CouponRecordBean> {
 
     private String couponsContent;
 
