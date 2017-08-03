@@ -25,9 +25,14 @@ import com.coupon.CouponPointsUtils;
 import com.coupon.widget.ChatRowCoupon;
 import com.coupon.widget.ChatRowPoints;
 import com.help.reward.App;
+import com.help.reward.activity.GoodInfoActivity;
+import com.help.reward.activity.StoreInfoActivity;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.GroupToStoreResponse;
+import com.help.reward.bean.Response.PointsRecordResponse;
 import com.help.reward.network.CouponPointsNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.view.MyProcessDialog;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMGroup;
@@ -56,6 +61,7 @@ import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
 
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -139,6 +145,46 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
             public void onClick(View v) {
                 if (chatType == EaseConstant.CHATTYPE_SINGLE) {
                     //emptyHistory();
+                        if (App.APP_CLIENT_KEY == null) {
+                            return;
+                        }
+                        String currentGroup = fragmentArgs.getString("currentGroup");
+
+                        if (TextUtils.isEmpty(currentGroup)) {
+                            return;
+                        }
+
+                        // ?act=member_points&op=receivePointsLog
+                        CouponPointsNetwork
+                                .getHelpNoCookieApi()
+                                .getStoreId(App.APP_CLIENT_KEY, currentGroup)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe((new BaseSubscriber<GroupToStoreResponse>() {
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        e.printStackTrace();
+                                        ToastUtils.show(getActivity(), R.string.string_error);
+                                    }
+                                    @Override
+                                    public void onNext(GroupToStoreResponse response) {
+                                        if (response.code == 200) {
+                                            if (response.data != null) { // 返回地址id  response.data.address_id
+                                                GroupToStoreResponse data = response.data;
+                                                if (!TextUtils.isEmpty(data.store_id)){
+                                                    Intent mStoreIntent = new Intent(getActivity(), StoreInfoActivity.class);
+                                                    mStoreIntent.putExtra("store_id", data.store_id);
+                                                    startActivity(mStoreIntent);
+                                                } else {
+                                                    ToastUtils.show(getActivity(), "获取店铺信息失败");
+                                                }
+                                            }
+                                        } else {
+                                            ToastUtils.show(getActivity(), response.msg);
+                                        }
+                                    }
+                                }));
                 } else {
                     toGroupDetails();
                 }

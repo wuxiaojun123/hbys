@@ -3,6 +3,7 @@ package com.help.reward.network.api;
 
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.CouponsRecordResponse;
+import com.help.reward.bean.Response.GroupToStoreResponse;
 import com.help.reward.bean.Response.PointsRecordResponse;
 import com.help.reward.utils.Constant;
 
@@ -46,6 +47,13 @@ public interface CouponPointsApi {
             @Query("op") String op,
             @Query("curpage") String curpage,
             @Field("key") String key
+    );
+
+    @FormUrlEncoded
+    @POST(Constant.URL_GROUP_STORE)
+    Observable<GroupToStoreResponse> getStoreId(
+            @Field("key") String key,
+            @Field("groupId") String groupId
     );
 
 }

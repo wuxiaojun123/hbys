@@ -790,6 +790,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 								Intent intent = new Intent(GroupDetailsActivity.this, ChatActivity.class);
 								intent.putExtra("userId", username);
 								intent.putExtra("chatType", Constant.CHATTYPE_SINGLE);
+								intent.putExtra("currentGroup",groupId);
 								startActivity(intent);
 							}
 
