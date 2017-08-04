@@ -31,6 +31,7 @@ import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.MyProcessDialog;
 import com.help.reward.view.StoreInfoMenuPop;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
@@ -180,15 +181,21 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                             if (res.code == 200) { // 收藏成功
                                 LogUtils.e("结果是：" + res.data.groupid);
 
-                                EMClient.getInstance().groupManager().getAllGroups();
-                                is_in_group = true;
-                                member_id = res.data.groupid;
+                                try {
+                                    EMClient.getInstance().groupManager().getJoinedGroupsFromServer();
+                                    is_in_group = true;
+                                    member_id = res.data.groupid;
 
-                                Intent intent = new Intent(GoodInfoActivity.this, ChatActivity.class);
-                                intent.putExtra(Constant.EXTRA_USER_ID, member_id);
-                                intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
-                                startActivity(intent);
-                                ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);
+                                    Intent intent = new Intent(GoodInfoActivity.this, ChatActivity.class);
+                                    intent.putExtra(Constant.EXTRA_USER_ID, member_id);
+                                    intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
+                                    startActivity(intent);
+                                    ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);
+                                } catch (HyphenateException e) {
+                                    e.printStackTrace();
+                                    ToastUtils.show(mContext, "加群失败");
+                                }
+
 
                             } else {
                                 ToastUtils.show(mContext, res.msg);
