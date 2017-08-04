@@ -15,6 +15,7 @@ import com.help.reward.adapter.viewholder.BannerImageHolderView;
 import com.help.reward.adapter.viewholder.GuideImageHolderView;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.SharedPreferenceConstant;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.SharedPreferencesHelper;
 
 import java.util.ArrayList;
@@ -59,7 +60,9 @@ public class GuideActivity extends BaseActivity {
         convenientBanner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                if(position == 2){
+//                    LogUtils.e("positionOffset="+positionOffset+"----positionOffsetPixels="+positionOffsetPixels);
+                }
             }
 
             @Override
@@ -67,13 +70,15 @@ public class GuideActivity extends BaseActivity {
                 if (position != 2) {
                     id_enter.setVisibility(View.GONE);
                 } else {
-                    id_enter.setVisibility(View.VISIBLE);
+                    //id_enter.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if(state == ViewPager.SCROLL_STATE_IDLE && convenientBanner.getCurrentItem() == 2){
+                    id_enter.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -87,7 +92,7 @@ public class GuideActivity extends BaseActivity {
                 // 设置标记
                 SharedPreferencesHelper.getInstance(mContext).putBoolean(SharedPreferenceConstant.KEY_IS_FIRST, true);
                 // 进入主页面
-                Intent mIntent = new Intent(GuideActivity.this,MainActivity.class);
+                Intent mIntent = new Intent(GuideActivity.this, MainActivity.class);
                 startActivity(mIntent);
                 finish();
                 ActivitySlideAnim.slideInAnim(GuideActivity.this);
