@@ -223,12 +223,14 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             View shopView = mInflater.inflate(R.layout.layout_my_order_shop, ll_shop, false);
             ImageView iv_shop_img = (ImageView) shopView.findViewById(R.id.iv_shop_img); // 商品图片
             TextView tv_shop_name = (TextView) shopView.findViewById(R.id.tv_shop_name); // 商品名称
+            TextView tv_shop_atrribute = (TextView) shopView.findViewById(R.id.tv_shop_atrribute);//商品属性值
             TextView tv_single_shop_price = (TextView) shopView.findViewById(R.id.tv_single_shop_price); // 单个商品价格 ￥200.0
             TextView tv_shop_num = (TextView) shopView.findViewById(R.id.tv_shop_num); // 商品数量 x1
 
             MyOrderShopBean myOrderShopBean = bean.goods_list.get(i);
             GlideUtils.loadImage(myOrderShopBean.image_url, iv_shop_img);
             tv_shop_name.setText(myOrderShopBean.goods_name);
+            tv_shop_atrribute.setText("商品属性:");
             tv_single_shop_price.setText(myOrderShopBean.goods_price);
             tv_shop_num.setText("x" + myOrderShopBean.goods_num);
 

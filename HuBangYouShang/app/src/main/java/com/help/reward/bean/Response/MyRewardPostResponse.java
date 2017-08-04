@@ -20,15 +20,20 @@ import java.util.List;
  * Created by wuxiaojun on 2017/3/2.
  */
 
-public class MyRewardPostResponse extends BaseResponse<List<MyRewardPostResponse>>{
+public class MyRewardPostResponse extends BaseResponse<List<MyRewardPostResponse.MyRewardPostBean>>{
 
-    public String id;
-    public String board_id;
-    public String board_name;
-    public String title;
-    public String create_time;
-    public String comment;
-    public String admiration;
-    public String status;
+    public boolean hasmore;
+    public int page_total;
+
+    public class MyRewardPostBean{
+        public String id;
+        public String board_id;
+        public String board_name;
+        public String title;
+        public String create_time;
+        public String comment;
+        public String admiration;
+        public String status;
+    }
 
 }

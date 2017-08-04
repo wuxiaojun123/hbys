@@ -282,6 +282,7 @@ public interface PersonalApi {
     @FormUrlEncoded
     @POST("mobile/index.php?act=member_index&op=my_get_reward")
     Observable<MyRewardPostResponse> getMyRewardPostResponse(
+            @Query("curpage") String curpage,
             @Field("type") String type,
             @Field("key") String key
     );
@@ -290,6 +291,7 @@ public interface PersonalApi {
     @FormUrlEncoded
     @POST("mobile/index.php?act=member_index&op=my_get_reward")
     Observable<MyRewardCommentResponse> getMyRewardCommentResponse(
+            @Query("curpage") String curpage,
             @Field("type") String type,
             @Field("key") String key
     );

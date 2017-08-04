@@ -12,10 +12,8 @@ import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
-import com.help.reward.fragment.CouponsRecordFragment;
 import com.help.reward.fragment.MyRewardCommentFragment;
 import com.help.reward.fragment.MyRewardPostFragment;
-import com.help.reward.fragment.PointsRecordFragment;
 import com.help.reward.utils.ActivitySlideAnim;
 
 import butterknife.BindView;
@@ -40,9 +38,8 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
-    private PointsRecordFragment pointsRecordFragment;
-    private CouponsRecordFragment couponsRecordFragment;
-
+    private MyRewardPostFragment myRewardPostFragment;
+    private MyRewardCommentFragment myRewardCommentFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,8 +48,8 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
         ButterKnife.bind(this);
 
         initView();
-        pointsRecordFragment = new PointsRecordFragment();
-        couponsRecordFragment = new CouponsRecordFragment();
+        myRewardPostFragment = new MyRewardPostFragment();
+        myRewardCommentFragment = new MyRewardCommentFragment();
 
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
@@ -93,10 +90,10 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0){
-                return new MyRewardPostFragment();
-            }else{
-                return new MyRewardCommentFragment();
+            if (position == 0) {
+                return myRewardPostFragment;
+            } else {
+                return myRewardCommentFragment;
             }
         }
 

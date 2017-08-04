@@ -29,16 +29,16 @@
             android:textColor="@color/color_3a"
             android:textSize="@dimen/dimen_13" />
 
-        <!--<TextView
+        <TextView
             android:id="@+id/tv_shop_atrribute"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:text="商品属性:属性值"
+            android:text="商品属性:"
             android:textColor="@color/color_bf"
-            android:textSize="@dimen/dimen_13" />-->
+            android:textSize="@dimen/dimen_13" />
 
     </LinearLayout>
 

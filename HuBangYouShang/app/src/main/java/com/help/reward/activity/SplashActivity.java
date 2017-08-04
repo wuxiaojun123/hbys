@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 
 import com.help.reward.R;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.SharedPreferenceConstant;
+import com.idotools.utils.SharedPreferencesHelper;
 
 /**
  * Created by wuxiaojun on 2017/1/4.
@@ -18,6 +20,14 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean isFirst = SharedPreferencesHelper.getInstance(mContext).getBoolean(SharedPreferenceConstant.KEY_IS_FIRST, false);
+        if(!isFirst){
+            Intent mIntent = new Intent(SplashActivity.this,GuideActivity.class);
+            startActivity(mIntent);
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_splash);
         mHandler.sendEmptyMessageDelayed(1,2000);
     }

@@ -31,6 +31,17 @@ public class GlideUtils {
         // .centerCrop()
     }
 
+    public static void loadLocalImage(int resId, ImageView imageView) {
+        Glide.with(imageView.getContext())
+                .load(resId)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//                .error(R.mipmap.img_default)
+//                .placeholder(R.mipmap.img_default)
+                .crossFade()
+                .into(imageView);
+        // .centerCrop()
+    }
+
     public static void loadGIFImage(Context context, String imgUrl, ImageView imageView) {
         if (!TextUtils.isEmpty(imgUrl)) {
             Glide.clear(imageView);
