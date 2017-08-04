@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +9,23 @@
         android:id="@+id/banner_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:canLoop="false" />
+        app:canLoop="true" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/id_enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/shape_bg_guide_enter"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="立即体验"
+        android:textColor="@color/color_eb6877"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

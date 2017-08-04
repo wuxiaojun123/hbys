@@ -13,7 +13,7 @@ import com.help.reward.bean.Response.MyRewardPostResponse;
  * Created by wuxiaojun on 2017/2/26.
  */
 
-public class MyRewardPostAdapter extends BaseRecyclerAdapter {
+public class MyRewardPostAdapter extends BaseRecyclerAdapter<MyRewardPostResponse.MyRewardPostBean> {
 
     public MyRewardPostAdapter(Context context) {
         super(context);
@@ -33,7 +33,7 @@ public class MyRewardPostAdapter extends BaseRecyclerAdapter {
         TextView tv_post = holder.getView(R.id.tv_post);
         TextView tv_reward = holder.getView(R.id.tv_reward);
 
-        MyRewardPostResponse bean = (MyRewardPostResponse) mDataList.get(position);
+        MyRewardPostResponse.MyRewardPostBean bean = mDataList.get(position);
 
         tv_content.setText(bean.title);
         tv_title.setText(bean.board_name);
