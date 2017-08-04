@@ -150,6 +150,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
             intent.putExtra(Constant.EXTRA_USER_ID, member_id);
             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
             startActivity(intent);
+            ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);
 
         } else {
             if (TextUtils.isEmpty(member_id)) {
@@ -187,6 +188,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                                 intent.putExtra(Constant.EXTRA_USER_ID, member_id);
                                 intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
                                 startActivity(intent);
+                                ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);
 
                             } else {
                                 ToastUtils.show(mContext, res.msg);

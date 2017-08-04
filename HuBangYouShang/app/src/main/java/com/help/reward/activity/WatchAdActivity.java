@@ -208,6 +208,7 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
         if (!TextUtils.isEmpty(avaliable_groupid)) {
             Intent intent = new Intent(WatchAdActivity.this, ChatActivity.class);
             intent.putExtra(Constant.EXTRA_USER_ID, avaliable_groupid);
+            intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
             startActivity(intent);
             ActivitySlideAnim.slideInAnim(WatchAdActivity.this);
             return;
@@ -242,6 +243,7 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                             if (res.data != null && !TextUtils.isEmpty(res.data.groupid)) {
                                 Intent intent = new Intent(WatchAdActivity.this, ChatActivity.class);
                                 intent.putExtra(Constant.EXTRA_USER_ID, res.data.groupid);
+                                intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
                                 startActivity(intent);
                                 ActivitySlideAnim.slideInAnim(WatchAdActivity.this);
                             }
