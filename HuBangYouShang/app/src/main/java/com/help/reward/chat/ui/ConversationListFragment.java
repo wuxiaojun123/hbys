@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.help.reward.App;
 import com.help.reward.activity.MainActivity;
 import com.help.reward.chat.Constant;
 import com.help.reward.chat.adapter.EaseConversationAdapter;
@@ -62,7 +63,24 @@ public class ConversationListFragment extends EaseConversationListFragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            setUpView();
+        }
+    }
+
+    @Override
     protected void setUpView() {
+
+        if (App.APP_CLIENT_KEY == null) {
+            errorText.setText(R.string.can_not_connect_chat_server_connection);
+            errorItemContainer.setVisibility(View.VISIBLE);
+            return;
+        } else {
+            errorItemContainer.setVisibility(View.GONE);
+        }
+
         super.setUpView();
         // register context menu
         registerForContextMenu(conversationListView);
