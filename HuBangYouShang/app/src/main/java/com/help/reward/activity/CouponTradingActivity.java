@@ -71,6 +71,7 @@ public class CouponTradingActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupon_trading);
         ButterKnife.bind(this);
+        et_search.setHint(R.string.string_search_relative_goods);
 
         initRecycler();
         initNetwork();
@@ -94,9 +95,9 @@ public class CouponTradingActivity extends BaseActivity implements View.OnClickL
                     storeName = keyword;
                 }
                 // 跳转到搜索结果的页面
-                Intent mIntent = new Intent(CouponTradingActivity.this,CouponTradingSearchResultActivity.class);
-                mIntent.putExtra("goodsname",goodsname);
-                mIntent.putExtra("storeName",storeName);
+                Intent mIntent = new Intent(CouponTradingActivity.this, CouponTradingSearchResultActivity.class);
+                mIntent.putExtra("goodsname", goodsname);
+                mIntent.putExtra("storeName", storeName);
                 startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim(CouponTradingActivity.this);
             }
@@ -150,7 +151,7 @@ public class CouponTradingActivity extends BaseActivity implements View.OnClickL
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                if(currentPage == 1){
+                                if (currentPage == 1) {
                                     mCollectionGoodsAdapter.clear();
                                 }
                                 mCollectionGoodsAdapter.addAll(response.data.voucher_list);
@@ -182,12 +183,12 @@ public class CouponTradingActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onType(String type) {
                         if ("goods".equals(type)) {
-                            et_search.setHint("搜索关键字相关商品");
-                            iv_search_type.setText("商品");
+                            et_search.setHint(R.string.string_search_relative_goods);
+                            iv_search_type.setText(R.string.string_goods);
                             storeName = "";
                         } else {
-                            et_search.setHint("搜索关键字相关店铺");
-                            iv_search_type.setText("店铺");
+                            et_search.setHint(R.string.string_search_relative_store);
+                            iv_search_type.setText(R.string.string_store);
                             goodsname = "";
                         }
                     }

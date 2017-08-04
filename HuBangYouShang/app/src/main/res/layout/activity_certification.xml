@@ -32,7 +32,7 @@
         android:text="您已通过实名认证"
         android:textColor="@color/color_3a"
         android:textSize="@dimen/dimen_14"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_info"

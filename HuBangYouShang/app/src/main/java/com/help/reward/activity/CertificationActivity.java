@@ -116,7 +116,9 @@ public class CertificationActivity extends BaseActivity implements View.OnClickL
      */
     private void judgeState(CertificationResponse.CertificationBean bean) {
         if (bean.certification != null) {
+            LogUtils.e("返回状态是：" + bean.certification);
             if ("0".equals(bean.certification)) { // 未认证，正常显示
+                tv_certification_success.setVisibility(View.GONE);
                 ll_info.setVisibility(View.VISIBLE);
                 initSelectPhoto();
 

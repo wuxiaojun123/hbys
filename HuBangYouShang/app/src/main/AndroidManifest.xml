@@ -60,8 +60,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.help.reward.activity.MainActivity"
-            android:launchMode="singleTask"
+            android:name="com.help.reward.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -70,6 +69,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
 
         <!-- 验证身份 -->
         <activity
