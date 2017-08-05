@@ -229,14 +229,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onError(int code, String message) {
-                runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        // TODO Auto-generated method stub
-                        ToastUtils.show(mContext,"unbind devicetokens failed");
-                    }
-                });
             }
         });
 
