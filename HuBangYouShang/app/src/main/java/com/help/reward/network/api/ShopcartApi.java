@@ -4,6 +4,7 @@ import com.help.reward.bean.Response.AddSellerGroupResponse;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.CommitOrderResponse;
 import com.help.reward.bean.Response.ConfirmOrderResponse;
+import com.help.reward.bean.Response.PayTypeAlipayResponse;
 import com.help.reward.bean.Response.PayTypeResponse;
 import com.help.reward.bean.Response.PayTypeWchatResponse;
 import com.help.reward.bean.Response.ShopCartResponse;
@@ -127,6 +128,14 @@ public interface ShopcartApi {
     @FormUrlEncoded
     @POST("mobile/index.php?act=member_payment&op=wx_app_pay3")
     Observable<PayTypeWchatResponse> getPayTypeWchatResponse(
+            @Field("pay_sn") String pay_sn,
+            @Field("key") String key
+    );
+
+    // 支付宝支付
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_payment&op=alipay_pay")
+    Observable<PayTypeAlipayResponse> getPayTypeAliPayResponse(
             @Field("pay_sn") String pay_sn,
             @Field("key") String key
     );

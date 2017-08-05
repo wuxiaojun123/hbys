@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.GoodsSpecBean;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.OrderInfoBean;
@@ -25,6 +26,8 @@ import com.help.reward.utils.GlideUtils;
 import com.help.reward.view.AlertDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -230,7 +233,18 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             MyOrderShopBean myOrderShopBean = bean.goods_list.get(i);
             GlideUtils.loadImage(myOrderShopBean.image_url, iv_shop_img);
             tv_shop_name.setText(myOrderShopBean.goods_name);
-            tv_shop_atrribute.setText("商品属性:");
+            List<GoodsSpecBean> specList = myOrderShopBean.goods_spec;
+            if (specList != null && !specList.isEmpty()) {
+                tv_shop_atrribute.setVisibility(View.VISIBLE);
+                StringBuilder specSb = new StringBuilder();
+                for (GoodsSpecBean spec : specList) {
+                    LogUtils.e("商品属性是" + spec.sp_name + "--" + spec.sp_value_name);
+                    specSb.append(spec.sp_name + ":" + spec.sp_value_name);
+                }
+                tv_shop_atrribute.setText("商品属性:" + specSb.toString());
+            } else {
+                tv_shop_atrribute.setVisibility(View.GONE);
+            }
             tv_single_shop_price.setText(myOrderShopBean.goods_price);
             tv_shop_num.setText("x" + myOrderShopBean.goods_num);
 

@@ -23,6 +23,9 @@ public class Constant {
     public static final String WXCHAT_APP_ID = "wx5a5e4c632b2ae894";
     public static final String WXCHAT_APP_SECRET = "18501139afdf58a23a8d05c56169728b";
 
+    /** 支付宝支付业务：入参app_id */
+    public static final String ALIPAY_APPID = "2017050207078993";
+    public static final String ALIPAY_RSA_PRIVATE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB";
 
 
     // 电话号码，设置页面

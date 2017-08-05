@@ -18,6 +18,7 @@ import android.widget.ToggleButton;
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.AddressBean;
+import com.help.reward.bean.GoodsSpecBean;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.Response.CartInfoBean;
@@ -245,7 +246,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             View shopView = mInflater.inflate(R.layout.layout_my_order_shop, ll_shop, false);
             ImageView iv_shop_img = (ImageView) shopView.findViewById(R.id.iv_shop_img); // 商品图片
             TextView tv_shop_name = (TextView) shopView.findViewById(R.id.tv_shop_name); // 商品名称
-//            TextView tv_shop_atrribute = (TextView) shopView.findViewById(R.id.tv_shop_atrribute); // 商品属性:属性值
+            TextView tv_shop_atrribute = (TextView) shopView.findViewById(R.id.tv_shop_atrribute); // 商品属性:属性值
             TextView tv_single_shop_price = (TextView) shopView.findViewById(R.id.tv_single_shop_price); // 单个商品价格 ￥200.0
             TextView tv_shop_num = (TextView) shopView.findViewById(R.id.tv_shop_num); // 商品数量 x1
 
@@ -253,7 +254,18 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
 
             GlideUtils.loadImage(goodInfoBean.goods_image_url, iv_shop_img);
             tv_shop_name.setText(goodInfoBean.goods_name);
-//            tv_shop_atrribute.setText("商品属性:");
+            List<GoodsSpecBean> specList = goodInfoBean.goods_spec;
+            if (specList != null && !specList.isEmpty()) {
+                tv_shop_atrribute.setVisibility(View.VISIBLE);
+                StringBuilder specSb = new StringBuilder();
+                for (GoodsSpecBean spec : specList) {
+                    LogUtils.e("商品属性是" + spec.sp_name + "--" + spec.sp_value_name);
+                    specSb.append(spec.sp_name + ":" + spec.sp_value_name);
+                }
+                tv_shop_atrribute.setText("商品属性:" + specSb.toString());
+            } else {
+                tv_shop_atrribute.setVisibility(View.GONE);
+            }
             tv_single_shop_price.setText(goodInfoBean.goods_price);
             tv_shop_num.setText("x" + goodInfoBean.goods_num);
             ll_shop.addView(shopView);
