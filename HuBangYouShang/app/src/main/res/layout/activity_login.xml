@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:src="@mipmap/img_login_logo" />
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_height="@dimen/dimen_35"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/shape_login_edittext_bg"
             android:drawableLeft="@mipmap/img_pwd"
             android:drawablePadding="14dp"
@@ -89,7 +89,7 @@
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -115,7 +115,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:drawableLeft="@mipmap/img_login_border_left"
             android:drawableRight="@mipmap/img_login_border_right"
             android:gravity="center"

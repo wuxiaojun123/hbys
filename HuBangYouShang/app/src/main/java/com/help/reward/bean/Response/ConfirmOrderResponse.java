@@ -1,6 +1,7 @@
 package com.help.reward.bean.Response;
 
 import com.help.reward.bean.AddressBean;
+import com.help.reward.bean.GoodsSpecBean;
 import com.help.reward.bean.VoucherBean;
 
 import java.util.List;
@@ -192,6 +193,8 @@ public class ConfirmOrderResponse extends BaseResponse<ConfirmOrderResponse.Conf
         public String goods_image_url;
         public String cart_id;
         public String store_id;
+
+        public List<GoodsSpecBean> goods_spec; // 商品属性
     }
 
     /**

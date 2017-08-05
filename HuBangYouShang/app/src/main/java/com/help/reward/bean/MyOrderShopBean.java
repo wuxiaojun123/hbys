@@ -1,5 +1,7 @@
 package com.help.reward.bean;
 
+import java.util.List;
+
 /**
  * 我的订单--商品
  * {
@@ -40,5 +42,8 @@ public class MyOrderShopBean {
     public String gc_id;
     public String goods_image_url; // 图片路径
     public String image_url; // 图片路径
+
+    public List<GoodsSpecBean> goods_spec; // 商品属性
+
 
 }
