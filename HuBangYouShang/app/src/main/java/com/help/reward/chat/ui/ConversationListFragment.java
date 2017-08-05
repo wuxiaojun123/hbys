@@ -75,10 +75,11 @@ public class ConversationListFragment extends EaseConversationListFragment {
 
         if (App.APP_CLIENT_KEY == null) {
             errorText.setText(R.string.can_not_connect_chat_server_connection);
-            errorItemContainer.setVisibility(View.VISIBLE);
+            //return;
+            handler.sendEmptyMessage(0);
             return;
         } else {
-            errorItemContainer.setVisibility(View.GONE);
+            handler.sendEmptyMessage(1);
         }
 
         super.setUpView();

@@ -171,9 +171,13 @@ public class EaseConversationListFragment extends EaseBaseFragment{
             
             case MSG_REFRESH:
 	            {
-	            	conversationList.clear();
-	                conversationList.addAll(loadConversationList());
-	                conversationListView.refresh();
+                    try {
+                        conversationList.clear();
+                        conversationList.addAll(loadConversationList());
+                        conversationListView.refresh();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
 	                break;
 	            }
             default:
