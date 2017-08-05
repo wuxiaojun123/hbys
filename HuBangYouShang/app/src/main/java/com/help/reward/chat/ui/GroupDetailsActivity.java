@@ -37,9 +37,14 @@ import android.widget.Toast;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.activity.GroupCouponsRecordActivity;
+import com.help.reward.activity.StoreInfoActivity;
+import com.help.reward.bean.Response.GroupToStoreResponse;
 import com.help.reward.chat.Constant;
 import com.help.reward.chat.db.TopUser;
 import com.help.reward.chat.db.TopUserDao;
+import com.help.reward.network.CouponPointsNetwork;
+import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.view.MyProcessDialog;
 import com.hyphenate.EMGroupChangeListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -60,6 +65,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static com.hbys.chatlibrary.R.id.message;
 
@@ -201,6 +209,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		rl_switch_block_groupmsg.setOnClickListener(this);
         searchLayout.setOnClickListener(this);
 		blockOfflineLayout.setOnClickListener(this);
+		((RelativeLayout)findViewById(R.id.group_to_store)).setOnClickListener(this);
 	}
 
 	@Override
@@ -488,10 +497,60 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			case R.id.group_send_record:
 				startActivity(new Intent(this, GroupCouponsRecordActivity.class));
 				break;
+			case R.id.group_to_store:
+				toStore();
+				break;
 			default:
 				break;
 		}
 
+	}
+
+	private void toStore(){
+		if (App.APP_CLIENT_KEY == null) {
+			return;
+		}
+
+		if (TextUtils.isEmpty(groupId)) {
+			return;
+		}
+
+		MyProcessDialog.showDialog(GroupDetailsActivity.this);
+
+		// ?act=member_points&op=receivePointsLog
+		CouponPointsNetwork
+				.getHelpNoCookieApi()
+				.getStoreId(App.APP_CLIENT_KEY, groupId)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe((new BaseSubscriber<GroupToStoreResponse>() {
+
+					@Override
+					public void onError(Throwable e) {
+						MyProcessDialog.closeDialog();
+						e.printStackTrace();
+						ToastUtils.show(GroupDetailsActivity.this, R.string.string_error);
+					}
+					@Override
+					public void onNext(GroupToStoreResponse response) {
+						MyProcessDialog.closeDialog();
+
+						if (response.code == 200) {
+							if (response.data != null) { // 返回地址id  response.data.address_id
+								GroupToStoreResponse data = response.data;
+								if (!TextUtils.isEmpty(data.store_id)){
+									Intent mStoreIntent = new Intent(GroupDetailsActivity.this, StoreInfoActivity.class);
+									mStoreIntent.putExtra("store_id", data.store_id);
+									startActivity(mStoreIntent);
+								} else {
+									ToastUtils.show(GroupDetailsActivity.this, "获取店铺信息失败");
+								}
+							}
+						} else {
+							ToastUtils.show(GroupDetailsActivity.this, response.msg);
+						}
+					}
+				}));
 	}
 
 	//设置置顶聊天
