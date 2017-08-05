@@ -92,5 +92,5 @@ dependencies {
     compile project(':library_address')
     compile project(':library_chat')
     compile project(':pickerview')
-    compile files('libs/alipaySdk-20170725.jar')
+//    compile files('libs/alipaySdk-20170725.jar')
 }

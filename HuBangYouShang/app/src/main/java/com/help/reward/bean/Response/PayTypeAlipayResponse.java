@@ -24,19 +24,18 @@ public class PayTypeAlipayResponse extends BaseResponse<PayTypeAlipayResponse.Pa
 
     public class PayTypeAlipayBean {
 
-        public String out_trade_no;
+        /*public String out_trade_no;
         public String subject;
         public String body;
         public String total_fee;
         public String partner;
         public String seller_id;
-        public String notify_url;
         public String service;
         public String payment_type;
         public String _input_charset;
-        public String it_b_pay;
+        public String it_b_pay;*/
 
-
+        public String notify_url;
         public String sign_type;
         public String sign;
         public String app_id;

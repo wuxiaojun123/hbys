@@ -190,6 +190,7 @@ public class PayTypeActivity extends BaseActivity {
         if (App.APP_CLIENT_KEY == null || TextUtils.isEmpty(pay_sn)) {
             return;
         }
+        LogUtils.e("点击支付宝支付...." + pay_sn + "======" + App.APP_CLIENT_KEY);
         ShopcartNetwork.getShopcartCookieApi()
                 .getPayTypeAliPayResponse(pay_sn, App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
@@ -225,7 +226,7 @@ public class PayTypeActivity extends BaseActivity {
             public void run() {
                 try {
                     Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap2(bean.app_id, bean.biz_content, bean.charset,
-                            bean.method, bean.sign_type, bean.timestamp, bean.version);
+                            bean.method, bean.notify_url, bean.timestamp, bean.version, bean.sign_type);
                     String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
 
                     String sign = URLEncoder.encode(bean.sign, "UTF-8");

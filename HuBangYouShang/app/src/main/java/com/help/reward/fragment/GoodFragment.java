@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.help.reward.App;
+import com.help.reward.activity.CouponTradingActivity;
+import com.help.reward.activity.CouponTradingSearchResultActivity;
 import com.help.reward.activity.GoodInfoActivity;
 import com.help.reward.activity.GoodPropertyActivity;
 import com.help.reward.adapter.ShopHotAdapter;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -94,14 +97,6 @@ public class GoodFragment extends BaseFragment {
             }
         }
 
-        layout_goodinfo_xuanze.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), GoodPropertyActivity.class);
-                intent.putExtra("goods_property", propertyBean);
-                startActivityForResult(intent, 0);
-            }
-        });
     }
 
     private void initNetwork(String goodsId) {
@@ -131,7 +126,7 @@ public class GoodFragment extends BaseFragment {
                                     tv_goodinfo_goodppost.setText(response.data.goods_hair_info.content);
                                     tv_goodinfo_address.setText(response.data.goods_hair_info.area_name);
                                 }
-                                LogUtils.e("是否加入到群里了"+response.data.is_in_group + "--" + response.data.store_info.available_groupid
+                                LogUtils.e("是否加入到群里了" + response.data.is_in_group + "--" + response.data.store_info.available_groupid
                                         + "--" + response.data.store_info.member_id);
                                 RxBus.getDefault().post(new GoodInfoRxbusType(response.data.is_favorate, response.data.is_in_group,
                                         response.data.is_in_group ? response.data.store_info.available_groupid : response.data.store_info.member_id));
@@ -242,6 +237,30 @@ public class GoodFragment extends BaseFragment {
         cb_goods_img.requestFocus();
     }
 
+    @OnClick({R.id.layout_goodinfo_youhuiquan, R.id.layout_goodinfo_xuanze})
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.layout_goodinfo_xuanze:
+                Intent intent = new Intent(getActivity(), GoodPropertyActivity.class);
+                intent.putExtra("goods_property", propertyBean);
+                startActivityForResult(intent, 0);
+
+                break;
+            case R.id.layout_goodinfo_youhuiquan:
+                // 跳转优惠劵交易大厅
+//                String goodsName = tv_goodinfo_goodname.getText().toString().trim();
+                String storeName = tv_goods_store_name.getText().toString().trim();
+
+                Intent mIntent = new Intent(getActivity(), CouponTradingSearchResultActivity.class);
+//                mIntent.putExtra("goodsname", goodsName);
+                mIntent.putExtra("storeName", storeName);
+                startActivity(mIntent);
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

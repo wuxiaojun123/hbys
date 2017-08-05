@@ -91,24 +91,32 @@ public class OrderInfoUtil2_0 {
         return keyValues;
     }
 
+    /***
+     * sign
+     * sign
+     *
+     * @param app_id
+     * @param biz_content
+     * @param charset
+     * @param method
+     * @param sign_type
+     * @param timestamp
+     * @param version
+     * @return
+     */
     public static Map<String, String> buildOrderParamMap2(String app_id, String biz_content,
-                                                         String charset,String method, String sign_type,
-                                                         String timestamp, String version) {
+                                                          String charset, String method, String notify_url,
+                                                          String timestamp, String version, String sign_type) {
         Map<String, String> keyValues = new HashMap<String, String>();
 
         keyValues.put("app_id", app_id);
-
         keyValues.put("biz_content", biz_content);
-
         keyValues.put("charset", charset);
-
         keyValues.put("method", method);
-
-        keyValues.put("sign_type", sign_type);
-
+        keyValues.put("notify_url", notify_url);
         keyValues.put("timestamp", timestamp);
-
         keyValues.put("version", version);
+        keyValues.put("sign_type", sign_type);
 
         return keyValues;
     }
