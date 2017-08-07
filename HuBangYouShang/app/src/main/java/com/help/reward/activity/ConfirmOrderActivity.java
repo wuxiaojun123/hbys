@@ -160,6 +160,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                     //TODO 支付
                                     Intent mIntent = new Intent(ConfirmOrderActivity.this, PayTypeActivity.class);
                                     mIntent.putExtra("pay_sn", pay_sn);
+                                    mIntent.putExtra("removeShopcatAndConfirmOrderActivity",true);
                                     startActivity(mIntent);
                                     ActivitySlideAnim.slideInAnim(ConfirmOrderActivity.this);
                                 }

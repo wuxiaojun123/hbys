@@ -28,6 +28,7 @@ import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.pay.alipay.OrderInfoUtil2_0;
 import com.help.reward.pay.alipay.PayResult;
+import com.help.reward.utils.ActivityManager;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.idotools.utils.LogUtils;
@@ -117,6 +118,11 @@ public class PayTypeActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         pay_sn = getIntent().getStringExtra("pay_sn");
+        boolean removeShopcatAndConfirmOrderActivity = getIntent().getBooleanExtra("removeShopcatAndConfirmOrderActivity",false);
+        if(removeShopcatAndConfirmOrderActivity){
+            ActivityManager.getActivityManager().finishActivity(ConfirmOrderActivity.class);
+            ActivityManager.getActivityManager().finishActivity(ShopcartActivity.class);
+        }
 
         initView();
         initNet();

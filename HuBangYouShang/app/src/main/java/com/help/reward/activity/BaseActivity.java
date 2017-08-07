@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.help.reward.R;
+import com.help.reward.utils.ActivityManager;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.DoAnalyticsManager;
 import com.help.reward.utils.StatusBarUtil;
@@ -22,6 +23,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityManager.getActivityManager().addActivity(this);
         mContext = this;
     }
 
@@ -45,6 +47,12 @@ public class BaseActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         DoAnalyticsManager.pagePause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityManager.getActivityManager().removeActivity(this);
+        super.onDestroy();
     }
 
     @Override
