@@ -32,6 +32,11 @@ public class OrderInfoBean {
         public String reciver_name; // 收货人姓名
         public reciver_info reciver_info; // 收货人信息
         public String voucher_price; // 优惠劵满减
+        public String voucher_code;// 优惠劵码
+        public String discount_level;// 优惠百分比
+        public String general_voucher_used;// 通用劵使用
+        public String general_voucher_price;// 通用劵减免
+
         public String dlyo_pickup_code; // 消费验证码
 
     }

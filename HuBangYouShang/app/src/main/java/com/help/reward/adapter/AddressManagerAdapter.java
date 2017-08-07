@@ -66,7 +66,7 @@ public class AddressManagerAdapter extends BaseRecyclerAdapter {
 
         tv_name.setText(bean.true_name);
         tv_mobile.setText(bean.mob_phone);
-        tv_address.setText(bean.address);
+        tv_address.setText(bean.area_info + bean.address);
 
         cb_default.setOnCheckedChangeListener(null);
 
@@ -102,7 +102,6 @@ public class AddressManagerAdapter extends BaseRecyclerAdapter {
                 showDialogRemove(bean, position);
             }
         });
-
     }
 
 

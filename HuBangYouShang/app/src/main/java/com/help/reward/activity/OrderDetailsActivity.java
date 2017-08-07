@@ -213,7 +213,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         tv_shop_total_price.setText("￥" + bean.goods_amount);
 
         tv_free.setText("￥" + bean.shipping_fee);
-        tv_discount.setText("暂无字段");
+        tv_discount.setText("￥" + bean.extend_order_common.general_voucher_price);
         tv_full_cut.setText("￥" + bean.extend_order_common.voucher_price);
         tv_real_price.setText("￥" + bean.real_pay_amount);
         sellerPhoneNumber = bean.store_phone;

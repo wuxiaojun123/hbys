@@ -28,16 +28,22 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="@dimen/dimen_5"
                 >
 
                 <TextView
-                    android:id="@+id/tv_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/shop_cart_total"
+                    android:textSize="@dimen/dimen_14"/>
+
+                <TextView
+                    android:id="@+id/tv_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.00"
                     android:textSize="@dimen/dimen_14"/>
 
             </LinearLayout>

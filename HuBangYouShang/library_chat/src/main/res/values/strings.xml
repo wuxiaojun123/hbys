@@ -368,7 +368,7 @@
 
 
         <string name="shop_cart_result">结算</string>
-        <string name="shop_cart_total">合计： ¥ 0.00</string>
+        <string name="shop_cart_total">合计： ¥ </string>
         <string name="shop_cart_total_tip">不含运费</string>
 
 </resources>

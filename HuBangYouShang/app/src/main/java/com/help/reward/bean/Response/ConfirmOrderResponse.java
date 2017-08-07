@@ -161,6 +161,7 @@ public class ConfirmOrderResponse extends BaseResponse<ConfirmOrderResponse.Conf
 
         public String general_voucher_allocation; // 通用卷点击使用，那么将这个数据回传给后台
         public String available_general_voucher; // 兑换之后的通用卷
+        public String general_voucher_total_cheap; // 通用劵能兑换的总金额
         public String discount_level;
         public String freight_hash;
 

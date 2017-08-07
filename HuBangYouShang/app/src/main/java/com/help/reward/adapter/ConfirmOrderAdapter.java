@@ -53,7 +53,11 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
 
     private String discount_level;
     private String available_general_voucher;
+    private String general_voucher_total_cheap; // 通用劵可用的兑换金额
     private ConfirmOrderResponse.AddressApi addressApi; // 里面包含了邮费
+
+    private TextView mTvTotal; // 总金额显示的view
+    private String totalStr; // 默认的总金额
 
     private StringBuilder voucher = new StringBuilder(); // t_id|store_id|price, 优惠卷
     private boolean useGeneralVoucher = false; // 是否使用通用卷
@@ -215,7 +219,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             // 全部可用优惠卷  bean.store_voucher_list  全部不可用优惠卷 bean.store_voucher_list2
             String defaultId = defaultVoucherBean.voucher_id;
             mVoucherMap.put(defaultVoucherBean.voucher_id,
-                    defaultVoucherBean.voucher_id + "|" + defaultVoucherBean.voucher_store_id + "|" + defaultVoucherBean.voucher_price+",");
+                    defaultVoucherBean.voucher_t_id + "|" + defaultVoucherBean.voucher_store_id + "|" + defaultVoucherBean.voucher_price + ",");
 
             List<VoucherBean> list = new ArrayList<>();
             for (VoucherBean voucherBean : bean.store_voucher_list) {
@@ -283,12 +287,20 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
             mOrderDiscount.setText("无可用通用劵");
             btn_switch.setEnabled(false);
         } else {
-//            final double amount = Double.parseDouble(available_general_voucher) * Double.parseDouble(discount_level);
-//            mOrderDiscount.setText("可用" + available_general_voucher + "通用劵 抵" + amount + "元");
+            mOrderDiscount.setText("可用" + available_general_voucher + "通用劵 抵" + general_voucher_total_cheap + "元");
             btn_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     useGeneralVoucher = isChecked;
+                    double totalDouble = Double.parseDouble(totalStr);
+                    double totalCheap = Double.parseDouble(general_voucher_total_cheap);
+
+                    if (useGeneralVoucher) { // 使用通用劵
+                        mTvTotal.setText((totalDouble - totalCheap) + "");
+                    } else { // 不使用通用劵
+                        mTvTotal.setText(totalStr);
+                    }
+                    LogUtils.e("是否使用通用劵" + isChecked + "----" + useGeneralVoucher);
                 }
             });
         }
@@ -319,12 +331,21 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
         this.addressApi = addressApi;
     }
 
+    public void setTvTotal(TextView tvTotal,String totalStr) {
+        this.mTvTotal = tvTotal;
+        this.totalStr = totalStr;
+    }
+
     public void setDiscount_level(String discount_level) {
         this.discount_level = discount_level;
     }
 
     public void setAvailable_general_voucher(String available_general_voucher) {
         this.available_general_voucher = available_general_voucher;
+    }
+
+    public void setGeneral_voucher_total_cheap(String general_voucher_total_cheap) {
+        this.general_voucher_total_cheap = general_voucher_total_cheap;
     }
 
     public String getVoucher() {

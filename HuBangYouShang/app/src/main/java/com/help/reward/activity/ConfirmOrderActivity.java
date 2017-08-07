@@ -199,6 +199,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                     adapter.setAddressInfo(response.data.address_info);
                                     adapter.setDiscount_level(response.data.discount_level);
                                     adapter.setAvailable_general_voucher(response.data.available_general_voucher);
+                                    adapter.setGeneral_voucher_total_cheap(response.data.general_voucher_total_cheap);
                                     adapter.setAddressApi(response.data.address_api);
                                     store_cart_list.clear();
                                     store_cart_list.addAll(response.data.store_cart_list);
@@ -206,7 +207,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                     lRecyclerview.setVisibility(View.VISIBLE);
                                 }
                                 if (!TextUtils.isEmpty(response.data.order_amount)) {
-                                    mTvTotal.setText("¥" + response.data.order_amount);
+                                    mTvTotal.setText(response.data.order_amount);
+                                    adapter.setTvTotal(mTvTotal,response.data.order_amount);
                                 }
                             }
                         } else {
