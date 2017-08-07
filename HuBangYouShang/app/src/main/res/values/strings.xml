@@ -233,6 +233,8 @@
     <string name="string_general_volume">通用劵</string>
     <string name="string_general_volume_acount">通用劵账户</string>
 
+    <string name="string_get_voucher_loggin">请登录后再领取</string>
+
     <!--微信-->
     <string name="app_back">返回</string>
     <string name="app_ok">确定</string>

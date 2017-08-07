@@ -56,7 +56,7 @@ public class PayendActivity extends BaseActivity {
     private PayEndGoodsAdapter adapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     List<ShopMallHotBean> mDatas = new ArrayList<>();
-    String money, type,order_id;
+    String money, type, order_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,10 +110,11 @@ public class PayendActivity extends BaseActivity {
         tv_payend_seeorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PayendActivity.this,OrderDetailsActivity.class);
-                intent.putExtra("order_id",order_id);
+                Intent intent = new Intent(PayendActivity.this, OrderDetailsActivity.class);
+                intent.putExtra("order_id", order_id);
                 startActivity(intent);
                 finish();
+                ActivitySlideAnim.slideOutAnim(PayendActivity.this);
             }
         });
         tv_payend_gohome.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +122,7 @@ public class PayendActivity extends BaseActivity {
             public void onClick(View view) {
                 startActivity(new Intent(PayendActivity.this, MainActivity.class));
                 finish();
+                ActivitySlideAnim.slideOutAnim(PayendActivity.this);
             }
         });
         mLRecyclerViewAdapter.addHeaderView(view);
@@ -178,10 +180,10 @@ public class PayendActivity extends BaseActivity {
                         if (response.code == 200) {
                             if (response.data != null) {
 //                                if (curpage == 1) {
-                                    mDatas = response.data.list;
-                                    adapter.setDataList(response.data.list);
-                                    if (adapter.getDataList().size() == 0) {
-                                    }
+                                mDatas = response.data.list;
+                                adapter.setDataList(response.data.list);
+                                if (adapter.getDataList().size() == 0) {
+                                }
 //                                } else {
 //                                    mDatas.addAll(response.data.goods_list);
 //                                    adapter.addAll(response.data.goods_list);

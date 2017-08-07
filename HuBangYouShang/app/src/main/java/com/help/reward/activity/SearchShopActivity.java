@@ -127,6 +127,15 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
             ToastUtils.show(mContext, "请输入搜索内容");
             return;
         }
+        addHistory(searchStr);
+        goToSearchShopResultActivity(searchStr);
+    }
+
+    /***
+     * 添加到历史搜索记录中
+     * @param searchStr
+     */
+    private void addHistory(String searchStr) {
         String searchSp = SharedPreferencesHelper.getInstance(mContext).getString(SharedPreferenceConstant.KEY_SEARCH_SHOP_HISTORY, null);
         if (TextUtils.isEmpty(searchSp)) {
             searchSp = searchStr + ",";
@@ -136,7 +145,6 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
             }
         }
         SharedPreferencesHelper.getInstance(mContext).putString(SharedPreferenceConstant.KEY_SEARCH_SHOP_HISTORY, searchSp);
-        goToSearchShopResultActivity(searchStr);
     }
 
     private void goToSearchShopResultActivity(String searchStr) {
@@ -200,6 +208,9 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // 热门商品搜索也需要添加到历史搜索记录中
+                    String hotText = tv.getText().toString().trim();
+                    addHistory(hotText);
                     goToSearchShopResultActivity(tv.getText().toString());
                 }
             });

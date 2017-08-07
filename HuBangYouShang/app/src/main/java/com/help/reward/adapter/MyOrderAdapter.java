@@ -16,6 +16,7 @@ import com.help.reward.activity.OrderDetailsActivity;
 import com.help.reward.activity.OrderPulishedEvaluateActivity;
 import com.help.reward.activity.PayTypeActivity;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
+import com.help.reward.bean.GoodsSpecBean;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.Response.BaseResponse;
@@ -28,6 +29,8 @@ import com.help.reward.view.AlertDialog;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
+
+import java.util.List;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -244,12 +247,14 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
      * @param bean
      * @param size
      */
-    private void setShopText(LinearLayout ll_shop, MyOrderListBean.OrderList bean, int size, String[] goods_id, String[] goods_img, String[] goods_name) {
+    private void setShopText(LinearLayout ll_shop, MyOrderListBean.OrderList bean, int size,
+                             String[] goods_id, String[] goods_img, String[] goods_name) {
         int length = goods_id.length;
         for (int i = 0; i < size; i++) {
             View shopView = mInflater.inflate(R.layout.layout_my_order_shop, ll_shop, false);
             ImageView iv_shop_img = (ImageView) shopView.findViewById(R.id.iv_shop_img); // 商品图片
             TextView tv_shop_name = (TextView) shopView.findViewById(R.id.tv_shop_name); // 商品名称
+            TextView tv_shop_atrribute = (TextView) shopView.findViewById(R.id.tv_shop_atrribute);//商品属性值
             TextView tv_single_shop_price = (TextView) shopView.findViewById(R.id.tv_single_shop_price); // 单个商品价格 ￥200.0
             TextView tv_shop_num = (TextView) shopView.findViewById(R.id.tv_shop_num); // 商品数量 x1
 
@@ -261,7 +266,18 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
             }
             GlideUtils.loadImage(myOrderShopBean.goods_image_url, iv_shop_img);
             tv_shop_name.setText(myOrderShopBean.goods_name);
-//            tv_shop_atrribute.setText("商品属性:");
+            List<GoodsSpecBean> specList = myOrderShopBean.goods_spec;
+            if (specList != null && !specList.isEmpty()) {
+                tv_shop_atrribute.setVisibility(View.VISIBLE);
+                StringBuilder specSb = new StringBuilder();
+                for (GoodsSpecBean spec : specList) {
+                    LogUtils.e("商品属性是" + spec.sp_name + "--" + spec.sp_value_name);
+                    specSb.append(spec.sp_name + ":" + spec.sp_value_name);
+                }
+                tv_shop_atrribute.setText("商品属性:" + specSb.toString());
+            } else {
+                tv_shop_atrribute.setVisibility(View.GONE);
+            }
             tv_single_shop_price.setText(myOrderShopBean.goods_price);
             tv_shop_num.setText("x" + myOrderShopBean.goods_num);
 

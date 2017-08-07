@@ -249,6 +249,10 @@ public class GoodFragment extends BaseFragment {
                 break;
             case R.id.layout_goodinfo_youhuiquan:
                 // 跳转优惠劵交易大厅
+                if (App.APP_USER_ID == null) {
+                    ToastUtils.show(mContext, R.string.string_get_voucher_loggin);
+                    return;
+                }
 //                String goodsName = tv_goodinfo_goodname.getText().toString().trim();
                 String storeName = tv_goods_store_name.getText().toString().trim();
 

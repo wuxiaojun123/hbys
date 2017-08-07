@@ -14,6 +14,7 @@ import com.help.reward.activity.MsgCenterActivity;
 import com.help.reward.activity.MyBalanceActivity;
 import com.help.reward.activity.MyCouponActivity;
 import com.help.reward.activity.MyGeneralVolumeActivity;
+import com.help.reward.activity.PayendActivity;
 import com.help.reward.activity.ShopcartActivity;
 import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.network.PersonalNetwork;
