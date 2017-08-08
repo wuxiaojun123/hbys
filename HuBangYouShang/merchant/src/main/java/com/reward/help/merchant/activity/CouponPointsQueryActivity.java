@@ -79,7 +79,7 @@ public class CouponPointsQueryActivity extends BaseActivity {
         ButterKnife.bind(this);
         intent = getIntent();
         giveId = intent.getStringExtra(Extra_GiveId);
-        type = intent.getIntExtra(Extra,0);
+        type = intent.getIntExtra(Extra, 0);
         initView();
 
         initData();
@@ -130,10 +130,9 @@ public class CouponPointsQueryActivity extends BaseActivity {
     }
 
 
-
     private void queryPointsRequest() {
         MyProcessDialog.showDialog(CouponPointsQueryActivity.this);
-        subscribe = CouponPointsNetwork.getCouponListApi().queryPoints(App.getAppClientKey(),giveId)
+        subscribe = CouponPointsNetwork.getCouponListApi().queryPoints(App.getAppClientKey(), giveId)
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<QueryPointsResponse>() {
@@ -169,9 +168,10 @@ public class CouponPointsQueryActivity extends BaseActivity {
             mTvStore.setText(voucher_info.seller_name);
             String num = "";
             try {
-                String showNum = voucher_info.num_given +"/" +voucher_info.num;
-                num = String.format(getString(R.string.format_query_coupon_get_num),showNum);
-            }catch (Exception e){}
+                String showNum = voucher_info.num_given + "/" + voucher_info.num;
+                num = String.format(getString(R.string.format_query_coupon_get_num), showNum);
+            } catch (Exception e) {
+            }
             mTvNum.setText(num);
         }
     }
@@ -182,22 +182,23 @@ public class CouponPointsQueryActivity extends BaseActivity {
             mTvStore.setText(voucher_info.seller_name);
             try {
                 String peoplelimit = voucher_info.people_received + "/" + voucher_info.people_limit;
-                String numlimit = voucher_info.num_given + "/"+ voucher_info.num_limit;
-                String[] showNum = new String[]{peoplelimit,numlimit};
-                String num = String.format(getString(R.string.format_query_points_get_num),showNum);
+                String numlimit = voucher_info.num_given + "/" + voucher_info.num_limit;
+                String[] showNum = new String[]{peoplelimit, numlimit};
+                String num = String.format(getString(R.string.format_query_points_get_num), showNum);
                 mTvNum.setText(num);
 
-                GlideUtils.loadBoundImage(voucher_info.member_avatar,mIvStorePic);
+                GlideUtils.loadBoundImage(voucher_info.member_avatar, mIvStorePic);
 
 
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
         }
     }
 
 
     private void queryCouponRequest() {
         MyProcessDialog.showDialog(CouponPointsQueryActivity.this);
-        subscribe = CouponPointsNetwork.getCouponListApi().queryCoupon(App.getAppClientKey(),giveId)
+        subscribe = CouponPointsNetwork.getCouponListApi().queryCoupon(App.getAppClientKey(), giveId)
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<QueryCouponResponse>() {

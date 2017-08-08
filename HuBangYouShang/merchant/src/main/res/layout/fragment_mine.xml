@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_allbg">
+    android:background="@color/color_allbg"
+    android:orientation="vertical">
 
-    <include
-        layout="@layout/layout_title"></include>
+    <include layout="@layout/layout_title"></include>
 
     <RelativeLayout
         android:id="@+id/rl_my_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_while"
         android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/color_while"
         android:padding="@dimen/dimen_13">
 
 
@@ -20,39 +20,39 @@
             android:id="@+id/iv_my_photo"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@mipmap/img_my_default_photo"/>
+            android:background="@mipmap/img_my_default_photo" />
 
         <ImageView
             android:id="@+id/iv_my_arrow"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/img_disclosure_arrow"/>
+            android:layout_centerVertical="true"
+            android:src="@mipmap/img_disclosure_arrow" />
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/dimen_15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toRightOf="@+id/iv_my_photo"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_15"
             android:layout_toLeftOf="@+id/iv_my_arrow"
-            android:layout_centerVertical="true">
+            android:layout_toRightOf="@+id/iv_my_photo"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_usrname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="@dimen/dimen_15"
-                android:textColor="@color/color_3a"/>
+                android:textColor="@color/color_3a"
+                android:textSize="@dimen/dimen_15" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mine_info_tip"
-                android:textSize="@dimen/dimen_12"
-                android:textColor="@color/color_84"/>
+                android:textColor="@color/color_84"
+                android:textSize="@dimen/dimen_12" />
 
         </LinearLayout>
 
@@ -63,8 +63,8 @@
         android:id="@+id/rl_my_store_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_while"
         android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/color_while"
         android:padding="@dimen/dimen_13">
 
 
@@ -72,39 +72,39 @@
             android:id="@+id/iv_store_photo"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@mipmap/img_my_default_photo"/>
+            android:background="@mipmap/img_my_default_photo" />
 
         <ImageView
             android:id="@+id/iv_store_arrow"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/img_disclosure_arrow"/>
+            android:layout_centerVertical="true"
+            android:src="@mipmap/img_disclosure_arrow" />
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/dimen_15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toRightOf="@+id/iv_store_photo"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_15"
             android:layout_toLeftOf="@+id/iv_store_arrow"
-            android:layout_centerVertical="true">
+            android:layout_toRightOf="@+id/iv_store_photo"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mine_store_info"
-                android:textSize="@dimen/dimen_15"
-                android:textColor="@color/color_3a"/>
+                android:textColor="@color/color_3a"
+                android:textSize="@dimen/dimen_15" />
 
             <TextView
                 android:id="@+id/tv_store_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mine_store_info_tip"
-                android:textSize="@dimen/dimen_12"
-                android:textColor="@color/color_84"/>
+                android:textColor="@color/color_84"
+                android:textSize="@dimen/dimen_12" />
 
         </LinearLayout>
 
@@ -112,11 +112,11 @@
 
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dimen_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@drawable/shape_divider_line"
+        android:layout_marginTop="@dimen/dimen_10"
         android:background="@color/color_while"
+        android:divider="@drawable/shape_divider_line"
         android:orientation="vertical"
         android:paddingLeft="10dp"
         android:showDividers="middle">
@@ -130,14 +130,17 @@
             android:id="@+id/tv_mine_clear_cache"
             style="@style/style_my_account_text_item"
             android:text="@string/mine_clear_cache" />
+
         <TextView
             android:id="@+id/tv_mine_customer_center"
             style="@style/style_my_account_text_item"
             android:text="@string/mine_customer_center" />
+
         <TextView
             android:id="@+id/tv_mine_feek_back"
             style="@style/style_my_account_text_item"
             android:text="@string/mine_feek_back" />
+
         <TextView
             android:id="@+id/tv_mine_about_us"
             style="@style/style_my_account_text_item"
@@ -148,12 +151,13 @@
         android:id="@+id/rl_mine_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_while"
         android:layout_marginTop="10dp"
+        android:background="@color/color_while"
         android:paddingLeft="10dp">
-    <TextView
-        style="@style/style_mine_logout"
-        android:text="@string/mine_logout" />
+
+        <TextView
+            style="@style/style_mine_logout"
+            android:text="@string/mine_logout" />
     </RelativeLayout>
 
 </LinearLayout>
