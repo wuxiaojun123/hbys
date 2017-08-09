@@ -14,6 +14,7 @@ import com.help.reward.R;
 import com.help.reward.activity.HelpRewardInfoActivity;
 import com.help.reward.adapter.MyRewardCommentAdapter;
 import com.help.reward.adapter.PointsRecordAdapter;
+import com.help.reward.bean.Response.GroupGrantHelpPointsResponse;
 import com.help.reward.bean.Response.MyRewardCommentResponse;
 import com.help.reward.bean.Response.PointsRecordResponse;
 import com.help.reward.network.CouponPointsNetwork;
@@ -40,7 +41,7 @@ public class PointsRecordFragment extends BaseFragment {
     LRecyclerView lRecyclerview;
     private PointsRecordAdapter mHelpPostAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
-
+    private String groupId;
 
     @Override
     protected int getLayoutId() {
@@ -49,6 +50,7 @@ public class PointsRecordFragment extends BaseFragment {
 
     @Override
     protected void init() {
+        groupId = getArguments().getString("groupId");
         initRecyclerView();
         initNetwork();
     }
@@ -57,13 +59,15 @@ public class PointsRecordFragment extends BaseFragment {
         if (App.APP_CLIENT_KEY == null) {
             return;
         }
-        // ?act=member_points&op=receivePointsLog
+        // ?act=member_points&op=receivePointsLog 个人领取记录
+        // mobile/index.php?act=index&op=givePointsLog 群发放积分的记录
         CouponPointsNetwork
                 .getHelpNoCookieApi()
-                .receivePointsLog("member_points","receivePointsLog",currentPage+"",App.APP_CLIENT_KEY)
+//                .receivePointsLog("member_points","receivePointsLog",currentPage+"",App.APP_CLIENT_KEY)  //个人领取记录
+                .groupGrantHelpPointsLog("index", "givePointsLog", currentPage + "", groupId, App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<PointsRecordResponse>() {
+                .subscribe(new BaseSubscriber<GroupGrantHelpPointsResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
@@ -72,19 +76,19 @@ public class PointsRecordFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onNext(PointsRecordResponse response) {
+                    public void onNext(GroupGrantHelpPointsResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                if(currentPage == 1){
-                                    mHelpPostAdapter.setDataList(response.data);
-                                }else{
-                                    mHelpPostAdapter.addAll(response.data);
+                                if (currentPage == 1) {
+                                    mHelpPostAdapter.setDataList(response.data.giveList);
+                                } else {
+                                    mHelpPostAdapter.addAll(response.data.giveList);
                                 }
                             }
-                            if(!response.hasmore){
+                            if (!response.hasmore) {
                                 lRecyclerview.setNoMore(true);
-                            }else{
+                            } else {
                                 currentPage += 1;
                             }
                         } else {

@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.CouponRecordBean;
+import com.help.reward.bean.GroupGrantHelpPointsBean;
 import com.help.reward.bean.PointRecordBean;
 import com.idotools.utils.DateUtil;
 
@@ -13,7 +14,7 @@ import com.idotools.utils.DateUtil;
  * Created by wuxiaojun on 2017/2/26.
  */
 
-public class PointsRecordAdapter extends BaseRecyclerAdapter<PointRecordBean> {
+public class PointsRecordAdapter extends BaseRecyclerAdapter<GroupGrantHelpPointsBean> {
 
 
     public PointsRecordAdapter(Context context) {
@@ -31,10 +32,10 @@ public class PointsRecordAdapter extends BaseRecyclerAdapter<PointRecordBean> {
         TextView tv_num = holder.getView(R.id.tv_receive_cp);
         TextView tv_date = holder.getView(R.id.tv_receive_date);
 
-        PointRecordBean bean = (PointRecordBean) mDataList.get(position);
+        GroupGrantHelpPointsBean bean = mDataList.get(position);
         //CouponsRecordResponse.GiveInfo bean = (CouponsRecordResponse.GiveInfo) mDataList.get(position);
-        tv_content.setText(bean.give_info.total_num);
-        tv_num.setText("已领取" + bean.give_info.people_received+"/"+bean.give_info.num_given);
+        tv_content.setText(bean.total_num);
+        tv_num.setText("已领取" + bean.people_received+"/"+bean.num_given);
         tv_date.setText(DateUtil.getDateToString(bean.created));
     }
 

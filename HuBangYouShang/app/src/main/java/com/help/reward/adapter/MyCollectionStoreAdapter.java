@@ -48,6 +48,9 @@ public class MyCollectionStoreAdapter extends BaseRecyclerAdapter<MyCollectionSt
         GlideUtils.loadImage(bean.store_avatar_url, iv_store);
         tv_title.setText(bean.store_name);
         tv_collection.setText(bean.store_collect);
+        tv_describe.setText(bean.store_desccredit);
+        tv_server.setText(bean.store_servicecredit);
+        tv_logistics.setText(bean.store_deliverycredit);
 
         id_ll_content.setOnClickListener(new View.OnClickListener() {
             @Override

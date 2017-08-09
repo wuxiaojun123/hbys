@@ -1,11 +1,9 @@
 package com.help.reward.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,7 +19,6 @@ import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.utils.StatusBarUtil;
 import com.help.reward.view.MyProcessDialog;
-import com.help.reward.wxapi.WXEntryActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.idotools.utils.LogUtils;
@@ -32,7 +29,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,7 +60,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd, R.id.tv_wetchat, R.id.tv_qq, R.id.tv_weibo})
+    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -86,6 +82,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ActivitySlideAnim.slideInAnim(LoginActivity.this);
 
                 break;
+            /*, R.id.tv_wetchat, R.id.tv_qq, R.id.tv_weibo
             case R.id.tv_wetchat:
                 // 微信登录
                 wxLogin();
@@ -96,7 +93,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.tv_weibo:
 
-                break;
+                break;*/
         }
     }
 
@@ -178,6 +175,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             // 请求会员信息
                             App.mLoginReponse = res.data;
                             RxBus.getDefault().post("loginSuccess");
+                            LogUtils.e("用户名是:" + App.mLoginReponse.easemobId + "----密码是:" + password);
                             LoginToHuanxin(App.mLoginReponse.easemobId, password);
                         } else {
                             MyProcessDialog.closeDialog();

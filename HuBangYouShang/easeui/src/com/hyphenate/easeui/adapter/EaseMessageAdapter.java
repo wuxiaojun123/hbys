@@ -183,7 +183,7 @@ public class EaseMessageAdapter extends BaseAdapter{
 	 * get type of item
 	 */
 	public int getItemViewType(int position) {
-		EMMessage message = getItem(position); 
+		EMMessage message = getItem(position);
 		if (message == null) {
 			return -1;
 		}

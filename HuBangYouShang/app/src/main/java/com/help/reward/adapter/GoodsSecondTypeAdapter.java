@@ -2,6 +2,7 @@ package com.help.reward.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,9 +91,13 @@ public class GoodsSecondTypeAdapter extends BaseAdapter {
                                     int arg2, long arg3) { // TODO Auto-generated method
                 try {
                     ToastUtils.show(mActivity, item.next_class_list.get(arg2).gc_name);
-                    Intent mIntent = new Intent(mActivity,SearchShopResultActivity.class);
-                    mIntent.putExtra("keyword",item.next_class_list.get(arg2).gc_name);
-                    mIntent.putExtra("searchType","goods");
+
+                    Intent mIntent = new Intent(mActivity, SearchShopResultActivity.class);
+                    Bundle bundle = new Bundle();
+//                    bundle.putString("keyword", item.next_class_list.get(arg2).gc_name);
+                    bundle.putString("gc_id", item.next_class_list.get(arg2).gc_id);
+                    bundle.putString("searchType", "goods");
+                    mIntent.putExtras(bundle);
                     mActivity.startActivity(mIntent);
                     ActivitySlideAnim.slideInAnim(mActivity);
 

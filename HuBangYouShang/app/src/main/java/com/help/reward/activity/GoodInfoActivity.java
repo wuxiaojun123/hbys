@@ -148,11 +148,12 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
             return;
         }
         if (is_in_group && !TextUtils.isEmpty(member_id)) { // 已经加入到商家群了，直接跳转到群页面
-            Intent intent = new Intent(GoodInfoActivity.this, ChatActivity.class);
+            /*Intent intent = new Intent(GoodInfoActivity.this, ChatActivity.class);
             intent.putExtra(Constant.EXTRA_USER_ID, member_id);
             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
             startActivity(intent);
-            ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);
+            ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);*/
+            showDialogWhetherEnterGroup(R.string.string_whether_enter_group);
 
         } else {
             if (TextUtils.isEmpty(member_id)) {
@@ -186,7 +187,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                                     is_in_group = true;
                                     member_id = res.data.groupid;
 
-                                    showDialogWhetherEnterGroup();
+                                    showDialogWhetherEnterGroup(R.string.string_whether_success_join_group);
                                 } catch (HyphenateException e) {
                                     e.printStackTrace();
                                     ToastUtils.show(mContext, "加群失败");
@@ -199,11 +200,11 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void showDialogWhetherEnterGroup(){
+    private void showDialogWhetherEnterGroup(int textResId) {
         new AlertDialog(mContext)
                 .builder()
-                .setMsg("确定进入商家群吗?")
-                .setPositiveButton("确定", new View.OnClickListener() {
+                .setMsg(textResId)
+                .setPositiveButton("是", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(GoodInfoActivity.this, ChatActivity.class);
@@ -213,7 +214,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                         ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);
                     }
                 })
-                .setNegativeButton("取消", new View.OnClickListener() {
+                .setNegativeButton("否", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                     }

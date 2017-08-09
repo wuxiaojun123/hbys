@@ -46,7 +46,7 @@ public class SearchStoreAdapter extends BaseRecyclerAdapter<SearchStoreInfoBean>
 
         TextView tv_delete = holder.getView(R.id.tv_delete);
         tv_delete.setVisibility(View.GONE);
-        View left_layout = holder.getView(R.id.left_layout);
+        View left_layout = holder.getView(R.id.id_ll_content);
         final SearchStoreInfoBean bean = mDataList.get(position);
 
         GlideUtils.loadImage(bean.store_avatar_url, iv_store);
@@ -58,6 +58,7 @@ public class SearchStoreAdapter extends BaseRecyclerAdapter<SearchStoreInfoBean>
         tv_server.setText(bean.store_evaluate_info.store_credit.store_servicecredit.credit);
         tv_logistics_title.setText(bean.store_evaluate_info.store_credit.store_deliverycredit.text);
         tv_logistics.setText(bean.store_evaluate_info.store_credit.store_deliverycredit.credit);
+
         left_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

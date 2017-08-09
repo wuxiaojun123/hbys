@@ -495,7 +495,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				conversationToTop();
 				break;
 			case R.id.group_send_record:
-				startActivity(new Intent(this, GroupCouponsRecordActivity.class));
+				Intent mIntent = new Intent(this, GroupCouponsRecordActivity.class);
+				mIntent.putExtra("groupId",groupId);
+				startActivity(mIntent);
 				break;
 			case R.id.group_to_store:
 				toStore();

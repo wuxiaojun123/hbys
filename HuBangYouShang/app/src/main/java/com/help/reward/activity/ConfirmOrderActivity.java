@@ -134,7 +134,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         LogUtils.e("优惠卷的值是:" + voucher);
         LogUtils.e("备注留言的值是:" + pay_message);
         LogUtils.e("通用卷是:" + general_voucher);
-
+        if (confirmOrderBean == null) {
+            return;
+        }
+        if (confirmOrderBean.address_info.address_id == null) {
+            return;
+        }
         MyProcessDialog.showDialog(mContext);
         ShopcartNetwork.getShopcartCookieApi().commitComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, confirmOrderBean.address_info.address_id
                 , confirmOrderBean.vat_hash, confirmOrderBean.address_api.offpay_hash, confirmOrderBean.address_api.offpay_hash_batch, "online",
@@ -160,7 +165,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                     //TODO 支付
                                     Intent mIntent = new Intent(ConfirmOrderActivity.this, PayTypeActivity.class);
                                     mIntent.putExtra("pay_sn", pay_sn);
-                                    mIntent.putExtra("removeShopcatAndConfirmOrderActivity",true);
+                                    mIntent.putExtra("removeShopcatAndConfirmOrderActivity", true);
                                     startActivity(mIntent);
                                     ActivitySlideAnim.slideInAnim(ConfirmOrderActivity.this);
                                 }
@@ -209,7 +214,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                                 }
                                 if (!TextUtils.isEmpty(response.data.order_amount)) {
                                     mTvTotal.setText(response.data.order_amount);
-                                    adapter.setTvTotal(mTvTotal,response.data.order_amount);
+                                    adapter.setTvTotal(mTvTotal, response.data.order_amount);
                                 }
                             }
                         } else {

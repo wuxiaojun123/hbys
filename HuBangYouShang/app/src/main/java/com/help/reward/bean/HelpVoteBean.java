@@ -13,6 +13,8 @@ package com.help.reward.bean;
  */
 
 public class HelpVoteBean {
+
+    public String id;// “id”://投诉/投票id
     public String post_id;
     public String post_title;
     public String post_board;

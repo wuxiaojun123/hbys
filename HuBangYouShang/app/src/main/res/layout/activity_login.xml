@@ -68,7 +68,7 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:paddingLeft="12dp"
-            android:text="123456"
+            android:text="123321"
             android:textColor="@color/color_while"
             android:textSize="@dimen/dimen_14" />
 
@@ -113,7 +113,7 @@
                 android:textSize="@dimen/dimen_15" />
         </LinearLayout>
 
-        <TextView
+        <!--<TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:drawableLeft="@mipmap/img_login_border_left"
@@ -167,7 +167,7 @@
                 android:textSize="@dimen/dimen_15"
                 android:visibility="gone" />
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <TextView
             android:layout_width="match_parent"

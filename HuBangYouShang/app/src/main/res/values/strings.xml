@@ -104,6 +104,12 @@
     <string name="string_search_relative_goods">搜索关键字相关商品</string>
     <string name="string_search_relative_store">搜索关键字相关店铺</string>
 
+    <string name="string_whether_success_join_group">已成功加入商家群，是否进入?</string>
+    <string name="string_whether_enter_group">是否进入商家群?</string>
+
+    <string name="string_help_points">帮赏分</string>
+    <string name="string_coupon_points">优惠劵</string>
+
     <!--我的求助-->
     <string name="string_my_help_title">我的求助</string>
     

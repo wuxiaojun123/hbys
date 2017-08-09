@@ -9,11 +9,10 @@
     <LinearLayout
         android:id="@+id/id_ll_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:divider="@drawable/shape_divider_line"
         android:orientation="horizontal"
-        android:showDividers="beginning"
-        >
+        android:showDividers="beginning">
 
         <ImageView
             android:id="@+id/iv_store"
@@ -65,7 +64,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:gravity="center_vertical"
-                    android:text="3"
+                    android:text="0"
                     android:textColor="@color/color_bf"
                     android:textSize="@dimen/dimen_12" />
 
@@ -85,7 +84,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:gravity="center_vertical"
-                    android:text="3"
+                    android:text="0"
                     android:textColor="@color/color_bf"
                     android:textSize="@dimen/dimen_12" />
 
@@ -105,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="4"
+                    android:text="0"
                     android:textColor="@color/color_bf"
                     android:textSize="@dimen/dimen_12" />
 

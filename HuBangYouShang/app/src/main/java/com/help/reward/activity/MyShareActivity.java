@@ -9,15 +9,23 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.Response.MyRewardPostResponse;
+import com.help.reward.network.PersonalNetwork;
+import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.Constant;
 import com.help.reward.utils.EncodingUtils;
 import com.idotools.utils.MetricsUtils;
+import com.idotools.utils.ToastUtils;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 我的分享
@@ -44,9 +52,10 @@ public class MyShareActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.activity_my_share);
         ButterKnife.bind(this);
         initView();
+//        initNet();
 
         imageWidth = MetricsUtils.dipToPx(192.0f);
-        mBitmap = EncodingUtils.createQRCode("我的二维码:测试使用",
+        mBitmap = EncodingUtils.createQRCode(Constant.BASE_URL + "/mobile/index.php?act=share&op=share&id=x",
                 imageWidth, imageWidth, null);
 
         iv_zxing_code.setImageBitmap(mBitmap);
@@ -69,7 +78,7 @@ public class MyShareActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.btn_share:
                 // 点击分享
-                shareText(mContext, "发现一个好应用，你也来下载吧！");
+                shareText(mContext, "发现一个好应用，你也来下载吧！" + Constant.BASE_URL + "/mobile/index.php?act=share&op=share&id=x");
 
                 break;
         }
@@ -85,7 +94,7 @@ public class MyShareActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onDestroy() {
-        if(mBitmap != null && !mBitmap.isRecycled()){
+        if (mBitmap != null && !mBitmap.isRecycled()) {
             mBitmap.recycle();
             mBitmap = null;
         }

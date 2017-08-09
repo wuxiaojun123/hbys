@@ -57,8 +57,8 @@ public class HelpVoteFragment extends BaseFragment {
     TextView tv_no_result;
     String searchStr;
     String type;
-    String board_id="";
-    String area_id="";
+    String board_id = "";
+    String area_id = "";
 
     @Nullable
     @Override
@@ -147,7 +147,7 @@ public class HelpVoteFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(mContext, HelpVoteInfoActivity.class);
-                intent.putExtra("id", adapter.getDataList().get(position).post_id);
+                intent.putExtra("id", adapter.getDataList().get(position).id);
                 startActivity(intent);
                 ActivitySlideAnim.slideInAnim(getActivity());
             }

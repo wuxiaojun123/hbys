@@ -13,6 +13,9 @@ public class PointRecordBean {
     public PointsGiveInfo give_info;
 
     public class PointsGiveInfo{
+        public String id;
+        public String seller_id;
+        public String seller_name;
         public String total_num;
         public String people_limit;
         public String number_limit;

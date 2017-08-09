@@ -1,8 +1,10 @@
 package com.help.reward.network.api;
 
 
+import com.help.reward.bean.GroupCouponsRecordResponse;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.CouponsRecordResponse;
+import com.help.reward.bean.Response.GroupGrantHelpPointsResponse;
 import com.help.reward.bean.Response.GroupToStoreResponse;
 import com.help.reward.bean.Response.PointsRecordResponse;
 import com.help.reward.utils.Constant;
@@ -29,7 +31,7 @@ public interface CouponPointsApi {
             @Field("give_log_id") String give_log_id
     );
 
-    // 我的获赏----跟帖  ?act=member_points&op=receivePointsLog
+    // 个人领取帮赏分发放记录
     @FormUrlEncoded
     @POST("mobile/index.php")
     Observable<PointsRecordResponse> receivePointsLog(
@@ -39,13 +41,35 @@ public interface CouponPointsApi {
             @Field("key") String key
     );
 
-    // 我的获赏----发帖  mobile/index.php?act=member_voucher&op=receiveVoucherLog
+    // 个人领取优惠劵发放记录
     @FormUrlEncoded
     @POST("mobile/index.php")
     Observable<CouponsRecordResponse> receiveCouponsLog(
             @Query("act") String act,
             @Query("op") String op,
             @Query("curpage") String curpage,
+            @Field("key") String key
+    );
+
+    // 群发帮赏分发放记录
+    @FormUrlEncoded
+    @POST("mobile/index.php")
+    Observable<GroupGrantHelpPointsResponse> groupGrantHelpPointsLog(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("groupId") String groupId,
+            @Field("key") String key
+    );
+
+    // 群发优惠劵发放记录
+    @FormUrlEncoded
+    @POST("mobile/index.php")
+    Observable<GroupCouponsRecordResponse> groupGrantCouponsLog(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("groupId") String groupId,
             @Field("key") String key
     );
 

@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,11 +25,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 发放记录
+ * 帮赏分和优惠劵的发放记录
  * Created by wuxiaojun on 2017/2/8.
  */
 
-public class GroupCouponsRecordActivity extends BaseActivity implements View.OnClickListener{
+public class GroupCouponsRecordActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -40,6 +42,10 @@ public class GroupCouponsRecordActivity extends BaseActivity implements View.OnC
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
+    private PointsRecordFragment pointsRecordFragment ;
+    private CouponsRecordFragment couponsRecordFragment;
+
+    String groupId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +53,18 @@ public class GroupCouponsRecordActivity extends BaseActivity implements View.OnC
         setContentView(R.layout.activity_my_reward);
         ButterKnife.bind(this);
 
+        groupId = getIntent().getStringExtra("groupId");
+
         initView();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("groupId",groupId);
+
+        pointsRecordFragment = new PointsRecordFragment();
+        pointsRecordFragment.setArguments(bundle);
+
+        couponsRecordFragment = new CouponsRecordFragment();
+        couponsRecordFragment.setArguments(bundle);
 
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
@@ -62,7 +79,7 @@ public class GroupCouponsRecordActivity extends BaseActivity implements View.OnC
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.iv_title_back:
                 finish();
                 ActivitySlideAnim.slideOutAnim(GroupCouponsRecordActivity.this);
@@ -71,14 +88,14 @@ public class GroupCouponsRecordActivity extends BaseActivity implements View.OnC
         }
     }
 
-    private class MyPagerAdapter extends FragmentPagerAdapter{
+    private class MyPagerAdapter extends FragmentPagerAdapter {
 
         private String[] TITLES = new String[2];
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
-            TITLES[0] = "帮赏分";
-            TITLES[1] = "优惠券";
+            TITLES[0] = getResources().getString(R.string.string_help_points);
+            TITLES[1] = getResources().getString(R.string.string_coupon_points);
         }
 
         @Override
@@ -88,10 +105,10 @@ public class GroupCouponsRecordActivity extends BaseActivity implements View.OnC
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0){
-                return new PointsRecordFragment();
-            }else{
-                return new CouponsRecordFragment();
+            if (position == 0) {
+                return pointsRecordFragment;
+            } else {
+                return couponsRecordFragment;
             }
         }
 

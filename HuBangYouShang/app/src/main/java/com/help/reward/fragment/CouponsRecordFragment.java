@@ -14,6 +14,7 @@ import com.help.reward.R;
 import com.help.reward.activity.HelpRewardInfoActivity;
 import com.help.reward.adapter.CouponRecordAdapter;
 import com.help.reward.adapter.MyRewardCommentAdapter;
+import com.help.reward.bean.GroupCouponsRecordResponse;
 import com.help.reward.bean.Response.CouponsRecordResponse;
 import com.help.reward.bean.Response.MyRewardCommentResponse;
 import com.help.reward.network.CouponPointsNetwork;
@@ -40,6 +41,7 @@ public class CouponsRecordFragment extends BaseFragment {
     LRecyclerView lRecyclerview;
     private CouponRecordAdapter mCouponRecordAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
+    private String groupId;
 
     @Override
     protected int getLayoutId() {
@@ -48,6 +50,7 @@ public class CouponsRecordFragment extends BaseFragment {
 
     @Override
     protected void init() {
+        groupId = getArguments().getString("groupId");
         initRecyclerView();
         initNetwork();
     }
@@ -57,12 +60,13 @@ public class CouponsRecordFragment extends BaseFragment {
             return;
         }
         // mobile/index.php?act=member_voucher&op=receiveVoucherLog
+        // /mobile/index.php?act=index&op=giveVoucherLog 群发放记录
         CouponPointsNetwork
                 .getHelpNoCookieApi()
-                .receiveCouponsLog("member_voucher", "receiveVoucherLog", currentPage + "", App.APP_CLIENT_KEY)
+                .groupGrantCouponsLog("index", "giveVoucherLog", currentPage + "", groupId, App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<CouponsRecordResponse>() {
+                .subscribe(new BaseSubscriber<GroupCouponsRecordResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
@@ -71,14 +75,14 @@ public class CouponsRecordFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onNext(CouponsRecordResponse response) {
+                    public void onNext(GroupCouponsRecordResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
                                 if (currentPage == 1) {
-                                    mCouponRecordAdapter.setDataList(response.data);
+                                    mCouponRecordAdapter.setDataList(response.data.giveList);
                                 } else {
-                                    mCouponRecordAdapter.addAll(response.data);
+                                    mCouponRecordAdapter.addAll(response.data.giveList);
                                 }
                             }
                             if (!response.hasmore) {
@@ -92,7 +96,6 @@ public class CouponsRecordFragment extends BaseFragment {
                     }
                 });
     }
-
 
 
     private void initRecyclerView() {

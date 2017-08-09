@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:scaleType="center"
-            android:src="@mipmap/img_back" />
+            android:src="@mipmap/img_myaccount_back" />
 
         <ImageView
             android:id="@+id/iv_goodinfo_more"
