@@ -165,12 +165,11 @@ public class GoodFragment extends BaseFragment {
             }
         }
         propertyBean.setPropertyList(propertyValueBeen);
-        String tip = "";
         if (!TextUtils.isEmpty(stringBuilder.toString())) {
-            tip = "请选择" + stringBuilder.toString();
+            String tip = "请选择" + stringBuilder.toString();
+            tvLabel.setText(tip);
+            propertyBean.setTip(tip);
         }
-        tvLabel.setText(tip);
-        propertyBean.setTip(tip);
         propertyBean.setSelectNum("1");
     }
 

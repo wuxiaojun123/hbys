@@ -218,7 +218,8 @@
     <string name="good_lable14">商品</string>
     <string name="good_lable15">详情</string>
     <string name="good_lable16">评价</string>
-    
+    <string name="good_lable17">请选择商品数量</string>
+
     <!--弹窗-->
     <string name="string_system_prompt">系统提示</string>
     <string name="string_watch_ad_get_scroe">恭喜您获得5帮赏分</string>

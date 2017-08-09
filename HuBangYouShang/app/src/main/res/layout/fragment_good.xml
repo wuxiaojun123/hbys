@@ -225,7 +225,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageView"
-                android:text="@string/good_lable10" />
+                android:text="@string/good_lable17" />
         </RelativeLayout>
 
         <LinearLayout

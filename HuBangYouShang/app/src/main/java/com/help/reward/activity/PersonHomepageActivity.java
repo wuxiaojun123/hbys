@@ -22,6 +22,7 @@ import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.HomepageMemInfoRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
+import com.help.reward.utils.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -165,6 +166,11 @@ public class PersonHomepageActivity extends BaseActivity {
             if (observer != null)
                 super.unregisterDataSetObserver(observer);
         }
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForImageViewInFragment(PersonHomepageActivity.this, StatusBarUtil.DEFAULT_ALPHA, null);
     }
 
     @Override
