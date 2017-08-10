@@ -137,7 +137,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         if (confirmOrderBean == null) {
             return;
         }
-        if (confirmOrderBean.address_info.address_id == null) {
+        if (confirmOrderBean.address_info == null || confirmOrderBean.address_info.address_id == null) {
+            ToastUtils.show(mContext, "请选择收获地址");
             return;
         }
         MyProcessDialog.showDialog(mContext);
@@ -231,6 +232,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             // 表示从地址页面过来 设置地址view
             AddressBean bean = data.getParcelableExtra("confirmAddress");
             if (adapter != null && bean != null) {
+                confirmOrderBean.address_info.address_id = bean.address_id;
                 adapter.setAddressInfo(bean);
                 adapter.notifyDataSetChanged();
             }
