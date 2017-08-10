@@ -130,6 +130,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
         TextView tv_shipping_methods = holder.getView(R.id.tv_shipping_methods); // 配送方式
         EditText et_remarks = holder.getView(R.id.et_remarks); // 留言备注
         TextView tv_coupon = holder.getView(R.id.tv_coupon); // 优惠劵
+        TextView tv_store_confim_order_discount = holder.getView(R.id.tv_store_confim_order_discount); // 商家设置的通用券抵扣比例为:
         TextView tv_total_shop_and_money = holder.getView(R.id.tv_total_shop_and_money); // 共计：4件商品  合计：￥235元(含运费12元)
 
         LinearLayout ll_shop = holder.getView(R.id.ll_shop); // 商品列表
@@ -144,8 +145,8 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
         }
 
         tv_store_name.setText(bean.store_name); // 店铺名称
+        tv_store_confim_order_discount.setText("商家设置的通用券抵扣比例为:" + bean.store_general_voucher + "%");
         bindVoucherView(tv_coupon, bean);
-
         bindRemarksView(et_remarks, bean);
 
         // 根据店铺id拿到邮费
@@ -331,7 +332,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
         this.addressApi = addressApi;
     }
 
-    public void setTvTotal(TextView tvTotal,String totalStr) {
+    public void setTvTotal(TextView tvTotal, String totalStr) {
         this.mTvTotal = tvTotal;
         this.totalStr = totalStr;
     }
