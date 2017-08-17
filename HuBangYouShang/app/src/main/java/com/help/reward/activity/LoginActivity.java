@@ -60,7 +60,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd})
+    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd, R.id.tv_look})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -82,6 +82,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ActivitySlideAnim.slideInAnim(LoginActivity.this);
 
                 break;
+            case R.id.tv_look:
+                finish();
+                ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+
+                break;
+
             /*, R.id.tv_wetchat, R.id.tv_qq, R.id.tv_weibo
             case R.id.tv_wetchat:
                 // 微信登录

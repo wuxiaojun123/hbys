@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.cache.DiskLruCacheFactory;
+import com.help.reward.App;
 import com.help.reward.R;
 
 import java.io.File;
@@ -20,7 +21,7 @@ public class GlideUtils {
 
     public static void loadImage(String imgUrl, ImageView imageView) {
         if (!TextUtils.isEmpty(imgUrl)) {
-            Glide.with(imageView.getContext())
+            Glide.with(App.getApplication())
                     .load(imgUrl)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .error(R.mipmap.img_default)

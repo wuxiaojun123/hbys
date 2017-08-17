@@ -451,6 +451,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
+        <activity android:name=".activity.WebviewActivity"
+            android:screenOrientation="portrait" />
+
         <!--sms的短信验证-->
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -462,7 +465,7 @@
             android:name="com.help.reward.activity.GoodPropertyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeDialogIsTranslucent"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!-- 开机自启动服务 -->
         <receiver android:name="com.help.reward.chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">

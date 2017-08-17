@@ -1,10 +1,16 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -17,6 +23,7 @@ import com.help.reward.bean.Response.RegisterResponse;
 import com.help.reward.bean.Response.VerificationCodeResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.utils.ActivityManager;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.utils.CountDownTimeUtils;
@@ -66,9 +73,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     EditText et_invitation_code; // 邀请code
     @BindView(R.id.cb_agreement)
     CheckBox cb_agreement; // 复选框
+    @BindView(R.id.tv_agreement)
+    TextView tv_agreement; // 用户协议
+
 
     private CountDownTimeUtils mTimer;
-//    public String verificationCode; // 请求到的code
     private EventHandler eh;
 
 
@@ -97,8 +106,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
             } else {
                 ((Throwable) data).printStackTrace();
-                LogUtils.e("注册接口中：data"+data);
-                ToastUtils.show(mContext,"发送验证码失败!请稍后重试");
+                LogUtils.e("注册接口中：data" + data);
+                ToastUtils.show(mContext, "发送验证码失败!请稍后重试");
             }
         }
     };
@@ -153,9 +162,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void initView() {
         tv_title.setText(R.string.string_register_title);
         tv_title_right.setVisibility(View.GONE);
+        SpannableString spannableString = new SpannableString("我已阅读并同意《互帮有赏APP使用协议》");
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.actionsheet_blue)),
+                7, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tv_agreement.setText(spannableString);
     }
 
-    @OnClick({R.id.iv_title_back, R.id.tv_code, R.id.btn_register})
+    @OnClick({R.id.iv_title_back, R.id.tv_code, R.id.btn_register, R.id.tv_agreement})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -169,8 +182,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String registerUserName = et_phone_number.getText().toString().trim();
                 if (!TextUtils.isEmpty(registerUserName)) {
                     if (ValidateUtil.isMobile(registerUserName)) {
-                        if(JudgeNetWork.isNetAvailable(mContext)){
-                            MyProcessDialog.showDialog(mContext,"请稍等...",true,false);
+                        if (JudgeNetWork.isNetAvailable(mContext)) {
+                            MyProcessDialog.showDialog(mContext, "请稍等...", true, false);
                             SMSSDK.getVerificationCode("86", registerUserName, new OnSendMessageHandler() {
                                 @Override
                                 public boolean onSendMessage(String s, String s1) {
@@ -180,8 +193,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             });
                             // 验证 验证码是否正确
 //                            SMSSDK.submitVerificationCode(); // s：86 s1:手机好 s2：验证码
-                        }else{
-                            ToastUtils.show(mContext,"请检查网络设置");
+                        } else {
+                            ToastUtils.show(mContext, "请检查网络设置");
                         }
                     } else {
                         ToastUtils.show(mContext, "手机号格式不正确");
@@ -193,6 +206,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.btn_register: // 注册
                 register();
+
+                break;
+            case R.id.tv_agreement: // 用户协议
+                // protocol/register
+                Intent mIntent = new Intent(RegisterActivity.this, WebviewActivity.class);
+                mIntent.putExtra("title", "用户协议");
+                mIntent.putExtra("url", Constant.URL_AGREEMENT);
+                startActivity(mIntent);
+                ActivitySlideAnim.slideInAnim(RegisterActivity.this);
 
                 break;
         }

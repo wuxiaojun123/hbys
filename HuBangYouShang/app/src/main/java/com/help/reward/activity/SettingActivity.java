@@ -116,7 +116,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
             case R.id.tv_logout: // 登出
-                if(App.APP_CLIENT_KEY != null){
+                if (App.APP_CLIENT_KEY != null) {
                     logoutDialog();
                 }
 
@@ -136,6 +136,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         DataCleanManager.cleanCustomCache(Constant.ROOT);
                         DataCleanManager.cleanFiles(mContext);
                         DataCleanManager.cleanExternalCache(mContext);
+                        // 清除商品搜索记录
+                        SharedPreferencesHelper.getInstance(mContext).putString(SharedPreferenceConstant.KEY_SEARCH_SHOP_HISTORY, null);
 
                         ToastUtils.show(mContext, "清除成功");
                     }
@@ -215,8 +217,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 });
     }
 
-    private void logoutHuanxin(){
-        DemoHelper.getInstance().logout(false,new EMCallBack() {
+    private void logoutHuanxin() {
+        DemoHelper.getInstance().logout(false, new EMCallBack() {
 
             @Override
             public void onSuccess() {
@@ -250,7 +252,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void run() {
                         // TODO Auto-generated method stub
-                        ToastUtils.show(mContext,"unbind devicetokens failed");
+                        ToastUtils.show(mContext, "unbind devicetokens failed");
                     }
                 });
             }

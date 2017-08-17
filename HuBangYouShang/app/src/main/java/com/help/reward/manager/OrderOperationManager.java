@@ -5,8 +5,6 @@ import android.view.View;
 
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.adapter.MyOrderAdapter;
-import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -24,23 +22,21 @@ import rx.schedulers.Schedulers;
 public class OrderOperationManager {
 
     private Context mContext;
-    private MyOrderAdapter myOrderAdapter;
 
-    public OrderOperationManager(Context mContext,MyOrderAdapter myOrderAdapter){
+    public OrderOperationManager(Context mContext){
         this.mContext = mContext;
-        this.myOrderAdapter = myOrderAdapter;
     }
 
 
     /***
      * 删除订单
      */
-    public void showRemoveDialog(final MyOrderListBean.OrderList bean) {
+    public void showRemoveDialog(final String order_id,final int position) {
         new AlertDialog(mContext).builder().setTitle(R.string.string_system_prompt).setMsg("确认删除订单?")
                 .setPositiveButton("确认", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        removeOrder(bean);
+                        removeOrder(order_id,position);
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
             @Override
@@ -50,11 +46,11 @@ public class OrderOperationManager {
         }).show();
     }
 
-    private void removeOrder(final MyOrderListBean.OrderList bean) {
+    private void removeOrder(final String order_id,final int position) {
         MyProcessDialog.showDialog(mContext, "请稍后...");
         PersonalNetwork
                 .getResponseApi()
-                .getRemoveOrderResponse(bean.order_id, App.APP_CLIENT_KEY)
+                .getRemoveOrderResponse(order_id, App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<String>>() {
@@ -70,8 +66,11 @@ public class OrderOperationManager {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             if (response.data != null) { // 显示数据
-                                myOrderAdapter.getDataList().remove(bean);
-                                myOrderAdapter.notifyDataSetChanged();
+                                if(mOnItemRemoveOrderClickListener != null){
+                                    mOnItemRemoveOrderClickListener.onItemRemoveOrderClickListener(position);
+                                }
+//                                myOrderAdapter.getDataList().remove(bean);
+//                                myOrderAdapter.notifyDataSetChanged();
                                 ToastUtils.show(mContext, response.msg);
                             }
                         } else {
@@ -83,14 +82,13 @@ public class OrderOperationManager {
 
     /***
      * 取消订单
-     * @param bean
      */
-    public void showCancelDialog(final MyOrderListBean.OrderList bean) {
+    public void showCancelDialog(final String order_id,final int position) {
         new AlertDialog(mContext).builder().setTitle(R.string.string_system_prompt).setMsg("确认取消订单?")
                 .setPositiveButton("确认", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        cancelOrder(bean);
+                        cancelOrder(order_id,position);
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
             @Override
@@ -100,11 +98,11 @@ public class OrderOperationManager {
         }).show();
     }
 
-    private void cancelOrder(final MyOrderListBean.OrderList bean) {
+    private void cancelOrder(final String order_id,final int position) {
         MyProcessDialog.showDialog(mContext, "请稍后...");
         PersonalNetwork
                 .getResponseApi()
-                .getCancelOrderResponse(bean.order_id, App.APP_CLIENT_KEY)
+                .getCancelOrderResponse(order_id, App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<String>>() {
@@ -120,8 +118,12 @@ public class OrderOperationManager {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             if (response.data != null) { // 显示数据
-                                myOrderAdapter.getDataList().remove(bean);
-                                myOrderAdapter.notifyDataSetChanged();
+                                if(mOnItemRemoveOrderClickListener != null){
+                                    mOnItemRemoveOrderClickListener.onItemRemoveOrderClickListener(position);
+                                }
+//                                myOrderAdapter.getDataList().remove(bean);
+//                                myOrderAdapter.notifyDataSetChanged();
+
                                 ToastUtils.show(mContext, response.msg);
                             }
                         } else {
@@ -129,6 +131,16 @@ public class OrderOperationManager {
                         }
                     }
                 });
+    }
+
+    public interface OnItemRemoveOrderClickListener {
+        void onItemRemoveOrderClickListener(int position);
+    }
+
+    private OnItemRemoveOrderClickListener mOnItemRemoveOrderClickListener;
+
+    public void setOnItemRemoveOrderClickListener(OnItemRemoveOrderClickListener listener) {
+        this.mOnItemRemoveOrderClickListener = listener;
     }
 
 }

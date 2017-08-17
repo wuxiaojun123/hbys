@@ -12,6 +12,8 @@ import com.help.reward.activity.MyOrderActivity;
 import com.help.reward.adapter.MyOrderAdapter;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.Response.MyOrderResponse;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.BooleanRxbusType;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
@@ -24,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -57,9 +60,26 @@ public class MyOrderAllFragment extends BaseFragment {
             state_type = bundle.getString(MyOrderActivity.STATE_TYPE);
         }
         initNetwork();
+        initRxbus();
+    }
+
+    private void initRxbus() {
+        RxBus.getDefault().toObservable(BooleanRxbusType.class).subscribe(new Action1<BooleanRxbusType>() {
+            @Override
+            public void call(BooleanRxbusType booleanRxbusType) {
+                if (booleanRxbusType.isRefresh) {
+                    // 刷新数据
+                    initNetwork();
+                }
+            }
+        });
     }
 
     private void initNetwork() {
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, R.string.string_please_login);
+            return;
+        }
         PersonalNetwork
                 .getResponseApi()
                 .getMyOrderResponse("member_order", "order_list", currentPage + "", state_type, App.APP_CLIENT_KEY)
