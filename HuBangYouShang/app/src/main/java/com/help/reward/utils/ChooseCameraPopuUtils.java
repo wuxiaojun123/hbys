@@ -57,9 +57,10 @@ public class ChooseCameraPopuUtils {
     public static final int PIC_RROM_VIDEO = 15;
     public static final int PIC_SIZE = 16;
     String type;
-    public ChooseCameraPopuUtils(Activity activity,String type){
-        this.activity=activity;
-        this.type=type;
+
+    public ChooseCameraPopuUtils(Activity activity, String type) {
+        this.activity = activity;
+        this.type = type;
     }
 
     public void showPopupWindow() {
@@ -73,35 +74,35 @@ public class ChooseCameraPopuUtils {
                             @Override
                             public void onClick(int which) {
 
-                                    // 调用系统摄像头，进行拍照
-                                    String status = Environment.getExternalStorageState();
-                                    if (status.equals(Environment.MEDIA_MOUNTED)) {
-                                        try {
-                                            File dir = new File(
-                                                    Environment.getExternalStorageDirectory() + "/"
-                                                            + PIC_CAMERA_IMG_DIR);
-                                            if (!dir.exists())
-                                                dir.mkdirs();
-                                            File f = new File(dir,PIC_CAMERA_IMG_NAME);// localTempImgDir和localTempImageFileName是自己定义的名字
-                                            Uri u = Uri.fromFile(f);
-                                            Intent intent = new Intent(
-                                                    android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                                // 调用系统摄像头，进行拍照
+                                String status = Environment.getExternalStorageState();
+                                if (status.equals(Environment.MEDIA_MOUNTED)) {
+                                    try {
+                                        File dir = new File(
+                                                Environment.getExternalStorageDirectory() + "/"
+                                                        + PIC_CAMERA_IMG_DIR);
+                                        if (!dir.exists())
+                                            dir.mkdirs();
+                                        File f = new File(dir, PIC_CAMERA_IMG_NAME);// localTempImgDir和localTempImageFileName是自己定义的名字
+                                        Uri u = Uri.fromFile(f);
+                                        Intent intent = new Intent(
+                                                android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
-                                            intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-                                            intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+                                        intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
 
-                                            activity.startActivityForResult(intent,
-                                                        PIC_RROM_CAMERA);
+                                        activity.startActivityForResult(intent,
+                                                PIC_RROM_CAMERA);
 
-                                        } catch (Exception e) {
-                                            // TODO Auto-generated catch block
-                                            ToastUtils.show(activity,"没有找到储存目录");
-
-                                        }
-                                    } else {
-                                        ToastUtils.show(activity,"没有储存卡");
+                                    } catch (Exception e) {
+                                        // TODO Auto-generated catch block
+                                        ToastUtils.show(activity, "没有找到储存目录");
 
                                     }
+                                } else {
+                                    ToastUtils.show(activity, "没有储存卡");
+
+                                }
 
                             }
                         })
@@ -119,13 +120,13 @@ public class ChooseCameraPopuUtils {
         if (requestCode == PIC_RROM_PHONO && resultCode == RESULT_OK) {
             // 获取选择本地的图片
             Uri selectedImageUri = data.getData();
-            if(selectedImageUri ==  null) {
-                ToastUtils.show(activity,  "选择图片失败");
+            if (selectedImageUri == null) {
+                ToastUtils.show(activity, "选择图片失败");
                 return;
             }
             String file = getImageAbsolutePath(activity, selectedImageUri);
-            if(file ==  null) {
-                ToastUtils.show(activity,  "选择图片失败");
+            if (file == null) {
+                ToastUtils.show(activity, "选择图片失败");
                 return;
             }
             extractPhoto(file);
@@ -149,9 +150,9 @@ public class ChooseCameraPopuUtils {
     private void openImage() {
         try {
 //				Uri uri =  Uri.parse("content://media/external/images/media/*");
-            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                activity.startActivityForResult(intent,
-                        PIC_RROM_PHONO);
+            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            activity.startActivityForResult(intent,
+                    PIC_RROM_PHONO);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -160,17 +161,15 @@ public class ChooseCameraPopuUtils {
             localIntent.setType("image/*");
             localIntent.setAction("android.intent.action.GET_CONTENT");
             Intent localIntent2 = Intent.createChooser(localIntent, "选择图片");
-                activity.startActivityForResult(localIntent2,
-                        PIC_RROM_PHONO);
+            activity.startActivityForResult(localIntent2,
+                    PIC_RROM_PHONO);
 
+        }
     }
-}
 
 
     /**
      * 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
-
-
      */
 
     public static String getImageAbsolutePath(Activity context, Uri imageUri) {
@@ -203,14 +202,14 @@ public class ChooseCameraPopuUtils {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
                 String selection = MediaStore.Images.Media._ID + "=?";
-                String[] selectionArgs = new String[] { split[1] };
+                String[] selectionArgs = new String[]{split[1]};
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
         } else if (scheme == null) {
 
             return imageUri.getPath();
 
-        }else if (ContentResolver.SCHEME_CONTENT.equalsIgnoreCase(imageUri.getScheme())) {
+        } else if (ContentResolver.SCHEME_CONTENT.equalsIgnoreCase(imageUri.getScheme())) {
             if (isGooglePhotosUri(imageUri))
                 return imageUri.getLastPathSegment();
             return getDataColumn(context, imageUri, null, null);
@@ -226,7 +225,7 @@ public class ChooseCameraPopuUtils {
     public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
         Cursor cursor = null;
         String column = MediaStore.Images.Media.DATA;
-        String[] projection = { column };
+        String[] projection = {column};
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
             if (cursor != null && cursor.moveToFirst()) {
@@ -272,7 +271,7 @@ public class ChooseCameraPopuUtils {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
-    public void extractPhoto(String path){
+    public void extractPhoto(String path) {
         Bitmap bmp;
         String fileName = null;
         try {
@@ -292,20 +291,20 @@ public class ChooseCameraPopuUtils {
 
     }
 
-    public void uploadHeadPhoto(File mFile){
+    public void uploadHeadPhoto(File mFile) {
 
-        if(mFile == null){
-            ToastUtils.show(activity,"请选择图片");
+        if (mFile == null) {
+            ToastUtils.show(activity, "请选择图片");
             return;
         }
-        if(null == App.APP_CLIENT_KEY){
-            ToastUtils.show(activity,"请登录");
+        if (null == App.APP_CLIENT_KEY) {
+            ToastUtils.show(activity, "请登录");
             return;
         }
         // 请求携带的参数
-        Map<String,RequestBody> params = new HashMap<>();
-        params.put("type",toRequestBody(type));
-        params.put("key",toRequestBody(App.APP_CLIENT_KEY));
+        Map<String, RequestBody> params = new HashMap<>();
+        params.put("type", toRequestBody(type));
+        params.put("key", toRequestBody(App.APP_CLIENT_KEY));
 
         // 上传的图片
         //设置Content-Type:application/octet-stream
@@ -313,9 +312,9 @@ public class ChooseCameraPopuUtils {
         //设置Content-Disposition:form-data; name="photo"; filename="xuezhiqian.png"
         MultipartBody.Part photo = MultipartBody.Part.createFormData("file", mFile.getName(), photoRequestBody);
 
-        MyProcessDialog.showDialog(activity,"正在上传...");
+        MyProcessDialog.showDialog(activity, "正在上传...");
         PersonalNetwork.getResponseApi()
-                .uploadImage(params,photo)
+                .uploadImage(params, photo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<UploadHeadImageReponse>() {
@@ -332,10 +331,10 @@ public class ChooseCameraPopuUtils {
                         if (response.code == 200) {
                             resetFileAndBitmap();
                             if (response.data != null) {
-                                LogUtils.e("返回上传图片的数据是："+response.data.url+"===="+response.data.file_name);
+                                LogUtils.e("返回上传图片的数据是：" + response.data.url + "====" + response.data.file_name);
                                 // 发送更新到个人首页
                                 if (onUploadImageListener != null) {
-                                    onUploadImageListener.onLoadSucced(response.data.file_name,response.data.url);
+                                    onUploadImageListener.onLoadSucced(response.data.file_name, response.data.url);
                                 }
                             }
                         } else {
@@ -346,14 +345,14 @@ public class ChooseCameraPopuUtils {
 
     }
 
-    public RequestBody toRequestBody(String value){
-        RequestBody body = RequestBody.create(MediaType.parse("text/plain"),value);
+    public RequestBody toRequestBody(String value) {
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain"), value);
         return body;
     }
 
-    private void resetFileAndBitmap(){
+    private void resetFileAndBitmap() {
         mFile = null;
-        if(mBitmap != null && !mBitmap.isRecycled()){
+        if (mBitmap != null && !mBitmap.isRecycled()) {
             mBitmap.recycle();
             mBitmap = null;
         }
@@ -362,9 +361,11 @@ public class ChooseCameraPopuUtils {
     public interface OnUploadImageListener {
         void onLoadError();
 
-        void onLoadSucced(String file_name,String url);
+        void onLoadSucced(String file_name, String url);
     }
+
     OnUploadImageListener onUploadImageListener;
+
     public void
     setOnUploadImageListener(OnUploadImageListener onUploadImageListener) {
         this.onUploadImageListener = onUploadImageListener;
