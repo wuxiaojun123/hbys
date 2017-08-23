@@ -42,7 +42,6 @@ import rx.schedulers.Schedulers;
 
 public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdapter.ShopCartOperateListener, View.OnClickListener {
 
-
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -72,9 +71,6 @@ public class ShopcartActivity extends BaseActivity implements ExpandShopcartAdap
         ButterKnife.bind(this);
 
         initview();
-
-        //initNetwork();
-
         initNetwork();
     }
 

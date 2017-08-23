@@ -11,14 +11,15 @@
         android:background="@drawable/shape_divider_line"
         android:visibility="gone"></RelativeLayout>
 
-    <TextView
+    <!--<TextView
         android:id="@+id/tv_confim_order_discount"
         android:padding="@dimen/dimen_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/style_setting_text"
         android:drawableRight="@null"
-        android:text="商家设置的通用券抵扣比例为:"/>
+        android:text="商家设置的通用券抵扣比例为:"
+        />-->
 
     <View
         android:layout_width="match_parent"
