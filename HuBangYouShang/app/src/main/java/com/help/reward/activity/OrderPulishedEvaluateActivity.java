@@ -23,6 +23,8 @@ import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.OrderInfoResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.BooleanRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.ChooseCameraPopuUtils;
 import com.help.reward.utils.GlideUtils;
@@ -191,7 +193,7 @@ public class OrderPulishedEvaluateActivity extends BaseActivity implements View.
         map.put("goods", evalueateMap);
         evaluate = JsonUtils.toJsonFromMap(map);
         LogUtils.e("转成json的格式是：" + evaluate);
-        MyProcessDialog.showDialog(mContext,"正在提交...");
+        MyProcessDialog.showDialog(mContext, "正在提交...");
         PersonalNetwork
                 .getResponseApi()
                 .getEvaluateResponse(order_id, evaluate, App.APP_CLIENT_KEY)
@@ -211,6 +213,8 @@ public class OrderPulishedEvaluateActivity extends BaseActivity implements View.
                         if (response.code == 200) {
                             if (response.data != null) { // 显示数据
                                 showMyDialog(response.msg);
+                                // 发送更新数据
+                                RxBus.getDefault().post(new BooleanRxbusType(true));
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
@@ -233,7 +237,7 @@ public class OrderPulishedEvaluateActivity extends BaseActivity implements View.
                         finish();
                         ActivitySlideAnim.slideOutAnim(OrderPulishedEvaluateActivity.this);
                     }
-        });
+                });
     }
 
 

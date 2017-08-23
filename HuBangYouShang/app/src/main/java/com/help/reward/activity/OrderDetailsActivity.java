@@ -1,5 +1,6 @@
 package com.help.reward.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,12 +19,17 @@ import com.help.reward.bean.GoodsSpecBean;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.OrderInfoBean;
+import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.OrderInfoResponse;
+import com.help.reward.manager.OrderOperationManager;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.BooleanRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.view.AlertDialog;
+import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
@@ -32,7 +38,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -41,7 +49,7 @@ import rx.schedulers.Schedulers;
  * Created by wuxiaojun on 2017/1/8.
  */
 
-public class OrderDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class OrderDetailsActivity extends BaseActivity implements View.OnClickListener, OrderOperationManager.OnItemRemoveOrderClickListener {
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -95,7 +103,12 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     private String sellerPhoneNumber;  // 商家电话
     private LayoutInflater mInflater;
     private String order_id;
+    private String pay_sn;
+    private String[] goods_id;
+    private String[] goods_img;
+    private String[] goods_name;
 
+    private OrderOperationManager mOperationManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,6 +118,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         mInflater = LayoutInflater.from(mContext);
         initView();
         initEvent();
+        initRxbus();
     }
 
     private void initView() {
@@ -118,7 +132,13 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             ToastUtils.show(mContext, "订单号不存在");
             return;
         }
+        mOperationManager = new OrderOperationManager(mContext);
+        mOperationManager.setOnItemRemoveOrderClickListener(this);
         LogUtils.e("订单号是：" + order_id);
+        initNetwork();
+    }
+
+    private void initNetwork() {
         PersonalNetwork
                 .getResponseApi()
                 .getMyOrderDetailsResponse("member_order", "order_info", order_id, App.APP_CLIENT_KEY)
@@ -139,7 +159,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                                 bindData(bean);
                                 setShopText(bean);
                                 setOrderState(bean);
-                                setEvaluationState(tv_evaluate_order, response.data.order_info);
+                                setEvaluationState(response.data.order_info);
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
@@ -148,7 +168,22 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
-    @OnClick({R.id.iv_title_back, R.id.tv_complaint, R.id.tv_contact_seller, R.id.tv_evaluate_order})
+    private Subscription subscribe;
+
+    private void initRxbus() {
+        subscribe = RxBus.getDefault().toObservable(BooleanRxbusType.class).subscribe(new Action1<BooleanRxbusType>() {
+            @Override
+            public void call(BooleanRxbusType booleanRxbusType) {
+                if (booleanRxbusType.isRefresh) {
+                    // 刷新数据
+                    initNetwork();
+                }
+            }
+        });
+    }
+
+    @OnClick({R.id.iv_title_back, R.id.tv_complaint, R.id.tv_contact_seller,
+            R.id.tv_evaluate_order, R.id.tv_cancel_order, R.id.tv_remove_order})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -171,11 +206,91 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.tv_evaluate_order:
+                // 根据不同tag显示不同内容做不同的操作
+                showOtherText();
 
+                break;
+            case R.id.tv_cancel_order:
+                // 取消订单
+                mOperationManager.showCancelDialog(order_id, -1);
+
+                break;
+            case R.id.tv_remove_order:
+                // 删除订单
+                mOperationManager.showCancelDialog(order_id, -2);
 
                 break;
         }
     }
+
+    @Override
+    public void onItemRemoveOrderClickListener(int position) {
+        // 发送更新
+        RxBus.getDefault().post(new BooleanRxbusType(true));
+        finish();
+        ActivitySlideAnim.slideOutAnim(OrderDetailsActivity.this);
+    }
+
+    private void showOtherText() {
+        String tag = (String) tv_evaluate_order.getTag();
+        if (tag != null) {
+            if ("1".equals(tag)) { // 立即付款
+                Intent mIntent = new Intent(mContext, PayTypeActivity.class);
+                mIntent.putExtra("pay_sn", pay_sn);
+                mContext.startActivity(mIntent);
+                ActivitySlideAnim.slideInAnim((Activity) mContext);
+
+            } else if ("2".equals(tag)) {// 确认收货
+                confirmReceiver(order_id);
+
+            } else if ("3".equals(tag)) {// 评价页面
+                Intent mIntent = new Intent(mContext, OrderPulishedEvaluateActivity.class);
+                mIntent.putExtra("order_id", order_id);
+                mIntent.putExtra("goods_id", goods_id);
+                mIntent.putExtra("goods_img", goods_img);
+                mIntent.putExtra("goods_name", goods_name);
+                mContext.startActivity(mIntent);
+                ActivitySlideAnim.slideInAnim((Activity) mContext);
+            }
+        }
+    }
+
+    /***
+     * 确认收货
+     */
+    private void confirmReceiver(String order_id) {
+        PersonalNetwork
+                .getResponseApi()
+                .getConfirmReceiveResponse(order_id, App.APP_CLIENT_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<String>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<String> response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            if (response.data != null) { // 显示数据
+//                                showMyDialog(response.msg);
+                                ToastUtils.show(mContext, response.msg);
+                            }
+                            //刷新当前页面吗？
+                            initNetwork();
+                            //刷新当前数据,发送给MyOrderAllFragment
+                            RxBus.getDefault().post(new BooleanRxbusType(true));
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
 
     private void showDialogContactSeller() { // 联系买家--拨打电话
         if (TextUtils.isEmpty(sellerPhoneNumber)) {
@@ -219,9 +334,13 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         sellerPhoneNumber = bean.store_phone;
     }
 
-
     private void setShopText(OrderInfoBean bean) {
+        pay_sn = bean.pay_sn;
         int size = bean.goods_list.size();
+        goods_id = new String[size];
+        goods_img = new String[size];
+        goods_name = new String[size];
+
         for (int i = 0; i < size; i++) {
             View shopView = mInflater.inflate(R.layout.layout_my_order_shop, ll_shop, false);
             ImageView iv_shop_img = (ImageView) shopView.findViewById(R.id.iv_shop_img); // 商品图片
@@ -231,6 +350,11 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             TextView tv_shop_num = (TextView) shopView.findViewById(R.id.tv_shop_num); // 商品数量 x1
 
             MyOrderShopBean myOrderShopBean = bean.goods_list.get(i);
+//            if (i < length) {
+            goods_id[i] = myOrderShopBean.goods_id;
+            goods_img[i] = myOrderShopBean.goods_image_url;
+            goods_name[i] = myOrderShopBean.goods_name;
+//            }
             GlideUtils.loadImage(myOrderShopBean.image_url, iv_shop_img);
             tv_shop_name.setText(myOrderShopBean.goods_name);
             List<GoodsSpecBean> specList = myOrderShopBean.goods_spec;
@@ -254,6 +378,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
     private void setOrderState(OrderInfoBean bean) {
         String order_state = bean.order_state; // 0:已取消,10(默认):未付款;20:已付款;30:已发货;40:已收货;50:已提交;60已确认;
+        LogUtils.e("order_state的值是:" + order_state + "-----bean.lock_state=" + bean.lock_state);
         if ("0".equals(bean.lock_state)) {
             if ("0".equals(order_state)) { // 已取消 删除订单
                 tv_remove_order.setVisibility(View.VISIBLE);
@@ -299,17 +424,13 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     /***
      * 设置评论状态
      */
-    private void setEvaluationState(TextView tv_evaluate_order, OrderInfoBean bean) {
+    private void setEvaluationState(OrderInfoBean bean) {
         boolean isEvaluated = false;
         if (bean.evaluation_state.equals("0")) {//评价状态 0未评价，1已评价，2已过期未评价
-//            tv_shop_state.setText("未评价");
             isEvaluated = true;
-        } else if (bean.evaluation_state.equals("1")) {
-//            tv_shop_state.setText("已评价");
-        } else {
-//            tv_shop_state.setText("已过期未评价");
         }
-        if (tv_evaluate_order.getTag().equals("3")) {
+        String tag = (String) tv_evaluate_order.getTag();
+        if (tag != null && tag.equals("3")) {
             if (isEvaluated) {
                 tv_evaluate_order.setVisibility(View.VISIBLE);
             } else {
@@ -318,6 +439,14 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        /*if(subscribe != null && subscribe.isUnsubscribed()){
+
+        }*/
     }
 
 }

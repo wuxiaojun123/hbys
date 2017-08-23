@@ -62,7 +62,7 @@ public class ConsumptionFragment extends BaseFragment {
     TextView tv_search; // 搜索框
     @BindView(R.id.banner_shop)
     ConvenientBanner bannerShop;
-//    @BindView(R.id.layout_shop_myaccount)
+    //    @BindView(R.id.layout_shop_myaccount)
 //    LinearLayout layoutShopMyaccount;
     @BindView(R.id.layout_shop_myorder)
     LinearLayout layoutShopMyorder;
@@ -112,7 +112,7 @@ public class ConsumptionFragment extends BaseFragment {
     @BindView(R.id.tv_hot_info5)
     TextView tv_hot_info5;
 
-//    @BindView(R.id.et_search)
+    //    @BindView(R.id.et_search)
 //    SearchEditTextView et_search;
     @BindView(R.id.iv_email)
     ImageView iv_email; // 消息中心
@@ -199,10 +199,7 @@ public class ConsumptionFragment extends BaseFragment {
         gvShopRecommand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mContext, StoreInfoActivity.class);
-                intent.putExtra("store_id", rec_store_list.get(position).store_id);
-                startActivity(intent);
-                ActivitySlideAnim.slideInAnim(getActivity());
+                goToStoreInfoActivity(rec_store_list.get(position).store_id);
             }
         });
     }
@@ -215,26 +212,31 @@ public class ConsumptionFragment extends BaseFragment {
         GlideUtils.loadImage(bean.adv_pic, iv_hot_img);
         tv_hot_title.setText(bean.adv_title);
         tv_hot_info.setText(bean.adv_sub_title);
+        iv_hot_img.setOnClickListener(new HotImgClickListener(bean.store_id));
 
         ShopBannerBean bean2 = adv_list.get(1);
         GlideUtils.loadImage(bean2.adv_pic, iv_hot_img2);
         tv_hot_title2.setText(bean2.adv_title);
         tv_hot_info2.setText(bean2.adv_sub_title);
+        iv_hot_img2.setOnClickListener(new HotImgClickListener(bean2.store_id));
 
         ShopBannerBean bean3 = adv_list.get(2);
         GlideUtils.loadImage(bean3.adv_pic, iv_hot_img3);
         tv_hot_title3.setText(bean3.adv_title);
         tv_hot_info3.setText(bean3.adv_sub_title);
+        iv_hot_img3.setOnClickListener(new HotImgClickListener(bean3.store_id));
 
         ShopBannerBean bean4 = adv_list.get(3);
         GlideUtils.loadImage(bean4.adv_pic, iv_hot_img4);
         tv_hot_title4.setText(bean4.adv_title);
         tv_hot_info4.setText(bean4.adv_sub_title);
+        iv_hot_img4.setOnClickListener(new HotImgClickListener(bean4.store_id));
 
         ShopBannerBean bean5 = adv_list.get(4);
         GlideUtils.loadImage(bean5.adv_pic, iv_hot_img5);
         tv_hot_title5.setText(bean5.adv_title);
         tv_hot_info5.setText(bean5.adv_sub_title);
+        iv_hot_img5.setOnClickListener(new HotImgClickListener(bean5.store_id));
     }
 
     /***
@@ -319,11 +321,38 @@ public class ConsumptionFragment extends BaseFragment {
             public void call(UpdateMessageDataRxbusType type) {
                 if (type.hasNew) { // 更新数据
                     tvTitleHelpMsgcount.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     tvTitleHelpMsgcount.setVisibility(View.INVISIBLE);
                 }
             }
         });
+    }
+
+    /***
+     * 跳转到店铺 页面
+     *
+     * @param store_id
+     */
+    private void goToStoreInfoActivity(String store_id) {
+        Intent intent = new Intent(mContext, StoreInfoActivity.class);
+        intent.putExtra("store_id", store_id);
+        startActivity(intent);
+        ActivitySlideAnim.slideInAnim(getActivity());
+    }
+
+    private class HotImgClickListener implements View.OnClickListener {
+
+        private String store_id;
+
+        public HotImgClickListener(String store_id) {
+            this.store_id = store_id;
+        }
+
+        @Override
+        public void onClick(View v) {
+            goToStoreInfoActivity(store_id);
+        }
+
     }
 
 }

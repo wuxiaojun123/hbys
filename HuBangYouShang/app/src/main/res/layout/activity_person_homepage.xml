@@ -56,7 +56,7 @@
 
                 <TextView
                     style="@style/style_my_account_text_title"
-                    android:text="投诉率" />
+                    android:text="投诉个数" />
 
             </LinearLayout>
 
@@ -71,7 +71,7 @@
 
                 <TextView
                     style="@style/style_my_account_text_title"
-                    android:text="被投诉率" />
+                    android:text="被投诉个数" />
 
             </LinearLayout>
 

@@ -76,16 +76,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.GuideActivity"
+        <activity
+            android:name=".activity.GuideActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- 验证身份 -->
         <activity
@@ -314,7 +314,8 @@
             android:name="com.help.reward.activity.TradeActivity"
             android:screenOrientation="portrait" />
         <!--个人主页-->
-        <activity android:name=".activity.PersonHomepageActivity"
+        <activity
+            android:name=".activity.PersonHomepageActivity"
             android:screenOrientation="portrait" />
 
         <!--选择支付方式-->
@@ -450,6 +451,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
+        <activity android:name=".activity.WebviewActivity"
+            android:screenOrientation="portrait" />
+
         <!--sms的短信验证-->
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -461,7 +465,7 @@
             android:name="com.help.reward.activity.GoodPropertyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeDialogIsTranslucent"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"></activity>
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!-- 开机自启动服务 -->
         <receiver android:name="com.help.reward.chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">
@@ -491,15 +495,13 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <!--支付宝支付 end-->
 
         <!-- 国内 key -->

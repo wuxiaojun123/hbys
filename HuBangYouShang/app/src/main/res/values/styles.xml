@@ -15,6 +15,18 @@
         <item name="android:windowBackground">@android:color/transparent</item>-->
     </style>
 
+    <style name="AppTheme_translucent" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--<item name="android:textAllCaps">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>-->
+    </style>
+
     <!-- 微信 Navigation Header -->
     <style name="NavPage">
         <item name="android:layout_width">fill_parent</item>

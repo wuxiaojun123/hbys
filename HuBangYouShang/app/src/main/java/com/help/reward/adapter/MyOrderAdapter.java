@@ -23,6 +23,8 @@ import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.manager.OrderOperationManager;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.BooleanRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.view.AlertDialog;
@@ -40,13 +42,14 @@ import rx.schedulers.Schedulers;
  * Created by wuxiaojun on 2017/2/26.
  */
 
-public class MyOrderAdapter extends BaseRecyclerAdapter {
+public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperationManager.OnItemRemoveOrderClickListener {
 
     private OrderOperationManager mOperationManager;
 
     public MyOrderAdapter(Context context) {
         super(context);
-        mOperationManager = new OrderOperationManager(context, this);
+        mOperationManager = new OrderOperationManager(context);
+        mOperationManager.setOnItemRemoveOrderClickListener(this);
     }
 
     @Override
@@ -55,7 +58,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
     }
 
     @Override
-    public void onBindItemHolder(SuperViewHolder holder, int position) {
+    public void onBindItemHolder(SuperViewHolder holder,final int position) {
 
         TextView tv_store_name = holder.getView(R.id.tv_store_name); // 商家名称
         TextView tv_shop_state = holder.getView(R.id.tv_shop_state); // 商品状态，是已支付还是未支付
@@ -88,13 +91,13 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
             tv_remove_order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { // 删除订单逻辑
-                    mOperationManager.showRemoveDialog(bean);
+                    mOperationManager.showRemoveDialog(bean.order_id,position);
                 }
             });
             tv_cancel_order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { // 取消订单
-                    mOperationManager.showCancelDialog(bean);
+                    mOperationManager.showCancelDialog(bean.order_id,position);
                 }
             });
 
@@ -110,6 +113,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
                             ActivitySlideAnim.slideInAnim((Activity) mContext);
 
                         } else if ("2".equals(tag)) {// 确认收货
+                            confirmReceiver(bean.order_id);
 
                         } else if ("3".equals(tag)) {// 评价页面
                             Intent mIntent = new Intent(mContext, OrderPulishedEvaluateActivity.class);
@@ -140,16 +144,6 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
 
     }
 
-    public interface OnItemRemoveOrderClickListener {
-        void onItemRemoveOrderClickListener(String orderId);
-    }
-
-    private OnItemRemoveOrderClickListener mOnItemRemoveOrderClickListener;
-
-    public void setOnItemRemoveOrderClickListener(OnItemRemoveOrderClickListener listener) {
-        this.mOnItemRemoveOrderClickListener = listener;
-    }
-
     /***
      * 待付款（lock_state=0,order_state=10）
      * 待发货（lock_state=0,order_state=20）
@@ -165,6 +159,13 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
      * （确认收货/退款完成）
      * 已取消  删除订单
      * 退款中  确认收货/删除订单
+     * <p>
+     * 待付款（lock_state=0,order_state=10） 可以：取消/立即付款
+     * 待发货（lock_state=0,order_state=20） 用户不能操作。可以投诉商家。
+     * 待收货（lock_state=0,order_state=30）可以：收货/投诉商家
+     * 已完成（lock_state=0,order_state=40）可以：评价/删除
+     * 已取消（lock_state=0,order_state=0）可以：删除
+     * 退款中（lock_state=1）
      */
     private void setOrderState(TextView tv_cancel_order, TextView tv_remove_order, TextView tv_evaluate_order, MyOrderListBean.OrderList bean) {
         String order_state = bean.order_state; // 0:已取消,10(默认):未付款;20:已付款;30:已发货;40:已收货;50:已提交;60已确认;
@@ -213,6 +214,40 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
     }
 
     /***
+     * 确认收货
+     */
+    private void confirmReceiver(String order_id) {
+        PersonalNetwork
+                .getResponseApi()
+                .getConfirmReceiveResponse(order_id, App.APP_CLIENT_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<String>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<String> response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            if (response.data != null) { // 显示数据
+//                                showMyDialog(response.msg);
+                                ToastUtils.show(mContext, response.msg);
+                            }
+                            //刷新当前数据,发送给MyOrderAllFragment
+                            RxBus.getDefault().post(new BooleanRxbusType(true));
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
+    /***
      * 设置评论状态
      *
      * @param tv_shop_state
@@ -232,7 +267,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
         if (tv_evaluate_order.getTag().equals("3")) {
             if (isEvaluated) {
                 tv_evaluate_order.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 if (tv_evaluate_order.getVisibility() != View.GONE) {
                     tv_evaluate_order.setVisibility(View.GONE);
                 }
@@ -271,7 +306,6 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
                 tv_shop_atrribute.setVisibility(View.VISIBLE);
                 StringBuilder specSb = new StringBuilder();
                 for (GoodsSpecBean spec : specList) {
-                    LogUtils.e("商品属性是" + spec.sp_name + "--" + spec.sp_value_name);
                     specSb.append(spec.sp_name + ":" + spec.sp_value_name);
                 }
                 tv_shop_atrribute.setText("商品属性:" + specSb.toString());
@@ -285,5 +319,11 @@ public class MyOrderAdapter extends BaseRecyclerAdapter {
         }
     }
 
+    @Override
+    public void onItemRemoveOrderClickListener(int position) {
+        mDataList.remove(position);
+        notifyItemRemoved(position);
+//        RxBus.getDefault().post(new BooleanRxbusType(true));
+    }
 
 }

@@ -59,8 +59,7 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
         ButterKnife.bind(this);
-
-        firstPage = getIntent().getIntExtra("firstPage",0);
+        firstPage = getIntent().getIntExtra("firstPage", 0);
 
         initView();
         initEvent();

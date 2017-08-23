@@ -176,8 +176,6 @@ public class VoucherDialog implements VoucherAdapter.OnVoucherCheckedChangedList
      * 当他们滑动的时候时刻判断currentPosition和上一个的type是否一样，如果不一样，则需要将ui进行改变
      */
     private void initScrollListener() {
-
-
         mLRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -190,18 +188,18 @@ public class VoucherDialog implements VoucherAdapter.OnVoucherCheckedChangedList
                 super.onScrolled(recyclerView, dx, dy);
 
                 int itemTypeCurrent = mAdapter.getItemViewType(mCurrentPosition);
-                int itemTypeNext = mAdapter.getItemViewType(mCurrentPosition + 1);
-                if (itemTypeCurrent != itemTypeNext) {
-                    // 跟据mCurrentPosition查找当前显示的View
-                    View itemView = mLinearLayoutManager.findViewByPosition(mCurrentPosition + 1);
-                    if (itemView != null) {
-                        if (itemView.getTop() <= mTypeHeight) {
-                            // 需要滑动悬浮view
-//                            tv_type.setY(-(mTypeHeight - itemView.getTop()));
-                            tv_type.setTranslationY((itemView.getTop() - mTypeHeight));
-
-                        } else {
-                            tv_type.setY(0);
+                if (mAdapter.getItemCount() > 1) {
+                    int itemTypeNext = mAdapter.getItemViewType(mCurrentPosition + 1);
+                    if (itemTypeCurrent != itemTypeNext) {
+                        // 跟据mCurrentPosition查找当前显示的View
+                        View itemView = mLinearLayoutManager.findViewByPosition(mCurrentPosition + 1);
+                        if (itemView != null) {
+                            if (itemView.getTop() <= mTypeHeight) {
+                                // 需要滑动悬浮view
+                                tv_type.setTranslationY((itemView.getTop() - mTypeHeight));
+                            } else {
+                                tv_type.setY(0);
+                            }
                         }
                     }
                 }

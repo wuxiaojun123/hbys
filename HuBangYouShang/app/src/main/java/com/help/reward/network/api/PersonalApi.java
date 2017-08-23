@@ -599,6 +599,14 @@ public interface PersonalApi {
             @Field("key") String key
     );
 
+    // 确认收货-- /mobile/index.php?act=member_order&op=order_receive
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_order&op=order_receive")
+    Observable<BaseResponse<String>> getConfirmReceiveResponse(
+            @Field("order_id") String order_id,
+            @Field("key") String key
+    );
+
 
     // 帮助中心
     @FormUrlEncoded
