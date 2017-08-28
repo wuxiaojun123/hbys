@@ -410,7 +410,7 @@
         <activity
             android:name="com.help.reward.activity.ShowBigImageActivity"
             android:screenOrientation="portrait" />
-        <!--提交投诉-->
+        <!--提交投诉,投诉页面-->
         <activity
             android:name="com.help.reward.activity.HelpComplainedActivity"
             android:screenOrientation="portrait" />
@@ -426,7 +426,7 @@
         <activity
             android:name="com.help.reward.activity.HelpRewardCommentActivity"
             android:screenOrientation="portrait" />
-
+        <!--申诉页面-->
         <activity
             android:name="com.help.reward.activity.HelpComplainedDetailActivity"
             android:screenOrientation="portrait" />

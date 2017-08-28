@@ -212,7 +212,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 // protocol/register
                 Intent mIntent = new Intent(RegisterActivity.this, WebviewActivity.class);
                 mIntent.putExtra("title", "用户协议");
-                mIntent.putExtra("url", Constant.URL_AGREEMENT);
+                mIntent.putExtra("op", "protocol");
                 startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim(RegisterActivity.this);
 

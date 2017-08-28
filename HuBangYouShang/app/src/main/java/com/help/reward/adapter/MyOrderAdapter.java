@@ -58,13 +58,13 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
     }
 
     @Override
-    public void onBindItemHolder(SuperViewHolder holder,final int position) {
+    public void onBindItemHolder(SuperViewHolder holder, final int position) {
 
         TextView tv_store_name = holder.getView(R.id.tv_store_name); // 商家名称
         TextView tv_shop_state = holder.getView(R.id.tv_shop_state); // 商品状态，是已支付还是未支付
         TextView tv_total_shop_and_money = holder.getView(R.id.tv_total_shop_and_money); // 共计：4件商品  合计：￥235元(含运费12元)
         TextView tv_cancel_order = holder.getView(R.id.tv_cancel_order); // 取消订单
-        TextView tv_remove_order = holder.getView(R.id.tv_remove_order); // 删除订单
+        final TextView tv_remove_order = holder.getView(R.id.tv_remove_order); // 删除订单
         final TextView tv_evaluate_order = holder.getView(R.id.tv_evaluate_order); // 评价订单
 
         LinearLayout ll_shop = holder.getView(R.id.ll_shop); // 商品列表
@@ -91,13 +91,18 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
             tv_remove_order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { // 删除订单逻辑
-                    mOperationManager.showRemoveDialog(bean.order_id,position);
+                    String tag = (String) tv_remove_order.getTag();
+                    if (tag != null) {
+                        ToastUtils.show(mContext, "退款退货");
+                    } else {
+                        mOperationManager.showRemoveDialog(bean.order_id, position);
+                    }
                 }
             });
             tv_cancel_order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { // 取消订单
-                    mOperationManager.showCancelDialog(bean.order_id,position);
+                    mOperationManager.showCancelDialog(bean.order_id, position);
                 }
             });
 
@@ -162,7 +167,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
      * <p>
      * 待付款（lock_state=0,order_state=10） 可以：取消/立即付款
      * 待发货（lock_state=0,order_state=20） 用户不能操作。可以投诉商家。
-     * 待收货（lock_state=0,order_state=30）可以：收货/投诉商家
+     * 待收货（lock_state=0,order_state=30）可以：确认收货/投诉商家
      * 已完成（lock_state=0,order_state=40）可以：评价/删除
      * 已取消（lock_state=0,order_state=0）可以：删除
      * 退款中（lock_state=1）
@@ -189,7 +194,9 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
                 tv_evaluate_order.setVisibility(View.GONE);
                 tv_evaluate_order.setTag("0");
 
-            } else if ("30".equals(order_state)) { // 待收货  确认收货/删除订单
+            } else if ("30".equals(order_state)) { // 待收货=退款/退货  确认收货/退款退货
+                tv_remove_order.setText("退款退货");
+                tv_remove_order.setTag("1");
                 tv_remove_order.setVisibility(View.VISIBLE);
                 tv_cancel_order.setVisibility(View.GONE);
                 tv_evaluate_order.setVisibility(View.VISIBLE);
@@ -204,12 +211,12 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
                 tv_evaluate_order.setTag("3");
 
             }
-        } else if ("1".equals(bean.lock_state)) { // 退款中  确认收货/删除订单
-            tv_remove_order.setVisibility(View.VISIBLE);
+        } else if ("1".equals(bean.lock_state)) { // 退款中  什么按钮都不显示
+            tv_remove_order.setVisibility(View.GONE);
             tv_cancel_order.setVisibility(View.GONE);
-            tv_evaluate_order.setVisibility(View.VISIBLE);
-            tv_evaluate_order.setText("确认收货");
-            tv_evaluate_order.setTag("2");
+            tv_evaluate_order.setVisibility(View.GONE);
+//            tv_evaluate_order.setText("确认收货");
+//            tv_evaluate_order.setTag("2");
         }
     }
 
@@ -321,7 +328,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
 
     @Override
     public void onItemRemoveOrderClickListener(int position) {
-        mDataList.remove(position);
+        this.mDataList.remove(position);
         notifyItemRemoved(position);
 //        RxBus.getDefault().post(new BooleanRxbusType(true));
     }
