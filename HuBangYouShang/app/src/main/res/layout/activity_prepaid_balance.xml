@@ -23,13 +23,14 @@
             android:textSize="@dimen/dimen_15" />
 
         <EditText
+            android:id="@+id/id_et_account"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="按需输入充值金额，最低一元"
-            android:textColorHint="@color/color_bf"
-            android:textSize="@dimen/dimen_14"
             android:background="@null"
-            />
+            android:hint="按需输入充值金额，最低一元"
+            android:inputType="number"
+            android:textColorHint="@color/color_bf"
+            android:textSize="@dimen/dimen_14" />
 
     </LinearLayout>
 
@@ -72,6 +73,7 @@
         android:showDividers="middle|end|beginning">
 
         <RelativeLayout
+            android:id="@+id/id_rl_wchat"
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
@@ -88,17 +90,20 @@
                 android:textSize="@dimen/dimen_15" />
 
             <CheckBox
+                android:id="@+id/id_cb_wchat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/selector_address_checkbox"
-                android:button="@null" />
+                android:button="@null"
+                android:checked="true" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/id_rl_alipay"
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
@@ -115,6 +120,7 @@
                 android:textSize="@dimen/dimen_15" />
 
             <CheckBox
+                android:id="@+id/id_cb_alipay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -136,6 +142,7 @@
         android:textSize="@dimen/dimen_14" />
 
     <Button
+        android:id="@+id/id_btn_prepaid"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="30dp"

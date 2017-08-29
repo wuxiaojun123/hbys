@@ -24,6 +24,8 @@ import com.help.reward.App;
 import com.help.reward.chat.db.UserDao;
 import com.help.reward.chat.ui.GroupActivity;
 import com.help.reward.rxbus.RxBus;
+import com.help.reward.service.DemoIntentService;
+import com.help.reward.service.DemoPushService;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.StatusBarUtil;
 import com.help.reward.view.MyProcessDialog;
@@ -49,6 +51,7 @@ import com.help.reward.fragment.IntegrationFragment;
 import com.help.reward.fragment.MyFragment;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
+import com.igexin.sdk.PushManager;
 
 import java.util.List;
 
@@ -87,6 +90,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // com.getui.demo.DemoPushService 为第三方自定义推送服务
+        PushManager.getInstance().initialize(this.getApplicationContext(), DemoPushService.class);
+        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), DemoIntentService.class);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);

@@ -215,6 +215,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
             tv_remove_order.setVisibility(View.GONE);
             tv_cancel_order.setVisibility(View.GONE);
             tv_evaluate_order.setVisibility(View.GONE);
+            tv_evaluate_order.setTag("0");
 //            tv_evaluate_order.setText("确认收货");
 //            tv_evaluate_order.setTag("2");
         }
