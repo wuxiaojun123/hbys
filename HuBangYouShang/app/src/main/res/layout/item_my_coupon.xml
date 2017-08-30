@@ -71,7 +71,7 @@
             android:text="交易中"
             android:textColor="@color/color_fa"
             android:textSize="@dimen/dimen_13"
-            android:visibility="gone" />
+             />
 
     </LinearLayout>
 

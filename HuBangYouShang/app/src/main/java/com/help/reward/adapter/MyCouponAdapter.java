@@ -13,6 +13,7 @@ import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.MyCouponBean;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.DateUtil;
+import com.idotools.utils.LogUtils;
 
 /**
  * 优惠劵

@@ -41,7 +41,7 @@ public class MyCouponFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             voucher_state = bundle.getString("voucher_state");
         }
     }
@@ -59,7 +59,7 @@ public class MyCouponFragment extends BaseFragment {
 
     private void initRecycler() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
-        mCollectionGoodsAdapter = new MyCouponAdapter(mContext,voucher_state);
+        mCollectionGoodsAdapter = new MyCouponAdapter(mContext, voucher_state);
         LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mCollectionGoodsAdapter);
         lRecyclerview.setAdapter(adapter);
         initRefreshListener();
@@ -87,9 +87,13 @@ public class MyCouponFragment extends BaseFragment {
      * act=member_voucher&op=voucher_list
      */
     private void initNetwork() {
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, R.string.string_please_login);
+            return;
+        }
         PersonalNetwork
                 .getResponseApi()
-                .getMyCouponResponse("member_voucher","voucher_list",""+currentPage,App.APP_CLIENT_KEY,voucher_state)
+                .getMyCouponResponse("member_voucher", "voucher_list", "" + currentPage, App.APP_CLIENT_KEY, voucher_state)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyCouponResponse>() {
