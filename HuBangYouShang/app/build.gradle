@@ -31,7 +31,7 @@ android {
         }
     }
     buildTypes {
-        debug {
+        /*debug {
             minifyEnabled true
             shrinkResources false
             zipAlignEnabled true
@@ -40,7 +40,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             signingConfig signingConfigs.myConfig
-        }
+        }*/
         release {
             minifyEnabled true
             shrinkResources false

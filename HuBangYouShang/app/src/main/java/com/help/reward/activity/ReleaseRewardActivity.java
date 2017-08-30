@@ -279,8 +279,8 @@ public class ReleaseRewardActivity extends BaseActivity {
                             intent.putExtra("from", "ReleaseRewardActivity");
                             startActivity(intent);
                             finish();
-                            RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
-                            RxBus.getDefault().post(new HelpCommitRxbusType());
+                            /*RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
+                            RxBus.getDefault().post(new HelpCommitRxbusType());*/
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

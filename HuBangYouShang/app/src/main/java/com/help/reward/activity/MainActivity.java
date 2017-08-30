@@ -392,23 +392,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         broadcastManager.unregisterReceiver(broadcastReceiver);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (exceptionBuilder != null) {
-            exceptionBuilder.create().dismiss();
-            exceptionBuilder = null;
-            isExceptionDialogShow = false;
-        }
-        unregisterBroadcastReceiver();
-
-        try {
-            unregisterReceiver(internalDebugReceiver);
-        } catch (Exception e) {
-        }
-
-    }
 
     /**
      * update unread message count
@@ -681,4 +664,45 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    private long mExitTime;
+
+    /**
+     * 退出应用
+     */
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtils.show(mContext, "再按一次退出");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            App.mLoginReponse = null;
+            App.APP_CLIENT_KEY = null;
+            App.APP_USER_ID = null;
+            App.APP_CLIENT_COOKIE = null;
+            App.GETUI_CLIENT_ID = null;
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (exceptionBuilder != null) {
+            exceptionBuilder.create().dismiss();
+            exceptionBuilder = null;
+            isExceptionDialogShow = false;
+        }
+        unregisterBroadcastReceiver();
+
+        try {
+            unregisterReceiver(internalDebugReceiver);
+        } catch (Exception e) {
+        }
+
+    }
 }

@@ -156,14 +156,13 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
      * 已完成（lock_state=0,order_state=40）
      * 已取消（lock_state=0,order_state=0）
      * 退款中（lock_state=1）
-     * <p>
-     * 待付款  立即付款/取消订单/删除订单
-     * 待发货  取消订单/删除订单
-     * 待收货  确认收货/删除订单
-     * 已完成  评价/删除订单
-     * （确认收货/退款完成）
-     * 已取消  删除订单
-     * 退款中  确认收货/删除订单
+     * <p> 最终版
+     * 待付款的显示：取消订单+立即付款
+     * 待发货的不显示
+     * 待收货的显示：确认收货
+     * 已完成的显示：删除订单+评价
+     * 已取消的显示：删除订单
+     * 退款中的不显示
      * <p>
      * 待付款（lock_state=0,order_state=10） 可以：取消/立即付款
      * 待发货（lock_state=0,order_state=20） 用户不能操作。可以投诉商家。

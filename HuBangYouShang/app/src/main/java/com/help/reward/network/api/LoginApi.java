@@ -30,6 +30,7 @@ public interface LoginApi {
     Observable<LoginResponse> getLoginBean(
             @Field("username") String username,
             @Field("password") String password,
+            @Field("clientId") String clientId,
             @Field("client") String client
     );
 

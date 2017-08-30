@@ -231,7 +231,7 @@ public class HelpComplainedActivity extends BaseActivity {
                                 @Override
                                 public void onClick(boolean isLeft) {
                                     finish();
-                                    RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
+//                                    RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
                                 }
                             });
 

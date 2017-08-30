@@ -30,6 +30,7 @@ public class App extends Application {
     public static String APP_USER_ID = null; // user_id
     public static String APP_CLIENT_COOKIE = null; // cookie
     public static LoginResponse mLoginReponse; // 会员信息
+    public static String GETUI_CLIENT_ID = null; // 个推id
 
     @Override
     public void onCreate() {

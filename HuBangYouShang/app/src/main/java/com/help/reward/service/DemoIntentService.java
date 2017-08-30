@@ -1,8 +1,15 @@
 package com.help.reward.service;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 
+import com.help.reward.App;
+import com.help.reward.bean.Response.LoginResponse;
+import com.help.reward.bean.UserBean;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.utils.JsonUtils;
 import com.idotools.utils.LogUtils;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
@@ -19,7 +26,6 @@ import org.json.JSONObject;
 public class DemoIntentService extends GTIntentService {
 
     public DemoIntentService() {
-
     }
 
     @Override
@@ -28,6 +34,7 @@ public class DemoIntentService extends GTIntentService {
 
     @Override
     public void onReceiveMessageData(Context context, GTTransmitMessage msg) {
+
         if (msg != null) {
             byte[] payload = msg.getPayload();
             String taskid = msg.getTaskId();
@@ -41,12 +48,12 @@ public class DemoIntentService extends GTIntentService {
                 if (!TextUtils.isEmpty(data)) {
                     try {
                         JSONObject jsonObject = new JSONObject(data);
-                        String test = jsonObject.getString("test");
-                        if (!TextUtils.isEmpty(test)) {
-                            //自定义通知栏消息
-
+                        boolean hasKey = jsonObject.has("update_member");
+                        if (hasKey) {
+                            sendUpdateMember(jsonObject);
                         }
-                    } catch (JSONException e) {
+
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -54,8 +61,50 @@ public class DemoIntentService extends GTIntentService {
         }
     }
 
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                RxBus.getDefault().post("loginSuccess");
+            }
+        }
+    };
+
+    /**
+     * 发送更新会员信息的数据
+     *
+     * @param jsonObject
+     * @throws JSONException
+     */
+    private void sendUpdateMember(JSONObject jsonObject) throws JSONException {
+        String update_member = jsonObject.getString("update_member");
+        UserBean userBean = (UserBean) JsonUtils.toObject(update_member, UserBean.class);
+        // 发送消息给我的界面，更新数据
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.username = userBean.username;
+        loginResponse.userid = userBean.userid;
+        loginResponse.available_predeposit = userBean.available_predeposit;
+        loginResponse.avator = userBean.avator;
+        loginResponse.complained = userBean.complained;
+        loginResponse.discount_level = userBean.discount_level;
+        loginResponse.easemobId = userBean.easemobId;
+        loginResponse.complaint = userBean.complaint;
+        loginResponse.key = userBean.key;
+        loginResponse.new_message = userBean.new_message;
+        loginResponse.general_voucher = userBean.general_voucher;
+        loginResponse.level_name = userBean.level_name;
+        loginResponse.point = userBean.point;
+        loginResponse.voucher = userBean.voucher;
+        loginResponse.people_help = userBean.people_help;
+
+        App.mLoginReponse = loginResponse;
+
+        mHandler.sendEmptyMessage(1);
+    }
+
     @Override
     public void onReceiveClientId(Context context, String clientid) {
+        App.GETUI_CLIENT_ID = clientid;
         LogUtils.e("cid是：" + clientid);
     }
 

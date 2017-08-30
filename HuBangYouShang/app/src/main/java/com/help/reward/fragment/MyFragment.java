@@ -116,9 +116,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         RxBus.getDefault().toObservable(UpdateLoginDataRxbusType.class).subscribe(new Action1<UpdateLoginDataRxbusType>() {
             @Override
             public void call(UpdateLoginDataRxbusType type) {
-//                LogUtils.e("更新个人中心数据11111111");
-                if (type.isUpdate) { // 更新数据
-//                    LogUtils.e("更新个人中心数据2222222222");
+                if (type.isUpdate) { // 更新个人中心数据
                     getPersonData();
                 }
             }
@@ -366,12 +364,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             lp.height = MetricsUtils.dipToPx(235);
             ll_not_logged_in.requestLayout();
             ll_logined.setVisibility(View.VISIBLE);
-            // 设置会员信息
-            setUserData();
         }
+        // 设置会员信息
+        setUserData();
     }
 
     private void setUserData() {
+        LogUtils.e("设置会员信息");
         if (App.mLoginReponse != null) {
             GlideUtils.loadCircleImage(App.mLoginReponse.avator, iv_photo);
             tv_register.setVisibility(View.GONE);
