@@ -248,7 +248,7 @@ public class GoodFragment extends BaseFragment {
                 break;
             case R.id.layout_goodinfo_youhuiquan:
                 // 跳转优惠劵交易大厅
-                if (App.APP_USER_ID == null) {
+                if (App.APP_CLIENT_KEY == null) {
                     ToastUtils.show(mContext, R.string.string_get_voucher_loggin);
                     return;
                 }
