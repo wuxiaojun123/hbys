@@ -10,13 +10,21 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.Response.WebViewUrlResponse;
+import com.help.reward.network.PersonalNetwork;
+import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
+import com.idotools.utils.LogUtils;
+import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by wuxiaojun on 17-8-17.
@@ -53,8 +61,39 @@ public class WebviewActivity extends BaseActivity {
         String title = intent.getStringExtra("title");
         tv_title.setText(title);
         tv_title_right.setVisibility(View.GONE);
-        String url = intent.getStringExtra("url");
-        id_webview.loadUrl(Constant.BASE_URL + url);
+        String op = intent.getStringExtra("op");
+        initNet(op);
+    }
+
+    private void initNet(String op) {
+        LogUtils.e("开始请求....");
+        // act=article&op=protocol  ?act=article&op=protocol
+        PersonalNetwork
+                .getLoginApi()
+                .getWebviewUrlResponse("article", "protocol")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<WebViewUrlResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        LogUtils.e("返回数据失败,,," + e.toString());
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(WebViewUrlResponse response) {
+                        LogUtils.e("返回值是:" + response.code + "----" + response.msg);
+                        if (response.code == 200) {
+                            if (response.data != null) {
+                                LogUtils.e("返回url是：" + response.data.url);
+                                id_webview.loadUrl(Constant.BASE_URL + "/" + response.data.url);
+                            }
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
     }
 
     @OnClick({R.id.iv_title_back})
@@ -69,5 +108,11 @@ public class WebviewActivity extends BaseActivity {
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (id_webview != null) {
+            id_webview.destroy();
+        }
+    }
 }

@@ -7,6 +7,15 @@
 
     <include layout="@layout/layout_title" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:text="请您谨慎申诉，申诉失败，败方会减少5个帮助人数。"
+        android:textColor="@color/color_fa"
+        android:textSize="13sp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -58,9 +67,9 @@
                     style="@style/style_text_lable"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:background="@color/color_allbg"
                     android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:text="您被投诉如下：" />
 
                 <View
@@ -82,9 +91,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:orientation="horizontal">
+                    android:paddingRight="@dimen/activity_horizontal_margin">
 
                     <ImageView
                         android:id="@+id/iv_content_image1"
@@ -139,8 +148,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:background="@color/color_allbg"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:text="您的申诉内容如下：" />
 
                 <View
@@ -162,9 +171,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:orientation="horizontal">
+                    android:paddingRight="@dimen/activity_horizontal_margin">
 
                     <ImageView
                         android:id="@+id/iv_appel_image1"
@@ -208,8 +217,8 @@
             <LinearLayout
                 android:id="@+id/complainant_explain_layout"
                 android:layout_width="match_parent"
-                android:background="@color/color_while"
                 android:layout_height="wrap_content"
+                android:background="@color/color_while"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -219,8 +228,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:background="@color/color_allbg"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:text="对方的解释如下：" />
 
                 <View
@@ -243,9 +252,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:orientation="horizontal">
+                    android:paddingRight="@dimen/activity_horizontal_margin">
 
                     <ImageView
                         android:id="@+id/iv_complainant_explain_image1"
@@ -300,8 +309,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:background="@color/color_allbg"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:text="您的解释如下：" />
 
                 <View
@@ -323,9 +332,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:orientation="horizontal">
+                    android:paddingRight="@dimen/activity_horizontal_margin">
 
                     <ImageView
                         android:id="@+id/iv_respondent_explain_image1"

@@ -313,8 +313,8 @@ public class ReleaseHelpActivity extends BaseActivity {
                             intent.putExtra("from", "ReleaseHelpActivity");
                             startActivity(intent);
                             finish();
-                            RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
-                            RxBus.getDefault().post(new HelpCommitRxbusType());
+                            /*RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
+                            RxBus.getDefault().post(new HelpCommitRxbusType());*/
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

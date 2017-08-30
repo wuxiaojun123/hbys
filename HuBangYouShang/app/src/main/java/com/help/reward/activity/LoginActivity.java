@@ -158,7 +158,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         MyProcessDialog.showDialog(mContext);
         subscribe = PersonalNetwork
                 .getLoginApi()
-                .getLoginBean(username, password, Constant.PLATFORM_CLIENT).subscribeOn(Schedulers.io()) // 请求放在io线程中
+                .getLoginBean(username, password, App.GETUI_CLIENT_ID, Constant.PLATFORM_CLIENT).subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<LoginResponse>() {
                     @Override

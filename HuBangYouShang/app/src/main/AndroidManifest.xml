@@ -55,6 +55,13 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!-- iBeancon功能所需权限 -->;
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!-- 个推3.0电子围栏功能所需权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <!--58d5e426677baa2007001842-->
     <application
@@ -410,7 +417,7 @@
         <activity
             android:name="com.help.reward.activity.ShowBigImageActivity"
             android:screenOrientation="portrait" />
-        <!--提交投诉-->
+        <!--提交投诉,投诉页面-->
         <activity
             android:name="com.help.reward.activity.HelpComplainedActivity"
             android:screenOrientation="portrait" />
@@ -426,7 +433,7 @@
         <activity
             android:name="com.help.reward.activity.HelpRewardCommentActivity"
             android:screenOrientation="portrait" />
-
+        <!--申诉页面-->
         <activity
             android:name="com.help.reward.activity.HelpComplainedDetailActivity"
             android:screenOrientation="portrait" />
@@ -451,8 +458,19 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
-        <activity android:name=".activity.WebviewActivity"
+        <activity
+            android:name=".activity.WebviewActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.pay.AlipayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/style_translucent" />
+
+        <activity
+            android:name=".activity.pay.WchatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/style_translucent" />
 
         <!--sms的短信验证-->
         <activity
@@ -503,6 +521,69 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <!--支付宝支付 end-->
+
+        <!--个推-->
+        <!-- 配置的第三方参数属性 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="${GETUI_APP_ID}" />
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="${GETUI_APP_KEY}" />
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="${GETUI_APP_SECRET}" />
+
+        <!-- 配置SDK核心服务 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.service.message"/>
+            </intent-filter>
+        </service>
+
+        <receiver android:name="com.igexin.sdk.PushReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.igexin.sdk.action.refreshls" />
+                <!-- 以下三项为可选的action声明，可大大提高service存活率和消息到达速度 -->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <activity
+            android:name="com.igexin.sdk.GActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <service
+            android:name=".service.DemoPushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice" />
+
+        <service android:name=".service.DemoIntentService"/>
+
+        <!--个推-->
 
         <!-- 国内 key -->
         <meta-data

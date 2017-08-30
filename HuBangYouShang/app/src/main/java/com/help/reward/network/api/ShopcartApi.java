@@ -7,6 +7,7 @@ import com.help.reward.bean.Response.ConfirmOrderResponse;
 import com.help.reward.bean.Response.PayTypeAlipayResponse;
 import com.help.reward.bean.Response.PayTypeResponse;
 import com.help.reward.bean.Response.PayTypeWchatResponse;
+import com.help.reward.bean.Response.PrepaidBalanceResponse;
 import com.help.reward.bean.Response.ShopCartResponse;
 import com.help.reward.utils.Constant;
 
@@ -89,6 +90,7 @@ public interface ShopcartApi {
      * voucher 类似‘t_id|store_id|price,t_id|store_id|price,...’格式
      * general_voucher类似‘store_id|num,store_id|num,...’格式
      * pay_message 格式 店铺id|备注内容,店铺id|备注内容
+     *
      * @param key
      * @param cart_id
      * @param ifcart
@@ -123,6 +125,14 @@ public interface ShopcartApi {
             @Field("key") String key
     );
 
+    // 0元支付
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_payment&op=payOk")
+    Observable<BaseResponse<String>> getPayOkResponse(
+            @Field("pay_sn") String pay_sn,
+            @Field("key") String key
+    );
+
 
     // 微信支付
     @FormUrlEncoded
@@ -136,6 +146,31 @@ public interface ShopcartApi {
     @FormUrlEncoded
     @POST("/mobile/index.php?act=member_payment&op=alipay_pay")
     Observable<PayTypeAlipayResponse> getPayTypeAliPayResponse(
+            @Field("pay_sn") String pay_sn,
+            @Field("key") String key
+    );
+
+    // 会员充值--创建订单
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_recharge&op=create_order")
+    Observable<PrepaidBalanceResponse> getPrepaidBalanceResponse(
+            @Field("pdr_amount") String pdr_amount,
+            @Field("pdr_payment_code") String pdr_payment_code,
+            @Field("key") String key
+    );
+
+    // 会员充值-支付宝支付
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_recharge&op=alipay")
+    Observable<PayTypeAlipayResponse> getBalancePayTypeAliPayResponse(
+            @Field("pay_sn") String pay_sn,
+            @Field("key") String key
+    );
+
+    // 微信支付
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=member_recharge&op=wxpay")
+    Observable<PayTypeWchatResponse> getBalancePayTypeWchatResponse(
             @Field("pay_sn") String pay_sn,
             @Field("key") String key
     );

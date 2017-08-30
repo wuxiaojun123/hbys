@@ -84,15 +84,38 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp" />
 
+    <LinearLayout
+        android:id="@+id/id_ll_pay_aero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/shape_divider_line"
+        android:orientation="vertical"
+        android:showDividers="end|beginning"
+        android:visibility="gone">
+
+
+        <TextView
+            style="@style/style_text_lable"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableRight="@mipmap/img_disclosure_arrow"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="0元支付" />
+
+    </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/id_ll_pay_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_msgcenter_item"
         android:divider="@drawable/shape_divider_line"
         android:orientation="vertical"
         android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:showDividers="middle">
+        android:showDividers="middle"
+        >
 
         <RelativeLayout
             android:id="@+id/layout_paytype_wchat"
@@ -132,8 +155,7 @@
             android:id="@+id/layout_paytype_alipay"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            >
+            android:paddingRight="@dimen/activity_horizontal_margin">
 
             <ImageView
                 android:id="@+id/iv_paytype2"
@@ -191,6 +213,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/img_disclosure_arrow" />
+
         </RelativeLayout>
+
     </LinearLayout>
+
 </LinearLayout>

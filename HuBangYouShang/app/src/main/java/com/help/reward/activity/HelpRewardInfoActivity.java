@@ -418,7 +418,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
                             ToastUtils.show(mContext, "打赏成功");
                             curpage = 1;
                             requestData();
-                            RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
+//                            RxBus.getDefault().post(new UpdateLoginDataRxbusType(true));
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

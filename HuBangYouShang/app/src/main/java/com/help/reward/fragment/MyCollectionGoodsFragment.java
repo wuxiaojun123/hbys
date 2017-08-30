@@ -69,7 +69,7 @@ public class MyCollectionGoodsFragment extends BaseFragment {
         mCollectionGoodsAdapter.setOnItemDeleteListener(new OnItemDeleteListener() {
             @Override
             public void deleteItem(final int position) {
-                MyCollectionGoodsBean bean = (MyCollectionGoodsBean) mCollectionGoodsAdapter.getDataList().get(position);
+                MyCollectionGoodsBean bean = mCollectionGoodsAdapter.getDataList().get(position);
                 if(bean != null){
                     PersonalNetwork
                             .getResponseApi()

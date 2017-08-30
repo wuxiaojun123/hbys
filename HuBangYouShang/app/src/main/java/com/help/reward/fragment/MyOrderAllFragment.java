@@ -80,6 +80,7 @@ public class MyOrderAllFragment extends BaseFragment {
             ToastUtils.show(mContext, R.string.string_please_login);
             return;
         }
+        LogUtils.e("当前页数是" + currentPage);
         PersonalNetwork
                 .getResponseApi()
                 .getMyOrderResponse("member_order", "order_list", currentPage + "", state_type, App.APP_CLIENT_KEY)
@@ -116,7 +117,7 @@ public class MyOrderAllFragment extends BaseFragment {
                                 }
                             }
                             if (!response.hasmore) { // 是否有更多数据
-                                lRecyclerview.setLoadMoreEnabled(false);
+                                lRecyclerview.setNoMore(true);
                             } else {
                                 currentPage += 1;
                             }

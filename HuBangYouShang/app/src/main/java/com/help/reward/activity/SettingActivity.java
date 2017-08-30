@@ -230,6 +230,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         App.APP_CLIENT_KEY = null;
                         App.APP_CLIENT_COOKIE = null;
                         App.mLoginReponse = null;
+                        App.APP_USER_ID = null;
                         // 应该清除个人信息页面的信息
                         RxBus.getDefault().post("logout");
 

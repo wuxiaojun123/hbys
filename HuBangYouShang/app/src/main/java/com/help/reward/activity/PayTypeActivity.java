@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.base.recyclerview.LRecyclerViewAdapter;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.adapter.PayTypeAdapter;
+import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.PayTypeAlipayResponse;
 import com.help.reward.bean.Response.PayTypeResponse;
 import com.help.reward.bean.Response.PayTypeWchatResponse;
@@ -70,6 +72,11 @@ public class PayTypeActivity extends BaseActivity {
     @BindView(R.id.layout_paytype_yinlian)
     RelativeLayout layoutPaytypeYinlian;
 
+    @BindView(R.id.id_ll_pay_type)
+    LinearLayout id_ll_pay_type; // 选择支付方式，微信支付，支付宝支付
+    @BindView(R.id.id_ll_pay_aero)
+    LinearLayout id_ll_pay_aero; // 0元支付
+
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
@@ -96,10 +103,11 @@ public class PayTypeActivity extends BaseActivity {
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        Toast.makeText(PayTypeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show(mContext,"支付成功");
+                        finishActivity();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                        Toast.makeText(PayTypeActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                        ToastUtils.show(mContext,"支付失败");
                     }
                     break;
                 }
@@ -118,8 +126,8 @@ public class PayTypeActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         pay_sn = getIntent().getStringExtra("pay_sn");
-        boolean removeShopcatAndConfirmOrderActivity = getIntent().getBooleanExtra("removeShopcatAndConfirmOrderActivity",false);
-        if(removeShopcatAndConfirmOrderActivity){
+        boolean removeShopcatAndConfirmOrderActivity = getIntent().getBooleanExtra("removeShopcatAndConfirmOrderActivity", false);
+        if (removeShopcatAndConfirmOrderActivity) {
             ActivityManager.getActivityManager().finishActivity(ConfirmOrderActivity.class);
             ActivityManager.getActivityManager().finishActivity(ShopcartActivity.class);
         }
@@ -141,7 +149,15 @@ public class PayTypeActivity extends BaseActivity {
                     public void onNext(PayTypeResponse payTypeResponse) {
                         if (payTypeResponse.code == 200) {
                             pay_sn = payTypeResponse.data.pay_sn;
-                            tvPaytypeMoney.setText("￥" + payTypeResponse.data.api_pay_amount);
+                            String payAmount = payTypeResponse.data.api_pay_amount;
+                            tvPaytypeMoney.setText("￥" + payAmount);
+                            if (!TextUtils.isEmpty(payAmount)) {
+                                double payAmountDou = Double.parseDouble(payAmount);
+                                if (payAmountDou <= 0) {
+                                    id_ll_pay_aero.setVisibility(View.VISIBLE);
+                                    id_ll_pay_type.setVisibility(View.GONE);
+                                }
+                            }
                             // 显示各种订单
                             mPayTypeAdapter.setDataList(payTypeResponse.data.order_list);
 
@@ -164,7 +180,8 @@ public class PayTypeActivity extends BaseActivity {
         lRecyclerview.setLoadMoreEnabled(false);
     }
 
-    @OnClick({R.id.iv_title_back, R.id.layout_paytype_wchat, R.id.layout_paytype_alipay, R.id.layout_paytype_yinlian})
+    @OnClick({R.id.iv_title_back, R.id.layout_paytype_wchat, R.id.layout_paytype_alipay,
+            R.id.layout_paytype_yinlian, R.id.id_ll_pay_aero})
     void click(View v) {
         switch (v.getId()) {
             case R.id.iv_title_back:
@@ -185,8 +202,43 @@ public class PayTypeActivity extends BaseActivity {
             case R.id.layout_paytype_yinlian:
 
                 break;
+            case R.id.id_ll_pay_aero:
+                // 0元支付
+                requestPayOk();
 
+                break;
         }
+    }
+
+    /***
+     * 0元支付
+     */
+    private void requestPayOk() {
+        if (App.APP_CLIENT_KEY == null || TextUtils.isEmpty(pay_sn)) {
+            return;
+        }
+        LogUtils.e("点击0元支付...." + pay_sn + "======" + App.APP_CLIENT_KEY);
+        ShopcartNetwork.getShopcartCookieApi()
+                .getPayOkResponse(pay_sn, App.APP_CLIENT_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<String>>() {
+                    @Override
+                    public void onNext(BaseResponse<String> response) {
+                        LogUtils.e("支付结果:" + response.code);
+                        if (response.code == 200) {
+                            ToastUtils.show(mContext,"支付成功");
+                            finishActivity();
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
+    private void finishActivity(){
+        finish();
+        ActivitySlideAnim.slideOutAnim(PayTypeActivity.this);
     }
 
     /***
@@ -316,6 +368,8 @@ public class PayTypeActivity extends BaseActivity {
                 ToastUtils.show(mContext, "正常调起支付");
                 // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
                 api.sendReq(req);
+                // 清除当前页
+                finish();
             } else {
                 ToastUtils.show(getApplicationContext(), "请安装微信");
             }

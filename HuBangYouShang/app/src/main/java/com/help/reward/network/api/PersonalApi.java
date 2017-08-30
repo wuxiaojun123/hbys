@@ -35,6 +35,7 @@ import com.help.reward.bean.Response.OrderInfoResponse;
 import com.help.reward.bean.Response.PersonInfoResponse;
 import com.help.reward.bean.Response.SaveNewAddressResponse;
 import com.help.reward.bean.Response.UploadHeadImageReponse;
+import com.help.reward.bean.Response.WebViewUrlResponse;
 import com.help.reward.utils.Constant;
 
 import java.util.Map;
@@ -655,6 +656,13 @@ public interface PersonalApi {
             @Field("key") String key,
             @Field("member_id") String member_id,
             @Field("type") String type
+    );
+
+    // 关于我们
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=article&op=aboutUs")
+    Observable<WebViewUrlResponse> getAboutOurResponse(
+            @Field("key") String key
     );
 
 }

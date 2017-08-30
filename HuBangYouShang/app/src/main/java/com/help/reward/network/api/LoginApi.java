@@ -6,6 +6,7 @@ import com.help.reward.bean.Response.LoginResponse2;
 import com.help.reward.bean.Response.RegisterResponse;
 import com.help.reward.bean.Response.VerificationCodeResponse;
 import com.help.reward.bean.Response.WXLoginTokenResponse;
+import com.help.reward.bean.Response.WebViewUrlResponse;
 import com.help.reward.utils.Constant;
 
 import retrofit2.http.Field;
@@ -29,6 +30,7 @@ public interface LoginApi {
     Observable<LoginResponse> getLoginBean(
             @Field("username") String username,
             @Field("password") String password,
+            @Field("clientId") String clientId,
             @Field("client") String client
     );
 
@@ -124,5 +126,12 @@ public interface LoginApi {
             @Field("phone") String phone
     );
 
+
+    // 获取需要加载的url ?act=article&op=protocol
+    @GET("mobile/index.php")
+    Observable<WebViewUrlResponse> getWebviewUrlResponse(
+            @Query("act") String act,
+            @Query("op") String op
+    );
 
 }

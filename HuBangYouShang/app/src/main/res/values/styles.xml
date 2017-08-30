@@ -45,6 +45,12 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
     </style>
 
+    <!-- 隐藏activity -->
+    <style name="style_translucent" >
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/color_window_transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 
     <!--<style name="style_dialog_activity_anim" >
         <item name="android:windowEnterAnimation">@anim/anim_slide_bottom_in</item>

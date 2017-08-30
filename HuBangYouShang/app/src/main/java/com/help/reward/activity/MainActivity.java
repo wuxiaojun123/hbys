@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ import com.help.reward.App;
 import com.help.reward.chat.db.UserDao;
 import com.help.reward.chat.ui.GroupActivity;
 import com.help.reward.rxbus.RxBus;
+import com.help.reward.service.DemoIntentService;
+import com.help.reward.service.DemoPushService;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.StatusBarUtil;
 import com.help.reward.view.MyProcessDialog;
@@ -45,7 +49,9 @@ import com.help.reward.fragment.ConsumptionFragment;
 import com.help.reward.fragment.HelpFragment;
 import com.help.reward.fragment.IntegrationFragment;
 import com.help.reward.fragment.MyFragment;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
+import com.igexin.sdk.PushManager;
 
 import java.util.List;
 
@@ -58,15 +64,7 @@ import butterknife.OnClick;
  *
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-    protected static final String TAG = "MainActivity";
-
-    /*@BindView(R.id.et_search)
-    EditText et_search;
-    @BindView(R.id.iv_email)
-    ImageView iv_email;
-    @BindView(R.id.tv_text)
-    TextView tv_text;*/
-
+//    protected static final String TAG = "MainActivity";
 
     @BindView(R.id.fl_content)
     FrameLayout fl_content;
@@ -85,14 +83,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private FragmentManager mFragmentManager;
     private HelpFragment mHelpFragment;
     private IntegrationFragment mIntegrationFragment;//积分
-    //private BenefitFragment mBenefitFragment;//获益
-    private ConversationListFragment mBenefitFragment;
+    private ConversationListFragment mBenefitFragment; //获益
     private ConsumptionFragment mConSumptionFragment;//消费
     private MyFragment mMyFragment;//我的
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // com.getui.demo.DemoPushService 为第三方自定义推送服务
+        PushManager.getInstance().initialize(this.getApplicationContext(), DemoPushService.class);
+        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), DemoIntentService.class);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -145,6 +146,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    private int currentIndex = 0;
+
     private void showFragment(int id) {
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
         hideFragment(mFragmentTransaction);
@@ -156,6 +159,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 } else {
                     mFragmentTransaction.show(mHelpFragment);
                 }
+                currentIndex = 0;
 
                 break;
             case R.id.radio_integration:
@@ -165,6 +169,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 } else {
                     mFragmentTransaction.show(mIntegrationFragment);
                 }
+                currentIndex = 1;
 
                 break;
             case R.id.radio_benefit:
@@ -180,6 +185,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 } else {
                     mFragmentTransaction.show(mBenefitFragment);
                 }
+                currentIndex = 2;
 
                 break;
             case R.id.radio_consumption:
@@ -189,6 +195,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 } else {
                     mFragmentTransaction.show(mConSumptionFragment);
                 }
+                currentIndex = 3;
 
                 break;
             case R.id.radio_my:
@@ -198,14 +205,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 } else {
                     mFragmentTransaction.show(mMyFragment);
                 }
+                currentIndex = 4;
 
                 break;
         }
         mFragmentTransaction.commitAllowingStateLoss();
     }
 
-    private void logoutHuanxin(){
-        DemoHelper.getInstance().logout(false,new EMCallBack() {
+    private void logoutHuanxin() {
+        DemoHelper.getInstance().logout(false, new EMCallBack() {
 
             @Override
             public void onSuccess() {
@@ -384,23 +392,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         broadcastManager.unregisterReceiver(broadcastReceiver);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (exceptionBuilder != null) {
-            exceptionBuilder.create().dismiss();
-            exceptionBuilder = null;
-            isExceptionDialogShow = false;
-        }
-        unregisterBroadcastReceiver();
-
-        try {
-            unregisterReceiver(internalDebugReceiver);
-        } catch (Exception e) {
-        }
-
-    }
 
     /**
      * update unread message count
@@ -554,7 +545,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 exceptionBuilder.create().show();
                 //isConflict = true;
             } catch (Exception e) {
-                EMLog.e(TAG, "---------color conflictBuilder error" + e.getMessage());
+                LogUtils.e("---------color conflictBuilder error" + e.getMessage());
             }
         }
     }
@@ -620,4 +611,98 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, 30, null);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putInt("index", currentIndex);
+//        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        currentIndex = savedInstanceState.getInt("index");
+        showRadiaButton();
+    }
+
+    private void showRadiaButton() {
+        switch (currentIndex) {
+            case 0:
+                radio_help.setChecked(true);
+                break;
+            case 1:
+                radio_integration.setChecked(true);
+                break;
+            case 2:
+                radio_benefit.setChecked(true);
+                break;
+            case 3:
+                radio_consumption.setChecked(true);
+                break;
+            case 4:
+                radio_my.setChecked(true);
+                break;
+        }
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (mHelpFragment == null && fragment instanceof HelpFragment) {
+            mHelpFragment = (HelpFragment) fragment;
+        }
+        if (mIntegrationFragment == null && fragment instanceof IntegrationFragment) {
+            mIntegrationFragment = (IntegrationFragment) fragment;
+
+        }
+        if (mBenefitFragment == null && fragment instanceof ConversationListFragment) {
+            mBenefitFragment = (ConversationListFragment) fragment;
+        }
+        if (mConSumptionFragment == null && fragment instanceof ConsumptionFragment) {
+            mConSumptionFragment = (ConsumptionFragment) fragment;
+        }
+        if (mMyFragment == null && fragment instanceof MyFragment) {
+            mMyFragment = (MyFragment) fragment;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    private long mExitTime;
+
+    /**
+     * 退出应用
+     */
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtils.show(mContext, "再按一次退出");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            App.mLoginReponse = null;
+            App.APP_CLIENT_KEY = null;
+            App.APP_USER_ID = null;
+            App.APP_CLIENT_COOKIE = null;
+            App.GETUI_CLIENT_ID = null;
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (exceptionBuilder != null) {
+            exceptionBuilder.create().dismiss();
+            exceptionBuilder = null;
+            isExceptionDialogShow = false;
+        }
+        unregisterBroadcastReceiver();
+
+        try {
+            unregisterReceiver(internalDebugReceiver);
+        } catch (Exception e) {
+        }
+
+    }
 }
