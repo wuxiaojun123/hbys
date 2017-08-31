@@ -57,6 +57,14 @@ public class PrepaidBalanceActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.id_cb_alipay)
     CheckBox id_cb_alipay;
 
+    @BindView(R.id.tv_ten)
+    TextView tv_ten;
+    @BindView(R.id.tv_twenty)
+    TextView tv_twenty;
+    @BindView(R.id.tv_fifty)
+    TextView tv_fifty;
+    @BindView(R.id.tv_one_hundred)
+    TextView tv_one_hundred;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,7 +100,8 @@ public class PrepaidBalanceActivity extends BaseActivity implements View.OnClick
     }
 
 
-    @OnClick({R.id.iv_title_back, R.id.id_rl_wchat, R.id.id_rl_alipay, R.id.id_btn_prepaid})
+    @OnClick({R.id.iv_title_back, R.id.id_rl_wchat, R.id.id_rl_alipay, R.id.id_btn_prepaid,
+            R.id.tv_ten, R.id.tv_twenty, R.id.tv_fifty, R.id.tv_one_hundred})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -106,6 +115,30 @@ public class PrepaidBalanceActivity extends BaseActivity implements View.OnClick
 
                 break;
             case R.id.id_rl_alipay:
+
+                break;
+            case R.id.tv_ten:
+                setDefaultTextBg();
+                tv_ten.setBackgroundResource(R.drawable.shape_bg_prepaid_balance_tv_selected);
+                id_et_account.setText("10");
+
+                break;
+            case R.id.tv_twenty:
+                setDefaultTextBg();
+                tv_twenty.setBackgroundResource(R.drawable.shape_bg_prepaid_balance_tv_selected);
+                id_et_account.setText("20");
+
+                break;
+            case R.id.tv_fifty:
+                setDefaultTextBg();
+                tv_fifty.setBackgroundResource(R.drawable.shape_bg_prepaid_balance_tv_selected);
+                id_et_account.setText("50");
+
+                break;
+            case R.id.tv_one_hundred:
+                setDefaultTextBg();
+                tv_one_hundred.setBackgroundResource(R.drawable.shape_bg_prepaid_balance_tv_selected);
+                id_et_account.setText("100");
 
                 break;
             case R.id.id_btn_prepaid:
@@ -126,9 +159,16 @@ public class PrepaidBalanceActivity extends BaseActivity implements View.OnClick
                 }
                 requestGetPaysn(accountParams);
 
-
                 break;
         }
+    }
+
+
+    private void setDefaultTextBg() {
+        tv_ten.setBackgroundResource(R.drawable.shape_bg_prepaid_balance_tv);
+        tv_twenty.setBackgroundResource(R.drawable.shape_bg_prepaid_balance_tv);
+        tv_fifty.setBackgroundResource(R.drawable.shape_bg_prepaid_balance_tv);
+        tv_one_hundred.setBackgroundResource(R.drawable.shape_bg_prepaid_balance_tv);
     }
 
     private void requestGetPaysn(double accountParams) {
