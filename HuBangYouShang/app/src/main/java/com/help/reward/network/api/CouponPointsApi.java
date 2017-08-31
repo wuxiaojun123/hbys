@@ -6,6 +6,7 @@ import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.CouponsRecordResponse;
 import com.help.reward.bean.Response.GroupGrantHelpPointsResponse;
 import com.help.reward.bean.Response.GroupToStoreResponse;
+import com.help.reward.bean.Response.HuanXinUserInfo;
 import com.help.reward.bean.Response.PointsRecordResponse;
 import com.help.reward.utils.Constant;
 
@@ -78,6 +79,14 @@ public interface CouponPointsApi {
     Observable<GroupToStoreResponse> getStoreId(
             @Field("key") String key,
             @Field("groupId") String groupId
+    );
+
+    // 根据环信id获取用户昵称和头像
+    @FormUrlEncoded
+    @POST("mobile/index.php?act=index&op=getEaseMobInfo")
+    Observable<HuanXinUserInfo> getUserNickAndHead(
+//            @Field("key") String key,
+            @Field("easeMobId") String easeMobId
     );
 
 }
