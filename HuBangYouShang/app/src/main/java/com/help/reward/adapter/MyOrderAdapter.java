@@ -180,16 +180,16 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
                 tv_evaluate_order.setVisibility(View.GONE);
                 tv_evaluate_order.setTag("0");
 
-            } else if ("10".equals(order_state)) { // 待付款  立即付款/取消订单/删除订单
-                tv_remove_order.setVisibility(View.VISIBLE);
+            } else if ("10".equals(order_state)) { // 待付款  立即付款/取消订单
+                tv_remove_order.setVisibility(View.GONE);
                 tv_cancel_order.setVisibility(View.VISIBLE);
                 tv_evaluate_order.setVisibility(View.VISIBLE);
                 tv_evaluate_order.setText("立即付款");
                 tv_evaluate_order.setTag("1");
 
-            } else if ("20".equals(order_state)) { // 待发货  取消订单/删除订单
-                tv_remove_order.setVisibility(View.VISIBLE);
-                tv_cancel_order.setVisibility(View.VISIBLE);
+            } else if ("20".equals(order_state)) { // 待发货 不显示
+                tv_remove_order.setVisibility(View.GONE);
+                tv_cancel_order.setVisibility(View.GONE);
                 tv_evaluate_order.setVisibility(View.GONE);
                 tv_evaluate_order.setTag("0");
 
@@ -202,7 +202,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
                 tv_evaluate_order.setText("确认收货");
                 tv_evaluate_order.setTag("2");
 
-            } else if ("40".equals(order_state)) { // 已完成 评价/删除订单
+            } else if ("40".equals(order_state)) { // 已完成的显示：删除订单+评价
                 tv_remove_order.setVisibility(View.VISIBLE);
                 tv_cancel_order.setVisibility(View.GONE);
                 tv_evaluate_order.setVisibility(View.VISIBLE);
