@@ -93,7 +93,7 @@ public class UserCacheManager {
                         public void onNext(HuanXinUserInfo response) {
                             if (response.code == 200) {
                                 if (response.data != null) { // 返回地址id  response.data.address_id
-                                    LogUtils.e("请求服务器获取到的是：" + response.data.nick_name);
+//                                    LogUtils.e("请求服务器获取到的是：" + response.data.nick_name);
                                     save(userId, response.data.nick_name, response.data.member_avatar);
                                 }
                             } else {
