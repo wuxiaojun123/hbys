@@ -244,10 +244,10 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
             iv_fabulous.setEnabled(false);
             iv_awful.setEnabled(false);
            // if ("0".equals(item.complained)) {
-                iv_fabulous.setVisibility(View.GONE);
+//                iv_fabulous.setVisibility(View.GONE);
             //   }
             //    if ("0".equals(item.given_points)) {
-                iv_awful.setVisibility(View.GONE);
+//                iv_awful.setVisibility(View.GONE);
             //    }
         }
         if(!isMyPost){

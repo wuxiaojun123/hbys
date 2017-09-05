@@ -192,7 +192,6 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                 // 加群购买
                 if (App.APP_USER_ID != null) {
                     getScroe();
-
                 } else {
                     ToastUtils.show(mContext, "请先登录");
                 }
@@ -211,9 +210,20 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
             startActivity(intent);
             ActivitySlideAnim.slideInAnim(WatchAdActivity.this);
-            return;
+        } else {
+            new AlertDialog(WatchAdActivity.this)
+                    .builder()
+                    .setTitle(R.string.string_system_prompt)
+                    .setMsg("该商家尚未创建商家群或者群已满").setNegativeButton("确认", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ad_type_flag == 2) {
+                        addSellerGroup();
+                    }
+                }
+            }).show();
         }
-        LogUtils.e("seller_member_id是：" + seller_member_id);
+        /*LogUtils.e("seller_member_id是：" + seller_member_id);
         if (TextUtils.isEmpty(seller_member_id)) {
             return;
         }
@@ -251,7 +261,7 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                             ToastUtils.show(mContext, res.msg);
                         }
                     }
-                });
+                });*/
     }
 
     /***

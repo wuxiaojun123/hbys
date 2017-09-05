@@ -20,7 +20,7 @@ import com.help.reward.utils.GlideUtils;
  * Created by wuxiaojun on 17-3-2.
  */
 
-public class IntegrationIntegrationBuyingAdapter extends BaseRecyclerAdapter {
+public class IntegrationIntegrationBuyingAdapter extends BaseRecyclerAdapter<AdvertisementBean> {
 
     public IntegrationIntegrationBuyingAdapter(Context context) {
         super(context);
@@ -39,7 +39,7 @@ public class IntegrationIntegrationBuyingAdapter extends BaseRecyclerAdapter {
         ImageView iv_img_ad = holder.getView(R.id.iv_img_ad);
         LinearLayout ll_content = holder.getView(R.id.ll_content);
 
-        final AdvertisementBean bean = (AdvertisementBean) mDataList.get(position);
+        final AdvertisementBean bean = mDataList.get(position);
         tv_title.setText(bean.name);
         tv_name.setText(bean.user_name);
         tv_score.setText(bean.per_credit + "帮赏分");
@@ -51,6 +51,7 @@ public class IntegrationIntegrationBuyingAdapter extends BaseRecyclerAdapter {
                 Intent mIntent = new Intent();
                 mIntent.putExtra("ad_id", bean.id);
                 mIntent.putExtra("ad_type", bean.type);
+//                mIntent.putExtra("groupid",bean.groupid);
                 mIntent.setClassName(mContext.getPackageName(), WatchAdActivity.class.getName());
                 mContext.startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim((BaseActivity) mContext);
