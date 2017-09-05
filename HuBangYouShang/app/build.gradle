@@ -72,6 +72,11 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+    /*packagingOptions{
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }*/
+
 }
 
 repositories{
@@ -110,4 +115,9 @@ dependencies {
     compile project(':pickerview')
     compile project(':library_getui')
 //    compile files('libs/alipaySdk-20170725.jar')
+
+    compile 'com.j256.ormlite:ormlite-android:5.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+    // LeanCloud 基础包
+//    compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
 }

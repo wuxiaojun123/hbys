@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.help.reward.cache.nickNameAndHead.UserCacheManager;
 import com.help.reward.chat.db.TopUser;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
@@ -51,6 +52,7 @@ import com.help.reward.chat.parse.UserProfileManager;
 import com.help.reward.chat.receiver.CallReceiver;
 import com.help.reward.chat.ui.ChatActivity;
 import com.help.reward.chat.utils.PreferenceManager;
+import com.idotools.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -745,13 +747,17 @@ public class DemoHelper {
 	private EaseUser getUserInfo(String username){
 		// To get instance of EaseUser, here we get it from the user list in memory
 		// You'd better cache it if you get it from your server
-        EaseUser user = null;
+        /*EaseUser user = null;
         if(username.equals(EMClient.getInstance().getCurrentUser()))
             return getUserProfileManager().getCurrentUserInfo();
         user = getContactList().get(username);
         if(user == null && getRobotList() != null){
             user = getRobotList().get(username);
-        }
+        }*/
+
+        // 从本地缓存中获取用户昵称头像
+        EaseUser user = UserCacheManager.getEaseUser(username);
+//        LogUtils.e("获取到的用户名是："+user.getNickname()+"-----"+user.getUsername());
 
         // if user is not in your contacts, set inital letter for him/her
         if(user == null){
