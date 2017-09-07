@@ -27,6 +27,7 @@ import com.help.reward.network.HelpNetwork;
 import com.help.reward.network.ShopMallNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.io.IOException;
@@ -114,7 +115,6 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                curpage++;
                 initNetwork();
             }
         });
@@ -124,7 +124,7 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
         MyProcessDialog.showDialog(getActivity());
         subscribe = ShopMallNetwork
                 .getShopMallMainApi()
-                .getGoodDetailsEvaluateResponse(goodsId, type, curpage)
+                .getGoodDetailsEvaluateResponse("goods", "goods_evaluate", curpage, goodsId, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<GoodEvaluateResponse>() {
@@ -147,19 +147,17 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
                                     setTextCount(response.data.goods_eval_info.all, response.data.goods_eval_info.good,
                                             response.data.goods_eval_info.normal, response.data.goods_eval_info.bad);
                                 }
-
                             } else {
                                 adapter.addAll(response.data.goods_eval_list);
                             }
-
                             if (!response.hasmore) {
                                 lRecyclerview.setLoadMoreEnabled(false);
+//                                lRecyclerview.setNoMore(true);
                             } else {
-                                lRecyclerview.setLoadMoreEnabled(true);
+                                curpage++;
                             }
                             // 设置按钮颜色
                             selectedBtn(type);
-
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }

@@ -462,6 +462,9 @@
             android:name=".activity.WebviewActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.HelpPeopleNumberActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.pay.AlipayActivity"
             android:screenOrientation="portrait"

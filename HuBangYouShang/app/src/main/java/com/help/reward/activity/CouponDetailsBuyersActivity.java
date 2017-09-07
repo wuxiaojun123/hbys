@@ -161,7 +161,7 @@ public class CouponDetailsBuyersActivity extends BaseActivity implements View.On
             tv_praise.setText(response.store_info.storepraise_rate);
             tv_complaint.setText(response.store_info.store_complaint);
             tv_constact.setText(response.store_info.store_phone);
-            tv_quota.setText("满" + response.voucher_info.voucher_price + "减去" + response.voucher_info.voucher_limit);
+            tv_quota.setText("满" +response.voucher_info.voucher_limit + "减去" + response.voucher_info.voucher_price);
             String time = DateUtil.getDateToString(response.voucher_info.voucher_start_date) + "-" +
                     DateUtil.getDateToString(response.voucher_info.voucher_end_date);
             tv_effective_time.setText(time);

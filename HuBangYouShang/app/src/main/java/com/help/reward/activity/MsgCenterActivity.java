@@ -75,10 +75,8 @@ public class MsgCenterActivity extends BaseActivity {
         //type 0为私信、1为系统消息、2为留言、3帖子动态、4账户消息、5交易信息、6投诉消息
         switch (v.getId()) {
             case R.id.iv_title_back:
-
                 finish();
                 ActivitySlideAnim.slideOutAnim(MsgCenterActivity.this);
-
 
                 break;
             case R.id.layout_msgcenter_post://帖子动态
@@ -108,7 +106,6 @@ public class MsgCenterActivity extends BaseActivity {
     /**
      * 请求网络
      */
-
     private void requestData() {
         if(App.APP_CLIENT_KEY == null){
             return;

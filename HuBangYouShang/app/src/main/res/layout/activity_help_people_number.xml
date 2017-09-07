@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:text="您已提供帮助人数"
+        android:textColor="@color/color_3a"
+        android:textSize="@dimen/dimen_15" />
+
+    <com.base.recyclerview.LRecyclerView
+        android:id="@+id/rv_post"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+</LinearLayout>

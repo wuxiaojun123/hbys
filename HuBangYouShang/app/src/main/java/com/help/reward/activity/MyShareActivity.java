@@ -55,7 +55,7 @@ public class MyShareActivity extends BaseActivity implements View.OnClickListene
 //        initNet();
 
         imageWidth = MetricsUtils.dipToPx(192.0f);
-        mBitmap = EncodingUtils.createQRCode(Constant.BASE_URL + "/mobile/index.php?act=share&op=share&id=x",
+        mBitmap = EncodingUtils.createQRCode(Constant.BASE_URL + "/mobile/index.php?act=share&op=share&id=" + App.APP_USER_ID,
                 imageWidth, imageWidth, null);
 
         iv_zxing_code.setImageBitmap(mBitmap);
@@ -78,7 +78,7 @@ public class MyShareActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.btn_share:
                 // 点击分享
-                shareText(mContext, "发现一个好应用，你也来下载吧！" + Constant.BASE_URL + "/mobile/index.php?act=share&op=share&id=x");
+                shareText(mContext, "发现互帮有赏好应用，互助、分钱，快来下载吧！" + Constant.BASE_URL + "/mobile/index.php?act=share&op=share&id=" + App.APP_USER_ID);
 
                 break;
         }

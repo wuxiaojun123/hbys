@@ -496,7 +496,8 @@ public class SearchShopResultActivity extends BaseActivity {
         }
         subscribe = ShopMallNetwork
                 .getShopMallMainApi()
-                .getSearchGoodsResponse(key, order, price_from, price_to, b_id, (String[]) service.toArray(new String[service.size()]), keyword, gc_id, store_id, curpage)
+                .getSearchGoodsResponse("goods", "goods_list", curpage, key, order, price_from, price_to, b_id,
+                        (String[]) service.toArray(new String[service.size()]), keyword, gc_id, store_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<StoreDetailAllResponse>() {
@@ -549,7 +550,7 @@ public class SearchShopResultActivity extends BaseActivity {
 
         subscribe = ShopMallNetwork
                 .getShopMallMainApi()
-                .getSearchStoreResponse(keyword, curpage)
+                .getSearchStoreResponse("store","listStore",curpage,keyword)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<SearchStoreResponse>() {

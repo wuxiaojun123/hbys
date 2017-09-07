@@ -51,7 +51,7 @@ public class Constant {
     public static final String URL_SHOP_MALL_INFO = "mobile/index.php";
 
     //商品详情评价
-    public static final String URL_SHOP_MALL_INFO_EVALUATE = "mobile/index.php?act=goods&op=goods_evaluate";
+    public static final String URL_SHOP_MALL_INFO_EVALUATE = "mobile/index.php";
 
     // 会员相关--余额明细  参数[post]：type=1/2 1-收入2-支出，不带参数为全部
     public static final String URL_MEMBER_BALANCE = "mobile/index.php";
@@ -132,7 +132,7 @@ public class Constant {
 
     public static final String URL_GOODSCLASS = "mobile/index.php?act=goods_class&op=index";
     public static final String URL_SEARCHGOODS = "mobile/index.php?act=goods&op=goods_list";
-    public static final String URL_SEARCHSTORE = "mobile/index.php?act=store&op=listStore";
+    public static final String URL_SEARCHSTORE = "mobile/index.php";
 
     public static final String URL_PAYOKGOODS = "mobile/index.php?act=member_buy&op=pay_ok";
 

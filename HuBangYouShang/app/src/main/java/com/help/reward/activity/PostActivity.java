@@ -75,7 +75,7 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
             tvTitle.setText("投诉信息");
         } else if ("1".equals(type)) {
             tvTitle.setText("系统消息");
-        }else if ("4".equals(type)) {
+        } else if ("4".equals(type)) {
             tvTitle.setText("账户消息");
         }
 
@@ -141,20 +141,21 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
 
     @Override
     public void onItemClick(View view, int position) {
-        position=position-1;
+        position = position - 1;
         if ("3".equals(type)) {
             Intent intent = null;
-            if("help".equalsIgnoreCase(adapter.getDataList().get(position).noteString)){
+            if ("help".equalsIgnoreCase(adapter.getDataList().get(position).noteString)) {
                 intent = new Intent(mContext, HelpSeekInfoActivity.class);
-            }else{
+            } else {
                 intent = new Intent(mContext, HelpRewardInfoActivity.class);
             }
             intent.putExtra("id", adapter.getDataList().get(position).related_id);
             startActivity(intent);
             ActivitySlideAnim.slideInAnim(this);
-        } else if ("5".equals(type)) {
+        } else if ("5".equals(type)) { // 交易信息
             Intent intent = new Intent(mContext, OrderDetailsActivity.class);
-            intent.putExtra("orderid", adapter.getDataList().get(position).noteObject.order_sn);
+//            intent.putExtra("order_id", adapter.getDataList().get(position).noteObject.order_sn);
+            intent.putExtra("order_id", adapter.getDataList().get(position).related_id);
             startActivity(intent);
             ActivitySlideAnim.slideInAnim(this);
         } else if ("6".equals(type)) {
@@ -172,8 +173,8 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
     @Override
     public void onDeleteBtnCilck(View view, final int position) {
         MessageBean bean = null;
-        if(position>=1||position<=adapter.getDataList().size()){
-            bean=adapter.getDataList().get(position-1);
+        if (position >= 1 || position <= adapter.getDataList().size()) {
+            bean = adapter.getDataList().get(position - 1);
         }
         if (bean != null) {
             MyProcessDialog.showDialog(mContext);

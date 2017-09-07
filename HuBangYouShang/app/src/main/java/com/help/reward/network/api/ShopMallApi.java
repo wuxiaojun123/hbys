@@ -61,13 +61,17 @@ public interface ShopMallApi {
      * @param type     类型：1-好评，2-中评，3-差评，默认不填
      * @param curpage  分页，从1开始
      * @return
+     *
+     * ?act=goods&op=goods_evaluate
      */
     @FormUrlEncoded
     @POST(Constant.URL_SHOP_MALL_INFO_EVALUATE)
     Observable<GoodEvaluateResponse> getGoodDetailsEvaluateResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") int curpage,
             @Field("goods_id") String goods_id,
-            @Field("type") String type,
-            @Field("curpage") int curpage
+            @Field("type") String type
     );
 
     // 获取商城信息的数据 ?act=goods&op=goods_detail&goods_id=42
@@ -115,10 +119,15 @@ public interface ShopMallApi {
      * refund 急速退款
      * protection 消费者保障quality
      * 正品保障 sevenDay 7天无理由退货
+     *
+     * mobile/index.php?act=goods&op=goods_list
      */
     @FormUrlEncoded
     @POST(Constant.URL_SEARCHGOODS)
     Observable<StoreDetailAllResponse> getSearchGoodsResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") int curpage,
             @Field("key") String key,
             @Field("order") String order,
             @Field("price_from") String price_from,
@@ -127,8 +136,7 @@ public interface ShopMallApi {
             @Field("service[]") String[] service,
             @Field("keyword") String keyword,
             @Field("gc_id") String gc_id,
-            @Field("store_id") String store_id,
-            @Field("curpage") int curpage
+            @Field("store_id") String store_id
     );
 
     /**
@@ -154,12 +162,15 @@ public interface ShopMallApi {
 
     /**
      * 店铺搜索
+     * mobile/index.php?act=store&op=listStore
      */
     @FormUrlEncoded
     @POST(Constant.URL_SEARCHSTORE)
     Observable<SearchStoreResponse> getSearchStoreResponse(
-            @Field("keyword") String keyword,
-            @Field("curpage") int curpage
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") int curpage,
+            @Field("keyword") String keyword
     );
 
 }

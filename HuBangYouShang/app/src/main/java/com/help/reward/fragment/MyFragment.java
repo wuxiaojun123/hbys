@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.help.reward.App;
 import com.help.reward.activity.AccountManagerActivity;
 import com.help.reward.activity.DiscountAmountActivity;
+import com.help.reward.activity.HelpPeopleNumberActivity;
 import com.help.reward.activity.MsgCenterActivity;
 import com.help.reward.activity.MyBalanceActivity;
 import com.help.reward.activity.MyCouponActivity;
@@ -160,11 +161,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             R.id.tv_payment, R.id.tv_take_delivery, R.id.tv_evaluate, R.id.tv_return_goods,
             R.id.ll_available_predeposit, R.id.ll_voucher, R.id.ll_general_voucher, R.id.ll_discount_level,
             R.id.tv_account, R.id.tv_my_help, R.id.tv_my_reward, R.id.tv_my_vote, R.id.tv_my_collection,
-            R.id.tv_share, R.id.tv_order})
+            R.id.tv_share, R.id.tv_order,R.id.tv_help_num})
     @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.tv_help_num:
+                startActivity(new Intent(mContext, HelpPeopleNumberActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
             case R.id.rl_user_info:
                 // 需要判断是否已登陆
                 if (App.APP_CLIENT_KEY == null) {
@@ -175,7 +181,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 }
 
                 break;
-
             case R.id.iv_setting:
                 // 设置页面
                 startActivity(new Intent(mContext, SettingActivity.class));

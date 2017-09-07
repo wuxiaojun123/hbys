@@ -15,6 +15,7 @@ import com.help.reward.bean.Response.DiscountAmountResponse;
 import com.help.reward.bean.Response.GeneralExchangeVolumeResponse;
 import com.help.reward.bean.Response.GeneralVolumeResponse;
 import com.help.reward.bean.Response.HelpCenterResponse;
+import com.help.reward.bean.Response.HelpPeopleNumberResponse;
 import com.help.reward.bean.Response.HelpRewardResponse;
 import com.help.reward.bean.Response.HomepageHelpResponse;
 import com.help.reward.bean.Response.HomepageSeekResponse;
@@ -425,6 +426,16 @@ public interface PersonalApi {
             @Query("curpage") String curpage,
             @Field("key") String key,
             @Field("voucher_state") String voucher_state
+    );
+
+    // 帮助人数 mobile/index.php?act=member_index&op=myhelppeople
+    @FormUrlEncoded
+    @POST("mobile/index.php")
+    Observable<HelpPeopleNumberResponse> getHelpPeopleNumberResponse(
+            @Query("act") String act,
+            @Query("op") String op,
+            @Query("curpage") String curpage,
+            @Field("key") String key
     );
 
     // 我的账户--优惠金额  mobile/index.php?act=member_voucher&op=voucher_list
