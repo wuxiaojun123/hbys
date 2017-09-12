@@ -339,3 +339,11 @@
 -keep class com.igexin.** { *; }
 -keep class org.json.** { *; }
 ####################个推 end#####################
+# OrmLite uses reflection
+-keep class com.help.reward.cache.nickNameAndHead.** {*;}
+
+-dontwarn com.j256.ormlite.**
+-keep class com.j256.ormlite.** { *;}
+-keep class com.envy15.cherry.base.orm.** { *;}
+
+

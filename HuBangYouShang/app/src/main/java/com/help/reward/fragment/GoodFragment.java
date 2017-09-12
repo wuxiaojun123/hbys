@@ -1,5 +1,6 @@
 package com.help.reward.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import com.help.reward.activity.CouponTradingSearchResultActivity;
 import com.help.reward.activity.GoodInfoActivity;
 import com.help.reward.activity.GoodPropertyActivity;
 import com.help.reward.adapter.ShopHotAdapter;
+import com.help.reward.bean.GoodSpecBean;
 import com.help.reward.bean.GoodsInfoBean;
 import com.help.reward.bean.PropertyBean;
 import com.help.reward.bean.PropertyValueBean;
@@ -39,7 +41,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
+import static android.app.Activity.RESULT_FIRST_USER;
 
 /**
  * Created by MXY on 2017/2/26.
@@ -80,6 +85,7 @@ public class GoodFragment extends BaseFragment {
     TextView tvLabel;
 
     public PropertyBean propertyBean = new PropertyBean();
+    private ArrayList<GoodSpecBean> spec_all_goods = new ArrayList<>(); // 商品规格
 
     @Override
     protected int getLayoutId() {
@@ -96,7 +102,22 @@ public class GoodFragment extends BaseFragment {
                 initNetwork(goodsId);
             }
         }
+        initRxBus();
+    }
 
+    private void initRxBus() {
+        RxBus.getDefault().toObservable(PropertyBean.class).subscribe(new Action1<PropertyBean>() {
+            @Override
+            public void call(PropertyBean bean) {
+                // 刷新界面
+                if(propertyBean != null){
+                    propertyBean = bean;
+                    initGoodsImage(propertyBean.goods_img);
+                    bindGoodsInfoView(propertyBean.getGoods_name(), propertyBean.getGoods_price(),
+                            propertyBean.goods_marketprice, propertyBean.goods_salenum);
+                }
+            }
+        });
     }
 
     private void initNetwork(String goodsId) {
@@ -126,6 +147,7 @@ public class GoodFragment extends BaseFragment {
                                     tv_goodinfo_goodppost.setText(response.data.goods_hair_info.content);
                                     tv_goodinfo_address.setText(response.data.goods_hair_info.area_name);
                                 }
+                                spec_all_goods.addAll(response.data.spec_all_goods);
                                 LogUtils.e("是否加入到群里了" + response.data.is_in_group + "--" + response.data.store_info.available_groupid
                                         + "--" + response.data.store_info.member_id);
                                 RxBus.getDefault().post(new GoodInfoRxbusType(response.data.is_favorate, response.data.is_in_group,
@@ -205,11 +227,17 @@ public class GoodFragment extends BaseFragment {
 
     private void initGoodsInfo(GoodsInfoBean goods_info) {
         if (goods_info != null) {
-            tv_goodinfo_goodname.setText(goods_info.goods_name);
-            tv_goodinfo_goodprice.setText("¥ " + goods_info.goods_price);
-            tv_goodinfo_oldprice.setText("¥ " + goods_info.goods_marketprice);
-            tv_goodinfo_salecount.setText(goods_info.goods_salenum + "人已付款");
+            bindGoodsInfoView(goods_info.goods_name, goods_info.goods_price,
+                    goods_info.goods_marketprice, goods_info.goods_salenum);
         }
+    }
+
+    private void bindGoodsInfoView(String goods_name, String goods_price,
+                                   String goods_marketprice, String goods_salenum) {
+        tv_goodinfo_goodname.setText(goods_name);
+        tv_goodinfo_goodprice.setText("¥ " + goods_price);
+        tv_goodinfo_oldprice.setText("¥ " + goods_marketprice);
+        tv_goodinfo_salecount.setText(goods_salenum + "人已付款");
     }
 
     private void initGoodsImage(String goods_image) {
@@ -243,7 +271,8 @@ public class GoodFragment extends BaseFragment {
             case R.id.layout_goodinfo_xuanze:
                 Intent intent = new Intent(getActivity(), GoodPropertyActivity.class);
                 intent.putExtra("goods_property", propertyBean);
-                startActivityForResult(intent, 0);
+                intent.putParcelableArrayListExtra("spec_all_goods", spec_all_goods);
+                startActivity(intent);
 
                 break;
             case R.id.layout_goodinfo_youhuiquan:
@@ -265,13 +294,17 @@ public class GoodFragment extends BaseFragment {
         }
     }
 
-    @Override
+    //    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 0 && data != null) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        /*LogUtils.e("执行onActivityResult" + requestCode + "---" + resultCode);
+        if (requestCode == 0 && resultCode == 1) {
             propertyBean = (PropertyBean) data.getSerializableExtra("selectInfo");
-            LogUtils.e("返回的信息是:" + propertyBean);
-        }
+            // 刷新界面
+            initGoodsImage(propertyBean.goods_img);
+            bindGoodsInfoView(propertyBean.getGoods_name(), propertyBean.getGoods_price(),
+                    propertyBean.goods_marketprice, propertyBean.goods_salenum);
+        }*/
     }
+
 }

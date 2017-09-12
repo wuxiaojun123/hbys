@@ -109,7 +109,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.tv_goodinfo_buy:
                 Intent intent = new Intent(GoodInfoActivity.this, ConfirmOrderActivity.class);
-                intent.putExtra("cart_id", goodsId + "|" + goodFragment.propertyBean.getSelectNum());
+                intent.putExtra("cart_id", goodFragment.propertyBean.getGoods_id() + "|" + goodFragment.propertyBean.getSelectNum());
                 intent.putExtra("if_cart", "0");
                 startActivity(intent);
                 ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);
@@ -267,6 +267,7 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
             ToastUtils.show(mContext, R.string.string_please_login);
             return;
         }
+        goodsId = goodFragment.propertyBean.getGoods_id();
         if (!TextUtils.isEmpty(goodsId)) {
             MyProcessDialog.showDialog(mContext);
             ShopcartNetwork.getShopcartCookieApi().getShopcartAdd(App.APP_CLIENT_KEY, goodsId, goodFragment.propertyBean.getSelectNum())
@@ -360,6 +361,11 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         public int getCount() {
             return TITLES.length;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

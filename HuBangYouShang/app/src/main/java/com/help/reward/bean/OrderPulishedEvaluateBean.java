@@ -10,6 +10,7 @@ import java.util.List;
 public class OrderPulishedEvaluateBean {
 
     public String goods_id; // 商品id
+    public String rec_id; // 购买商品记录id
     public String goods_img;
     public String goods_name;
     public String score; // 分数

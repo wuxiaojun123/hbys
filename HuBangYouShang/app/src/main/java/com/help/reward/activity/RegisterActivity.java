@@ -265,7 +265,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         MyProcessDialog.showDialog(mContext);
         PersonalNetwork
                 .getLoginApi()
-                .getRegisterBean(phone, registerCode, registerPwd, Constant.PLATFORM_CLIENT)
+                .getRegisterBean(phone, registerCode, registerPwd, Constant.PLATFORM_CLIENT,registerInvitationCode)
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<RegisterResponse>() {

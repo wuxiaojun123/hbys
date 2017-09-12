@@ -379,7 +379,7 @@
     <!--内容类文字样式-->
     <style name="style_text_content">
         <item name="android:textSize">@dimen/dimen_12</item>
-        <item name="android:textColor">#aeb1bd</item>
+        <item name="android:textColor">@color/color_aeb1bd</item>
     </style>
     <!--内容类文字样式-->
     <style name="style_text_content_red">

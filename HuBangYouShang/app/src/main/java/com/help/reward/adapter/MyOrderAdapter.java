@@ -77,7 +77,8 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
             final String[] goods_id = new String[size];
             final String[] goods_img = new String[size];
             final String[] goods_name = new String[size];
-            setShopText(ll_shop, bean, size, goods_id, goods_img, goods_name);
+            final String[] rec_id = new String[size]; // 购买商品记录id
+            setShopText(ll_shop, bean, size, goods_id, goods_img, goods_name, rec_id);
 
             double shippingFee = Double.parseDouble(bean.shipping_fee);
             if (shippingFee > 0) {
@@ -126,6 +127,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
                             mIntent.putExtra("goods_id", goods_id);
                             mIntent.putExtra("goods_img", goods_img);
                             mIntent.putExtra("goods_name", goods_name);
+                            mIntent.putExtra("rec_id", rec_id);
                             mContext.startActivity(mIntent);
                             ActivitySlideAnim.slideInAnim((Activity) mContext);
                         }
@@ -290,7 +292,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
      * @param size
      */
     private void setShopText(LinearLayout ll_shop, MyOrderListBean.OrderList bean, int size,
-                             String[] goods_id, String[] goods_img, String[] goods_name) {
+                             String[] goods_id, String[] goods_img, String[] goods_name, String[] rec_id) {
         int length = goods_id.length;
         for (int i = 0; i < size; i++) {
             View shopView = mInflater.inflate(R.layout.layout_my_order_shop, ll_shop, false);
@@ -305,6 +307,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
                 goods_id[i] = myOrderShopBean.goods_id;
                 goods_img[i] = myOrderShopBean.goods_image_url;
                 goods_name[i] = myOrderShopBean.goods_name;
+                rec_id[i] = myOrderShopBean.rec_id;
             }
             GlideUtils.loadImage(myOrderShopBean.goods_image_url, iv_shop_img);
             tv_shop_name.setText(myOrderShopBean.goods_name);

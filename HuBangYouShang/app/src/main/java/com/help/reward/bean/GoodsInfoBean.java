@@ -8,7 +8,7 @@ import java.util.List;
  * Created by wuxiaojun on 2017/3/8.
  */
 
-public class GoodsInfoBean implements Serializable{
+public class GoodsInfoBean implements Serializable {
 
     public String goods_name; // 商品名称
     public String goods_jingle;
@@ -21,17 +21,17 @@ public class GoodsInfoBean implements Serializable{
     public List<PropertyName> spec_name;
     public List<PropertyValue> spec_value;
 
-    public class PropertyName implements Serializable{
+    public class PropertyName implements Serializable {
         public int spec_id;
         public String spec_name;
     }
 
-    public class PropertyValue implements Serializable{
+    public class PropertyValue implements Serializable {
         public int spec_id;
         public List<PropertyValueInfo> spec_value;
     }
 
-    public class PropertyValueInfo implements Serializable{
+    public class PropertyValueInfo implements Serializable {
         public int spec_value_id;
         public String spec_value_name;
     }

@@ -1,11 +1,13 @@
 package com.help.reward.bean.Response;
 
+import com.help.reward.bean.GoodSpecBean;
 import com.help.reward.bean.GoodsInfoBean;
 import com.help.reward.bean.GoodsInfoHairBean;
 import com.help.reward.bean.ShopInfoRecommendBean;
 import com.help.reward.bean.ShopMallHotBean;
 import com.help.reward.bean.StoreInfoBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,5 +23,6 @@ public class GoodResponse extends BaseResponse<GoodResponse> {
     public StoreInfoBean store_info; // 店铺信息
     public boolean is_favorate; // 是否为收藏
     public boolean is_in_group; // 标记是否已经加入群组
+    public List<GoodSpecBean> spec_all_goods; // 商品的所有规格
 
 }

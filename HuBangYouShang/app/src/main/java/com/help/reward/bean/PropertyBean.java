@@ -8,13 +8,15 @@ import java.util.List;
  */
 
 public class PropertyBean implements Serializable{
-    private String goods_pic;
+    private String goods_pic; // 图片链接
     private String goods_name;
     private String goods_num;
     private String goods_price;
     private String goods_id;
     private String tip;
-
+    public String goods_img; // 商品轮播图片
+    public String goods_marketprice;
+    public String goods_salenum;// 多少人已付款
 
     /**
      * 选择的属性

@@ -95,7 +95,8 @@ public interface LoginApi {
             @Field("phone") String phone,
             @Field("captcha") String captcha,
             @Field("password") String password,
-            @Field("client") String client
+            @Field("client") String client,
+            @Field("invitation_code") String invitation_code
     );
 
     // 重设密码
