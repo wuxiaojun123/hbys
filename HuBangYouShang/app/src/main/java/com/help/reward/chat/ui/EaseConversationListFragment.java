@@ -225,7 +225,7 @@ public class EaseConversationListFragment extends EaseBaseFragment {
         synchronized (conversations) {
             for (EMConversation conversation : conversations.values()) {
                 if (conversation.getAllMessages().size() != 0) {
-                    if (topUserMap.containsKey(conversation.conversationId())) {
+                    if (topUserMap != null && topUserMap.containsKey(conversation.conversationId())) {
                         top_list.add(conversation);
                     } else {
                         sortList.add(new Pair<Long, EMConversation>(conversation.getLastMessage().getMsgTime(), conversation));

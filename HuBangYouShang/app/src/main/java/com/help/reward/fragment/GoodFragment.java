@@ -69,7 +69,7 @@ public class GoodFragment extends BaseFragment {
     @BindView(R.id.layout_goodinfo_youhuiquan)
     RelativeLayout layout_goodinfo_youhuiquan; //优惠劵交易
     @BindView(R.id.layout_goodinfo_xuanze)
-    RelativeLayout layout_goodinfo_xuanze;// 颜色分类尺码
+    public RelativeLayout layout_goodinfo_xuanze;// 颜色分类尺码
     @BindView(R.id.tv_goods_store_name)
     TextView tv_goods_store_name; // 店铺名称
     @BindView(R.id.tv_goodinfo_desccredit)
@@ -264,15 +264,19 @@ public class GoodFragment extends BaseFragment {
         cb_goods_img.requestFocus();
     }
 
+    public void startPropertyActivity(){
+        Intent intent = new Intent(getActivity(), GoodPropertyActivity.class);
+        intent.putExtra("goods_property", propertyBean);
+        intent.putParcelableArrayListExtra("spec_all_goods", spec_all_goods);
+        startActivity(intent);
+    }
+
     @OnClick({R.id.layout_goodinfo_youhuiquan, R.id.layout_goodinfo_xuanze})
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
             case R.id.layout_goodinfo_xuanze:
-                Intent intent = new Intent(getActivity(), GoodPropertyActivity.class);
-                intent.putExtra("goods_property", propertyBean);
-                intent.putParcelableArrayListExtra("spec_all_goods", spec_all_goods);
-                startActivity(intent);
+                startPropertyActivity();
 
                 break;
             case R.id.layout_goodinfo_youhuiquan:

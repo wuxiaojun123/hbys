@@ -66,7 +66,7 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
 
     private void initNetwork() {
         ShopMallNetwork
-                .getShopOtherApi()
+                .getShopMallMainApi()
                 .getShopSearchResponse()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -74,7 +74,7 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        ToastUtils.show(mContext, R.string.string_error);
+//                        ToastUtils.show(mContext, R.string.string_error);
                     }
 
                     @Override
@@ -82,8 +82,6 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
                         if (response.code == 200) {
                             if (response.data != null) { // 显示数据
                                 hotList = response.data.list;
-//                                historyList = response.data.his_list;
-
                                 setHot();
                             }
                         } else {
@@ -133,6 +131,7 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
 
     /***
      * 添加到历史搜索记录中
+     *
      * @param searchStr
      */
     private void addHistory(String searchStr) {
@@ -159,8 +158,13 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
 
     private void setHistory() {
         if (historyList == null) {
+//            tv_search_history.setVisibility(View.GONE);
+//            fl_history.setVisibility(View.GONE);
             return;
         }
+//        tv_search_history.setVisibility(View.VISIBLE);
+//        fl_history.setVisibility(View.VISIBLE);
+
         fl_history.removeAllViews();
         fl_history.setGravity(Gravity.CENTER);
         int size = historyList.length;
@@ -218,7 +222,7 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    @OnClick({R.id.tv_text, R.id.iv_search_type, R.id.iv_search})
+    @OnClick({R.id.tv_text, R.id.iv_search_type, R.id.iv_search, R.id.tv_clean})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -247,10 +251,17 @@ public class SearchShopActivity extends BaseActivity implements View.OnClickList
             case R.id.iv_search:
                 // 点击搜索
 
+                break;
+            case R.id.tv_clean:
+                // 清除历史记录
+                int childCount = fl_history.getChildCount();
+                if(childCount > 0){
+                    fl_history.removeAllViews();
+                    SharedPreferencesHelper.getInstance(mContext).putString(SharedPreferenceConstant.KEY_SEARCH_SHOP_HISTORY, "");
+
+                }
 
                 break;
-
-
         }
 
     }

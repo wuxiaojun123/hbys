@@ -47,11 +47,6 @@ public class MyCouponAdapter extends BaseRecyclerAdapter {
         TextView tv_state = holder.getView(R.id.tv_state);
         LinearLayout ll_left = holder.getView(R.id.ll_left); // 根据不同状态显示不同的颜色
 
-        if (voucher_state.equals("1")) { // 未使用
-            ll_left.setBackgroundColor(color1);
-        } else {
-            ll_left.setBackgroundColor(color2);
-        }
 
         final MyCouponBean bean = (MyCouponBean) mDataList.get(position);
 
@@ -59,7 +54,17 @@ public class MyCouponAdapter extends BaseRecyclerAdapter {
         tv_price_bottom.setText("满" + bean.voucher_limit + "可用");
         tv_store_name.setText(bean.store_name);
         tv_date.setText(DateUtil.getDateToString1(bean.voucher_start_date) + "-" + DateUtil.getDateToString1(bean.voucher_end_date));
+
         tv_state.setText(bean.voucher_state_text);
+
+        if (voucher_state.equals("1")) { // 未使用
+            ll_left.setBackgroundColor(color1);
+            if ("user".equals(bean.voucher_from)) {
+                tv_state.setText("不可交易");
+            }
+        } else {
+            ll_left.setBackgroundColor(color2);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

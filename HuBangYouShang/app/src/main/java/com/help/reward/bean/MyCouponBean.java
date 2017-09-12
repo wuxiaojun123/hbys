@@ -40,6 +40,6 @@ public class MyCouponBean {
     public String store_domain;
     public String voucher_t_customimg;
     public String voucher_state_text;
-
+    public String voucher_from; // 表明优惠劵是买来的还是领取的，store 就是表示是领的，user表示就是买来的
 
 }

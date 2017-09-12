@@ -108,11 +108,13 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                 StoreInfoMenuPop.showPopupWindow(this, ivGoodinfoMore);
                 break;
             case R.id.tv_goodinfo_buy:
-                Intent intent = new Intent(GoodInfoActivity.this, ConfirmOrderActivity.class);
+                // 获取到goodsFragment
+                goodFragment.startPropertyActivity();
+                /*Intent intent = new Intent(GoodInfoActivity.this, ConfirmOrderActivity.class);
                 intent.putExtra("cart_id", goodFragment.propertyBean.getGoods_id() + "|" + goodFragment.propertyBean.getSelectNum());
                 intent.putExtra("if_cart", "0");
                 startActivity(intent);
-                ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);
+                ActivitySlideAnim.slideInAnim(GoodInfoActivity.this);*/
 
                 break;
             case R.id.ll_store: // 店铺

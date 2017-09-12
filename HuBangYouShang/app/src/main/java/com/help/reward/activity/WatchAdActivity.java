@@ -139,9 +139,9 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                                 } else {
                                     tv_buy.setText("加群购买(" + bean.click_num + "/" + bean.times + ")");
                                     seller_member_id = response.data.info.seller_member_id;
-                                    if (response.data.isInGroup) {
-                                        avaliable_groupid = response.data.avaliable_groupid;
-                                    }
+//                                    if (response.data.isInGroup) {
+                                    avaliable_groupid = response.data.avaliable_groupid;
+//                                    }
                                 }
                                 LogUtils.e("是否看过该广告" + response.data.hasWathced + "----" + response.data.isInGroup + "----" + response.data.avaliable_groupid);
                                 if (response.data.hasWathced) { // 已看过该广告
@@ -217,9 +217,7 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
                     .setMsg("该商家尚未创建商家群或者群已满").setNegativeButton("确认", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (ad_type_flag == 2) {
-                        addSellerGroup();
-                    }
+
                 }
             }).show();
         }

@@ -46,6 +46,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/tv_clean"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_while"
+                android:gravity="center"
+                android:text="清除所有搜索记录"
+                android:textColor="@color/color_next_bg" />
+
         </LinearLayout>
 
     </ScrollView>

@@ -76,8 +76,7 @@ public interface ShopMallApi {
 
     // 获取商城信息的数据 ?act=goods&op=goods_detail&goods_id=42
     @GET("mobile/index.php?act=index&op=search_key_list")
-    Observable<ShopSearchResponse> getShopSearchResponse(
-    );
+    Observable<ShopSearchResponse> getShopSearchResponse();
 
 
     /**

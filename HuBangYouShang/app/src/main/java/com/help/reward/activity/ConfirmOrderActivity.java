@@ -179,6 +179,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData() {
+        if (App.APP_CLIENT_KEY == null) {
+            ToastUtils.show(mContext, R.string.string_please_login);
+            return;
+        }
         // cart_id=66|1,67|1,68|1,69|1---if_cart=1
         LogUtils.e("确认订单页面 cart_id=" + cart_id + "---if_cart=" + if_cart);
         MyProcessDialog.showDialog(mContext);
