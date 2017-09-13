@@ -68,7 +68,7 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
     private int curpage = 1;
     private int numSize = 15;
 
-    private Collection<GoodEvaluateBean> mDatas = new ArrayList<>();
+//    private Collection<GoodEvaluateBean> mDatas = new ArrayList<>();
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private GoodEvaluateAdapter adapter;
 
@@ -100,7 +100,7 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
     private void initView() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new GoodEvaluateAdapter(getActivity());
-        adapter.setDataList(mDatas);
+        adapter.setDataList(new ArrayList<GoodEvaluateBean>());
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(adapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         //禁用下拉刷新功能
@@ -151,9 +151,9 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
                             } else {
                                 adapter.addAll(response.data.goods_eval_list);
                             }
+                            // 是否还有更多
                             if (!response.hasmore) {
                                 lRecyclerview.setLoadMoreEnabled(false);
-//                                lRecyclerview.setNoMore(true);
                             } else {
                                 curpage++;
                             }
@@ -174,21 +174,25 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
                 type = null;
                 curpage = 1;
                 initNetwork();
+
                 break;
             case R.id.tv_evaluate_good:
                 type = TYPE_GOOD;
                 curpage = 1;
                 initNetwork();
+
                 break;
             case R.id.tv_evaluate_middle:
                 type = TYPE_MIDDLE;
                 curpage = 1;
                 initNetwork();
+
                 break;
             case R.id.tv_evaluate_bad:
                 type = TYPE_BAD;
                 curpage = 1;
                 initNetwork();
+
                 break;
         }
     }

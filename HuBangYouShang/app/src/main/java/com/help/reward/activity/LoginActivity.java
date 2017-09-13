@@ -181,7 +181,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             // 请求会员信息
                             App.mLoginReponse = res.data;
                             RxBus.getDefault().post("loginSuccess");
-                            LogUtils.e("用户名是:" + App.mLoginReponse.easemobId + "----密码是:" + password);
+                            LogUtils.e("用户名是:" + App.mLoginReponse.easemobId + "----密码是:" + password + App.mLoginReponse.new_message);
 
                             LoginToHuanxin(App.mLoginReponse.easemobId, password);
                         } else {
