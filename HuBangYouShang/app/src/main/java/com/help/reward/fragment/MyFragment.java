@@ -391,7 +391,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             tv_general_voucher.setText(App.mLoginReponse.general_voucher);
             tv_discount_level.setText(App.mLoginReponse.discount_level);
 
-            LogUtils.e("是否有新消息" + App.mLoginReponse.new_message);
             if (App.mLoginReponse.new_message) {
                 tv_title_help_msgcount.setVisibility(View.VISIBLE);
             } else {

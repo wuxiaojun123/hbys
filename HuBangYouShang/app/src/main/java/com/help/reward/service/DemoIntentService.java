@@ -9,6 +9,7 @@ import com.help.reward.App;
 import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.bean.UserBean;
 import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateMessageDataRxbusType;
 import com.help.reward.utils.JsonUtils;
 import com.idotools.utils.LogUtils;
 import com.igexin.sdk.GTIntentService;
@@ -51,6 +52,14 @@ public class DemoIntentService extends GTIntentService {
                         boolean hasKey = jsonObject.has("update_member");
                         if (hasKey) {
                             sendUpdateMember(jsonObject);
+                        }
+                        if(App.mLoginReponse != null){
+                            boolean hasMsg = jsonObject.has("new_message");
+                            if (hasMsg) {
+                                // 发送更新，有新消息
+                                boolean new_message = jsonObject.getBoolean("new_message");
+                                RxBus.getDefault().post(new UpdateMessageDataRxbusType(new_message));
+                            }
                         }
 
                     } catch (Exception e) {
