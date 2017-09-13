@@ -43,6 +43,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
+ * 商品信息评价
  * Created by MXY on 2017/2/26.
  */
 

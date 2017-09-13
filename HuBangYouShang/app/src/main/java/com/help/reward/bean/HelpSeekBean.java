@@ -23,4 +23,6 @@ public class HelpSeekBean {
     public long create_time;
     public String comment;
     public String offer;
+    public String status;// 分结贴和正常
+
 }

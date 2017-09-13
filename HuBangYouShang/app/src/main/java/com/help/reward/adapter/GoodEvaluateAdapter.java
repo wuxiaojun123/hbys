@@ -53,12 +53,11 @@ public class GoodEvaluateAdapter extends BaseRecyclerAdapter<GoodEvaluateBean> {
         mTvDate.setText(goodEvaluate.geval_addtime_date);
         mTvContent.setText(goodEvaluate.geval_content);
 
-
-        if (mLayout.getTag() == null && viewSparseArray.get(position) == null) {
-            String[] geval_image_240 = goodEvaluate.geval_image_240;
-            if (geval_image_240 != null && geval_image_240.length > 0) {
-                int total = geval_image_240.length / LINE_NUMBERS;
-                int MaxLength = geval_image_240.length > 6 ? 6 : geval_image_240.length;
+        String[] geval_image_240 = goodEvaluate.geval_image_240;
+        if (geval_image_240 != null && geval_image_240.length > 0) {
+            int total = geval_image_240.length / LINE_NUMBERS;
+            int MaxLength = geval_image_240.length > 6 ? 6 : geval_image_240.length;
+            if (mLayout.getTag() == null && viewSparseArray.get(position) == null) {
                 addImageview(position, mLayout, goodEvaluate, geval_image_240, total, MaxLength);
             }
         }
@@ -66,7 +65,8 @@ public class GoodEvaluateAdapter extends BaseRecyclerAdapter<GoodEvaluateBean> {
     }
 
 
-    private void addImageview(int position, LinearLayout mLayout, GoodEvaluateBean goodEvaluate, String[] geval_image_240, int total, int maxLength) {
+    private void addImageview(int position, LinearLayout mLayout, GoodEvaluateBean goodEvaluate,
+                              String[] geval_image_240, int total, int maxLength) {
         int i = 0;
         if (total > 1) {
             LinearLayout ll = new LinearLayout(mContext);
@@ -80,6 +80,7 @@ public class GoodEvaluateAdapter extends BaseRecyclerAdapter<GoodEvaluateBean> {
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DisplayUtil.dip2px(mContext, 90),
                         DisplayUtil.dip2px(mContext, 90));
                 lp.leftMargin = 10;
+                iv.setScaleType(ImageView.ScaleType.FIT_XY);
                 //iv.setLayoutParams(lp);
                 ll.addView(iv);
                 GlideUtils.loadImage(geval_image_240[i], iv);
@@ -99,6 +100,7 @@ public class GoodEvaluateAdapter extends BaseRecyclerAdapter<GoodEvaluateBean> {
                     DisplayUtil.dip2px(mContext, 90));
             lp.leftMargin = 10;
             iv.setLayoutParams(lp);
+            iv.setScaleType(ImageView.ScaleType.FIT_XY);
             ll2.addView(iv);
             if (mLayout.getChildCount() > 0) {
                 mLayout.removeAllViews();
@@ -109,4 +111,5 @@ public class GoodEvaluateAdapter extends BaseRecyclerAdapter<GoodEvaluateBean> {
         viewSparseArray.put(position, mLayout);
         mLayout.setTag(goodEvaluate.geval_frommemberid);
     }
+
 }

@@ -28,6 +28,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
+ * 投票详情页
  * Created by MXY on 2017/2/20.
  */
 
@@ -73,6 +74,15 @@ public class HelpVoteInfoActivity extends BaseActivity {
     TextView tv_subvote;
     @BindView(R.id.layout_content)
     LinearLayout layout_content;
+
+    @BindView(R.id.iv_image1)
+    ImageView iv_image1;
+    @BindView(R.id.iv_image2)
+    ImageView iv_image2;
+    @BindView(R.id.iv_image3)
+    ImageView iv_image3;
+    @BindView(R.id.iv_image4)
+    ImageView iv_image4;
 
     String id;
     String complainant_id, respondent_id;
@@ -175,6 +185,7 @@ public class HelpVoteInfoActivity extends BaseActivity {
                                     layout_vote2.setEnabled(false);
                                     tv_subvote.setTextColor(getResources().getColor(R.color.color_8a));
                                 }
+                                // 显示顺序是，投诉内容，投诉图片，申诉内容，申诉图片，投诉者解释内容，投诉者解释图片，被投诉者解释内容，被投诉者解释图片
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
@@ -189,7 +200,7 @@ public class HelpVoteInfoActivity extends BaseActivity {
         MyProcessDialog.showDialog(mContext);
         subscribe = HelpNetwork
                 .getHelpApi()
-                .getSubVoteBean(App.APP_CLIENT_KEY,id, complaint_id)
+                .getSubVoteBean(App.APP_CLIENT_KEY, id, complaint_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<SubVoteResponse>() {

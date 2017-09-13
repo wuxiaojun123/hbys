@@ -33,9 +33,15 @@ public class HelpSeekAdapter extends BaseRecyclerAdapter<HelpSeekBean> {
         TextView item_help1_type = holder.getView(R.id.item_help1_type);
         item_help1_type.setText(item.board_name);
         TextView item_help1_date = holder.getView(R.id.item_help1_date);
-        item_help1_date.setText(DateUtil.getDateToString(item.create_time+""));
+        item_help1_date.setText(DateUtil.getDateToString(item.create_time + ""));
         TextView item_help1_score = holder.getView(R.id.item_help1_score);
-        item_help1_score.setText("悬赏 " + item.offer);
+
+        if ("正常".equals(item.status)) {
+            item_help1_score.setText("悬赏 " + item.offer);
+        } else {
+            item_help1_score.setText("已结束");
+        }
+
         TextView item_help1_count = holder.getView(R.id.item_help1_count);
         item_help1_count.setVisibility(View.GONE);
         TextView item_help1_des = holder.getView(R.id.item_help1_des);
