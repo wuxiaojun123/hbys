@@ -98,7 +98,9 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_goodinfo_shopcart_add:
-                addToShopcart();
+                //addToShopcart();
+                goodFragment.startPropertyActivity();
+
                 break;
             case R.id.iv_goodinfo_back:
                 this.finish();

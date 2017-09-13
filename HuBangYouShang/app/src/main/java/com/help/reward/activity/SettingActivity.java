@@ -16,6 +16,7 @@ import com.help.reward.chat.DemoHelper;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateMessageDataRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.utils.SharedPreferenceConstant;
@@ -209,6 +210,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         if (response.code == 200) {
                             if (response.data != null) { // 返回地址id  response.data.address_id
                                 logoutHuanxin();
+
                             }
                         } else {
                             ToastUtils.show(mContext, response.msg);
@@ -227,13 +229,15 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         MyProcessDialog.closeDialog();
                         // show login screen
                         ToastUtils.show(mContext, "退出成功");
+                        if (App.mLoginReponse.new_message) {
+                            RxBus.getDefault().post(new UpdateMessageDataRxbusType(false));
+                        }
                         App.APP_CLIENT_KEY = null;
                         App.APP_CLIENT_COOKIE = null;
                         App.mLoginReponse = null;
                         App.APP_USER_ID = null;
                         // 应该清除个人信息页面的信息
                         RxBus.getDefault().post("logout");
-
                         // 清除当前activity
                         finish();
                         ActivitySlideAnim.slideOutAnim(SettingActivity.this);

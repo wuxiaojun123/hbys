@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.help.reward.App;
 import com.help.reward.activity.MyAccountActivity;
 import com.help.reward.activity.MyCouponActivity;
 import com.help.reward.activity.MyOrderActivity;
@@ -118,6 +119,7 @@ public class ConsumptionFragment extends BaseFragment {
     ImageView iv_email; // 消息中心
     @BindView(R.id.tv_title_help_msgcount)
     TextView tvTitleHelpMsgcount; // 消息红点
+
     StoreRecommandAdapter mStoreRecommandAdapter;
     ShopHotAdapter mShopHotAdapter;
 
@@ -131,6 +133,11 @@ public class ConsumptionFragment extends BaseFragment {
         initView();
         initNetwork();
         updateData();
+        if (App.mLoginReponse != null && App.mLoginReponse.new_message) {
+            tvTitleHelpMsgcount.setVisibility(View.VISIBLE);
+        } else {
+            tvTitleHelpMsgcount.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void initView() {
@@ -319,13 +326,17 @@ public class ConsumptionFragment extends BaseFragment {
         RxBus.getDefault().toObservable(UpdateMessageDataRxbusType.class).subscribe(new Action1<UpdateMessageDataRxbusType>() {
             @Override
             public void call(UpdateMessageDataRxbusType type) {
-                if (type.hasNew) { // 更新数据
-                    tvTitleHelpMsgcount.setVisibility(View.VISIBLE);
-                } else {
-                    tvTitleHelpMsgcount.setVisibility(View.INVISIBLE);
-                }
+                updateNewMsg(type.hasNew);
             }
         });
+    }
+
+    private void updateNewMsg(boolean hasNew) {
+        if (hasNew) { // 更新数据
+            tvTitleHelpMsgcount.setVisibility(View.VISIBLE);
+        } else {
+            tvTitleHelpMsgcount.setVisibility(View.INVISIBLE);
+        }
     }
 
     /***
