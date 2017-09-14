@@ -10,6 +10,7 @@ import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.view.AlertDialog;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -23,7 +24,7 @@ public class OrderOperationManager {
 
     private Context mContext;
 
-    public OrderOperationManager(Context mContext){
+    public OrderOperationManager(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -31,12 +32,12 @@ public class OrderOperationManager {
     /***
      * 删除订单
      */
-    public void showRemoveDialog(final String order_id,final int position) {
+    public void showRemoveDialog(final String order_id, final int position) {
         new AlertDialog(mContext).builder().setTitle(R.string.string_system_prompt).setMsg("确认删除订单?")
                 .setPositiveButton("确认", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        removeOrder(order_id,position);
+                        removeOrder(order_id, position);
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
             @Override
@@ -46,8 +47,9 @@ public class OrderOperationManager {
         }).show();
     }
 
-    private void removeOrder(final String order_id,final int position) {
+    private void removeOrder(final String order_id, final int position) {
         MyProcessDialog.showDialog(mContext, "请稍后...");
+//        LogUtils.e("删除的订单id是：" + order_id);
         PersonalNetwork
                 .getResponseApi()
                 .getRemoveOrderResponse(order_id, App.APP_CLIENT_KEY)
@@ -66,7 +68,7 @@ public class OrderOperationManager {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             if (response.data != null) { // 显示数据
-                                if(mOnItemRemoveOrderClickListener != null){
+                                if (mOnItemRemoveOrderClickListener != null) {
                                     mOnItemRemoveOrderClickListener.onItemRemoveOrderClickListener(position);
                                 }
 //                                myOrderAdapter.getDataList().remove(bean);
@@ -83,12 +85,12 @@ public class OrderOperationManager {
     /***
      * 取消订单
      */
-    public void showCancelDialog(final String order_id,final int position) {
+    public void showCancelDialog(final String order_id, final int position) {
         new AlertDialog(mContext).builder().setTitle(R.string.string_system_prompt).setMsg("确认取消订单?")
                 .setPositiveButton("确认", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        cancelOrder(order_id,position);
+                        cancelOrder(order_id, position);
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
             @Override
@@ -98,7 +100,7 @@ public class OrderOperationManager {
         }).show();
     }
 
-    private void cancelOrder(final String order_id,final int position) {
+    private void cancelOrder(final String order_id, final int position) {
         MyProcessDialog.showDialog(mContext, "请稍后...");
         PersonalNetwork
                 .getResponseApi()
@@ -118,7 +120,7 @@ public class OrderOperationManager {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             if (response.data != null) { // 显示数据
-                                if(mOnItemRemoveOrderClickListener != null){
+                                if (mOnItemRemoveOrderClickListener != null) {
                                     mOnItemRemoveOrderClickListener.onItemRemoveOrderClickListener(position);
                                 }
 //                                myOrderAdapter.getDataList().remove(bean);

@@ -29,7 +29,6 @@ import butterknife.OnClick;
  * <p>
  * Created by wuxiaojun on 2017/1/10.
  */
-
 public class MyOrderActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String STATE_TYPE = "state_type";

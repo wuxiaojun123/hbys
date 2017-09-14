@@ -96,7 +96,8 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     TextView tv_cancel_order;
     @BindView(R.id.tv_remove_order)
     TextView tv_remove_order;
-
+    @BindView(R.id.ll_click)
+    LinearLayout ll_click; // 所有按钮
     @BindView(R.id.rl_receiver_info)
     RelativeLayout rl_receiver_info; // 收货人信息
 
@@ -380,31 +381,36 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         String order_state = bean.order_state; // 0:已取消,10(默认):未付款;20:已付款;30:已发货;40:已收货;50:已提交;60已确认;
         LogUtils.e("order_state的值是:" + order_state + "-----bean.lock_state=" + bean.lock_state);
         if ("0".equals(bean.lock_state)) {
+            ll_click.setVisibility(View.VISIBLE);
             if ("0".equals(order_state)) { // 已取消 删除订单
                 tv_remove_order.setVisibility(View.VISIBLE);
                 tv_cancel_order.setVisibility(View.GONE);
                 tv_evaluate_order.setVisibility(View.GONE);
+                tv_evaluate_order.setTag("0");
 
-            } else if ("10".equals(order_state)) { // 待付款  立即付款/取消订单/删除订单
-                tv_remove_order.setVisibility(View.VISIBLE);
+            } else if ("10".equals(order_state)) { // 待付款  立即付款/取消订单
+                tv_remove_order.setVisibility(View.GONE);
                 tv_cancel_order.setVisibility(View.VISIBLE);
                 tv_evaluate_order.setVisibility(View.VISIBLE);
                 tv_evaluate_order.setText("立即付款");
                 tv_evaluate_order.setTag("1");
 
-            } else if ("20".equals(order_state)) { // 待发货  取消订单/删除订单
-                tv_remove_order.setVisibility(View.VISIBLE);
-                tv_cancel_order.setVisibility(View.VISIBLE);
+            } else if ("20".equals(order_state)) { // 待发货 不显示
+                tv_remove_order.setVisibility(View.GONE);
+                tv_cancel_order.setVisibility(View.GONE);
                 tv_evaluate_order.setVisibility(View.GONE);
+                tv_evaluate_order.setTag("0");
 
-            } else if ("30".equals(order_state)) { // 待收货  确认收货/删除订单
+            } else if ("30".equals(order_state)) { // 待收货=退款/退货  确认收货/退款退货
+                tv_remove_order.setText("退款退货");
+                tv_remove_order.setTag("1");
                 tv_remove_order.setVisibility(View.VISIBLE);
                 tv_cancel_order.setVisibility(View.GONE);
                 tv_evaluate_order.setVisibility(View.VISIBLE);
                 tv_evaluate_order.setText("确认收货");
                 tv_evaluate_order.setTag("2");
 
-            } else if ("40".equals(order_state)) { // 已完成 评价/删除订单
+            } else if ("40".equals(order_state)) { // 已完成的显示：删除订单+评价
                 tv_remove_order.setVisibility(View.VISIBLE);
                 tv_cancel_order.setVisibility(View.GONE);
                 tv_evaluate_order.setVisibility(View.VISIBLE);
@@ -412,12 +418,12 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 tv_evaluate_order.setTag("3");
 
             }
-        } else if ("1".equals(bean.lock_state)) { // 退款中  确认收货/删除订单
-            tv_remove_order.setVisibility(View.VISIBLE);
+        } else if ("1".equals(bean.lock_state)) { // 退款中  什么按钮都不显示
+            tv_remove_order.setVisibility(View.GONE);
             tv_cancel_order.setVisibility(View.GONE);
-            tv_evaluate_order.setVisibility(View.VISIBLE);
-            tv_evaluate_order.setText("确认收货");
-            tv_evaluate_order.setTag("2");
+            tv_evaluate_order.setVisibility(View.GONE);
+            tv_evaluate_order.setTag("0");
+            ll_click.setVisibility(View.GONE);
         }
     }
 
