@@ -68,7 +68,7 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
     private int curpage = 1;
     private int numSize = 15;
 
-//    private Collection<GoodEvaluateBean> mDatas = new ArrayList<>();
+    //    private Collection<GoodEvaluateBean> mDatas = new ArrayList<>();
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private GoodEvaluateAdapter adapter;
 
@@ -77,6 +77,11 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
 
     private int colorWhile;
     private int colorBlack;
+
+    private boolean allFlag;
+    private boolean goodFlag;
+    private boolean middleFlag;
+    private boolean badFlag;
 
     @Override
     protected int getLayoutId() {
@@ -116,12 +121,25 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
+                if (type == null && allFlag) {
+                    return;
+                }
+                if (type == TYPE_GOOD && goodFlag) {
+                    return;
+                }
+                if (type == TYPE_MIDDLE && middleFlag) {
+                    return;
+                }
+                if (type == TYPE_BAD && badFlag) {
+                    return;
+                }
                 initNetwork();
             }
         });
     }
 
     private void initNetwork() {
+        lRecyclerview.setLoadMoreEnabled(true);
         MyProcessDialog.showDialog(getActivity());
         subscribe = ShopMallNetwork
                 .getShopMallMainApi()
@@ -153,8 +171,19 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
                             }
                             // 是否还有更多
                             if (!response.hasmore) {
+                                if (type == null) {
+                                    allFlag = true;
+                                } else if (type == TYPE_GOOD) {
+                                    goodFlag = true;
+                                } else if (type == TYPE_MIDDLE) {
+                                    middleFlag = true;
+                                } else if (type == TYPE_BAD) {
+                                    badFlag = true;
+                                }
                                 lRecyclerview.setLoadMoreEnabled(false);
+//                                lRecyclerview.setLoadMoreEnabled(false);
                             } else {
+                                lRecyclerview.setLoadMoreEnabled(true);
                                 curpage++;
                             }
                             // 设置按钮颜色
@@ -172,24 +201,28 @@ public class GoodRetedFragment extends BaseFragment implements View.OnClickListe
         switch (v.getId()) {
             case R.id.tv_evaluate_all:
                 type = null;
+                allFlag = false;
                 curpage = 1;
                 initNetwork();
 
                 break;
             case R.id.tv_evaluate_good:
                 type = TYPE_GOOD;
+                goodFlag = false;
                 curpage = 1;
                 initNetwork();
 
                 break;
             case R.id.tv_evaluate_middle:
                 type = TYPE_MIDDLE;
+                middleFlag = false;
                 curpage = 1;
                 initNetwork();
 
                 break;
             case R.id.tv_evaluate_bad:
                 type = TYPE_BAD;
+                badFlag = false;
                 curpage = 1;
                 initNetwork();
 
