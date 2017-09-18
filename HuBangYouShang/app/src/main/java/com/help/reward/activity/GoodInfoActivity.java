@@ -99,8 +99,9 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.tv_goodinfo_shopcart_add:
                 //addToShopcart();
-                goodFragment.startPropertyActivity();
-
+                if (goodFragment != null) {
+                    goodFragment.startPropertyActivity();
+                }
                 break;
             case R.id.iv_goodinfo_back:
                 this.finish();
@@ -111,7 +112,9 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.tv_goodinfo_buy:
                 // 获取到goodsFragment
-                goodFragment.startPropertyActivity();
+                if (goodFragment != null) {
+                    goodFragment.startPropertyActivity();
+                }
                 /*Intent intent = new Intent(GoodInfoActivity.this, ConfirmOrderActivity.class);
                 intent.putExtra("cart_id", goodFragment.propertyBean.getGoods_id() + "|" + goodFragment.propertyBean.getSelectNum());
                 intent.putExtra("if_cart", "0");

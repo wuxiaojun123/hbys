@@ -236,7 +236,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             // 表示从地址页面过来 设置地址view
             AddressBean bean = data.getParcelableExtra("confirmAddress");
             if (adapter != null && bean != null) {
-                confirmOrderBean.address_info.address_id = bean.address_id;
+                if (confirmOrderBean.address_info != null) {
+                    confirmOrderBean.address_info.address_id = bean.address_id;
+                } else {
+                    confirmOrderBean.address_info = bean;
+                }
                 adapter.setAddressInfo(bean);
                 adapter.notifyDataSetChanged();
             }

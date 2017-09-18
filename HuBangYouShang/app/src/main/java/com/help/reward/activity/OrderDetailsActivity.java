@@ -108,6 +108,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     private String[] goods_id;
     private String[] goods_img;
     private String[] goods_name;
+    private String[] rec_id; // 购买商品记录id
 
     private OrderOperationManager mOperationManager;
 
@@ -250,6 +251,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 mIntent.putExtra("goods_id", goods_id);
                 mIntent.putExtra("goods_img", goods_img);
                 mIntent.putExtra("goods_name", goods_name);
+                mIntent.putExtra("rec_id", rec_id);
                 mContext.startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim((Activity) mContext);
             }
@@ -341,6 +343,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
         goods_id = new String[size];
         goods_img = new String[size];
         goods_name = new String[size];
+        rec_id = new String[size];
 
         for (int i = 0; i < size; i++) {
             View shopView = mInflater.inflate(R.layout.layout_my_order_shop, ll_shop, false);
@@ -355,6 +358,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
             goods_id[i] = myOrderShopBean.goods_id;
             goods_img[i] = myOrderShopBean.goods_image_url;
             goods_name[i] = myOrderShopBean.goods_name;
+            rec_id[i] = myOrderShopBean.rec_id;
 //            }
             GlideUtils.loadImage(myOrderShopBean.image_url, iv_shop_img);
             tv_shop_name.setText(myOrderShopBean.goods_name);
