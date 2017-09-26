@@ -13,4 +13,6 @@ public class SharedPreferenceConstant {
 
     public static final String KEY_SEARCH_SHOP_HISTORY = "key_search_shop_history"; // 搜索商品历史记录
 
+    public static final String KEY_LOGIN_USERNAME = "key_login_username";
+
 }

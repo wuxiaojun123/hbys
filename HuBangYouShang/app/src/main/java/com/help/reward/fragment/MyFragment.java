@@ -161,7 +161,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             R.id.tv_payment, R.id.tv_take_delivery, R.id.tv_evaluate, R.id.tv_return_goods,
             R.id.ll_available_predeposit, R.id.ll_voucher, R.id.ll_general_voucher, R.id.ll_discount_level,
             R.id.tv_account, R.id.tv_my_help, R.id.tv_my_reward, R.id.tv_my_vote, R.id.tv_my_collection,
-            R.id.tv_share, R.id.tv_order, R.id.tv_help_num})
+            R.id.tv_share, R.id.tv_order, R.id.tv_help_num,R.id.tv_account_help_reward})
     @Override
     public void onClick(View v) {
         int id = v.getId();

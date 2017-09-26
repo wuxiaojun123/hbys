@@ -17,11 +17,13 @@ import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.WeiXinLoginRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
+import com.help.reward.utils.SharedPreferenceConstant;
 import com.help.reward.utils.StatusBarUtil;
 import com.help.reward.view.MyProcessDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.idotools.utils.LogUtils;
+import com.idotools.utils.SharedPreferencesHelper;
 import com.idotools.utils.ToastUtils;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -58,6 +60,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        String defaultUsername = SharedPreferencesHelper.getInstance(mContext).getString(SharedPreferenceConstant.KEY_LOGIN_USERNAME, null);
+        et_login_phone_number.setText(defaultUsername);
     }
 
     @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd, R.id.tv_look})
@@ -182,6 +186,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             App.mLoginReponse = res.data;
                             RxBus.getDefault().post("loginSuccess");
                             LogUtils.e("用户名是:" + App.mLoginReponse.easemobId + "----密码是:" + password + App.mLoginReponse.new_message);
+                            SharedPreferencesHelper.getInstance(mContext).putString(SharedPreferenceConstant.KEY_LOGIN_USERNAME, username);
 
                             LoginToHuanxin(App.mLoginReponse.easemobId, password);
                         } else {

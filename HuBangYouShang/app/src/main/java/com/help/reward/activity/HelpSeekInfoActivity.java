@@ -271,7 +271,6 @@ public class HelpSeekInfoActivity extends BaseActivity {
     }
 
     private void requestData() {
-
         subscribe = HelpNetwork
                 .getHelpApi()
                 .getHelpSeekInfoBean(App.APP_CLIENT_KEY, "seek_help_detail", id, curpage)
