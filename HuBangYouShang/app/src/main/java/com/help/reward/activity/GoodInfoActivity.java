@@ -2,6 +2,8 @@ package com.help.reward.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -185,20 +187,23 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
                         }
 
                         @Override
-                        public void onNext(AddSellerGroupResponse res) {
+                        public void onNext(final AddSellerGroupResponse res) {
                             MyProcessDialog.closeDialog();
                             if (res.code == 200) { // 收藏成功
                                 LogUtils.e("结果是：" + res.data.groupid);
-                                try {
-                                    EMClient.getInstance().groupManager().getJoinedGroupsFromServer();
-                                    is_in_group = true;
-                                    member_id = res.data.groupid;
-
-                                    showDialogWhetherEnterGroup(R.string.string_whether_success_join_group);
-                                } catch (HyphenateException e) {
-                                    e.printStackTrace();
-                                    ToastUtils.show(mContext, "加群失败");
-                                }
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            EMClient.getInstance().groupManager().getJoinedGroupsFromServer();
+                                        } catch (HyphenateException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }.start();
+                                is_in_group = true;
+                                member_id = res.data.groupid;
+                                showDialogWhetherEnterGroup(R.string.string_whether_success_join_group);
                             } else {
                                 ToastUtils.show(mContext, res.msg);
                             }
@@ -207,9 +212,17 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+        }
+    };
+
     private void showDialogWhetherEnterGroup(int textResId) {
         new AlertDialog(mContext)
                 .builder()
+                .setTitle(R.string.string_system_prompt)
                 .setMsg(textResId)
                 .setPositiveButton("是", new View.OnClickListener() {
                     @Override

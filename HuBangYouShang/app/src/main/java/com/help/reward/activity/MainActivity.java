@@ -79,7 +79,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.radio_my)
     RadioButton radio_my;
 
-
     private FragmentManager mFragmentManager;
     private HelpFragment mHelpFragment;
     private IntegrationFragment mIntegrationFragment;//积分
@@ -487,15 +486,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(false);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
     private android.app.AlertDialog.Builder exceptionBuilder;
     private boolean isExceptionDialogShow = false;
     private BroadcastReceiver internalDebugReceiver;
@@ -664,9 +654,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    /*@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }*/
+
     @Override
     public void onBackPressed() {
-        exit();
+        moveTaskToBack(false);
+//        exit();
     }
 
     private long mExitTime;
@@ -678,6 +678,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if ((System.currentTimeMillis() - mExitTime) > 2000) {
             ToastUtils.show(mContext, "再按一次退出");
             mExitTime = System.currentTimeMillis();
+            return;
         } else {
             App.mLoginReponse = null;
             App.APP_CLIENT_KEY = null;
@@ -687,6 +688,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             finish();
         }
     }
+
+
 
     @Override
     protected void onDestroy() {

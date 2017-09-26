@@ -24,6 +24,7 @@ import com.help.reward.utils.IntentUtil;
 import com.help.reward.view.HelpSeekInfoCommentMorePop;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.DateUtil;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -100,7 +101,7 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
 
         ImageView iv_helpinfo_headimg = holder.getView(R.id.iv_helpinfo_headimg);
         GlideUtils.loadCircleImage(item.member_avatar, iv_helpinfo_headimg);
-        IntentUtil.startPersonalHomePage(mActivity,item.u_id,iv_helpinfo_headimg);
+        IntentUtil.startPersonalHomePage(mActivity, item.u_id, iv_helpinfo_headimg);
 
         TextView tv_helpinfo_uname = holder.getView(R.id.tv_helpinfo_uname);
         tv_helpinfo_uname.setText(item.u_name);
@@ -128,34 +129,33 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
             iv_awful.setImageResource(R.mipmap.awful_selected);
         }
 
-        if (!"0".equals(item.useful) || !"0".equals(item.useless)||!isMyPost) {
+        if (!"0".equals(item.useful) || !"0".equals(item.useless) || !isMyPost) {
             iv_fabulous.setEnabled(false);
             iv_awful.setEnabled(false);
         } else {
             iv_fabulous.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DialogUtil.showConfirmCancleDialog(mActivity,"您将增加此用户0.1帮助人数，确定么？",new DialogUtil.OnDialogUtilClickListener(){
+                    DialogUtil.showConfirmCancleDialog(mActivity, "您将增加此用户的帮助人数，确定么？", new DialogUtil.OnDialogUtilClickListener() {
 
                         @Override
                         public void onClick(boolean isLeft) {
-                            if(isLeft) {
-                                setUseFulOrUseless("set_useful", item.id, position);
+                            if (isLeft) {
+                                setUseFulOrUseless("set_useful", item.id, position, true);
                             }
                         }
                     });
-
                 }
             });
             iv_awful.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DialogUtil.showConfirmCancleDialog(mActivity,"您将减少此用户0.1帮助人数，确定么？",new DialogUtil.OnDialogUtilClickListener(){
+                    DialogUtil.showConfirmCancleDialog(mActivity, "您将减少此用户的帮助人数，确定么？", new DialogUtil.OnDialogUtilClickListener() {
 
                         @Override
                         public void onClick(boolean isLeft) {
-                            if(isLeft) {
-                                setUseFulOrUseless("set_useless", item.id, position);
+                            if (isLeft) {
+                                setUseFulOrUseless("set_useless", item.id, position, false);
                             }
                         }
                     });
@@ -164,7 +164,7 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
             });
         }
 
-      final ImageView iv_reply = holder.getView(R.id.iv_reply);
+        final ImageView iv_reply = holder.getView(R.id.iv_reply);
 
         if ("true".equalsIgnoreCase(item.new_unread)) {
             iv_reply.setImageResource(R.mipmap.reply_selected);
@@ -184,9 +184,9 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
                 intentDetail.putExtra("status", status);
                 mActivity.startActivity(intentDetail);
                 ActivitySlideAnim.slideInAnim(mActivity);
-                if ("true".equalsIgnoreCase(item.new_unread)&&!"结帖".equals(status)) {
+                if ("true".equalsIgnoreCase(item.new_unread) && !"结帖".equals(status)) {
                     iv_reply.setImageResource(R.mipmap.reply_normal);
-                    item.new_unread="false";
+                    item.new_unread = "false";
                 }
 
             }
@@ -205,7 +205,7 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
                 intentDetail.putExtra("status", status);
                 mActivity.startActivity(intentDetail);
                 ActivitySlideAnim.slideInAnim(mActivity);
-                if ("true".equalsIgnoreCase(item.new_unread)&&!"结帖".equals(status)) {
+                if ("true".equalsIgnoreCase(item.new_unread) && !"结帖".equals(status)) {
                     iv_reply.setImageResource(R.mipmap.reply_normal);
                 }
 
@@ -217,7 +217,7 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new HelpSeekInfoCommentMorePop(status, item.post_id, item.id, item.u_name, item.content,"help").showPopupWindow(mActivity, iv_more);
+                new HelpSeekInfoCommentMorePop(status, item.post_id, item.id, item.u_name, item.content, "help").showPopupWindow(mActivity, iv_more);
 
             }
         });
@@ -243,20 +243,20 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
             iv_reply.setImageResource(R.mipmap.review_normal);
             iv_fabulous.setEnabled(false);
             iv_awful.setEnabled(false);
-           // if ("0".equals(item.complained)) {
+            // if ("0".equals(item.complained)) {
 //                iv_fabulous.setVisibility(View.GONE);
             //   }
             //    if ("0".equals(item.given_points)) {
 //                iv_awful.setVisibility(View.GONE);
             //    }
         }
-        if(!isMyPost){
+        if (!isMyPost) {
             iv_fabulous.setVisibility(View.GONE);
             iv_awful.setVisibility(View.GONE);
         }
     }
 
-    private void setUseFulOrUseless(final String op, String parent_id, final int position) {
+    private void setUseFulOrUseless(final String op, String parent_id, final int position, final boolean addOrReduce) {
         MyProcessDialog.showDialog(mContext);
         HelpNetwork
                 .getHelpApi()
@@ -275,12 +275,17 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
                     public void onNext(StringResponse response) {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
+                            LogUtils.e("返回的是:" + response.msg + "-----" + response.data);
                             HelpSeekCommentBean item = mDataList.get(position);
                             if ("set_useful".equalsIgnoreCase(op)) {
                                 item.useful = "1";
                             } else {
                                 item.useless = "1";
                             }
+                            ToastUtils.show(mContext, response.msg);
+                            /*if (addOrReduce) { // 增加的帮助人数
+                            } else { // 减少的帮助人数
+                            }*/
                             notifyDataSetChanged();
                         } else {
                             ToastUtils.show(mContext, response.msg);

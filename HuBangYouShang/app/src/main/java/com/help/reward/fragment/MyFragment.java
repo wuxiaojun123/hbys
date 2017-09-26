@@ -12,6 +12,7 @@ import com.help.reward.activity.AccountManagerActivity;
 import com.help.reward.activity.DiscountAmountActivity;
 import com.help.reward.activity.HelpPeopleNumberActivity;
 import com.help.reward.activity.MsgCenterActivity;
+import com.help.reward.activity.MyAccountHelpRewardActivity;
 import com.help.reward.activity.MyBalanceActivity;
 import com.help.reward.activity.MyCouponActivity;
 import com.help.reward.activity.MyGeneralVolumeActivity;
@@ -103,7 +104,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         return R.layout.fragment_my;
     }
 
-
     @Override
     protected void init() {
         updateData();
@@ -167,7 +167,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         int id = v.getId();
         switch (id) {
             case R.id.tv_help_num:
+                // 帮助人数
                 startActivity(new Intent(mContext, HelpPeopleNumberActivity.class));
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+                break;
+            case R.id.tv_account_help_reward:
+                // 帮赏分
+                startActivity(new Intent(mContext, MyAccountHelpRewardActivity.class));
                 ActivitySlideAnim.slideInAnim(getActivity());
 
                 break;

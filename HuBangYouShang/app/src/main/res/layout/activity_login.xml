@@ -51,9 +51,11 @@
             android:hint="昵称/手机号"
             android:maxLines="1"
             android:paddingLeft="12dp"
-            android:text="18810543162"
             android:textColor="@color/color_while"
+            android:textColorHint="@color/color_while"
             android:textSize="@dimen/dimen_14" />
+
+        <!--android:text="18810543162"-->
 
         <EditText
             android:id="@+id/et_login_pwd"
@@ -68,7 +70,6 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:paddingLeft="12dp"
-            android:text="123321"
             android:textColor="@color/color_while"
             android:textSize="@dimen/dimen_14" />
 

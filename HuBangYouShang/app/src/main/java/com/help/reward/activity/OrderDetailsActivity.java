@@ -219,7 +219,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_remove_order:
                 // 删除订单
-                mOperationManager.showCancelDialog(order_id, -2);
+                mOperationManager.showRemoveDialog(order_id, -2);
 
                 break;
         }
