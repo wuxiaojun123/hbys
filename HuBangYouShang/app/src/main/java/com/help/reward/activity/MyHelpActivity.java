@@ -21,10 +21,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * 我的求助
  * Created by wuxiaojun on 2017/2/8.
  */
 
-public class MyHelpActivity extends BaseActivity implements View.OnClickListener{
+public class MyHelpActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -37,6 +38,8 @@ public class MyHelpActivity extends BaseActivity implements View.OnClickListener
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
+    private MyHelpPostFragment mMyHelpPostFragment;
+    private MyHelpCommentFragment mMyHelpCommentFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class MyHelpActivity extends BaseActivity implements View.OnClickListener
         ButterKnife.bind(this);
 
         initView();
+        mMyHelpPostFragment = new MyHelpPostFragment();
+        mMyHelpCommentFragment = new MyHelpCommentFragment();
 
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
@@ -59,7 +64,7 @@ public class MyHelpActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.iv_title_back:
                 finish();
                 ActivitySlideAnim.slideOutAnim(MyHelpActivity.this);
@@ -87,9 +92,9 @@ public class MyHelpActivity extends BaseActivity implements View.OnClickListener
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new MyHelpPostFragment();
+                return mMyHelpPostFragment;
             } else {
-                return new MyHelpCommentFragment();
+                return mMyHelpCommentFragment;
             }
         }
 

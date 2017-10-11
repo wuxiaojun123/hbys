@@ -12,7 +12,7 @@ import com.help.reward.bean.Response.MyRewardCommentResponse;
  * Created by wuxiaojun on 2017/2/26.
  */
 
-public class MyRewardCommentAdapter extends BaseRecyclerAdapter {
+public class MyRewardCommentAdapter extends BaseRecyclerAdapter<MyRewardCommentResponse.MyRewardCommentBean> {
 
     public MyRewardCommentAdapter(Context context) {
         super(context);
@@ -34,11 +34,11 @@ public class MyRewardCommentAdapter extends BaseRecyclerAdapter {
         TextView tv_help = holder.getView(R.id.tv_help);
 
 
-        MyRewardCommentResponse bean = (MyRewardCommentResponse) mDataList.get(position);
+        MyRewardCommentResponse.MyRewardCommentBean bean = mDataList.get(position);
 
         tv_content.setText(bean.title);
         tv_title.setText(bean.board_name);
-        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time)));
+        tv_time.setText(DateUtil.getDateToString(bean.create_time));
 //        tv_state.setText(bean.status);
         tv_post.setText(bean.comment);
         tv_reward.setText(bean.admiration);

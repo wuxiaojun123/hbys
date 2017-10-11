@@ -11,18 +11,52 @@ android {
         //applicationId "com.help.reward"
         minSdkVersion 14
         targetSdkVersion 22
+        applicationId "com.help.reward"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
+        manifestPlaceholders = [
+                GETUI_APP_ID : "UsoJRiuuJE78W2iC1xIyz2",
+                GETUI_APP_KEY : "k0SdUZwREf7KubTlcLScV6",
+                GETUI_APP_SECRET : "QL2yigLZwFAuJRKI17a0E8"
+        ]
+
     }
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    signingConfigs {
+        myConfig {
+            storeFile file("hbys.jks")
+            storePassword "123456"
+            keyAlias "hbys"
+            keyPassword "123456"
         }
     }
+    buildTypes {
+        /*debug {
+            minifyEnabled true
+            shrinkResources false
+            zipAlignEnabled true
+            debuggable true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.myConfig
+        }*/
+        release {
+            minifyEnabled true
+            shrinkResources false
+            zipAlignEnabled true
+            debuggable false
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.myConfig
+        }
+    }
+
     sourceSets{
         main{
             assets.srcDirs = ['assets']
@@ -38,36 +72,56 @@ android {
         javaMaxHeapSize = "2g"
     }
 
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    /*packagingOptions{
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }*/
 
+}
+
+repositories{
+    flatDir{
+        dirs 'libs' //就是你放aar的目录地址
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    /*compile 'com.android.support:appcompat-v7:22.1.0'
-                compile 'com.android.support:recyclerview-v7:22.1.0'
-                compile 'com.android.support:design:22.2.0'//design风格*/
     //butterknife
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     //rxjava和retrofit框架
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
-    //    compile 'io.reactivex:rxjava2:rxandroid:2.0.1'
-    //    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     //这是添加retrofit对rxjava的支持
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
-    //基本工具类
-    //
-    //    compile project(':library_pagerSlidingTabStrip')
-    // recyclerview
-    //    compile project(':library_recycler')
-//    debugCompile 'com.antfortune.freeline:runtime:0.8.4'
-//    releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
-//    testCompile 'com.antfortune.freeline:runtime-no-op:0.8.4'
+    // umeng统计
+    compile 'com.umeng.analytics:analytics:latest.integration'
     //广告位banner
     compile 'com.bigkoo:convenientbanner:2.0.5'
+    //    compile 'com.contrarywind:Android-PickerView:3.2.4'
+    // 微信登录
+    //    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    //    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //    compile project(':libqrcode')
+    compile files('libs/zxing.jar')
+    compile name: 'SMSSDK-2.1.3', ext: 'aar'
+    compile name: 'SMSSDKGUI-2.1.3', ext: 'aar'
+//    compile project(':sticknavlayout')
+//    compile project(':library_address')
     compile project(':library_chat')
-	compile project(':pickerview')
+    compile project(':pickerview')
+//    compile project(':library_getui')
+//    compile files('libs/alipaySdk-20170725.jar')
+
+    compile 'com.j256.ormlite:ormlite-android:5.0'
+//    compile 'com.google.code.gson:gson:2.8.0'
+    // LeanCloud 基础包
+//    compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
 }

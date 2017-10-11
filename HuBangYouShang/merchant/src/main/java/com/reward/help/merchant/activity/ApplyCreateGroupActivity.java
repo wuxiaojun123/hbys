@@ -11,11 +11,12 @@ import com.reward.help.merchant.chat.ui.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ApplyCreateGroupActivity extends BaseActivity{
+public class ApplyCreateGroupActivity extends BaseActivity {
     @BindView(R.id.iv_title_back)
     ImageView mIvBack;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);

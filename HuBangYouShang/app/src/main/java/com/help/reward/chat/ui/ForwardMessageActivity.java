@@ -15,7 +15,9 @@ package com.help.reward.chat.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 
+import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseAlertDialog.AlertDialogUser;
@@ -30,12 +32,15 @@ public class ForwardMessageActivity extends PickContactNoCheckboxActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		forward_msg_id = getIntent().getStringExtra("forward_msg_id");
-	}
+        RelativeLayout titleBar = (RelativeLayout) findViewById(R.id.rl_title_bar);
+        titleBar.setBackgroundColor(getResources().getColor(R.color.color_title_background));
+
+    }
 	
 	@Override
 	protected void onListItemClick(int position) {
 		selectUser = contactAdapter.getItem(position);
-		new EaseAlertDialog(this, null, getString(R.string.confirm_forward_to, selectUser.getNick()), null, new AlertDialogUser() {
+		new EaseAlertDialog(this, null, getString(R.string.confirm_forward_to, selectUser.getUsername()), null, new AlertDialogUser() {
             @Override
             public void onResult(boolean confirmed, Bundle bundle) {
                 if (confirmed) {
@@ -47,8 +52,9 @@ public class ForwardMessageActivity extends PickContactNoCheckboxActivity {
                     }
                     Intent intent = new Intent(ForwardMessageActivity.this, ChatActivity.class);
                     // it is single chat
-                    intent.putExtra("userId", selectUser.getUsername());
+                    intent.putExtra("userId", selectUser.getNickname());
                     intent.putExtra("forward_msg_id", forward_msg_id);
+                    intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE,EaseConstant.CHATTYPE_GROUP);
                     startActivity(intent);
                     finish();
                 }

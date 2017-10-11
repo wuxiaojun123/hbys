@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,15 @@ import com.coupon.CouponPointsConstant;
 import com.coupon.CouponPointsUtils;
 import com.coupon.widget.ChatRowCoupon;
 import com.coupon.widget.ChatRowPoints;
+import com.help.reward.App;
+import com.help.reward.activity.GoodInfoActivity;
+import com.help.reward.activity.StoreInfoActivity;
+import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.GroupToStoreResponse;
+import com.help.reward.bean.Response.PointsRecordResponse;
+import com.help.reward.network.CouponPointsNetwork;
+import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.view.MyProcessDialog;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMGroup;
@@ -34,6 +44,7 @@ import com.hyphenate.easeui.ui.EaseChatFragment.EaseChatFragmentHelper;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
+import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EasyUtils;
 import com.hyphenate.util.PathUtil;
 import com.help.reward.R;
@@ -43,11 +54,17 @@ import com.help.reward.chat.DemoHelper;
 import com.help.reward.chat.domain.EmojiconExampleGroupData;
 import com.help.reward.chat.domain.RobotUser;
 import com.help.reward.chat.widget.ChatRowVoiceCall;
+import com.idotools.utils.ToastUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
+
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHelper {
 
@@ -84,7 +101,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
      * if it is chatBot 
      */
     private boolean isRobot;
-    
+
+    protected Subscription subscribe;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -102,7 +122,11 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         super.setUpView();
         // set click listener
         titleBar.setBackgroundColor(getResources().getColor(R.color.color_title_bg));
-        titleBar.setRightImageResource(R.mipmap.group);
+        if (chatType == EaseConstant.CHATTYPE_SINGLE) {
+            titleBar.setRightImageResource(R.mipmap.nav_store);
+        } else {
+            titleBar.setRightImageResource(R.mipmap.group);
+        }
         titleBar.setLeftLayoutClickListener(new OnClickListener() {
 
             @Override
@@ -112,6 +136,58 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                     startActivity(intent);
                 }
                 onBackPressed();
+            }
+        });
+
+        titleBar.setRightLayoutClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (chatType == EaseConstant.CHATTYPE_SINGLE) {
+                    //emptyHistory();
+                        if (App.APP_CLIENT_KEY == null) {
+                            return;
+                        }
+                        String currentGroup = fragmentArgs.getString("currentGroup");
+
+                        if (TextUtils.isEmpty(currentGroup)) {
+                            return;
+                        }
+
+                        // ?act=member_points&op=receivePointsLog
+                        CouponPointsNetwork
+                                .getHelpNoCookieApi()
+                                .getStoreId(App.APP_CLIENT_KEY, currentGroup)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe((new BaseSubscriber<GroupToStoreResponse>() {
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        e.printStackTrace();
+                                        ToastUtils.show(getActivity(), R.string.string_error);
+                                    }
+                                    @Override
+                                    public void onNext(GroupToStoreResponse response) {
+                                        if (response.code == 200) {
+                                            if (response.data != null) { // 返回地址id  response.data.address_id
+                                                GroupToStoreResponse data = response.data;
+                                                if (!TextUtils.isEmpty(data.store_id)){
+                                                    Intent mStoreIntent = new Intent(getActivity(), StoreInfoActivity.class);
+                                                    mStoreIntent.putExtra("store_id", data.store_id);
+                                                    startActivity(mStoreIntent);
+                                                } else {
+                                                    ToastUtils.show(getActivity(), "获取店铺信息失败");
+                                                }
+                                            }
+                                        } else {
+                                            ToastUtils.show(getActivity(), response.msg);
+                                        }
+                                    }
+                                }));
+                } else {
+                    toGroupDetails();
+                }
             }
         });
         ((EaseEmojiconMenu)inputMenu.getEmojiconMenu()).addEmojiconGroup(EmojiconExampleGroupData.getData());
@@ -293,9 +369,21 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         //red packet code : 拆红包页面
         if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_COUPON, false)){
             //TODO 获取优惠券
+            try {
+                String give_log_id = message.getStringAttribute(CouponPointsConstant.EXTRA_COUPON_POINTS_RECEIVER_ID);
+                receiveCoupon(give_log_id);
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
 
             return true;
         } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_POINTS, false)) {
+            try {
+                String give_log_id = message.getStringAttribute(CouponPointsConstant.EXTRA_COUPON_POINTS_RECEIVER_ID);
+                receivePoints(give_log_id);
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
             //TODO 获取积分
             return true;
         }
@@ -493,6 +581,56 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 //end of red packet code
             }
             return null;
+        }
+
+    }
+
+
+
+    private void receiveCoupon(String give_log_id){
+        if (!TextUtils.isEmpty(give_log_id)) {
+            subscribe = CouponPointsNetwork.getHelpNoCookieApi().receiveCoupon(App.APP_CLIENT_KEY,give_log_id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<BaseResponse>() {
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(BaseResponse response) {
+                            if (response.code == 200) {
+                                ToastUtils.show(getActivity(),"领取成功！可在个人中心进行查看");
+                            } else {
+                                ToastUtils.show(getActivity(),response.msg);
+                            }
+                        }
+                    });
+        }
+
+    }
+
+    private void receivePoints(String give_log_id){
+        if (!TextUtils.isEmpty(give_log_id)) {
+            subscribe = CouponPointsNetwork.getHelpNoCookieApi().receivePoints(App.APP_CLIENT_KEY,give_log_id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<BaseResponse>() {
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(BaseResponse response) {
+                            if (response.code == 200) {
+                                ToastUtils.show(getActivity(),"领取成功！可在个人中心进行查看");
+                            } else {
+                                ToastUtils.show(getActivity(),response.msg);
+                            }
+                        }
+                    });
         }
 
     }

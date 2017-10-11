@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:text="请您谨慎申诉，申诉失败，败方会减少5个帮助人数。"
+        android:textColor="@color/color_fa"
+        android:textSize="13sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/root_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_msgcenter_item"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/tv_post_title"
+                    style="@style/style_text_lable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="标题" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/style_text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="投诉人" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_while"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_content_title"
+                    style="@style/style_text_lable"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/color_allbg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:text="您被投诉如下：" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_spiline" />
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    style="@style/style_text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="5dp"
+                    android:text="这里是投诉内容" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <ImageView
+                        android:id="@+id/iv_content_image1"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_content_image2"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_content_image3"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_content_image4"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_spiline" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/appel_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_while"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_apple_title"
+                    style="@style/style_text_lable"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/color_allbg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:text="您的申诉内容如下：" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_spiline" />
+
+                <TextView
+                    android:id="@+id/tv_appel"
+                    style="@style/style_text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="5dp"
+                    android:text="这里是申诉内容" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <ImageView
+                        android:id="@+id/iv_appel_image1"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_appel_image2"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_appel_image3"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_appel_image4"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_spiline" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/complainant_explain_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_while"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_complainant_explain_title"
+                    style="@style/style_text_lable"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/color_allbg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:text="对方的解释如下：" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_spiline" />
+
+
+                <TextView
+                    android:id="@+id/tv_complainant_explain"
+                    style="@style/style_text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="5dp"
+                    android:text="投诉者解释" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <ImageView
+                        android:id="@+id/iv_complainant_explain_image1"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_complainant_explain_image2"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_complainant_explain_image3"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_complainant_explain_image4"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_spiline" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/respondent_explain_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_while"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_respondent_explain_title"
+                    style="@style/style_text_lable"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/color_allbg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:text="您的解释如下：" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_spiline" />
+
+                <TextView
+                    android:id="@+id/tv_respondent_explain"
+                    style="@style/style_text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="5dp"
+                    android:text="111" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <ImageView
+                        android:id="@+id/iv_respondent_explain_image1"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_respondent_explain_image2"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_respondent_explain_image3"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_respondent_explain_image4"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginBottom="@dimen/layout_margin"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_spiline" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ed_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin"
+                android:background="@drawable/bg_msgcenter_item"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/et_content_title"
+                    style="@style/style_text_lable"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_44"
+                    android:gravity="center_vertical"
+                    android:text="您可以提交申诉如下：" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_spiline" />
+
+                <EditText
+                    android:id="@+id/et_content"
+                    style="@style/style_text_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/layout_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/layout_margin"
+                    android:background="@null"
+                    android:gravity="top|left"
+                    android:hint="请输入您的申诉内容，不少于100字"
+                    android:maxLength="400"
+                    android:minLines="6" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_spiline" />
+
+                <include layout="@layout/up_photo_layout" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

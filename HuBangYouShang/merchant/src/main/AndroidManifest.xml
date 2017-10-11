@@ -15,8 +15,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-        >
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,38 +24,43 @@
         </activity>
 
 
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
         <!-- 登录-->
-        <activity android:name=".activity.LoginActivity"
-        android:screenOrientation="portrait"
-        android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"></activity>
         <!-- 验证手机号-->
-        <activity android:name=".activity.CheckPhoneNumberActivity"
+        <activity
+            android:name=".activity.CheckPhoneNumberActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
         <!-- 设置密码-->
-        <activity android:name=".activity.SetNewPasswordActivity"
+        <activity
+            android:name=".activity.SetNewPasswordActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
 
-        <activity android:name=".activity.ApplyCreateGroupActivity"
+        <activity
+            android:name=".activity.ApplyCreateGroupActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
-        <activity android:name=".activity.CouponSendListActivity"
+        <activity
+            android:name=".activity.CouponSendListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
-        <activity android:name=".activity.ProfileActivity"
+        <activity
+            android:name=".activity.ProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
-        <activity android:name=".activity.QueryApplyGroupActivity"
+        <activity
+            android:name=".activity.QueryApplyGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
         <!-- 群组聊天-->

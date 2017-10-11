@@ -1,11 +1,17 @@
 package com.help.reward.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.activity.GoodInfoActivity;
+import com.help.reward.adapter.MyCollectionPostAdapter;
+import com.help.reward.bean.MyCollectionGoodsBean;
+import com.help.reward.minterface.OnMyItemClickListener;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
@@ -30,6 +36,7 @@ public class MyCollectionGoodsFragment extends BaseFragment {
 
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -55,17 +62,18 @@ public class MyCollectionGoodsFragment extends BaseFragment {
         initDeleteListener();
         initRefreshListener();
         initLoadMoreListener();
+        initOnItemClickListener();
     }
 
     private void initDeleteListener() {
         mCollectionGoodsAdapter.setOnItemDeleteListener(new OnItemDeleteListener() {
             @Override
             public void deleteItem(final int position) {
-                MyCollectionPostBean bean = (MyCollectionPostBean) mCollectionGoodsAdapter.getDataList().get(position);
+                MyCollectionGoodsBean bean = mCollectionGoodsAdapter.getDataList().get(position);
                 if(bean != null){
                     PersonalNetwork
                             .getResponseApi()
-                            .getDeleteMyCollectionPostResponse(App.APP_CLIENT_KEY,bean.fav_id,bean.log_msg)
+                            .getDeleteMyCollectionGoodsResponse(App.APP_CLIENT_KEY,bean.fav_id)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -77,7 +85,7 @@ public class MyCollectionGoodsFragment extends BaseFragment {
 
                                 @Override
                                 public void onNext(BaseResponse response) {
-                                    LogUtils.e("删除我的收藏中的帖子："+response.toString());
+                                    LogUtils.e("删除我的收藏中的商品："+response.toString());
                                     if (response.code == 200) { // 删除成功
                                         mCollectionGoodsAdapter.remove(position);
                                     } else {
@@ -91,11 +99,26 @@ public class MyCollectionGoodsFragment extends BaseFragment {
         });
     }
 
+    private void initOnItemClickListener() {
+        mCollectionGoodsAdapter.setOnMyItemClickListener(new OnMyItemClickListener() {
+            @Override
+            public void onMyItemClickListener(int position) {
+                MyCollectionGoodsBean bean = mCollectionGoodsAdapter.getDataList().get(position);
+                Intent mIntent = new Intent(mContext, GoodInfoActivity.class);
+                mIntent.putExtra("goods_id", bean.goods_id);
+                mIntent.putExtra("store_id", bean.store_id);
+                startActivity(mIntent);
+                ActivitySlideAnim.slideInAnim(getActivity());
+            }
+        });
+    }
+
     private void initRefreshListener() {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() { // 如果集合中没有数据，则进行刷新，否则不刷新
-                LogUtils.e("执行下拉刷新的方法");
+                currentPage = 1;
+                initNetwork();
             }
         });
     }
@@ -104,15 +127,19 @@ public class MyCollectionGoodsFragment extends BaseFragment {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                initNetwork();
             }
         });
     }
 
     private void initNetwork() {
+        if (App.APP_CLIENT_KEY == null) {
+            return;
+        }
+        // ?act=member_favorites&op=favorites_list
         PersonalNetwork
                 .getResponseApi()
-                .getMyCollectionGoodsResponse(App.APP_CLIENT_KEY)
+                .getMyCollectionGoodsResponse("member_favorites","favorites_list",currentPage+"",App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyCollectionGoodsResponse>() {
@@ -129,15 +156,32 @@ public class MyCollectionGoodsFragment extends BaseFragment {
                         if (response.code == 200) {
                             LogUtils.e("获取数据成功。。。" + response.data.favorites_list.size());
                             if (response.data != null) {
-                                mCollectionGoodsAdapter.addAll(response.data.favorites_list);
+                                if(currentPage == 1){
+                                    mCollectionGoodsAdapter.setDataList(response.data.favorites_list);
+                                }else{
+                                    mCollectionGoodsAdapter.addAll(response.data.favorites_list);
+                                }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
-
+                            if (!response.hasmore) {
+                                lRecyclerview.setNoMore(true);
+                            } else {
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
                     }
                 });
+    }
+
+    public void refreshRecycler(){
+        if(mCollectionGoodsAdapter != null){
+            mCollectionGoodsAdapter.clear();
+        }
+    }
+
+    public MyCollectionGoodsAdapter getMyCollectionGoodsAdapter(){
+        return mCollectionGoodsAdapter;
     }
 
 }

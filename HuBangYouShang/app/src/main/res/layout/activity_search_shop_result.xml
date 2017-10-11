@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_drawerlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_search_shop" />
+
+        <include layout="@layout/layout_search_shop_result_selection_condition" />
+
+        <com.base.recyclerview.LRecyclerView
+            android:id="@+id/id_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+        <com.base.recyclerview.LRecyclerView
+            android:id="@+id/id_store_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/pop_searchgoodsfenlei"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end|right"
+         />
+
+
+</android.support.v4.widget.DrawerLayout>

@@ -42,7 +42,7 @@ public class AccountManagerActivity extends BaseActivity implements View.OnClick
         tv_title_right.setVisibility(View.GONE);
     }
 
-    @OnClick({R.id.iv_title_back,R.id.tv_person_info, R.id.tv_certification, R.id.tv_verify_ldentity,
+    @OnClick({R.id.iv_title_back, R.id.tv_person_info, R.id.tv_certification, R.id.tv_verify_ldentity,
             R.id.tv_address_manager, R.id.tv_login_pwd, R.id.tv_payment_pwd})
     @Override
     public void onClick(View v) {
@@ -73,7 +73,8 @@ public class AccountManagerActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.tv_login_pwd:
                 // 登陆密码
-                startActivity(new Intent(mContext, PwdUpdateActivity.class));
+                Intent mIntent = new Intent(mContext, PwdUpdateActivity.class);
+                startActivity(mIntent);
                 ActivitySlideAnim.slideInAnim(AccountManagerActivity.this);
 
                 break;

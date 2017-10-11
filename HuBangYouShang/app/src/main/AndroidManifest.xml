@@ -4,7 +4,66 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <!--sms starat-->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--sms end-->
+    <!--umeng统计-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--微信登录-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--支付宝支付-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- iBeancon功能所需权限 -->;
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!-- 个推3.0电子围栏功能所需权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+    <!--58d5e426677baa2007001842-->
     <application
         android:name="com.help.reward.App"
         android:allowBackup="true"
@@ -14,16 +73,26 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.help.reward.activity.MainActivity"
+            android:name="com.help.reward.activity.SplashActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            >
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.GuideActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- 验证身份 -->
         <activity
@@ -64,7 +133,8 @@
         <!--个人信息-->
         <activity
             android:name="com.help.reward.activity.PersonInfoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!--设置-->
         <activity
@@ -89,6 +159,11 @@
         <!--帮助中心-->
         <activity
             android:name="com.help.reward.activity.HelpCenterActivity"
+            android:screenOrientation="portrait" />
+
+        <!--帮助中心详细-->
+        <activity
+            android:name="com.help.reward.activity.HelpCenterInfoActivity"
             android:screenOrientation="portrait" />
 
         <!--我的账户-->
@@ -186,10 +261,16 @@
         <activity
             android:name="com.help.reward.activity.GeneralExchangeVolumeActivity"
             android:screenOrientation="portrait" />
-        <!--交易大厅-->
+        <!--优惠劵交易大厅-->
         <activity
             android:name="com.help.reward.activity.CouponTradingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <!--优惠劵搜索结果展示-->
+        <activity
+            android:name="com.help.reward.activity.CouponTradingSearchResultActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <!--我的订单-->
         <activity
             android:name="com.help.reward.activity.MyOrderActivity"
@@ -201,7 +282,8 @@
         <!--发表评价-->
         <activity
             android:name="com.help.reward.activity.OrderPulishedEvaluateActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <!--投诉商家-->
         <activity
             android:name="com.help.reward.activity.OrderComplaintsMerchantActivity"
@@ -238,6 +320,11 @@
         <activity
             android:name="com.help.reward.activity.TradeActivity"
             android:screenOrientation="portrait" />
+        <!--个人主页-->
+        <activity
+            android:name=".activity.PersonHomepageActivity"
+            android:screenOrientation="portrait" />
+
         <!--选择支付方式-->
         <activity
             android:name="com.help.reward.activity.PayTypeActivity"
@@ -249,11 +336,36 @@
         <!--店铺详情-->
         <activity
             android:name="com.help.reward.activity.StoreInfoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!--商品详情-->
         <activity
             android:name="com.help.reward.activity.GoodInfoActivity"
             android:screenOrientation="portrait" />
+        <!--搜索商品页面-->
+        <activity
+            android:name=".activity.SearchShopActivity"
+            android:screenOrientation="portrait" />
+        <!--搜索商品结果展示页面-->
+        <activity
+            android:name=".activity.SearchShopResultActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <!--看广告-->
+        <activity
+            android:name="com.help.reward.activity.WatchAdActivity"
+            android:screenOrientation="portrait" />
+        <!--搜索广告-->
+        <activity
+            android:name="com.help.reward.activity.SearchAdvertisementActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.GroupCouponsRecordActivity"
+            android:screenOrientation="portrait" />
+
         <!-- 群组聊天-->
         <activity
             android:name="com.help.reward.chat.ui.GroupActivity"
@@ -261,7 +373,8 @@
 
         <activity
             android:name="com.help.reward.chat.ui.ContextMenuActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle"></activity>
         <activity
             android:name="com.help.reward.chat.ui.ForwardMessageActivity"
             android:screenOrientation="portrait"></activity>
@@ -288,6 +401,92 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <!--投票详情-->
+        <activity
+            android:name="com.help.reward.activity.HelpVoteInfoActivity"
+            android:screenOrientation="portrait" />
+        <!--求助详情-->
+        <activity
+            android:name="com.help.reward.activity.HelpSeekInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.help.reward.activity.ShowBigImageActivity"
+            android:screenOrientation="portrait" />
+        <!--提交投诉,投诉页面-->
+        <activity
+            android:name="com.help.reward.activity.HelpComplainedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.help.reward.activity.HelpSeekCommentDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.help.reward.activity.HelpRewardInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.help.reward.activity.HelpRewardChatDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.help.reward.activity.HelpRewardCommentActivity"
+            android:screenOrientation="portrait" />
+        <!--申诉页面-->
+        <activity
+            android:name="com.help.reward.activity.HelpComplainedDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.help.reward.activity.SearchHelpActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.help.reward.activity.ShopcartActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.help.reward.activity.StoreKindsListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.help.reward.activity.ConfirmOrderActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.help.reward.activity.GoodsTypeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+        <activity
+            android:name=".activity.WebviewActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.HelpPeopleNumberActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.pay.AlipayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/style_translucent" />
+
+        <activity
+            android:name=".activity.pay.WchatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/style_translucent" />
+
+        <!--sms的短信验证-->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name="com.help.reward.activity.GoodPropertyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeDialogIsTranslucent"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <!-- 开机自启动服务 -->
         <receiver android:name="com.help.reward.chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">
@@ -297,6 +496,106 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
+
+        <!--注册微信回调 WXEntryActivity -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/style_transparent" />
+
+        <!--支付宝支付 start-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <!--支付宝支付 end-->
+
+        <!--个推-->
+        <!-- 配置的第三方参数属性 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="${GETUI_APP_ID}" />
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="${GETUI_APP_KEY}" />
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="${GETUI_APP_SECRET}" />
+
+        <!-- 配置SDK核心服务 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.service.message"/>
+            </intent-filter>
+        </service>
+
+        <receiver android:name="com.igexin.sdk.PushReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.igexin.sdk.action.refreshls" />
+                <!-- 以下三项为可选的action声明，可大大提高service存活率和消息到达速度 -->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <activity
+            android:name="com.igexin.sdk.GActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <service
+            android:name=".service.DemoPushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice" />
+
+        <service android:name=".service.DemoIntentService"/>
+
+        <!--个推-->
+
+        <!-- 国内 key -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="58d5e426677baa2007001842" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="111" />
+        <!-- 友盟 END -->
     </application>
 
 </manifest>

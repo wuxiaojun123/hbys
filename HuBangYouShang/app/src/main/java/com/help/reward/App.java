@@ -6,10 +6,16 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.multidex.MultiDex;
 
+import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.chat.DemoHelper;
+import com.help.reward.chat.db.TopUser;
+import com.help.reward.utils.Constant;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import cn.smssdk.SMSSDK;
 
 /**
  * 更新一下,加了个注释
@@ -20,8 +26,11 @@ import java.util.List;
 public class App extends Application {
 
     private static App mApp;
-    public static String APP_CLIENT_KEY = null;
-    public static String APP_CLIENT_COOKIE = null;
+    public static String APP_CLIENT_KEY = null; // key
+    public static String APP_USER_ID = null; // user_id
+    public static String APP_CLIENT_COOKIE = null; // cookie
+    public static LoginResponse mLoginReponse; // 会员信息
+    public static String GETUI_CLIENT_ID = null; // 个推id
 
     @Override
     public void onCreate() {
@@ -29,7 +38,7 @@ public class App extends Application {
         super.onCreate();
 //        FreelineCore.init(this);
         mApp = this;
-        
+
         int pid = android.os.Process.myPid();
         String processAppName = getAppName(pid);
         // 如果APP启用了远程的service，此application:onCreate会被调用2次
@@ -81,6 +90,14 @@ public class App extends Application {
             }
         }
         return processName;
+    }
+
+    public Map<String,TopUser> getTopUserList(){
+        return DemoHelper.getInstance().getTopUserList();
+    }
+
+    public void setTopUserList(Map<String,TopUser> contactList){
+        DemoHelper.getInstance().setTopUserList(contactList);
     }
 
 }

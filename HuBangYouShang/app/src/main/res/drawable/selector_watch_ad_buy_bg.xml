@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/string_watch_ad_group_bug_pressed" android:state_pressed="true"  />
+    <item android:drawable="@drawable/string_watch_ad_group_bug_normal" android:state_pressed="false"/>
+
+</selector>

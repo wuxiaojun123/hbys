@@ -231,7 +231,7 @@
         <string name="Login_failed">登录失败:</string>
         <string name="receive_the_passthrough">收到透传：action：</string>
         <string name="have_you_removed">已把你从他好友列表里移除</string>
-        <string name="can_not_connect_chat_server_connection">连接不到聊天服务器</string>
+        <string name="can_not_connect_chat_server_connection">登录后点击积分中加入购物群才能使用</string>
         <string name="the_current_network">当前网络不可用，请检查网络设置</string>
         <string name="Invite_you_to_join_a_group_chat">邀请你加入了群聊</string>
         <string name="Agreed_to_your_group_chat_application">同意了你的群聊申请</string>
@@ -360,10 +360,16 @@
         <string name="exit_title">系统提示</string>
         <string name="exit_text">是否退出商家群</string>
         <string name="Group_member_number">群组人数</string>
+        <string name="send_record">发放记录</string>
+        <string name="group_to_store">进入店铺</string>
 
         <string name="get_coupon">领取优惠券</string>
         <string name="get_points">领取帮赏分</string>
 
         <string name="item_coupon">优惠券</string>
         <string name="item_points">积分</string>
+        <string name="shop_cart_result">结算</string>
+        <string name="shop_cart_total">合计： ¥ </string>
+        <string name="shop_cart_total_tip">不含运费</string>
+
 </resources>

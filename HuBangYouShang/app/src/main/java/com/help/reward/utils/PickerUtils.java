@@ -3,6 +3,7 @@ package com.help.reward.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,10 +12,14 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
+import com.bigkoo.pickerview.lib.WheelView;
 import com.help.reward.R;
-import com.lvfq.pickerview.TimePickerView;
+/*import com.lvfq.pickerview.TimePickerView;
 import com.lvfq.pickerview.adapter.ArrayWheelAdapter;
-import com.lvfq.pickerview.lib.WheelView;
+import com.lvfq.pickerview.lib.WheelView;*/
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +48,7 @@ public class PickerUtils {
      * @param format   时间格式化
      * @param callBack 时间选择回调
      */
-    public static void alertTimerPicker(Context context, TimePickerView.Type type, final String format, final TimerPickerCallBack callBack) {
+    /*public static void alertTimerPicker(Context context, TimePickerView.Type type, final String format, final TimerPickerCallBack callBack) {
         TimePickerView pvTime = new TimePickerView(context, type);
         //控制时间范围
         //        Calendar calendar = Calendar.getInstance();
@@ -64,7 +69,7 @@ public class PickerUtils {
         pvTime.setTextSize(16);
         //弹出时间选择器
         pvTime.show();
-    }
+    }*/
 
 
     /**
@@ -82,8 +87,17 @@ public class PickerUtils {
      * @param click
      */
     public static void alertBottomWheelOption(Context context, ArrayList<?> list, final OnWheelViewClick click) {
-
-        final PopupWindow popupWindow = new PopupWindow();
+        OptionsPickerView optionsPickerView = new OptionsPickerView.Builder(context, new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                Log.e("当前选择的是：", options1 + "====2" + options2 + "3" + options3);
+//                btn_single_option.setText(cardItem.get(options1).getPickerViewText());
+                click.onClick(v, options1);
+            }
+        }).build();
+        optionsPickerView.setPicker(list);
+        optionsPickerView.show();
+        /*final PopupWindow popupWindow = new PopupWindow();
 
         View view = LayoutInflater.from(context).inflate(R.layout.layout_bottom_wheel_option, null);
         TextView tv_confirm = (TextView) view.findViewById(R.id.btnSubmit);
@@ -126,6 +140,9 @@ public class PickerUtils {
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.showAtLocation(((ViewGroup) ((Activity) context).findViewById(android.R.id.content)).getChildAt(0), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(((ViewGroup) ((Activity) context).findViewById(android.R.id.content)).getChildAt(0), Gravity.CENTER, 0, 0);*/
     }
+
+
+
 }

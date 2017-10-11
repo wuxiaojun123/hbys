@@ -33,7 +33,7 @@ public class HelpVoteAdapter extends BaseRecyclerAdapter<HelpVoteBean> {
         TextView item_help1_type = holder.getView(R.id.item_help1_type);
         item_help1_type.setText(item.post_board);
         TextView item_help1_date = holder.getView(R.id.item_help1_date);
-        item_help1_date.setText(DateUtil.getDateToString(item.update_time * 1000));
+        item_help1_date.setText(DateUtil.getDateToString(item.update_time + ""));
         TextView item_help1_score = holder.getView(R.id.item_help1_score);
         item_help1_score.setVisibility(View.GONE);
         TextView item_help1_count = holder.getView(R.id.item_help1_count);

@@ -6,10 +6,16 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_content"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_170"
+        android:layout_height="@dimen/dimen_195"
         android:background="@mipmap/img_myaccount_head_bg"
         android:orientation="horizontal">
+
+        <View
+            android:id="@+id/fake_status_bar"
+            style="@style/style_fake_status_bar_height"
+            android:alpha="0" />
 
         <ImageView
             android:id="@+id/iv_back"
@@ -29,7 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="通用卷账户"
+                android:text="@string/string_general_volume_acount"
                 android:textColor="@color/color_while"
                 android:textSize="@dimen/dimen_14" />
 
@@ -53,7 +59,7 @@
             android:layout_marginRight="45dp"
             android:background="@drawable/shape_help_reward_exchange_bg"
             android:gravity="center"
-            android:text="兑换通用卷"
+            android:text="兑换通用劵"
             android:textColor="@color/color_3a"
             android:textSize="@dimen/dimen_13" />
 

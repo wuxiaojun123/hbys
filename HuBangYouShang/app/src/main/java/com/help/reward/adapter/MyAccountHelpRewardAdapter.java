@@ -1,17 +1,11 @@
 package com.help.reward.adapter;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.HelpRewardBean;
-import com.help.reward.bean.MyCollectionGoodsBean;
-import com.help.reward.minterface.OnItemDeleteListener;
-import com.help.reward.utils.GlideUtils;
-import com.help.reward.view.SwipeMenuView;
 import com.idotools.utils.DateUtil;
 
 /**
@@ -41,7 +35,7 @@ public class MyAccountHelpRewardAdapter extends BaseRecyclerAdapter {
 
         tv_title.setText(bean.pl_desc);
         tv_price.setText(bean.pl_points);
-        tv_date.setText(DateUtil.getDateToString(Long.parseLong(bean.pl_addtime)));
+        tv_date.setText(DateUtil.getDateToString(bean.pl_addtime));
 
     }
 

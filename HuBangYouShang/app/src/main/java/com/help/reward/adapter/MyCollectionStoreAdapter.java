@@ -3,12 +3,14 @@ package com.help.reward.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.help.reward.R;
 import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.MyCollectionStoreBean;
 import com.help.reward.minterface.OnItemDeleteListener;
+import com.help.reward.minterface.OnMyItemClickListener;
 import com.help.reward.utils.GlideUtils;
 import com.help.reward.view.SwipeMenuView;
 
@@ -17,7 +19,7 @@ import com.help.reward.view.SwipeMenuView;
  * Created by wuxiaojun on 2017/2/26.
  */
 
-public class MyCollectionStoreAdapter extends BaseRecyclerAdapter {
+public class MyCollectionStoreAdapter extends BaseRecyclerAdapter<MyCollectionStoreBean> {
 
     public MyCollectionStoreAdapter(Context context) {
         super(context);
@@ -36,16 +38,28 @@ public class MyCollectionStoreAdapter extends BaseRecyclerAdapter {
         TextView tv_server = holder.getView(R.id.tv_server);
         TextView tv_logistics = holder.getView(R.id.tv_logistics);
         TextView tv_collection = holder.getView(R.id.tv_collection);
-
+        LinearLayout id_ll_content = holder.getView(R.id.id_ll_content);
         TextView tv_delete = holder.getView(R.id.tv_delete);
 
         ((SwipeMenuView) holder.itemView).setIos(false).setLeftSwipe(true);
 
-        MyCollectionStoreBean bean = (MyCollectionStoreBean) mDataList.get(position);
+        MyCollectionStoreBean bean = mDataList.get(position);
 
         GlideUtils.loadImage(bean.store_avatar_url, iv_store);
         tv_title.setText(bean.store_name);
         tv_collection.setText(bean.store_collect);
+        tv_describe.setText(bean.store_desccredit);
+        tv_server.setText(bean.store_servicecredit);
+        tv_logistics.setText(bean.store_deliverycredit);
+
+        id_ll_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myItemClickListener != null){
+                    myItemClickListener.onMyItemClickListener(position);
+                }
+            }
+        });
 
         tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +69,12 @@ public class MyCollectionStoreAdapter extends BaseRecyclerAdapter {
                 }
             }
         });
+    }
+
+    private OnMyItemClickListener myItemClickListener;
+
+    public void setOnMyItemClickListener(OnMyItemClickListener onMyItemClickListener) {
+        this.myItemClickListener = onMyItemClickListener;
     }
 
     private OnItemDeleteListener mOnItenDeleteListener;

@@ -22,6 +22,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMGroup;
 import com.hyphenate.easeui.adapter.EaseContactAdapter;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.widget.EaseSidebar;
@@ -51,7 +53,8 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 		sidebar.setListView(listView);
 		contactList = new ArrayList<EaseUser>();
 		// get contactlist
-		getContactList();
+		//getContactList();
+		getGroupList();
 		// set adapter
 		contactAdapter = new EaseContactAdapter(this, R.layout.ease_row_contact, contactList);
 		listView.setAdapter(contactAdapter);
@@ -63,6 +66,16 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 			}
 		});
 
+	}
+
+	private void getGroupList() {
+		contactList.clear();
+		List<EMGroup> grouplist = EMClient.getInstance().groupManager().getAllGroups();
+		for (EMGroup group : grouplist) {
+			EaseUser easeUser = new EaseUser(group.getGroupName());
+			easeUser.setNickname(group.getGroupId());
+			contactList.add(easeUser);
+		}
 	}
 
 	protected void onListItemClick(int position) {

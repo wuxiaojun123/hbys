@@ -25,16 +25,15 @@ public class HelpRewardsAdapter extends BaseRecyclerAdapter<HelpRewardsBean> {
 
     @Override
     public void onBindItemHolder(SuperViewHolder holder, int position) {
-        HelpRewardsBean item = mDataList.get(position);
-
+        HelpRewardsBean item =mDataList.get(position);
         TextView item_help1_title = holder.getView(R.id.item_help1_title);
         item_help1_title.setText(item.title);
         TextView item_help1_type = holder.getView(R.id.item_help1_type);
         item_help1_type.setText(item.board_name);
         TextView item_help1_date = holder.getView(R.id.item_help1_date);
-        item_help1_date.setText(DateUtil.getDateToString(item.create_time*1000));
+        item_help1_date.setText(DateUtil.getDateToString(item.create_time+""));
         TextView item_help1_score = holder.getView(R.id.item_help1_score);
-        item_help1_score.setText("悬赏 " + item.admiration);
+        item_help1_score.setText("获赏 " + item.admiration_all);
         TextView item_help1_count = holder.getView(R.id.item_help1_count);
         item_help1_count.setText("跟帖 " + item.comment);
         TextView item_help1_des = holder.getView(R.id.item_help1_des);

@@ -1,6 +1,7 @@
 package com.idotools.utils;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.text.TextUtils;
 
 import java.io.ByteArrayInputStream;
@@ -8,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by wuxiaojun on 16-10-8.
@@ -82,6 +84,31 @@ public class FileUtils {
                 }
             }
         }
+    }
+
+    /***
+     * 读取assetmanager下的文件
+     * @param mContext
+     * @return
+     */
+    public static String getAssetsFile(Context mContext){
+        String content = null;
+        try {
+            AssetManager am = mContext.getAssets();
+            InputStream open = am.open("area.json");
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] bytes = new byte[1024];
+            int len = 0;
+            while ((len = open.read(bytes)) != -1) {
+                bos.write(bytes, 0, len);
+            }
+            bos.close();
+//            content = new String(bos.toByteArray());
+            return bos.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return content;
     }
 
 }

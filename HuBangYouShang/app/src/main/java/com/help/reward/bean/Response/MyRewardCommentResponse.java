@@ -22,17 +22,23 @@ import java.util.List;
  * Created by wuxiaojun on 2017/3/2.
  */
 
-public class MyRewardCommentResponse extends BaseResponse<List<MyRewardCommentResponse>> {
+public class MyRewardCommentResponse extends BaseResponse<List<MyRewardCommentResponse.MyRewardCommentBean>> {
 
-    public String id;
-    public String u_id;
-    public String u_name;
-    public String board_id;
-    public String board_name;
-    public String title;
-    public String create_time;
-    public String comment;
-    public String admiration;
-    public String status;
+    public boolean hasmore;
+    public int page_total;
+
+    public class MyRewardCommentBean{
+        public String id;
+        public String u_id;
+        public String u_name;
+        public String board_id;
+        public String board_name;
+        public String title;
+        public String create_time;
+        public String comment;
+        public String admiration;
+        public String status;
+    }
+
 
 }

@@ -3,6 +3,7 @@ package com.help.reward.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
@@ -11,12 +12,10 @@ import com.base.recyclerview.OnRefreshListener;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.adapter.CouponTradingAdapter;
-import com.help.reward.adapter.MyAccountHelpRewardAdapter;
-import com.help.reward.bean.Response.HelpRewardResponse;
+import com.help.reward.bean.Response.CouponTradingResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
-import com.help.reward.rxbus.RxBus;
-import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -30,9 +29,12 @@ import rx.schedulers.Schedulers;
 
 public class CouponTradingFragment extends BaseFragment {
 
-    private int numSize = 15;
-    private int currentPage = 1;
-    private String requestType = "0";
+    private int numSize = 15; // 一页展示数量
+    public int currentPage = 1; // 当前页
+    private String order = "asc"; // 升序
+    public String storeName = ""; // 店铺名称
+    public String goodsname = ""; // 商品名称
+
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -42,8 +44,8 @@ public class CouponTradingFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if(bundle != null){
-            requestType = bundle.getString("type");
+        if (bundle != null) {
+            order = bundle.getString("order");
         }
     }
 
@@ -71,6 +73,8 @@ public class CouponTradingFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() { // 如果集合中没有数据，则进行刷新，否则不刷新
+                currentPage = 1;
+                initNetwork();
             }
         });
     }
@@ -85,15 +89,15 @@ public class CouponTradingFragment extends BaseFragment {
     }
 
     /***
-     * ?act=member_points&op=member_points_detail
+     * mobile/index.php?act=voucher&op=voucher_list
      */
     private void initNetwork() {
         PersonalNetwork
                 .getResponseApi()
-                .getMyHelpRewardResponse("member_points","member_points_detail",""+currentPage,App.APP_CLIENT_KEY,requestType)
+                .getCouponTradingResultResponse("voucher", "voucher_list", "" + currentPage, App.APP_CLIENT_KEY, storeName, order, goodsname)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<HelpRewardResponse>() {
+                .subscribe(new BaseSubscriber<CouponTradingResponse>() {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
@@ -102,15 +106,15 @@ public class CouponTradingFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onNext(HelpRewardResponse response) {
+                    public void onNext(CouponTradingResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                mCollectionGoodsAdapter.addAll(response.data.list);
-                                RxBus.getDefault().post(new MyAccountHelpRewardRxbusType(response.data.points));
-                            }
-                            if (currentPage == 1) {
-                                lRecyclerview.setPullRefreshEnabled(false);
+                                if (currentPage == 1) {
+                                    mCollectionGoodsAdapter.clear();
+                                    LogUtils.e("清除原来数据,返回集合长度是：" + response.data.voucher_list.size());
+                                }
+                                mCollectionGoodsAdapter.addAll(response.data.voucher_list);
                             }
                             if (!response.hasmore) { // 是否有更多数据
                                 lRecyclerview.setLoadMoreEnabled(false);
@@ -122,6 +126,16 @@ public class CouponTradingFragment extends BaseFragment {
                         }
                     }
                 });
+    }
+
+    /***
+     * 重置搜索条件
+     */
+    public void reset(int currentPage, String storeName, String goodsname) {
+        this.currentPage = currentPage;
+        this.storeName = storeName;
+        this.goodsname = goodsname;
+        initNetwork();
     }
 
 }

@@ -10,9 +10,14 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.MessageReadResponse;
 import com.help.reward.network.MessageNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.network.exception.ApiHttpResonseException;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateMessageDataRxbusType;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -51,6 +56,8 @@ public class MsgCenterActivity extends BaseActivity {
     ImageView ivMsgcenterSys;
     @BindView(R.id.layout_msgcenter_ss)
     RelativeLayout layoutMsgcenterSs;
+    @BindView(R.id.iv_msgcenter_account)
+    ImageView ivMsgcenterAccount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,13 +69,15 @@ public class MsgCenterActivity extends BaseActivity {
     }
 
     @OnClick({R.id.iv_title_back, R.id.layout_msgcenter_post, R.id.layout_msgcenter_deal,
-            R.id.layout_msgcenter_complain, R.id.layout_msgcenter_ss})
+            R.id.layout_msgcenter_complain, R.id.layout_msgcenter_ss,R.id.layout_msgcenter_account})
     public void onCLick(View v) {
         Intent intent = new Intent(mContext, PostActivity.class);
         //type 0为私信、1为系统消息、2为留言、3帖子动态、4账户消息、5交易信息、6投诉消息
         switch (v.getId()) {
             case R.id.iv_title_back:
                 finish();
+                ActivitySlideAnim.slideOutAnim(MsgCenterActivity.this);
+
                 break;
             case R.id.layout_msgcenter_post://帖子动态
                 intent.putExtra("type", "3");
@@ -86,15 +95,21 @@ public class MsgCenterActivity extends BaseActivity {
                 intent.putExtra("type", "1");
                 startActivity(intent);
                 break;
+            case R.id.layout_msgcenter_account://账户消息
+                intent.putExtra("type", "4");
+                startActivity(intent);
+                break;
+
         }
     }
 
     /**
      * 请求网络
      */
-
     private void requestData() {
-
+        if(App.APP_CLIENT_KEY == null){
+            return;
+        }
         subscribe = MessageNetwork
                 .getMessageApi()
                 .getMessageReadBean(App.APP_CLIENT_KEY, "new_msg_num")
@@ -136,6 +151,12 @@ public class MsgCenterActivity extends BaseActivity {
                             } else {
                                 ivMsgcenterComplain.setVisibility(View.GONE);
                             }
+                            if (response.data.account > 0) {
+                                ivMsgcenterAccount.setVisibility(View.VISIBLE);
+                            } else {
+                                ivMsgcenterAccount.setVisibility(View.GONE);
+                            }
+                            RxBus.getDefault().post(new UpdateMessageDataRxbusType(response.data.totalNew > 0));
 
                         } else {
                             ToastUtils.show(mContext, response.msg);

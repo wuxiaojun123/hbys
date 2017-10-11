@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:showDividers="middle"
     android:divider="@drawable/shape_divider_line"
-    >
+    android:orientation="vertical"
+    android:showDividers="middle">
 
     <include
         android:id="@+id/layout_title"
@@ -18,80 +17,70 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
             style="@style/style_add_address_text"
-            android:text="收货人"
-            />
+            android:text="收货人" />
 
         <EditText
             android:id="@+id/et_name"
             style="@style/style_add_address_edit"
-            android:hint="请输入收货人姓名"
-            />
+            android:hint="请输入收货人姓名" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
             style="@style/style_add_address_text"
-            android:text="联系手机"
-            />
+            android:text="联系手机" />
 
         <EditText
             android:id="@+id/et_phone_number"
             style="@style/style_add_address_edit"
             android:hint="请输入收货人手机号码"
-            />
+            android:inputType="number" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
             style="@style/style_add_address_text"
-            android:text="地区选择"
-            />
+            android:text="地区选择" />
 
-        <EditText
-            android:id="@+id/et_area"
+        <TextView
+            android:id="@+id/tv_area"
             style="@style/style_add_address_edit"
-            android:hint="请选择地区"
-            />
+            android:hint="请选择地区" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
             style="@style/style_add_address_text"
-            android:text="详细地址"
-            />
+            android:text="详细地址" />
 
         <EditText
             android:id="@+id/et_address"
             style="@style/style_add_address_edit"
-            android:hint="请输入详细地址"
-            />
+            android:hint="请输入详细地址" />
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_save_address"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="20dp"
@@ -100,7 +89,6 @@
         android:background="@drawable/shape_save_address_bg"
         android:text="保存地址"
         android:textColor="@color/color_while"
-        android:textSize="@dimen/dimen_15"
-        />
+        android:textSize="@dimen/dimen_15" />
 
 </LinearLayout>

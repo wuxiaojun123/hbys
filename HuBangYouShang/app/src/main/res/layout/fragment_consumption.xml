@@ -6,13 +6,18 @@
     android:background="@color/color_allbg"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_title_shop" />
+    <View
+        android:id="@+id/fake_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/statusbar_view_height"
+        android:background="@color/colorPrimary" />
+
+    <include layout="@layout/layout_search_textview" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        >
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +37,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/layout_shop_myaccount"
+                    android:id="@+id/layout_shop_type"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
@@ -42,7 +47,7 @@
                     <ImageView
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:src="@mipmap/account" />
+                        android:src="@mipmap/shoptype" />
 
                     <TextView
                         style="@style/style_text_lable"
@@ -50,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/content_margin"
                         android:gravity="center"
-                        android:text="@string/shop_lable1" />
+                        android:text="@string/shop_lable4" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -86,7 +91,7 @@
                     <ImageView
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:src="@mipmap/coupon" />
+                        android:src="@mipmap/img_coupon" />
 
                     <TextView
                         style="@style/style_text_lable"
@@ -98,7 +103,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layout_shop_type"
+                    android:id="@+id/layout_shop_cart"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
@@ -108,7 +113,7 @@
                     <ImageView
                         android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:src="@mipmap/shoptype" />
+                        android:src="@mipmap/cart" />
 
                     <TextView
                         style="@style/style_text_lable"
@@ -116,8 +121,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/content_margin"
                         android:gravity="center"
-                        android:text="@string/shop_lable4" />
+                        android:text="@string/shop_cart" />
                 </LinearLayout>
+
+
             </LinearLayout>
 
             <include layout="@layout/layout_shop_mall" />

@@ -23,4 +23,8 @@ public class MyCollectionStoreBean {
     public String store_avatar;
     public String store_avatar_url;
 
+    public String store_desccredit; // 描述
+    public String store_servicecredit; // 服务
+    public String store_deliverycredit; // 物流
+
 }

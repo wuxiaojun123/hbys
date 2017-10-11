@@ -7,6 +7,8 @@ import java.util.List;
  * {
  * "code": 200,
  * "msg": "操作成功",
+ * "hasmore": true,
+ "page_total": 2,
  * "data": [
  * {
  * "id": "1",
@@ -28,18 +30,25 @@ import java.util.List;
  * Created by wuxiaojun on 2017/3/1.
  */
 
-public class MyHelpCommentResponse extends BaseResponse<List<MyHelpCommentResponse>> {
+public class MyHelpCommentResponse extends BaseResponse<List<MyHelpCommentResponse.MyHelpCommentBean>> {
 
-    public String id;
-    public String u_id;
-    public String u_name;
-    public String board_id;
-    public String board_name;
-    public String title;
-    public String create_time;
-    public String comment;
-    public String offer;
-    public String status;
-    public boolean isSolved;
+    public boolean hasmore;
+    public int page_total;
+
+    public class MyHelpCommentBean{
+        public String id;
+        public String u_id;
+        public String u_name;
+        public String board_id;
+        public String board_name;
+        public String title;
+        public String create_time;
+        public String comment;
+        public String offer;
+        public String status;
+        public boolean isSolved;
+    }
+
+
 
 }

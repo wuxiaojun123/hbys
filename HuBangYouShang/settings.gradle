@@ -1,7 +1,13 @@
+//<<<<<<< HEAD
 include ':library_recycler', ':easeui', ':library_chat', ':pickerview', ':merchant'
+//=======
+//include ':app', ':library_recycler', ':easeui', ':library_chat', ':pickerview', ':sticknavlayout', ':library_address', ':library_getui'
+//>>>>>>> c0475fc72a5387e8dc7c0f01edf6afe03bcfe109
 
 include ':library_base'
 
 include ':library_pagerSlidingTabStrip'
+
+//include ':libqrcode'
 
 //include ':LRecyclerview_library'

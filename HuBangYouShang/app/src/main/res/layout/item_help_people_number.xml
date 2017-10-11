@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_spiline"
+    android:paddingBottom="1dp">
+
+    <RelativeLayout
+        android:id="@+id/layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_while"
+        android:padding="@dimen/layout_margin">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/style_text_lable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="文本标题"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/style_text_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true" />
+
+            <TextView
+                android:id="@+id/tv_body"
+                style="@style/style_text_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/tv_time"
+                android:ellipsize="end" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

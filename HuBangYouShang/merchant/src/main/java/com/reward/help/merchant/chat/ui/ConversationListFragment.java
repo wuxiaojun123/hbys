@@ -19,11 +19,10 @@ import com.reward.help.merchant.R;
 import com.reward.help.merchant.chat.Constant;
 import com.reward.help.merchant.chat.db.InviteMessgeDao;
 
-public class ConversationListFragment extends EaseConversationListFragment{
+public class ConversationListFragment extends EaseConversationListFragment {
 
     private TextView errorText;
     private Dialog dialog;
-
 
     @Override
     protected void initView() {
@@ -45,10 +44,11 @@ public class ConversationListFragment extends EaseConversationListFragment{
         mRlSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),GroupActivity.class).putExtra(GroupActivity.TAG,true));
+                startActivity(new Intent(getActivity(), GroupActivity.class).putExtra(GroupActivity.TAG, true));
             }
         });
     }
+
     @Override
     protected void setUpView() {
         super.setUpView();
@@ -65,11 +65,11 @@ public class ConversationListFragment extends EaseConversationListFragment{
                 else {
                     // TODO start chat acitivity
                     Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    if(conversation.isGroup()){
-                        if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
+                    if (conversation.isGroup()) {
+                        if (conversation.getType() == EMConversation.EMConversationType.ChatRoom) {
                             // it's group chat
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_CHATROOM);
-                        }else{
+                        } else {
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
                         }
 
@@ -83,10 +83,10 @@ public class ConversationListFragment extends EaseConversationListFragment{
             @Override
             public void onItemDeleteListener(int position) {
                 EMConversation tobeDeleteCons = conversationListView.getItem(position);
-    	        if (tobeDeleteCons == null) {
-    	            return ;
-    	        }
-                if(tobeDeleteCons.getType() == EMConversation.EMConversationType.GroupChat){
+                if (tobeDeleteCons == null) {
+                    return;
+                }
+                if (tobeDeleteCons.getType() == EMConversation.EMConversationType.GroupChat) {
                     EaseAtMessageHelper.get().removeAtMeGroup(tobeDeleteCons.conversationId());
                 }
                 try {
@@ -101,7 +101,7 @@ public class ConversationListFragment extends EaseConversationListFragment{
 
                 // update unread count
                 //((MainActivity) getActivity()).updateUnreadLabel();
-                }
+            }
         });
 
 
@@ -116,11 +116,11 @@ public class ConversationListFragment extends EaseConversationListFragment{
                 else {
                     // TODO start chat acitivity
                     Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    if(conversation.isGroup()){
-                        if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
+                    if (conversation.isGroup()) {
+                        if (conversation.getType() == EMConversation.EMConversationType.ChatRoom) {
                             // it's group chat
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_CHATROOM);
-                        }else{
+                        } else {
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
                         }
 
@@ -169,14 +169,14 @@ public class ConversationListFragment extends EaseConversationListFragment{
     @Override
     protected void onConnectionDisconnected() {
         super.onConnectionDisconnected();
-        if (NetUtils.hasNetwork(getActivity())){
-         errorText.setText(R.string.can_not_connect_chat_server_connection);
+        if (NetUtils.hasNetwork(getActivity())) {
+            errorText.setText(R.string.can_not_connect_chat_server_connection);
         } else {
-          errorText.setText(R.string.the_current_network);
+            errorText.setText(R.string.the_current_network);
         }
     }
-    
-    
+
+
 //    @Override
 //    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 //        getActivity().getMenuInflater().inflate(R.menu.em_delete_message, menu);

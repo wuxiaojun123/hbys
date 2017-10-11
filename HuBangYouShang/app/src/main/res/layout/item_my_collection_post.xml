@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.help.reward.view.SwipeMenuView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/id_ll_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@drawable/shape_divider_line"
         android:orientation="vertical"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:showDividers="beginning">
 
         <TextView
             android:id="@+id/tv_content"
@@ -103,12 +106,13 @@
                     android:textSize="@dimen/dimen_13" />
 
                 <TextView
+                    android:id="@+id/tv_type"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="5dp"
                     android:gravity="center_vertical"
-                    android:text="悬赏"
+                    android:text="@string/string_offer_reward"
                     android:textColor="@color/color_text_ad_score"
                     android:textSize="@dimen/dimen_13" />
 

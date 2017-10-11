@@ -12,7 +12,7 @@ import com.help.reward.bean.Response.MyHelpCommentResponse;
  * Created by wuxiaojun on 2017/2/26.
  */
 
-public class MyHelpCommentAdapter extends BaseRecyclerAdapter {
+public class MyHelpCommentAdapter extends BaseRecyclerAdapter<MyHelpCommentResponse.MyHelpCommentBean> {
 
     public MyHelpCommentAdapter(Context context) {
         super(context);
@@ -34,37 +34,16 @@ public class MyHelpCommentAdapter extends BaseRecyclerAdapter {
         TextView tv_help = holder.getView(R.id.tv_help);
 
 
-        MyHelpCommentResponse bean = (MyHelpCommentResponse) mDataList.get(position);
+        MyHelpCommentResponse.MyHelpCommentBean bean = mDataList.get(position);
 
         tv_content.setText(bean.title);
         tv_title.setText(bean.board_name);
-        tv_time.setText(DateUtil.getDateToString(Long.parseLong(bean.create_time)));
+        tv_time.setText(DateUtil.getDateToString(bean.create_time));
         tv_state.setText(bean.status);
         tv_post.setText(bean.comment);
         tv_reward.setText(bean.offer);
         tv_help.setText(bean.u_name);
 
     }
-
-
-    /*class HelpPostViewHolder extends SuperViewHolder{
-        *//*@BindView(R.id.tv_content)
-        TextView tv_content;
-        @BindView(R.id.tv_title)
-        TextView tv_title;
-        @BindView(R.id.tv_time)
-        TextView tv_time;
-        @BindView(R.id.tv_state)
-        TextView tv_state;
-        @BindView(R.id.tv_post)
-        TextView tv_post;
-        @BindView(R.id.tv_reward)
-        TextView tv_reward;*//*
-
-        public HelpPostViewHolder(View itemView) {
-            super(itemView);
-//            ButterKnife.bind(this,itemView);
-        }
-    }*/
 
 }

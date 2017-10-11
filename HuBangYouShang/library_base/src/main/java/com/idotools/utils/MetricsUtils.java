@@ -1,9 +1,6 @@
 package com.idotools.utils;
 
-import android.content.Context;
 import android.content.res.Resources;
-import android.util.DisplayMetrics;
-import android.view.WindowManager;
 
 /**
  * Created by wuxiaojun on 16-10-2.

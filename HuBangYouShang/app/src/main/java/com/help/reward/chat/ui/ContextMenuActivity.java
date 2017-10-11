@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.help.reward.R;
 import com.hyphenate.chat.EMMessage;
 import com.help.reward.chat.Constant;
 
@@ -39,22 +40,22 @@ public class ContextMenuActivity extends BaseActivity {
 					/*|| message.getBooleanAttribute(RPConstant.MESSAGE_ATTR_IS_RED_PACKET_MESSAGE, false)
 					|| message.getBooleanAttribute(RPConstant.MESSAGE_ATTR_IS_TRANSFER_PACKET_MESSAGE, false)*/){
 				    //end of red packet code
-				//setContentView(R.layout.em_context_menu_for_location);
+				setContentView(R.layout.em_context_menu_for_location);
 		    }else if(message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)){
-		        //setContentView(R.layout.em_context_menu_for_image);
+		        setContentView(R.layout.em_context_menu_for_image);
 		    }else{
-		       // setContentView(R.layout.em_context_menu_for_text);
+		        setContentView(R.layout.em_context_menu_for_text);
 		    }
 		} else if (type == EMMessage.Type.LOCATION.ordinal()) {
-		    //setContentView(R.layout.em_context_menu_for_location);
+			setContentView(R.layout.em_context_menu_for_location);
 		} else if (type == EMMessage.Type.IMAGE.ordinal()) {
-		    //setContentView(R.layout.em_context_menu_for_image);
+		    setContentView(R.layout.em_context_menu_for_image);
 		} else if (type == EMMessage.Type.VOICE.ordinal()) {
-		    //setContentView(R.layout.em_context_menu_for_voice);
+		    setContentView(R.layout.em_context_menu_for_voice);
 		} else if (type == EMMessage.Type.VIDEO.ordinal()) {
-			//setContentView(R.layout.em_context_menu_for_video);
+			setContentView(R.layout.em_context_menu_for_video);
 		} else if (type == EMMessage.Type.FILE.ordinal()) {
-		    //setContentView(R.layout.em_context_menu_for_location);
+		    setContentView(R.layout.em_context_menu_for_location);
 		}
 		if (isChatroom
 				//red packet code : 屏蔽红包消息、转账消息的撤回功能

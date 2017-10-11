@@ -8,16 +8,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.help.reward.R;
 import com.help.reward.fragment.BaseFragment;
-import com.help.reward.fragment.MyAccountHelpRewardFragment;
 import com.help.reward.fragment.MyGeneralVolumeFragment;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.MyAccountHelpRewardRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.StatusBarUtil;
 import com.idotools.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -45,6 +46,9 @@ public class MyGeneralVolumeActivity extends BaseActivity implements View.OnClic
     ViewPager viewPager;
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
+    @BindView(R.id.rl_content)
+    RelativeLayout rl_content;
+
 
     private Subscription subscribe;
     private List<BaseFragment> fragmentList;
@@ -85,6 +89,11 @@ public class MyGeneralVolumeActivity extends BaseActivity implements View.OnClic
 
     private void initEvent() {
 
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForImageViewInFragment(MyGeneralVolumeActivity.this, StatusBarUtil.DEFAULT_ALPHA, null);
     }
 
     /**

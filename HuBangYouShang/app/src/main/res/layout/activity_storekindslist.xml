@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title" />
+
+    <RelativeLayout
+        android:id="@+id/layout_all"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_msgcenter_item">
+
+        <TextView
+            android:id="@+id/id_tv_all_shop"
+            style="@style/style_text_lable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:gravity="center_vertical"
+            android:text="全部商品" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@mipmap/img_goods_detail_allow_right" />
+    </RelativeLayout>
+
+    <com.base.recyclerview.LRecyclerView
+        android:id="@+id/lv_srorekinds"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:layout_weight="1"
+        android:background="@drawable/bg_msgcenter_item"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+</LinearLayout>

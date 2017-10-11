@@ -1,8 +1,16 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -11,17 +19,17 @@ import android.widget.TextView;
 
 import com.help.reward.App;
 import com.help.reward.R;
-import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.bean.Response.RegisterResponse;
 import com.help.reward.bean.Response.VerificationCodeResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
-import com.help.reward.rxbus.RxBus;
+import com.help.reward.utils.ActivityManager;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.help.reward.utils.CountDownTimeUtils;
 import com.help.reward.utils.ValidateUtil;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.JudgeNetWork;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
@@ -31,6 +39,9 @@ import java.net.UnknownHostException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.smssdk.EventHandler;
+import cn.smssdk.OnSendMessageHandler;
+import cn.smssdk.SMSSDK;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -62,9 +73,45 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     EditText et_invitation_code; // 邀请code
     @BindView(R.id.cb_agreement)
     CheckBox cb_agreement; // 复选框
+    @BindView(R.id.tv_agreement)
+    TextView tv_agreement; // 用户协议
+
 
     private CountDownTimeUtils mTimer;
-    public String verificationCode; // 请求到的code
+    private EventHandler eh;
+
+
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            MyProcessDialog.closeDialog();
+            int event = msg.arg1;
+            int result = msg.arg2;
+            Object data = msg.obj;
+            if (result == SMSSDK.RESULT_COMPLETE) {
+                LogUtils.e("data：" + data);
+                //回调完成
+                if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                    //提交验证码成功
+                    LogUtils.e("提交验证码成功");
+                } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                    //获取验证码成功  开始计时
+                    LogUtils.e("获取验证码成功");
+                    tv_code.setClickable(false);
+                    mTimer.start();
+
+                } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
+                    //返回支持发送验证码的国家列表
+                    LogUtils.e("返回支持发送验证码的国家列表");
+                }
+            } else {
+                ((Throwable) data).printStackTrace();
+                LogUtils.e("注册接口中：data" + data);
+                ToastUtils.show(mContext, "发送验证码失败!请稍后重试");
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,11 +124,27 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void initData() {
         initTimer();
+        sms();
+    }
 
+
+    private void sms() {
+        SMSSDK.initSDK(this, Constant.SMS_APPKEY, Constant.SMS_APPSECRET);
+        eh = new EventHandler() {
+            @Override
+            public void afterEvent(int event, int result, Object data) {
+                Message msg = new Message();
+                msg.arg1 = event;
+                msg.arg2 = result;
+                msg.obj = data;
+                handler.sendMessage(msg);
+            }
+        };
+        SMSSDK.registerEventHandler(eh); //注册短信回调
     }
 
     private void initTimer() {
-        mTimer = new CountDownTimeUtils();
+        mTimer = new CountDownTimeUtils(CountDownTimeUtils.millisInFuture, CountDownTimeUtils.countDownInterval);
         mTimer.setOnCountDownTimeListener(new CountDownTimeUtils.OnCountDownTimeListener() {
             @Override
             public void onTick(long millisUntilFinished) { // 计时开始
@@ -99,9 +162,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void initView() {
         tv_title.setText(R.string.string_register_title);
         tv_title_right.setVisibility(View.GONE);
+        SpannableString spannableString = new SpannableString("我已阅读并同意《互帮有赏APP使用协议》");
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.actionsheet_blue)),
+                7, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tv_agreement.setText(spannableString);
     }
 
-    @OnClick({R.id.iv_title_back, R.id.tv_code, R.id.btn_register})
+    @OnClick({R.id.iv_title_back, R.id.tv_code, R.id.btn_register, R.id.tv_agreement})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -115,9 +182,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String registerUserName = et_phone_number.getText().toString().trim();
                 if (!TextUtils.isEmpty(registerUserName)) {
                     if (ValidateUtil.isMobile(registerUserName)) {
-                        LogUtils.e("点击获取code");
-                        tv_code.setClickable(false);
-                        requestVerificationCode(registerUserName);
+                        if (JudgeNetWork.isNetAvailable(mContext)) {
+                            MyProcessDialog.showDialog(mContext, "请稍等...", true, false);
+                            SMSSDK.getVerificationCode("86", registerUserName, new OnSendMessageHandler() {
+                                @Override
+                                public boolean onSendMessage(String s, String s1) {
+                                    LogUtils.e("OnSendMessageHandler中s=" + s + "==s1=" + s1);
+                                    return false;
+                                }
+                            });
+                            // 验证 验证码是否正确
+//                            SMSSDK.submitVerificationCode(); // s：86 s1:手机好 s2：验证码
+                        } else {
+                            ToastUtils.show(mContext, "请检查网络设置");
+                        }
                     } else {
                         ToastUtils.show(mContext, "手机号格式不正确");
                     }
@@ -130,45 +208,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 register();
 
                 break;
+            case R.id.tv_agreement: // 用户协议
+                // protocol/register
+                Intent mIntent = new Intent(RegisterActivity.this, WebviewActivity.class);
+                mIntent.putExtra("title", "用户协议");
+                mIntent.putExtra("op", "protocol");
+                startActivity(mIntent);
+                ActivitySlideAnim.slideInAnim(RegisterActivity.this);
+
+                break;
         }
-    }
-
-    /**
-     * 获取code
-     */
-    private void requestVerificationCode(String registerUserName) {
-//        MyProcessDialog.showDialog(mContext);
-        PersonalNetwork
-                .getLoginApi()
-                .getVerificationCodeBean(registerUserName, "1")
-                .subscribeOn(Schedulers.io()) // 请求放在io线程中
-                .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
-                .subscribe(new BaseSubscriber<VerificationCodeResponse>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        MyProcessDialog.closeDialog();
-                        e.printStackTrace();
-                        if (e instanceof UnknownHostException) {
-                            ToastUtils.show(mContext, "请求到错误服务器");
-                        } else if (e instanceof SocketTimeoutException) {
-                            ToastUtils.show(mContext, "请求超时");
-                        }
-                        tv_code.setClickable(true);
-                    }
-
-                    @Override
-                    public void onNext(VerificationCodeResponse res) {
-//                        MyProcessDialog.closeDialog();
-                        if (res.code == 200) { // 获取验证code成功
-                            mTimer.start();
-                            LogUtils.e("获取code成功" + res.data.sms_time);
-                            verificationCode = res.data.sms_time;
-                        } else {
-                            ToastUtils.show(mContext, res.msg);
-                            tv_code.setClickable(true);
-                        }
-                    }
-                });
     }
 
     /***
@@ -212,11 +261,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void requestRegister(String registerUserName, String registerPwd, String registerCode, String registerInvitationCode) {
+    private void requestRegister(String phone, String registerPwd, String registerCode, String registerInvitationCode) {
         MyProcessDialog.showDialog(mContext);
         PersonalNetwork
                 .getLoginApi()
-                .getRegisterBean(registerUserName,registerCode,registerPwd, Constant.PLATFORM_CLIENT)
+                .getRegisterBean(phone, registerCode, registerPwd, Constant.PLATFORM_CLIENT,registerInvitationCode)
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<RegisterResponse>() {
@@ -236,7 +285,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         MyProcessDialog.closeDialog();
                         if (res.code == 200) { // 获取验证code成功
                             App.APP_CLIENT_KEY = res.data.key;
-                            LogUtils.e("注册成功。。。"+res.data.username);
+
+                            finish();
+                            ActivitySlideAnim.slideOutAnim(RegisterActivity.this);
+                            LogUtils.e("注册成功。。。" + res.data.username);
                         } else {
                             ToastUtils.show(mContext, res.msg);
                         }
@@ -250,6 +302,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             mTimer.cancel();
             mTimer = null;
         }
+        SMSSDK.unregisterEventHandler(eh); //注册短信回调
         super.onDestroy();
     }
 }

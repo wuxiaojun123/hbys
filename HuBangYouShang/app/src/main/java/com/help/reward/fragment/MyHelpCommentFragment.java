@@ -1,5 +1,6 @@
 package com.help.reward.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,8 +10,11 @@ import android.view.ViewGroup;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnItemClickListener;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.activity.HelpRewardInfoActivity;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
@@ -32,17 +36,13 @@ import rx.schedulers.Schedulers;
 public class MyHelpCommentFragment extends BaseFragment {
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     private MyHelpCommentAdapter myHelpCommentAdapter;
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
-
-
-    /*@Override
-    protected int getLayoutId() {
-        return R.layout.fragment_my_help_comment;
-    }*/
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
     @Nullable
     @Override
@@ -61,10 +61,13 @@ public class MyHelpCommentFragment extends BaseFragment {
     }
 
     private void initNetwork() {
-        lRecyclerview.refresh();
+        if(App.APP_CLIENT_KEY == null){
+            return;
+        }
+        // ?act=member_index&op=my_seek_help
         PersonalNetwork
                 .getResponseApi()
-                .getMyHelpCommentResponse("comment", App.APP_CLIENT_KEY)
+                .getMyHelpCommentResponse("member_index","my_seek_help",currentPage+"","comment", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyHelpCommentResponse>() {
@@ -79,11 +82,19 @@ public class MyHelpCommentFragment extends BaseFragment {
                     public void onNext(MyHelpCommentResponse response) {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
-                            LogUtils.e("获取数据成功。。。。"+response.data.size());
+                            LogUtils.e("获取数据成功。。。。"+response.data.size()+"----"+response.hasmore+"---"+response.page_total);
                             if (response.data != null) {
-                                myHelpCommentAdapter.addAll(response.data);
+                                if(currentPage == 1){
+                                    myHelpCommentAdapter.setDataList(response.data);
+                                }else{
+                                    myHelpCommentAdapter.addAll(response.data);
+                                }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
+                            if(!response.hasmore){
+                                lRecyclerview.setNoMore(true);
+                            }else{
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -94,17 +105,30 @@ public class MyHelpCommentFragment extends BaseFragment {
     private void initRecyclerView() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         myHelpCommentAdapter = new MyHelpCommentAdapter(mContext);
-        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(myHelpCommentAdapter);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(myHelpCommentAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
         initLoadMoreListener();
+        initOnItemListener();
+    }
+
+    private void initOnItemListener() {
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(mContext, HelpRewardInfoActivity.class);
+                intent.putExtra("id", myHelpCommentAdapter.getDataList().get(position).id);
+                startActivity(intent);
+                ActivitySlideAnim.slideInAnim(getActivity());
+            }
+        });
     }
 
     private void initLoadMoreListener() {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                initNetwork();
             }
         });
     }
@@ -113,7 +137,8 @@ public class MyHelpCommentFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                    LogUtils.e("执行onRefresh方法");
+                currentPage = 1;
+                initNetwork();
             }
         });
     }

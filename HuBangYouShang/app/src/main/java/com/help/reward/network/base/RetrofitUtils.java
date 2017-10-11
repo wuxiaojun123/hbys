@@ -1,7 +1,9 @@
 package com.help.reward.network.base;
 
+import com.google.gson.GsonBuilder;
 import com.help.reward.App;
 import com.help.reward.utils.Constant;
+import com.idotools.utils.LogUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -30,8 +32,32 @@ public class RetrofitUtils {
 
     private static Retrofit mRetrofit;
     private static Retrofit mCookieRetrofit;
+    private static Retrofit notsetCookieRetrofit;
 
     public static Retrofit getRetrofit() {
+        if (App.APP_CLIENT_COOKIE != null) {
+            return getRetrofitCookie();
+        }
+        if (notsetCookieRetrofit == null) {
+            OkHttpClient mOkHttpClient = new OkHttpClient()
+                    .newBuilder()
+                    .connectTimeout(20, TimeUnit.SECONDS)
+                    .readTimeout(20, TimeUnit.SECONDS)
+                    .writeTimeout(20, TimeUnit.SECONDS)
+                    .build();
+
+            notsetCookieRetrofit = new Retrofit.Builder()
+                    .client(mOkHttpClient)
+                    .baseUrl(Constant.BASE_URL)
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxjavaCallAdapterFactory)
+                    .build();
+        }
+        return notsetCookieRetrofit;
+    }
+
+
+    public static Retrofit getSetCookieRetrofit() {
         if (mRetrofit == null) {
             OkHttpClient mOkHttpClient = new OkHttpClient()
                     .newBuilder()
@@ -58,10 +84,10 @@ public class RetrofitUtils {
                     .addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
-                            if(App.APP_CLIENT_COOKIE != null){
+                            if (App.APP_CLIENT_COOKIE != null) {
                                 Request request = chain.request().newBuilder().addHeader("Cookie", App.APP_CLIENT_COOKIE).build();
                                 return chain.proceed(request);
-                            }else{
+                            } else {
                                 return null;
                             }
                         }
@@ -80,5 +106,7 @@ public class RetrofitUtils {
         }
         return mCookieRetrofit;
     }
+
+
 
 }

@@ -21,30 +21,34 @@
         android:src="@mipmap/classification_store"
         android:scaleType="center"
         />
-    <EditText
+
+    <com.help.reward.view.SearchEditTextView
         android:id="@+id/et_shop_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:gravity="center_vertical"
         android:layout_marginBottom="8dp"
+        android:hint="@string/shop_lable11"
         android:layout_marginTop="8dp"
         android:drawablePadding="6dp"
         android:background="@drawable/shape_search_background"
         android:drawableLeft="@mipmap/img_search"
         android:drawableRight="@mipmap/img_search_close"
-        android:hint="@string/shop_lable11"
+        android:imeOptions="actionSearch"
         android:textColor="@color/color_while"
+        android:inputType="text"
+        android:maxLines="1"
         android:textSize="@dimen/dimen_13"
         android:textColorHint="@color/color_while"
         android:layout_toLeftOf="@+id/iv_shopinfo_title_type"
         android:layout_toRightOf="@+id/iv_shopinfo_title_back"
         />
-
     <ImageView
         android:id="@+id/iv_shopinfo_title_more"
         android:layout_width="@dimen/dimen_50"
         android:layout_height="match_parent"
-        android:src="@mipmap/img_back"
+        android:src="@mipmap/store_menu"
         android:scaleType="center"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"

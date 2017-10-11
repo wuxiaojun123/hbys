@@ -75,7 +75,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 	// user account was removed
 	private boolean isCurrentAccountRemoved = false;
 
-
 	@BindView(R.id.radio_chat)
 	RadioButton radio_chat;//聊天
 	@BindView(R.id.radio_group)

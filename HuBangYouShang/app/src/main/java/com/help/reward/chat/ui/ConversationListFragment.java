@@ -20,18 +20,18 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.help.reward.App;
 import com.help.reward.activity.MainActivity;
 import com.help.reward.chat.Constant;
+import com.help.reward.chat.adapter.EaseConversationAdapter;
 import com.help.reward.chat.db.InviteMessgeDao;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
-import com.hyphenate.easeui.adapter.EaseConversationAdapter;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
-import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.util.NetUtils;
 import com.help.reward.R;
 
-public class ConversationListFragment extends EaseConversationListFragment{
+public class ConversationListFragment extends EaseConversationListFragment {
 
     private TextView errorText;
     private Dialog dialog;
@@ -57,12 +57,31 @@ public class ConversationListFragment extends EaseConversationListFragment{
         mRlSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),GroupActivity.class).putExtra(GroupActivity.TAG,true));
+                startActivity(new Intent(getActivity(), GroupActivity.class).putExtra(GroupActivity.TAG, true));
             }
         });
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            setUpView();
+        }
+    }
+
     @Override
     protected void setUpView() {
+
+        if (App.APP_CLIENT_KEY == null) {
+            errorText.setText(R.string.can_not_connect_chat_server_connection);
+            //return;
+            handler.sendEmptyMessage(0);
+            return;
+        } else {
+            handler.sendEmptyMessage(1);
+        }
+
         super.setUpView();
         // register context menu
         registerForContextMenu(conversationListView);
@@ -77,11 +96,11 @@ public class ConversationListFragment extends EaseConversationListFragment{
                 else {
                     // TODO start chat acitivity
                     Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    if(conversation.isGroup()){
-                        if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
+                    if (conversation.isGroup()) {
+                        if (conversation.getType() == EMConversation.EMConversationType.ChatRoom) {
                             // it's group chat
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_CHATROOM);
-                        }else{
+                        } else {
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
                         }
 
@@ -95,10 +114,10 @@ public class ConversationListFragment extends EaseConversationListFragment{
             @Override
             public void onItemDeleteListener(int position) {
                 EMConversation tobeDeleteCons = conversationListView.getItem(position);
-    	        if (tobeDeleteCons == null) {
-    	            return ;
-    	        }
-                if(tobeDeleteCons.getType() == EMConversation.EMConversationType.GroupChat){
+                if (tobeDeleteCons == null) {
+                    return;
+                }
+                if (tobeDeleteCons.getType() == EMConversation.EMConversationType.GroupChat) {
                     EaseAtMessageHelper.get().removeAtMeGroup(tobeDeleteCons.conversationId());
                 }
                 try {
@@ -113,7 +132,7 @@ public class ConversationListFragment extends EaseConversationListFragment{
 
                 // update unread count
                 ((MainActivity) getActivity()).updateUnreadLabel();
-                }
+            }
         });
 
 
@@ -128,11 +147,11 @@ public class ConversationListFragment extends EaseConversationListFragment{
                 else {
                     // TODO start chat acitivity
                     Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    if(conversation.isGroup()){
-                        if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
+                    if (conversation.isGroup()) {
+                        if (conversation.getType() == EMConversation.EMConversationType.ChatRoom) {
                             // it's group chat
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_CHATROOM);
-                        }else{
+                        } else {
                             intent.putExtra(Constant.EXTRA_CHAT_TYPE, Constant.CHATTYPE_GROUP);
                         }
 
@@ -179,16 +198,22 @@ public class ConversationListFragment extends EaseConversationListFragment{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    @Override
     protected void onConnectionDisconnected() {
         super.onConnectionDisconnected();
-        if (NetUtils.hasNetwork(getActivity())){
-         errorText.setText(R.string.can_not_connect_chat_server_connection);
+        if (NetUtils.hasNetwork(getActivity())) {
+            errorText.setText(R.string.can_not_connect_chat_server_connection);
         } else {
-          errorText.setText(R.string.the_current_network);
+            errorText.setText(R.string.the_current_network);
         }
     }
-    
-    
+
+
 //    @Override
 //    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 //        getActivity().getMenuInflater().inflate(R.menu.em_delete_message, menu);

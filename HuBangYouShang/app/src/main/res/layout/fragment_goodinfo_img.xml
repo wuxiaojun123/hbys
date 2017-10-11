@@ -3,9 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <WebView
+        android:id="@+id/wb_load"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+    </WebView>
+
     <TextView
+        android:id="@+id/tv_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="图片详情"/>
+        android:text="暂无详情"
+        android:visibility="gone"/>
 </LinearLayout>

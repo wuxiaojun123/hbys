@@ -45,7 +45,7 @@
         <TextView
             android:id="@+id/tv_login_pwd"
             style="@style/style_my_account_text_item"
-            android:text="登陆密码" />
+            android:text="登录密码" />
 
         <TextView
             android:id="@+id/tv_payment_pwd"

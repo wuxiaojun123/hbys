@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_195"
+        android:background="@mipmap/img_myaccount_head_bg"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/fake_status_bar"
+            style="@style/style_fake_status_bar_height"
+            android:alpha="0" />
+
+        <include layout="@layout/layout_my_account_head" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:divider="@drawable/shape_divider_line"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+            <LinearLayout
+                style="@style/style_my_account_ll"
+                >
+
+                <TextView
+                    android:id="@+id/tv_help_count"
+                    style="@style/style_my_account_text_balance"
+                    android:text="0"
+                    />
+
+                <TextView
+                    style="@style/style_my_account_text_title"
+                    android:text="帮助人数"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/style_my_account_ll">
+
+                <TextView
+                    android:id="@+id/tv_complaint"
+                    style="@style/style_my_account_text_balance"
+                    android:text="0" />
+
+                <TextView
+                    style="@style/style_my_account_text_title"
+                    android:text="投诉个数" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/style_my_account_ll"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_complainted"
+                    style="@style/style_my_account_text_balance"
+                    android:text="0" />
+
+                <TextView
+                    style="@style/style_my_account_text_title"
+                    android:text="被投诉个数" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:background="@color/color_while"
+        app:pstsIndicatorColor="@color/color_f6"
+        app:pstsIndicatorHeight="2dp"
+        app:pstsShouldExpand="true"
+        app:pstsTabTextColor="@color/color_3a"
+        app:pstsTabTextSize="@dimen/dimen_14" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/id_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

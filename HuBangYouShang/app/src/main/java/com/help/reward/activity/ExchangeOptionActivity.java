@@ -52,14 +52,13 @@ public class ExchangeOptionActivity extends BaseActivity implements View.OnClick
 
                 break;
             case R.id.tv_balance_exchange:
-                // 余额兑换通用卷
-                startActivity(new Intent(ExchangeOptionActivity.this, BalanceExchangeHelpScoreActivity.class));
+                // 余额兑换通用劵
+                startActivity(new Intent(ExchangeOptionActivity.this, BalanceExchangeVolumeActivity.class));
                 ActivitySlideAnim.slideInAnim(ExchangeOptionActivity.this);
-
 
                 break;
             case R.id.tv_bonus_points:
-                // 帮赏分兑换通用卷
+                // 帮赏分兑换通用劵
                 startActivity(new Intent(ExchangeOptionActivity.this, GeneralExchangeVolumeActivity.class));
                 ActivitySlideAnim.slideInAnim(ExchangeOptionActivity.this);
 

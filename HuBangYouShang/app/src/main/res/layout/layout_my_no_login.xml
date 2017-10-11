@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_not_logged_in"
     android:layout_width="match_parent"
     android:layout_height="155dp"
     android:background="@mipmap/img_my_login"
-    android:orientation="vertical"
-    android:id="@+id/ll_height"
-    >
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/fake_status_bar"
+        style="@style/style_fake_status_bar_height"
+        android:alpha="0" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,13 +25,38 @@
             android:paddingRight="10dp"
             android:src="@mipmap/img_person_setting" />
 
-        <ImageView
+        <LinearLayout
+            android:id="@+id/layout_help_title_sms"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:src="@mipmap/img_person_email" />
+            android:paddingRight="10dp">
+
+            <ImageView
+                android:id="@+id/tv_msg"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/img_person_email" />
+
+            <TextView
+                android:id="@+id/tv_title_help_msgcount"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="-8dp"
+                android:background="@drawable/bg_reddot"
+                android:gravity="center"
+                android:padding="2dp"
+                android:textColor="@color/color_while"
+                android:textSize="10sp"
+                android:visibility="invisible" />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -38,7 +67,7 @@
 
         <ImageView
             android:id="@+id/iv_photo"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:src="@mipmap/img_my_default_photo" />
@@ -61,8 +90,8 @@
                     android:id="@+id/tv_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="登陆/"
                     android:gravity="center_horizontal"
+                    android:text="登录/"
                     android:textColor="@color/color_while"
                     android:textSize="@dimen/dimen_15" />
 
@@ -70,18 +99,19 @@
                     android:id="@+id/tv_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="注册"
                     android:gravity="center_horizontal"
+                    android:text="注册"
                     android:textColor="@color/color_while"
                     android:textSize="@dimen/dimen_15" />
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_user_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="这里是用户等级"
                 android:gravity="center_horizontal"
+                android:text="这里是用户等级"
                 android:textColor="@color/color_while"
                 android:textSize="@dimen/dimen_12" />
 
@@ -106,12 +136,12 @@
         android:divider="@drawable/shape_divider_line"
         android:orientation="horizontal"
         android:showDividers="middle"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <LinearLayout style="@style/style_my_account_ll">
 
             <TextView
+                android:id="@+id/tv_help_num"
                 style="@style/style_my_account_text_balance"
                 android:text="0" />
 
@@ -124,6 +154,7 @@
         <LinearLayout style="@style/style_my_account_ll">
 
             <TextView
+                android:id="@+id/tv_account_help_reward"
                 style="@style/style_my_account_text_balance"
                 android:text="0" />
 
@@ -138,6 +169,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tv_number_of_complaints"
                 style="@style/style_my_account_text_balance"
                 android:text="0" />
 
@@ -150,6 +182,7 @@
         <LinearLayout style="@style/style_my_account_ll">
 
             <TextView
+                android:id="@+id/tv_number_of_complaints2"
                 style="@style/style_my_account_text_balance"
                 android:text="0" />
 

@@ -1,92 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
         <include layout="@layout/layout_title" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/img_about_our" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="关于我们，我有话要说。我们的努力，希望能够让您的生活更加美好。关于我们，我有话要说，我们的努力希望能够让你的生活更加美好"
-            android:textColor="@color/color_3a"
-            android:textSize="@dimen/dimen_13"
-            android:paddingLeft="10dp"
-            />
+    <WebView
+        android:id="@+id/id_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="我们的服务"
-            android:textColor="@color/color_3a"
-            android:textSize="@dimen/dimen_15"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="关于我们，我有话要说。我们的努力，希望能够让您的生活更加美好。关于我们，我有话要说，我们的努力希望能够让你的生活更加美好"
-            android:textColor="@color/color_3a"
-            android:textSize="@dimen/dimen_13"
-            android:paddingLeft="10dp"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="联系我们"
-            android:textColor="@color/color_3a"
-            android:textSize="@dimen/dimen_15"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="地址：北京市海淀区中关村南街4号中科院软件园1号楼\n电话：010-11111111\n邮箱：ffffff@qq.com"
-            android:textColor="@color/color_3a"
-            android:textSize="@dimen/dimen_13"
-            android:paddingLeft="10dp"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="5dp"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/color_79"
-            android:layout_marginTop="20dp"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="地址：北京市海淀区中关村南街4号中科院软件园1号楼"
-            android:textColor="@color/color_79"
-            android:textSize="@dimen/dimen_12"
-            android:gravity="center"
-            />
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

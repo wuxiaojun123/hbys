@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.help.reward.view.SwipeMenuView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="80dp"
+    android:layout_width="match_parent"
+    android:layout_height="81dp"
+    android:background="@drawable/bg_bottom_line"
     android:clickable="true"
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/id_ll_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@drawable/shape_divider_line"
         android:orientation="horizontal"
-        >
+        android:showDividers="beginning">
 
         <ImageView
             android:id="@+id/iv_store"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:scaleType="fitXY"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            />
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_margin="10dp"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -42,13 +43,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                >
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_describe_title"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
@@ -61,14 +62,14 @@
                     android:id="@+id/tv_describe"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="3"
-                    android:textColor="@color/color_bf"
-                    android:textSize="@dimen/dimen_12"
                     android:layout_marginRight="5dp"
-                    />
+                    android:gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/color_bf"
+                    android:textSize="@dimen/dimen_12" />
 
                 <TextView
+                    android:id="@+id/tv_server_title"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
@@ -81,18 +82,18 @@
                     android:id="@+id/tv_server"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="3"
-                    android:textColor="@color/color_bf"
-                    android:textSize="@dimen/dimen_12"
                     android:layout_marginRight="5dp"
-                    />
+                    android:gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/color_bf"
+                    android:textSize="@dimen/dimen_12" />
 
                 <TextView
+                    android:id="@+id/tv_logistics_title"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="5dp"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginRight="5dp"
                     android:gravity="center_vertical"
                     android:text="物流："
                     android:textColor="@color/color_bf"
@@ -103,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="4"
+                    android:text="0"
                     android:textColor="@color/color_bf"
                     android:textSize="@dimen/dimen_12" />
 
@@ -113,8 +114,8 @@
                 android:id="@+id/tv_collection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="bottom"
                 android:layout_gravity="bottom"
+                android:gravity="bottom"
                 android:text="10人关注"
                 android:textColor="@color/color_fa"
                 android:textSize="@dimen/dimen_13" />
@@ -128,9 +129,9 @@
         android:layout_width="70dp"
         android:layout_height="match_parent"
         android:background="@color/color_fa"
-        android:text="@string/string_remove"
-        android:textSize="@dimen/dimen_15"
         android:gravity="center"
-        android:textColor="@android:color/white" />
+        android:text="@string/string_remove"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/dimen_15" />
 
 </com.help.reward.view.SwipeMenuView>

@@ -8,10 +8,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.help.reward.R;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.HelpCommitRxbusType;
+import com.help.reward.utils.ActivitySlideAnim;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * 发布帖子
@@ -30,7 +35,7 @@ public class ReleaseActivity extends BaseActivity {
     TextView tvReleaseHelp;
     @BindView(R.id.tv_release_rewards)
     TextView tvReleaseRewards;
-
+    private Subscription rxSubscribe;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +47,7 @@ public class ReleaseActivity extends BaseActivity {
     private void initView() {
         tvTitle.setText("发布帖子");
         tvTitleRight.setVisibility(View.GONE);
+        getRxBusData();
     }
     @OnClick({R.id.iv_title_back,R.id.tv_release_help,R.id.tv_release_rewards})
     void onCLick(View v){
@@ -56,5 +62,27 @@ public class ReleaseActivity extends BaseActivity {
                 startActivity(new Intent(mContext,ReleaseRewardActivity.class));
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        if (rxSubscribe != null && !rxSubscribe.isUnsubscribed()) {
+            rxSubscribe.unsubscribe();
+        }
+        super.onDestroy();
+        ActivitySlideAnim.slideOutAnim(this);
+    }
+
+    /**
+     * 获取rxbus传递过来的数据,刷新
+     */
+    private void getRxBusData() {
+        rxSubscribe = RxBus.getDefault().toObservable(HelpCommitRxbusType.class).subscribe(new Action1<HelpCommitRxbusType>() {
+            @Override
+            public void call(HelpCommitRxbusType type) {
+                finish();
+            }
+        });
     }
 }

@@ -1,5 +1,6 @@
 package com.help.reward.network;
 
+import com.help.reward.App;
 import com.help.reward.network.api.LoginApi;
 import com.help.reward.network.api.PersonalApi;
 import com.help.reward.network.base.RetrofitUtils;
@@ -12,7 +13,7 @@ public class PersonalNetwork {
 
     // 登录api
     public static LoginApi getLoginApi() {
-        return RetrofitUtils.getRetrofit().create(LoginApi.class);
+        return RetrofitUtils.getSetCookieRetrofit().create(LoginApi.class);
     }
 
     // 获取个人的信息

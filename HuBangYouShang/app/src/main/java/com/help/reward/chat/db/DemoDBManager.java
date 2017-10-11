@@ -373,4 +373,64 @@ public class DemoDBManager {
 		}
 		return users;
 	}
+
+    public Map<String,TopUser> getTopUserList() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Map<String, TopUser> users = new Hashtable<String, TopUser>();
+        if (db.isOpen()) {
+            Cursor cursor = db.rawQuery("select * from " + TopUserDao.TABLE_NAME /* + " desc" */, null);
+            while (cursor.moveToNext()) {
+                String username = cursor.getString(cursor.getColumnIndex(TopUserDao.COLUMN_NAME_ID));
+                String isGroup = cursor.getString(cursor.getColumnIndex(TopUserDao.COLUMN_NAME_IS_GROUP));
+                Long time = cursor.getLong(cursor.getColumnIndex(TopUserDao.COLUMN_NAME_TIME));
+
+                TopUser topUser = new TopUser();
+                topUser.setTopuser_id(username);
+                topUser.setIs_group(isGroup);
+                topUser.setTime(time);
+
+//                if (username.equals(Constant.NEW_FRIENDS_USERNAME) || username.equals(Constant.GROUP_USERNAME)
+//                        || username.equals(Constant.CHAT_ROOM)|| username.equals(Constant.CHAT_ROBOT)) {
+//                    user.setInitialLetter("");
+//                } else {
+//                    EaseCommonUtils.setUserInitialLetter(user);
+//                }
+                users.put(username, topUser);
+            }
+            cursor.close();
+        }
+        return users;
+    }
+
+    public void setTopUserList(List<TopUser> contactList) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (db.isOpen()) {
+            db.delete(TopUserDao.TABLE_NAME, null, null);
+            for (TopUser topUser : contactList) {
+                ContentValues values = new ContentValues();
+                values.put(TopUserDao.COLUMN_NAME_ID, topUser.getTopuser_id());
+                values.put(TopUserDao.COLUMN_NAME_IS_GROUP, topUser.getIs_group());
+                values.put(TopUserDao.COLUMN_NAME_TIME, topUser.getTime());
+                db.replace(TopUserDao.TABLE_NAME, null, values);
+            }
+        }
+    }
+
+    synchronized  public void saveTopUser(TopUser topUser) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TopUserDao.COLUMN_NAME_ID, topUser.getTopuser_id());
+        values.put(TopUserDao.COLUMN_NAME_IS_GROUP, topUser.getIs_group());
+        values.put(TopUserDao.COLUMN_NAME_TIME, topUser.getTime());
+        if(db.isOpen()){
+            db.replace(TopUserDao.TABLE_NAME, null, values);
+        }
+    }
+
+    public void deleteTopUser(TopUser topUser) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if(db.isOpen()){
+            db.delete(TopUserDao.TABLE_NAME, TopUserDao.COLUMN_NAME_ID + " = ?", new String[]{topUser.getTopuser_id()});
+        }
+    }
 }

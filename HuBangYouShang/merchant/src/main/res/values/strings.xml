@@ -59,4 +59,13 @@
 
     <string name="no_coupon">暂无可发放的优惠券</string>
     <string name="send_coupon">发优惠券</string>
+
+    <!--弹窗-->
+    <string name="string_system_prompt">系统提示</string>
+    <string name="string_watch_ad_get_scroe">恭喜您获得5帮赏分</string>
+    <string name="num_dialog_show">购买数量</string>
+    <string name="canclebtn">取消</string>
+    <string name="surebtn">确定</string>
+
+
 </resources>

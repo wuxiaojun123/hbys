@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,8 +29,15 @@ import butterknife.OnClick;
  * <p>
  * Created by wuxiaojun on 2017/1/10.
  */
-
 public class MyOrderActivity extends BaseActivity implements View.OnClickListener {
+
+    public static final String STATE_TYPE = "state_type";
+    public static final String STATE_TYPE_DEFAULT = "";
+    public static final String STATE_TYPE_NEW = "state_new"; // 未付款
+    public static final String STATE_TYPE_SEND = "state_send"; // 待收货
+    public static final String STATE_TYPE_NOEVAL = "state_noeval"; // 待评价
+    public static final String STATE_TYPE_NOTAKES = "state_notakes"; // 退款、收货
+
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -42,8 +50,7 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
-
-    private MyFragmentPageAdapter mAdapter;
+    private int firstPage; // 第一次进来显示哪一个页面
     private List<BaseFragment> fragmentList;
 
     @Override
@@ -51,6 +58,7 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
         ButterKnife.bind(this);
+        firstPage = getIntent().getIntExtra("firstPage", 0);
 
         initView();
         initEvent();
@@ -64,14 +72,42 @@ public class MyOrderActivity extends BaseActivity implements View.OnClickListene
 
     private void initData() {
         fragmentList = new ArrayList<>(5);
-        fragmentList.add(new MyOrderAllFragment());
-        fragmentList.add(new MyOrderAllFragment());
-        fragmentList.add(new MyOrderAllFragment());
-        fragmentList.add(new MyOrderAllFragment());
-        fragmentList.add(new MyOrderAllFragment());
-        viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));
+        MyOrderAllFragment allFragment = new MyOrderAllFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putString(STATE_TYPE, STATE_TYPE_DEFAULT);
+        allFragment.setArguments(bundle1);
+
+        MyOrderAllFragment fragment2 = new MyOrderAllFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putString(STATE_TYPE, STATE_TYPE_NEW);
+        fragment2.setArguments(bundle2);
+
+        MyOrderAllFragment fragment3 = new MyOrderAllFragment();
+        Bundle bundle3 = new Bundle();
+        bundle3.putString(STATE_TYPE, STATE_TYPE_SEND);
+        fragment3.setArguments(bundle3);
+
+        MyOrderAllFragment fragment4 = new MyOrderAllFragment();
+        Bundle bundle4 = new Bundle();
+        bundle4.putString(STATE_TYPE, STATE_TYPE_NOEVAL);
+        fragment4.setArguments(bundle4);
+
+        MyOrderAllFragment fragment5 = new MyOrderAllFragment();
+        Bundle bundle5 = new Bundle();
+        bundle5.putString(STATE_TYPE, STATE_TYPE_NOTAKES);
+        fragment5.setArguments(bundle5);
+
+        fragmentList.add(allFragment);
+        fragmentList.add(fragment2);
+        fragmentList.add(fragment3);
+        fragmentList.add(fragment4);
+        fragmentList.add(fragment5);
+        MyFragmentPageAdapter myFragmentPageAdapter = new MyFragmentPageAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(myFragmentPageAdapter);
         tabStrip.setViewPager(viewPager);
         viewPager.setOffscreenPageLimit(5);
+        // 显示那一个fragment
+        viewPager.setCurrentItem(firstPage);
     }
 
     private void initEvent() {

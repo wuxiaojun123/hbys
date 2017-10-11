@@ -1,3 +1,4 @@
+/*
 package com.reward.help.merchant.utils;
 
 import android.app.Activity;
@@ -20,29 +21,35 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+*/
 /**
  * --------------------------------------------
  * Create By :  Lvfq
  * Date ： 2016/8/25 0025 下午 5:50
  * -------------------------------------------
- **/
+ **//*
+
 public class PickerUtils {
 
-    /**
+    */
+/**
      * 时间选择回调
-     */
+     *//*
+
     public interface TimerPickerCallBack {
         void onTimeSelect(String date);
     }
 
-    /**
+    */
+/**
      * 弹出时间选择
      *
      * @param context
      * @param type     TimerPickerView 中定义的 选择时间类型
      * @param format   时间格式化
      * @param callBack 时间选择回调
-     */
+     *//*
+
     public static void alertTimerPicker(Context context, TimePickerView.Type type, final String format, final TimerPickerCallBack callBack) {
         TimePickerView pvTime = new TimePickerView(context, type);
         //控制时间范围
@@ -67,20 +74,24 @@ public class PickerUtils {
     }
 
 
-    /**
+    */
+/**
      * 底部滚轮点击事件回调
-     */
+     *//*
+
     public interface OnWheelViewClick {
         void onClick(View view, int postion);
     }
 
-    /**
+    */
+/**
      * 弹出底部滚轮选择
      *
      * @param context
      * @param list
      * @param click
-     */
+     *//*
+
     public static void alertBottomWheelOption(Context context, ArrayList<?> list, final OnWheelViewClick click) {
 
         final PopupWindow popupWindow = new PopupWindow();
@@ -129,3 +140,4 @@ public class PickerUtils {
         popupWindow.showAtLocation(((ViewGroup) ((Activity) context).findViewById(android.R.id.content)).getChildAt(0), Gravity.CENTER, 0, 0);
     }
 }
+*/

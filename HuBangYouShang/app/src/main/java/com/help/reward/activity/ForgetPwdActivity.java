@@ -9,14 +9,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.bean.CertificationResponse;
+import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.VerificationCodeResponse;
 import com.help.reward.network.PersonalNetwork;
+import com.help.reward.network.api.LoginApi;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.CountDownTimeUtils;
+import com.help.reward.utils.SmsSDKUtils;
 import com.help.reward.utils.ValidateUtil;
-import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
@@ -52,7 +56,7 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
     EditText et_code;
 
     private CountDownTimeUtils mTimer;
-    public String verificationCode; // 请求到的code
+    private SmsSDKUtils smsSDKUtils;
 
 
     @Override
@@ -65,17 +69,31 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initView() {
-        tv_title.setText(R.string.string_identity_title);
+        String title = getIntent().getStringExtra("title");
+        if (!TextUtils.isEmpty(title)) {
+            // 忘记密码
+            tv_title.setText(title);
+            et_phone_number.setHint("请输入您注册时的手机号");
+        } else {
+            tv_title.setText(R.string.string_identity_title);
+        }
         tv_title_right.setVisibility(View.GONE);
     }
 
     private void initData() {
         initTimer();
-
+        smsSDKUtils = new SmsSDKUtils(mContext);
+        smsSDKUtils.setOnSMSSDKListener(new SmsSDKUtils.OnSMSSDKListener() {
+            @Override
+            public void onSMSSDKSendSuccessListener() {
+                tv_code.setClickable(false);
+                mTimer.start();
+            }
+        });
     }
 
     private void initTimer() {
-        mTimer = new CountDownTimeUtils();
+        mTimer = new CountDownTimeUtils(CountDownTimeUtils.millisInFuture, CountDownTimeUtils.countDownInterval);
         mTimer.setOnCountDownTimeListener(new CountDownTimeUtils.OnCountDownTimeListener() {
             @Override
             public void onTick(long millisUntilFinished) { // 计时开始
@@ -103,63 +121,72 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
             case R.id.tv_code: // 点击验证code
                 String registerUserName = et_phone_number.getText().toString().trim();
                 if (!TextUtils.isEmpty(registerUserName)) {
-                    if (ValidateUtil.isMobile(registerUserName)) {
-                        LogUtils.e("点击获取code");
-                        tv_code.setClickable(false);
-                        requestVerificationCode(registerUserName);
-                    } else {
-                        ToastUtils.show(mContext, "手机号格式不正确");
-                    }
+                    LogUtils.e("点击获取code");
+                    smsSDKUtils.sendCode(registerUserName);
                 } else {
                     ToastUtils.show(mContext, "请输入手机号");
                 }
 
                 break;
-            case R.id.btn_next: // 下一步
-                startActivity(new Intent(ForgetPwdActivity.this, ResetPwdActivity.class));
-                ActivitySlideAnim.slideOutAnim(ForgetPwdActivity.this);
+            case R.id.btn_next: // 需要验证验证码，然后再下一步
+
+                String phoneNumber = et_phone_number.getText().toString().trim();
+                String code = et_code.getText().toString().trim();
+                if (!TextUtils.isEmpty(phoneNumber)) {
+                    if (ValidateUtil.isMobile(phoneNumber)) {
+                        if (!TextUtils.isEmpty(code)) {
+                            validateCode(phoneNumber, code);
+                        } else {
+                            ToastUtils.show(mContext, "请输入验证码");
+                        }
+                    } else {
+                        ToastUtils.show(mContext, "手机号码格式不正确");
+                    }
+                } else {
+                    ToastUtils.show(mContext, "请输入手机号码");
+                }
 
                 break;
         }
     }
 
-    /**
-     * 获取code
-     */
-    private void requestVerificationCode(String registerUserName) {
-//        MyProcessDialog.showDialog(mContext);
-        PersonalNetwork
-                .getLoginApi()
-                .getVerificationCodeBean(registerUserName, "3")
-                .subscribeOn(Schedulers.io()) // 请求放在io线程中
-                .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
-                .subscribe(new BaseSubscriber<VerificationCodeResponse>() {
+    public static final int REQUEST_CODE = 1;
+
+    private void validateCode(final String phoneNumber, String verificationCode) {
+        PersonalNetwork.getLoginApi()
+                .getCheckCaptchaBean(phoneNumber, verificationCode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<String>>() {
                     @Override
                     public void onError(Throwable e) {
-//                        MyProcessDialog.closeDialog();
                         e.printStackTrace();
-                        if (e instanceof UnknownHostException) {
-                            ToastUtils.show(mContext, "请求到错误服务器");
-                        } else if (e instanceof SocketTimeoutException) {
-                            ToastUtils.show(mContext, "请求超时");
-                        }
-                        tv_code.setClickable(true);
+                        ToastUtils.show(mContext, R.string.string_error);
                     }
 
                     @Override
-                    public void onNext(VerificationCodeResponse res) {
-//                        MyProcessDialog.closeDialog();
-                        if (res.code == 200) { // 获取验证code成功
-                            mTimer.start();
-                            LogUtils.e("获取code成功" + res.data.sms_time);
-                            verificationCode = res.data.sms_time;
+                    public void onNext(BaseResponse<String> response) {
+                        if (response.code == 200) {
+                            if (response.data != null) {
+                                Intent mIntent = new Intent(ForgetPwdActivity.this, ResetPwdActivity.class);
+                                mIntent.putExtra("phone", phoneNumber);
+                                mIntent.putExtra("flag", 1);
+                                startActivityForResult(mIntent, REQUEST_CODE);
+                                ActivitySlideAnim.slideInAnim(ForgetPwdActivity.this);
+                            }
                         } else {
-                            ToastUtils.show(mContext, res.msg);
-                            tv_code.setClickable(true);
+                            ToastUtils.show(mContext, response.msg);
                         }
                     }
                 });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            finish();
+        }
     }
 
     @Override
@@ -167,6 +194,9 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
         if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;
+        }
+        if (smsSDKUtils != null) {
+            smsSDKUtils.destroySms();
         }
         super.onDestroy();
     }

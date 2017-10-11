@@ -6,8 +6,8 @@
     android:layout_marginRight="@dimen/dimen_margin_10"
     android:layout_marginTop="@dimen/dimen_margin_10"
     android:orientation="vertical"
-    android:divider="@drawable/shape_divider_line"
-    android:showDividers="end"
+    android:background="@color/color_while"
+    android:id="@+id/ll_content"
     >
 
     <TextView
@@ -56,6 +56,6 @@
         android:id="@+id/iv_img_ad"
         android:layout_width="match_parent"
         android:layout_height="175dp"
-        android:src="@mipmap/test_img_ad" />
+        android:scaleType="fitXY" />
 
 </LinearLayout>

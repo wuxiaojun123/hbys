@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">互帮赞赏</string>
+    <string name="app_name">互帮有赏</string>
 
     <!--首页底部-->
     <string name="string_help">互帮</string>
@@ -11,10 +11,16 @@
     <!--搜索-->
     <string name="string_search_hint">搜索关键字广告</string>
 
+    <string name="string_please_login">请先登录</string>
+    <string name="string_login">登录</string>
 
     <!--首页 积分-->
     <string name="string_watch_point_praise">看完点赞</string>
     <string name="string_group_buying">加群购买</string>
+
+    <!--商城 看广告-->
+    <string name="string_watch_ad">看广告</string>
+    <string name="string_search_like_ad">搜索关键字相关商品</string>
 
     <!--个人中心 我的获赏，我的求助-->
     <string name="string_comment">跟帖</string>
@@ -28,7 +34,7 @@
     <!--个人中心  我的账户-->
     <string name="string_all">全部</string>
     <string name="string_expenditure">支出</string>
-    <string name="string_support">支入</string>
+    <string name="string_support">收入</string>
 
     <string name="string_weishiyong">未使用</string>
     <string name="string_yishiyong">已使用</string>
@@ -45,13 +51,17 @@
     <string name="string_stay_goods_receipt">待收货</string>
     <string name="string_stay_evaluate">待评价</string>
     <string name="string_refund">退款/退货</string>
+    <string name="string_order_details">订单详情</string>
 
+    <string name="string_order_evaluate_title">发表评价</string>
+    <string name="string_order_complaints_merchant_title">投诉商家</string>
 
     <!--消息中心-->
     <string name="msgcenter_lable1">帖子动态</string>
     <string name="msgcenter_lable2">交易信息</string>
     <string name="msgcenter_lable3">投诉信息</string>
     <string name="msgcenter_lable4">系统消息</string>
+    <string name="msgcenter_lable5">账户消息</string>
 
     <!--交易信息-->
     <string name="trade_lable1">交易信息</string>
@@ -59,7 +69,7 @@
 
     <!--互帮-->
     <string name="help_lable1">筛选</string>
-    <string name="help_lable2">搜索关键字相关帖子</string>
+    <string name="help_lable2">请输入关键词搜索相关帖子</string>
     <string name="help_lable3">求助</string>
     <string name="help_lable4">获赏</string>
     <string name="help_lable5">投票</string>
@@ -87,12 +97,22 @@
     <string name="release_hint4">请选择帖子有效时间</string>
     <string name="release_hint5">请设置悬赏分，至少10分</string>
     <string name="release_hint6">请输入帖子内容，400字以内</string>
-    <string name="release_hint7">还可上传（）张</string>
+    <string name="release_hint7">还可上传（4）张</string>
     <string name="release_hint8">请填写可以帮助别人的资源信息，400字以内</string>
-    <string name="release_hint9">帮助后得到1分，可向跟帖人索要更多</string>
+    <string name="release_hint9">帮助后得到10分，可向跟帖人索要更多</string>
+
+    <string name="string_search_relative_goods">搜索关键字相关商品</string>
+    <string name="string_search_relative_store">搜索关键字相关店铺</string>
+
+    <string name="string_whether_success_join_group">已成功加入商家群，是否进入?</string>
+    <string name="string_whether_enter_group">是否进入商家群?</string>
+
+    <string name="string_help_points">帮赏分</string>
+    <string name="string_coupon_points">优惠劵</string>
 
     <!--我的求助-->
     <string name="string_my_help_title">我的求助</string>
+    
     <!--我的获赏-->
     <string name="string_my_help_reward">我的获赏</string>
     <!--我的投票-->
@@ -100,6 +120,8 @@
     <!--我的收藏-->
     <string name="string_my_collection_title">我的收藏</string>
     <string name="string_my_clean">清空</string>
+    <string name="string_offer_reward">悬赏</string>
+    <string name="string_reward">获赏</string>
     <!--我的分享-->
     <string name="string_my_share_title">我的分享</string>
 
@@ -134,6 +156,7 @@
     <string name="string_recapture">重新获取</string>
     <!--忘记密码-->
     <string name="string_forget_pwd_title">忘记密码</string>
+    <string name="string_reset_pwd_title">重置密码</string>
     <!--修改密码-->
     <string name="string_update_title">修改密码</string>
     <string name="string_identity_title">认证身份</string>
@@ -143,9 +166,9 @@
     <!--余额兑换帮赏分-->
     <string name="string_yue_duihuan_bangshangfen_title">余额兑换帮赏分</string>
     <!--帮赏分兑换通用卷-->
-    <string name="string_bangshangfen_duihuan_tongyongjuan_title">帮赏分兑换通用卷</string>
+    <string name="string_bangshangfen_duihuan_tongyongjuan_title">帮赏分兑换通用劵</string>
     <!--余额兑换通用卷-->
-    <string name="string_yue_duihuan_tongyongjuan_title">余额兑换通用卷</string>
+    <string name="string_yue_duihuan_tongyongjuan_title">余额兑换通用劵</string>
     <!--充值余额-->
     <string name="string_chongzhi_yue_title">充值余额</string>
 
@@ -162,13 +185,14 @@
     <string name="pay_lable10">继续购物</string>
 
     <!--商城-->
+    <string name="shop_cart">购物车</string>
     <string name="shop_lable1">我的账户</string>
     <string name="shop_lable2">我的订单</string>
     <string name="shop_lable3">优惠券</string>
     <string name="shop_lable4">分类</string>
     <string name="shop_lable5">推荐店铺</string>
     <string name="shop_lable6">热门商品</string>
-
+    <string name="string_search_al_shop">搜索关键字相关商品</string>
     <string name="string_error">获取数据失败</string>
 
     <!--店铺-->
@@ -200,4 +224,47 @@
     <string name="good_lable14">商品</string>
     <string name="good_lable15">详情</string>
     <string name="good_lable16">评价</string>
+    <string name="good_lable17">请选择商品数量</string>
+
+    <!--弹窗-->
+    <string name="string_system_prompt">系统提示</string>
+    <string name="string_watch_ad_get_scroe">恭喜您获得5帮赏分</string>
+    <string name="num_dialog_show">购买数量</string>
+    <string name="canclebtn">取消</string>
+    <string name="surebtn">确定</string>
+
+    <string name="string_available_coupon">可用优惠劵</string>
+    <string name="string_not_available_coupon">不可用优惠劵</string>
+
+    <!--通用劵-->
+    <string name="string_general_volume">通用劵</string>
+    <string name="string_general_volume_acount">通用劵账户</string>
+
+    <string name="string_get_voucher_loggin">请登录后再领取</string>
+
+    <!--微信-->
+    <string name="app_back">返回</string>
+    <string name="app_ok">确定</string>
+    <string name="app_cancel">取消</string>
+    <string name="app_continue">继续</string>
+    <string name="app_tip">提示</string>
+    <string name="app_send">发送</string>
+    <string name="app_set">设置</string>
+    <string name="app_save">保存</string>
+    <string name="app_delete">删除</string>
+    <string name="app_nextstep">下一步</string>
+    <string name="app_prevstep">上一步</string>
+    <string name="app_finish">完成</string>
+    <string name="app_find">查找</string>
+    <string name="app_edit">编辑</string>
+
+    <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
+    <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
+
+    <drawable name="string_watch_ad_group_bug_normal">#ec6a5c</drawable>
+    <drawable name="string_watch_ad_group_bug_pressed">#af4034</drawable>
+
+    <drawable name="string_warch_ad_group_bug_text_normal">#ffffff</drawable>
+    <drawable name="string_warch_ad_group_bug_text_pressed">#af4034</drawable>
+
 </resources>

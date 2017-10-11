@@ -1,5 +1,6 @@
 package com.help.reward.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +10,13 @@ import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnItemClickListener;
+import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.bean.Response.ComplaintStatusResponse;
+import com.help.reward.manager.GotoHelpVoteInfoUtils;
+import com.help.reward.network.HelpNetwork;
+import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
 import com.help.reward.R;
@@ -29,9 +36,10 @@ import rx.schedulers.Schedulers;
  * 我的投票
  * Created by wuxiaojun on 2017/2/11.
  */
-public class MyVoteActivity extends BaseActivity implements View.OnClickListener {
+public class MyVoteActivity extends BaseActivity implements View.OnClickListener, MyVoteAdapter.OnMyVoteClickListener {
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
@@ -43,6 +51,8 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
     private MyVoteAdapter mHelpPostAdapter;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,12 +62,21 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
         initView();
         initNet();
         initRecyclerView();
+        initEvent();
+    }
+
+    private void initEvent() {
+        mHelpPostAdapter.setOnMyVoteClickListener(this);
     }
 
     private void initNet() {
+        if (App.APP_CLIENT_KEY == null) {
+            return;
+        }
+        //  ?act=member_vote&op=list
         PersonalNetwork
                 .getResponseApi()
-                .getMyVoteResponse(App.APP_CLIENT_KEY)
+                .getMyVoteResponse("member_vote", "list", currentPage + "", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyVoteResponse>() {
@@ -73,10 +92,17 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                mHelpPostAdapter.addAll(response.data);
+                                if (currentPage == 1) {
+                                    mHelpPostAdapter.setDataList(response.data);
+                                } else {
+                                    mHelpPostAdapter.addAll(response.data);
+                                }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
-
+                            if (!response.hasmore) {
+                                lRecyclerview.setNoMore(true);
+                            } else {
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -88,6 +114,16 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
     private void initView() {
         tv_title.setText(R.string.string_my_vote_title);
         tv_title_right.setVisibility(View.GONE);
+    }
+
+    private GotoHelpVoteInfoUtils gotoHelpVoteInfoUtils;
+
+    @Override
+    public void onItemClick(int position) {
+        if (gotoHelpVoteInfoUtils == null) {
+            gotoHelpVoteInfoUtils = new GotoHelpVoteInfoUtils(MyVoteActivity.this);
+        }
+        gotoHelpVoteInfoUtils.gotoHelpVoteInfo(mHelpPostAdapter.getDataList().get(position).id);
     }
 
     @OnClick({R.id.iv_title_back})
@@ -106,18 +142,40 @@ public class MyVoteActivity extends BaseActivity implements View.OnClickListener
     private void initRecyclerView() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         mHelpPostAdapter = new MyVoteAdapter(mContext);
-        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
-//        initLoadMoreListener();
-        lRecyclerview.setLoadMoreEnabled(false);
+        initLoadMoreListener();
+        initOnItemClickListener();
+    }
+
+    private void initOnItemClickListener() {
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(mContext, HelpVoteInfoActivity.class);
+                intent.putExtra("id", mHelpPostAdapter.getDataList().get(position).post_id);
+                startActivity(intent);
+                ActivitySlideAnim.slideInAnim(MyVoteActivity.this);
+            }
+        });
+    }
+
+    private void initLoadMoreListener() {
+        lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                initNet();
+            }
+        });
     }
 
     private void initRefreshListener() {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                currentPage = 1;
+                initNet();
             }
         });
     }

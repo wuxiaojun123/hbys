@@ -3,6 +3,7 @@ package com.help.reward.utils;
 import android.app.Activity;
 
 import com.help.reward.R;
+import com.idotools.utils.LogUtils;
 
 /**
  * Created by wuxiaojun on 2017/2/22.

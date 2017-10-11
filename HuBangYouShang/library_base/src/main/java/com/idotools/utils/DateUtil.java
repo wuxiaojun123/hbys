@@ -19,6 +19,7 @@ public class DateUtil {
     private static final SimpleDateFormat SDF_NO_SECONDS = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private static final SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy.MM.dd");
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     /**
@@ -27,9 +28,13 @@ public class DateUtil {
      * @param time
      * @return
      */
-    public static String getDateToString(long time) {
+    /*public static String getDateToString(long time) {
         Date d = new Date(time);
         return SDF_NO_SECONDS.format(d);
+    }*/
+    public static String getDateToString1(String time){
+        long lcc_time = Long.valueOf(time);
+        return datetimeFormat.format(new Date(lcc_time * 1000L));
     }
 
     /**
@@ -38,9 +43,42 @@ public class DateUtil {
      * @param time
      * @return
      */
-    public static String getDateToString(String time) throws ParseException {
-        Date d = SDF_NO_SECONDS.parse(time);
-        return SDF_NO_SECONDS.format(d);
+    public static String getDateToString(String time) {
+//        Date d = SDF_NO_SECONDS.parse(time);
+        long lcc_time = Long.valueOf(time);
+        return SDF_NO_SECONDS.format(new Date(lcc_time * 1000L));
+    }
+
+    /***
+     * 在当前日期之上加多少天
+     * @param addDay
+     * @return
+     */
+    public static String addDayToStringTime(int addDay) {
+        Date date = new Date();//取时间
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(calendar.DATE, addDay);//把日期往后增加一天.整数往后推,负数往前移动
+        date = calendar.getTime();   //这个时间就是日期往后推一天的结果
+
+        String re_StrTime = null;
+        //同理也可以转为其它样式的时间格式.例如："yyyy/MM/dd HH:mm"
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        // 例如：cc_time=1291778220
+        re_StrTime = sdf.format(date);
+
+        return re_StrTime;
+    }
+
+    /**
+     * 把时间戳变yyyy-MM-dd格式时间
+     *
+     * @param longTime
+     * @return
+     */
+    public static String getYYYYMMDDDateToString(String longTime) throws ParseException {
+        Date d = new Date(Long.parseLong(longTime));
+        return dateFormat2.format(d);
     }
 
     public static Date str2Date(String str) {

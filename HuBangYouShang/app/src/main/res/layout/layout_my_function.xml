@@ -57,9 +57,12 @@
         android:layout_height="65dp"
         android:orientation="horizontal">
 
-        <LinearLayout style="@style/style_my_function_linear_layout">
+        <LinearLayout
+            android:id="@+id/ll_available_predeposit"
+            style="@style/style_my_function_linear_layout">
 
             <TextView
+                android:id="@+id/tv_available_predeposit"
                 style="@style/style_my_function_quantity"
                 android:text="0" />
 
@@ -69,9 +72,12 @@
 
         </LinearLayout>
 
-        <LinearLayout style="@style/style_my_function_linear_layout">
+        <LinearLayout
+            android:id="@+id/ll_voucher"
+            style="@style/style_my_function_linear_layout">
 
             <TextView
+                android:id="@+id/tv_voucher"
                 style="@style/style_my_function_quantity"
                 android:text="0" />
 
@@ -81,21 +87,27 @@
 
         </LinearLayout>
 
-        <LinearLayout style="@style/style_my_function_linear_layout">
+        <LinearLayout
+            android:id="@+id/ll_general_voucher"
+            style="@style/style_my_function_linear_layout">
 
             <TextView
+                android:id="@+id/tv_general_voucher"
                 style="@style/style_my_function_quantity"
                 android:text="0" />
 
             <TextView
                 style="@style/style_my_function_quantity_title"
-                android:text="通用卷" />
+                android:text="通用劵" />
 
         </LinearLayout>
 
-        <LinearLayout style="@style/style_my_function_linear_layout">
+        <LinearLayout
+            android:id="@+id/ll_discount_level"
+            style="@style/style_my_function_linear_layout">
 
             <TextView
+                android:id="@+id/tv_discount_level"
                 style="@style/style_my_function_quantity"
                 android:text="0" />
 

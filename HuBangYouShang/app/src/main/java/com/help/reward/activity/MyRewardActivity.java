@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * Created by wuxiaojun on 2017/2/8.
  */
 
-public class MyRewardActivity extends BaseActivity implements View.OnClickListener{
+public class MyRewardActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
     @BindView(R.id.tv_title)
@@ -38,6 +38,8 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.tabs)
     PagerSlidingTabStrip tabStrip;
 
+    private MyRewardPostFragment myRewardPostFragment;
+    private MyRewardCommentFragment myRewardCommentFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
         ButterKnife.bind(this);
 
         initView();
+        myRewardPostFragment = new MyRewardPostFragment();
+        myRewardCommentFragment = new MyRewardCommentFragment();
 
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         tabStrip.setViewPager(viewPager);
@@ -60,7 +64,7 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.iv_title_back:
                 finish();
                 ActivitySlideAnim.slideOutAnim(MyRewardActivity.this);
@@ -69,7 +73,7 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private class MyPagerAdapter extends FragmentPagerAdapter{
+    private class MyPagerAdapter extends FragmentPagerAdapter {
 
         private String[] TITLES = new String[2];
 
@@ -86,10 +90,10 @@ public class MyRewardActivity extends BaseActivity implements View.OnClickListen
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0){
-                return new MyRewardPostFragment();
-            }else{
-                return new MyRewardCommentFragment();
+            if (position == 0) {
+                return myRewardPostFragment;
+            } else {
+                return myRewardCommentFragment;
             }
         }
 

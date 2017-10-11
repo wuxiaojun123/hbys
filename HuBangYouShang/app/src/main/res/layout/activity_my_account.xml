@@ -6,56 +6,18 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_content"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_170"
+        android:layout_height="@dimen/dimen_195"
         android:background="@mipmap/img_myaccount_head_bg"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <View
+            android:id="@+id/fake_status_bar"
+            style="@style/style_fake_status_bar_height"
+            android:alpha="0" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@mipmap/img_myaccount_back" />
-
-            <ImageView
-                android:id="@+id/tv_head"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@mipmap/img_default_head_portrait" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/color_while"
-                    android:textSize="@dimen/dimen_15" />
-
-                <TextView
-                    android:id="@+id/tv_subscibe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/color_while"
-                    android:textSize="@dimen/dimen_11" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <include layout="@layout/layout_my_account_head" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,8 +34,9 @@
                 >
 
                 <TextView
+                    android:id="@+id/tv_available_predeposit"
                     style="@style/style_my_account_text_balance"
-                    android:text="0.0"
+                    android:text="0"
                     />
 
                 <TextView
@@ -88,6 +51,7 @@
                 style="@style/style_my_account_ll">
 
                 <TextView
+                    android:id="@+id/tv_reward_points"
                     style="@style/style_my_account_text_balance"
                     android:text="0" />
 
@@ -103,8 +67,9 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/tv_voucher"
                     style="@style/style_my_account_text_balance"
-                    android:text="0张" />
+                    android:text="0" />
 
                 <TextView
                     style="@style/style_my_account_text_title"
@@ -117,6 +82,7 @@
                 style="@style/style_my_account_ll">
 
                 <TextView
+                    android:id="@+id/tv_general_voucher"
                     style="@style/style_my_account_text_balance"
                     android:text="0" />
 
@@ -131,12 +97,13 @@
                 style="@style/style_my_account_ll">
 
                 <TextView
+                    android:id="@+id/tv_discount_level"
                     style="@style/style_my_account_text_balance"
                     android:text="0" />
 
                 <TextView
                     style="@style/style_my_account_text_title"
-                    android:text="优惠金额" />
+                    android:text="优惠百分比" />
 
             </LinearLayout>
 
@@ -168,7 +135,7 @@
 
         <TextView
             android:id="@+id/tv_coupon_generic"
-            android:text="通用卷兑换"
+            android:text="通用劵兑换"
             style="@style/style_my_account_text_item"
             />
 

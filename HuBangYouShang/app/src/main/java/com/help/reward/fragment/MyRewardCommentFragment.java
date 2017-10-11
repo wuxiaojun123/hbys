@@ -1,11 +1,16 @@
 package com.help.reward.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnItemClickListener;
 import com.base.recyclerview.OnLoadMoreListener;
 import com.base.recyclerview.OnRefreshListener;
+import com.help.reward.activity.HelpRewardInfoActivity;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.idotools.utils.ToastUtils;
 import com.help.reward.App;
 import com.help.reward.R;
@@ -26,6 +31,7 @@ import rx.schedulers.Schedulers;
 public class MyRewardCommentFragment extends BaseFragment {
 
     private int numSize = 15;
+    private int currentPage = 1;
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -39,13 +45,16 @@ public class MyRewardCommentFragment extends BaseFragment {
     @Override
     protected void init() {
         initRecyclerView();
-        initNetwork();
+        initNet();
     }
 
-    private void initNetwork() {
+    private void initNet() {
+        if (App.APP_CLIENT_KEY == null) {
+            return;
+        }
         PersonalNetwork
                 .getResponseApi()
-                .getMyRewardCommentResponse("comment", App.APP_CLIENT_KEY)
+                .getMyRewardCommentResponse(currentPage + "","comment", App.APP_CLIENT_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MyRewardCommentResponse>() {
@@ -61,9 +70,17 @@ public class MyRewardCommentFragment extends BaseFragment {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                mHelpPostAdapter.addAll(response.data);
+                                if (currentPage == 1) {
+                                    mHelpPostAdapter.setDataList(response.data);
+                                } else {
+                                    mHelpPostAdapter.addAll(response.data);
+                                }
                             }
-                            lRecyclerview.setPullRefreshEnabled(false);
+                            if (!response.hasmore) {
+                                lRecyclerview.setNoMore(true);
+                            } else {
+                                currentPage += 1;
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
@@ -71,21 +88,37 @@ public class MyRewardCommentFragment extends BaseFragment {
                 });
     }
 
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
+
     private void initRecyclerView() {
         lRecyclerview.setLayoutManager(new LinearLayoutManager(mContext));
         mHelpPostAdapter = new MyRewardCommentAdapter(mContext);
-        LRecyclerViewAdapter mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHelpPostAdapter);
         lRecyclerview.setAdapter(mLRecyclerViewAdapter);
         initRefreshListener();
-        lRecyclerview.setLoadMoreEnabled(false);
-//        initLoadMoreListener();
+        initLoadMoreListener();
+        initOnItemClickListener();
+    }
+
+    private void initOnItemClickListener() {
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Intent intent = new Intent(mContext, HelpRewardInfoActivity.class);
+                intent.putExtra("id", mHelpPostAdapter.getDataList().get(position).id);
+                startActivity(intent);
+                ActivitySlideAnim.slideInAnim(getActivity());
+
+            }
+        });
     }
 
     private void initLoadMoreListener() {
         lRecyclerview.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                initNet();
             }
         });
     }
@@ -94,7 +127,8 @@ public class MyRewardCommentFragment extends BaseFragment {
         lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                currentPage = 1;
+                initNet();
             }
         });
     }

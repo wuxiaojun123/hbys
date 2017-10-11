@@ -9,11 +9,10 @@ import android.os.CountDownTimer;
 
 public class CountDownTimeUtils extends CountDownTimer {
 
+    public static final long countDownInterval = 1000; // 每隔多久
+    public static final long millisInFuture = 60 * countDownInterval;  // 总共隔多久
 
-    private static final long countDownInterval = 1000; // 每隔多久
-    private static final long millisInFuture = 59 * countDownInterval;  // 总共隔多久
-
-    public CountDownTimeUtils() {
+    public CountDownTimeUtils(long millisInFuture,long countDownInterval) {
         super(millisInFuture, countDownInterval);
     }
 

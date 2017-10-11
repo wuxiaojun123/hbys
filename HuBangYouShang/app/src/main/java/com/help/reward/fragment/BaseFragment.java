@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.help.reward.utils.DoAnalyticsManager;
+
 import butterknife.ButterKnife;
 import rx.Subscription;
 
@@ -29,25 +31,38 @@ public class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(),container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(getLayoutId(), container, false);
+        ButterKnife.bind(this, view);
         init();
 
         return view;
     }
 
-    protected void init(){
+    protected void init() {
 
     }
 
-    protected int getLayoutId(){
+    protected int getLayoutId() {
         return 0;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DoAnalyticsManager.pageFragmentResume(getClass().getSimpleName(), mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DoAnalyticsManager.pageFragmentPause(getClass().getSimpleName(), mContext);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(subscribe != null && !subscribe.isUnsubscribed()){
+        if (subscribe != null && !subscribe.isUnsubscribed()) {
             subscribe.unsubscribe();
         }
     }

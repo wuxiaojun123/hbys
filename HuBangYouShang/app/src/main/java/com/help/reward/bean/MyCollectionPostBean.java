@@ -27,7 +27,7 @@ public class MyCollectionPostBean {
     public String member_name;
     public String fav_id;
     public String fav_type;
-    public String log_msg;
+    public String log_msg; // reward表示获赏  help表示求助
     public String title;
     public String board_id;
     public String board_name;

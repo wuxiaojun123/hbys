@@ -39,4 +39,13 @@
     <color name="color_8b4ab8">#8b4ab8</color>
     <color name="color_8c">#8c8c8c</color>
     <color name="color_83b2f6">#8cb2f6</color>
+
+    <!-- 仿ios弹窗颜色 -->
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="assist0">#666666</color>
+    <color name="The_main_text">#000000</color>
+
 </resources>

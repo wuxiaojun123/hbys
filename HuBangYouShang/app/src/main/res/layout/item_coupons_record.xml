@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dimen_10"
+        android:paddingRight="@dimen/dimen_10"
+        android:paddingLeft="@dimen/dimen_10"
+        android:paddingBottom="@dimen/dimen_10"
+        android:gravity="center_vertical"
+        android:background="@color/color_while">
+
+    <TextView
+        android:id="@+id/record_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/ll_right"
+        android:text=""
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/color_text_selected"
+        android:textSize="14dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/tv_receive_cp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已领取"
+            android:textColor="@android:color/black"
+            android:textSize="12dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_receive_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2017/01/01"
+            android:textColor="@color/smssdk_gray"
+            android:textSize="12dp"
+            />
+
+    </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_spiline"
+        android:layout_alignParentBottom="true"/>
+</LinearLayout>

@@ -68,6 +68,25 @@
     public static final int *;
 }
 
+
+######################一些实体类和自定义控件不混淆  start##################
+
+-keep class com.help.reward.bean.** {*;}
+-keep class com.help.reward.view.** {*;}
+-keep class com.help.reward.chat.** {*;}
+
+-keep class * extends com.raizlabs.android.dbflow.config.DatabaseHolder { *; } ## 地址
+-keep class chihane.jdaddressselector.** { *; } ## 地址
+-keep class com.hbys.chatlibrary.** { *; } ##library_chat
+-keep class com.hyphenate.easeui.** { *; } ##easeui
+-keep class com.astuetz.pagerslidingtabstrip.** { *; } ## pagerSlidingTabStrip
+-keep class com.base.recyclerview.** { *; } ## recycler
+-keep class com.bigkoo.pickerview.** { *; } ## pickerview
+-keep class com.gxz.library.** { *; } ## sticknavlayout
+
+######################一些实体类和自定义控件不混淆  end##################
+
+
 #####################glide start###################
 #glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -110,6 +129,221 @@
 }
 -dontwarn com.squareup.okhttp.**
 
+# RxJava RxAndroid
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
 ################### retrofit end ###################
+
+################## sms ############################
+-keep class cn.smssdk.**{*;}
+-keep class com.mob.**{*;}
+
+-dontwarn com.mob.**
+-dontwarn cn.smssdk.**
+################## sms ############################
+
+######################umeng统计 start##################
+-keepclassmembers class * {
+    public <init> (org.json.JSONObject);
+}
+-keep public class com.help.reward.R$*{
+    public static final int *;
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+#######################umeng统计 end####################
+
+###################### weixin login ##################
+-keep class com.tencent.mm.opensdk.** {
+   *;
+}
+-keep class com.tencent.wxop.** {
+   *;
+}
+-keep class com.tencent.mm.sdk.** {
+   *;
+}
+###################### weixin login ##################
+
+-keep class com.hyphenate.** {*;}
+-dontwarn  com.hyphenate.**
+
+
+#-keep class com.reward.help.merchant.bean.** {*;}
+#-dontwarn com.reward.help.merchant.bean.**
+
+-keep class com.google.** {*;}
+-dontwarn  com.google.**
+
+-keep class com.baidu.** {*;}
+-dontwarn  com.baidu.**
+
+-keep class com.huawei.** {*;}
+-dontwarn  com.huawei.**
+
+-keep class org.apache.** {*;}
+-dontwarn  org.apache.**
+
+-keep class com.parse.** {*;}
+-dontwarn  com.parse.**
+
+-keep class android.net.** {*;}
+-dontwarn  android.net.**
+
+-dontwarn android.webkit.WebView
+
+#-keep class com.reward.help.merchant.chat.** {*;}
+#-dontwarn com.reward.help.merchant.chat.**
+
+-keep class com.base.** {*;}
+-dontwarn  com.base.**
+
+-keep class com.astuetz.** {*;}
+-dontwarn com.astuetz.**
+
+-keep class com.coupon.** {*;}
+-dontwarn  com.coupon.**
+
+
+-keep class internal.** {*;}
+-dontwarn  internal.**
+
+-keep class com.xiaomi.** {*;}
+-dontwarn  com.xiaomi.**
+
+-keep class vi.** {*;}
+-dontwarn  vi.**
+
+-keep class com.hianalytics.** {*;}
+-dontwarn  com.hianalytics.**
+
+-keep class com.superrtc.** {*;}
+-dontwarn  com.superrtc.**
+
+-keep class com.android.** {*;}
+-dontwarn  com.android.**
+
+-keep class com.android.** {*;}
+-dontwarn  com.android.**
+
+-dontwarn
+
+# Optimization is turned off by default. Dex does not like code run
+# through the ProGuard optimize and preverify steps (and performs some
+# of these optimizations on its own).
+-dontoptimize
+# Note that if you want to enable optimization, you cannot just
+# include optimization flags in your own project configuration file;
+# instead you will need to point to the
+# "proguard-android-optimize.txt" file instead of this one from your
+# project.properties file.
+
+-keepattributes *Annotation*
+-keep public class com.google.vending.licensing.ILicensingService
+-keep public class com.android.vending.licensing.ILicensingService
+
+# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+   void set*(***);
+   *** get*();
+}
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+-keep class android.support.v4.** {*;}
+
+-keep class org.xmlpull.** {*;}
+-keep class com.baidu.** {*;}
+-keep public class * extends com.umeng.**
+-keep class com.umeng.** { *; }
+-keep class com.squareup.picasso.* {*;}
+
+-keep class com.hyphenate.* {*;}
+-keep class com.hyphenate.chat.** {*;}
+-keep class org.jivesoftware.** {*;}
+-keep class org.apache.** {*;}
+#另外，demo中发送表情的时候使用到反射，需要keep SmileUtils,注意前面的包名，
+#不要SmileUtils复制到自己的项目下keep的时候还是写的demo里的包名
+-keep class com.hyphenate.chatuidemo.utils.SmileUtils {*;}
+
+#2.0.9后加入语音通话功能，如需使用此功能的api，加入以下keep
+-keep class net.java.sip.** {*;}
+-keep class org.webrtc.voiceengine.** {*;}
+-keep class org.bitlet.** {*;}
+-keep class org.slf4j.** {*;}
+-keep class ch.imvs.** {*;}
+
+-dontwarn javax.annotation.**
+-dontwarn javax.inject.**
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+
+# Gson
+-keep class com.google.gson.stream.** { *; }
+-keepattributes EnclosingMethod
+
+# 支付宝
+#-libraryjars libs/alipaySdk-20170725.jar
+-keep class com.alipay.android.app.IAlixPay{*;}
+-keep class com.alipay.android.app.IAlixPay$Stub{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
+-keep class com.alipay.sdk.app.PayTask{ public *;}
+-keep class com.alipay.sdk.app.AuthTask{ public *;}
+
+####################个推　start###################
+-dontwarn com.igexin.**
+-keep class com.igexin.** { *; }
+-keep class org.json.** { *; }
+####################个推 end#####################
+# OrmLite uses reflection
+-keep class com.help.reward.cache.nickNameAndHead.** {*;}
+
+-dontwarn com.j256.ormlite.**
+-keep class com.j256.ormlite.** { *;}
+-keep class com.envy15.cherry.base.orm.** { *;}
 
 

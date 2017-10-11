@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <!--<color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>-->
+    <color name="colorPrimary">#721312</color>
+    <color name="colorPrimaryDark">#721312</color>
     <color name="colorAccent">#FF4081</color>
+
 
     <color name="color_while">@android:color/white</color>
     <color name="color_black">@android:color/black</color>
@@ -17,6 +21,8 @@
     <color name="color_dc">#dcdcdc</color>
     <color name="color_e4">#e4e4e4</color>
     <color name="color_text_ad_score">#ff503f</color>
+
+
     
     <color name="color_next_bg">#ec6a5c</color>
     <color name="color_eb6">#eb6a5b</color>
@@ -27,15 +33,35 @@
     <color name="color_79">#797979</color>
     <color name="color_84">#848484</color>
     <color name="color_d2">#d2d2d2</color>
+    <color name="color_f8">#f8f8f8</color>
 
     <color name="color_f6">#f6b352</color>
     <color name="color_f6b258">#f6b258</color>
 
     <color name="color_fa">#fa372d</color>
 
+    <color name="color_ffb258">#ffb258</color>
+
     <color name="color_spiline">#cdcdcd</color>
     <color name="color_allbg">#f8f8f8</color>
 
     <color name="color_8b4ab8">#8b4ab8</color>
     <color name="color_8c">#8c8c8c</color>
+    <color name="navpage">#FFE1E8EB</color>
+
+    <!-- 仿ios弹窗颜色 -->
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="assist0">#666666</color>
+    <color name="The_main_text">#000000</color>
+
+    <color name="color_aeb1bd">#aeb1bd</color>
+
+    <color name="color_window_transparent">#9000</color>
+
+    <color name="color_f9372d">#f9372d</color>
+    <color name="color_eb6877">#eb6877</color>
+
 </resources>
