@@ -1,6 +1,7 @@
 package com.reward.help.merchant.network.base;
 
 
+import com.idotools.utils.LogUtils;
 import com.reward.help.merchant.App;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class GetCookiesInterceptor implements Interceptor {
                             cookieBuffer.append(cookie).append(";");
                         }
                     });
-            App.APP_CLIENT_COOKIE = cookieBuffer.toString();
+            App.setAppClientCookie(cookieBuffer.toString());
 
             /*SharedPreferences sharedPreferences = context.getSharedPreferences("cookie", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();

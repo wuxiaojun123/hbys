@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,22 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseBaseFragment;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.idotools.utils.DataCleanManager;
+import com.idotools.utils.ToastUtils;
+import com.reward.help.merchant.App;
 import com.reward.help.merchant.R;
+import com.reward.help.merchant.activity.AboutUsActivity;
+import com.reward.help.merchant.activity.CheckPhoneNumberActivity;
+import com.reward.help.merchant.activity.FeedbackActivity;
 import com.reward.help.merchant.activity.LoginActivity;
 import com.reward.help.merchant.activity.MainActivity;
 import com.reward.help.merchant.activity.ProfileActivity;
+import com.reward.help.merchant.activity.StoreInfoActivity;
+import com.reward.help.merchant.bean.LoginBean;
 import com.reward.help.merchant.chat.DemoHelper;
 import com.reward.help.merchant.utils.Constant;
 import com.reward.help.merchant.utils.GlideUtils;
+import com.reward.help.merchant.utils.SpUtils;
 import com.reward.help.merchant.view.AlertDialog;
 
 import butterknife.BindView;
@@ -72,10 +82,27 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
         mTvTitle.setText(getText(R.string.mine_title));
 
         mTvMyStoreName.setText(String.format(getString(R.string.mine_store_info_tip), "dd"));
-
         String username = DemoHelper.getInstance().getCurrentUsernName();
         GlideUtils.setUserAvatar(getContext(), username, mIvMyPhoto);
-        EaseUserUtils.setUserNick(username, mTvName);
+        //EaseUserUtils.setUserNick(username, mTvName);
+        LoginBean userInfo = SpUtils.getUserInfo();
+
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.seller_name)) {
+            mTvName.setText(userInfo.seller_name);
+        } else {
+            EaseUserUtils.setUserNick(username, mTvName);
+        }
+
+        if (userInfo != null ) {
+
+            if (!TextUtils.isEmpty(userInfo.store_name)) {
+                mTvMyStoreName.setText(String.format(getString(R.string.mine_store_info_tip), userInfo.store_name));
+            }
+
+            GlideUtils.loadCircleImage(userInfo.member_avatar,mIvMyPhoto);
+
+        }
+        GlideUtils.loadBoundImage("",mIvMyStorePhoto);
     }
 
 
@@ -90,32 +117,44 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_my_info:
-                //TODO edit my info
                 startActivity(new Intent(getActivity(), ProfileActivity.class));
                 break;
             case R.id.rl_my_store_info:
                 //TODO edit my store info
 
                 break;
-            case R.id.tv_mine_modify_password:
+            /*case R.id.tv_mine_modify_password:
                 //TODO modify password
 
                 break;
             case R.id.tv_mine_clear_cache:
                 //TODO clear cache
-
+                startActivity(new Intent(getActivity(), StoreInfoActivity.class));
+                break;*/
+            case R.id.tv_mine_modify_password:
+                //TODO modify password
+                startActivity(new Intent(getActivity(),CheckPhoneNumberActivity.class));
+                break;
+            case R.id.tv_mine_clear_cache:
+                //TODO clear cache
+                cleanCache();
                 break;
             case R.id.tv_mine_customer_center:
                 //TODO call somebody
                 call();
-
                 break;
-            case R.id.tv_mine_feek_back:
+            /*case R.id.tv_mine_feek_back:
                 //TODO feekback
 
                 break;
             case R.id.tv_mine_about_us:
-
+                break;*/
+            case R.id.tv_mine_feek_back:
+                //TODO feekback
+                startActivity(new Intent(getActivity(), FeedbackActivity.class));
+                break;
+            case R.id.tv_mine_about_us:
+                startActivity(new Intent(getActivity(), AboutUsActivity.class));
                 break;
             case R.id.rl_mine_logout:
                 logout();
@@ -142,6 +181,55 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
                     }
                 }).show();
     }
+
+/*
+    private void call() {
+        new AlertDialog(getActivity())
+                .builder()
+                .setTitle("系统提示")
+                .setMsg("025-58840881")
+                .setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:025-58840881"));
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
+    }
+*/
+
+
+
+    private void cleanCache() {
+        new AlertDialog(getActivity())
+                .builder()
+                .setTitle("系统提示")
+                .setMsg("是否清除所有图片缓存")
+                .setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DataCleanManager.cleanInternalCache(getActivity());
+                        DataCleanManager.cleanCustomCache(Constant.ROOT);
+                        DataCleanManager.cleanFiles(getActivity());
+                        DataCleanManager.cleanExternalCache(getActivity());
+
+                        ToastUtils.show(getActivity(),"清除成功");
+                    }
+                })
+                .setNegativeButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
+    }
+
 
     /**
      * 退出登录
@@ -185,5 +273,46 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
                 });
             }
         });
+ /*private void logout() {
+     final ProgressDialog pd = new ProgressDialog(getActivity());
+     String st = getResources().getString(R.string.Are_logged_out);
+     pd.setMessage(st);
+     pd.setCanceledOnTouchOutside(false);
+     pd.show();
+     DemoHelper.getInstance().logout(false,new EMCallBack() {
+
+         @Override
+         public void onSuccess() {
+             getActivity().runOnUiThread(new Runnable() {
+                 public void run() {
+                     pd.dismiss();
+                     // show login screen
+                     ((MainActivity) getActivity()).finish();
+                     startActivity(new Intent(getActivity(), LoginActivity.class));
+                     App.setAppClientCookie("");
+                     App.setAppClientKey("");
+
+                 }
+             });
+         }
+
+         @Override
+         public void onProgress(int progress, String status) {
+
+         }
+
+         @Override
+         public void onError(int code, String message) {
+             getActivity().runOnUiThread(new Runnable() {
+
+                 @Override
+                 public void run() {
+                     // TODO Auto-generated method stub
+                     pd.dismiss();
+                     Toast.makeText(getActivity(), "unbind devicetokens failed", Toast.LENGTH_SHORT).show();
+                 }
+             });
+         }
+     });*/
     }
 }

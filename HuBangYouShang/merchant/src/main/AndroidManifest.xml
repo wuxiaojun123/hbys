@@ -44,8 +44,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
 
-        <activity
-            android:name=".activity.ApplyCreateGroupActivity"
+        <!--<activity
+            android:name=".activity.ApplyCreateGroupActivity"-->
+        <activity android:name=".activity.StoreInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+
+        <activity android:name=".activity.ApplyCreateGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
 
@@ -54,8 +60,25 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
 
-        <activity
-            android:name=".activity.ProfileActivity"
+        <!--<activity
+            android:name=".activity.ProfileActivity"-->
+        <activity android:name=".activity.CouponSendActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+
+        <activity android:name=".activity.PointsSendActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+
+
+        <activity android:name=".activity.CouponPointsQueryActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+
+        <activity android:name=".activity.ProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
 
@@ -94,9 +117,22 @@
 
         <activity
             android:name=".chat.ui.GroupSearchMessageActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"></activity>
 
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".chat.ui.GroupDeleteActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
         <!-- 开机自启动服务 -->
         <receiver android:name="chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">

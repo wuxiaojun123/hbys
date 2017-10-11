@@ -33,6 +33,12 @@ public class Constant {
     // 电话号码，设置页面
     public static final String TEL_PHONE = "025-58840881";
 
+<<<<<<< HEAD
+=======
+    // 210.72.13.135
+//    public static final String BASE_URL = "http://210.72.13.135/";
+    public static final String BASE_URL = "http://www.hubangyoushang.com";
+>>>>>>> 4de81b6e24160ddcb4b5a1342dcb53eef6d3ae69
     // 登录
     public static final String URL_LOGIN = "mobile/index.php?act=login";
     // 注册获取验证码

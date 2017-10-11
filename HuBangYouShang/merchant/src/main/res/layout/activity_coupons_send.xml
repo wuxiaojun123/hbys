@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_allbg">
+
+    <include
+        layout="@layout/layout_title"></include>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/dimen_10"
+        android:background="@mipmap/coupon_background">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="114dp"
+            android:layout_marginLeft="@dimen/dimen_50"
+            android:layout_marginRight="@dimen/dimen_28"
+            android:layout_marginTop="@dimen/dimen_22"
+            android:orientation="horizontal">
+            
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_send_coupon_store"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/color_3a"
+                    android:textSize="@dimen/dimen_18"/>
+
+                <TextView
+                    android:id="@+id/tv_send_coupon_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:text=""
+                    android:textColor="@color/color_fa"
+                    android:textSize="@dimen/dimen_12"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_send_coupon_discout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:textColor="@color/color_while"
+                    android:textSize="@dimen/dimen_18"/>
+
+                <TextView
+                    android:id="@+id/tv_send_coupon_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dimen_12"
+                    android:text=""
+                    android:textColor="@color/color_while"
+                    android:textSize="@dimen/dimen_12"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_send_coupon_left_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/dimen_14"
+            android:textColor="@color/color_while"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dimen_12"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_while"
+        android:layout_marginTop="@dimen/dimen_13">
+
+        <TextView
+            android:id="@+id/tv_send_coupon_count_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_coupon"
+            android:textColor="@color/color_3a"
+            android:textSize="@dimen/dimen_18"
+            android:padding="@dimen/dimen_10"/>
+
+        <EditText
+            android:id="@+id/et_send_coupon_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tv_send_coupon_count_type"
+            android:layout_alignBottom="@+id/tv_send_coupon_count_type"
+            android:layout_toRightOf="@+id/tv_send_coupon_count_type"
+            android:background="@null"
+            android:hint="@string/send_coupon_count_hint"
+            android:layout_marginLeft="@dimen/dimen_13"
+            android:inputType="number"
+            android:textSize="@dimen/dimen_18"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_send_coupon_groupnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_13"
+        android:text=""
+        android:textSize="@dimen/dimen_14"
+        android:textColor="@color/color_8c"/>
+
+
+    <Button
+        android:id="@+id/btn_send_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:background="@drawable/shape_login_bg"
+        android:text="@string/send_btn"
+        android:textColor="@color/color_while"
+        android:textSize="@dimen/dimen_15" />
+</LinearLayout>

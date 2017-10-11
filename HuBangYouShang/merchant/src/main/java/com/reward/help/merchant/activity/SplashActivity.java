@@ -42,7 +42,7 @@ public class SplashActivity extends BaseActivity {
 
 		new Thread(new Runnable() {
 			public void run() {
-				if (!TextUtils.isEmpty(App.getApplication().APP_CLIENT_KEY) && DemoHelper.getInstance().isLoggedIn()) {
+				if (TextUtils.isEmpty(App.getAppClientKey())|| TextUtils.isEmpty(App.getAppClientCookie()) || DemoHelper.getInstance().isLoggedIn()) {
 					// auto login mode, make sure all group and conversation is loaed before enter the main screen
 					long start = System.currentTimeMillis();
 					EMClient.getInstance().chatManager().loadAllConversations();

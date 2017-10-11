@@ -166,14 +166,14 @@
             android:paddingBottom="@dimen/dimen_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/profile_cellphone"
+            android:text="@string/store_name"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_10"
             android:textSize="@dimen/dimen_18"
             android:textColor="@color/color_3a"/>
 
         <TextView
-            android:id="@+id/tv_profile_cellphone"
+            android:id="@+id/tv_profile_store"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/dimen_10"

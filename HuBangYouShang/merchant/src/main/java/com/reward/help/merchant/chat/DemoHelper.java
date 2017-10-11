@@ -42,6 +42,7 @@ import com.reward.help.merchant.R;
 import com.reward.help.merchant.activity.MainActivity;
 import com.reward.help.merchant.chat.db.DemoDBManager;
 import com.reward.help.merchant.chat.db.InviteMessgeDao;
+import com.reward.help.merchant.chat.db.TopUser;
 import com.reward.help.merchant.chat.db.UserDao;
 import com.reward.help.merchant.chat.domain.EmojiconExampleGroupData;
 import com.reward.help.merchant.chat.domain.InviteMessage;
@@ -1283,6 +1284,23 @@ public class DemoHelper {
 
     public void popActivity(Activity activity) {
         easeUI.popActivity(activity);
+    }
+
+    /**
+     * 设置置顶聊天
+     */
+
+    private Map<String, TopUser> topUserList;
+
+    public void setTopUserList(Map<String,TopUser> topUserList){
+        this.topUserList = topUserList;
+    };
+
+    public Map<String, TopUser> getTopUserList(){
+        if (topUserList == null) {
+            topUserList = getModel().getTopUserList();
+        }
+        return topUserList;
     }
 
 }

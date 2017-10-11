@@ -67,5 +67,36 @@
     <string name="canclebtn">取消</string>
     <string name="surebtn">确定</string>
 
+    <string name="send_coupon_count">发放个数</string>
+    <string name="send_coupon_count_hint">请输入发放的优惠券个数</string>
+    <string name="send_btn">发放</string>
+    <string name="group_num">本群共%1$s人</string>
+    <string name="format_discount_money">¥ %1$s</string>
+    <string name="format_limit_money">满%1$s元可用</string>
+    <string name="format_left_count">剩余</string>
+    <string name="format_query_coupon_get_num">已领取%1$s个</string>
+    <string name="format_query_points_get_num">已领取%1$s个,%2$s分</string>
+    <string name="format_greeting">满%2$s元减%1$s</string>
 
+    <string name="send_points_num">领取人数</string>
+    <string name="send_points_num_hint">请输入领取营销积分的人数</string>
+
+
+    <string name="send_points_per_num">每人领取</string>
+    <string name="send_points_per_num_hint">请输入每位买家可领取的营销积分</string>
+
+    <string name="send_points_per_num_result">可用营销积分</string>
+
+
+
+    <string name="store_check_pass">您的入驻申请已通过审核</string>
+    <string name="store_check_wait">您的入驻申请正在审核</string>
+    <string name="store_check_unpass">您的入驻申请审核不通过</string>
+    <string name="store_check_unpass_des" >请登录网页端重新提交申请信息</string>
+    <string name="store_name">店铺名称</string>
+    <string name="store_type">店铺分类</string>
+    <string name="store_type2">经营类目</string>
+    <string name="store_main">经营主体</string>
+    <string name="store_owner">联系人</string>
+>>>>>>> 4de81b6e24160ddcb4b5a1342dcb53eef6d3ae69
 </resources>

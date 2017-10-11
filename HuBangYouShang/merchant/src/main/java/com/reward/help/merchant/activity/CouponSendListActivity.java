@@ -1,7 +1,11 @@
 package com.reward.help.merchant.activity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnItemClickListener;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.MetricsUtils;
 import com.idotools.utils.ToastUtils;
@@ -20,6 +25,7 @@ import com.reward.help.merchant.adapter.CouponListAdapter;
 import com.reward.help.merchant.bean.CouponListBean;
 import com.reward.help.merchant.bean.Response.CouponListResponse;
 import com.reward.help.merchant.chat.ui.BaseActivity;
+import com.reward.help.merchant.chat.ui.ChatFragment;
 import com.reward.help.merchant.network.CouponPointsNetwork;
 import com.reward.help.merchant.network.base.BaseSubscriber;
 import com.reward.help.merchant.rxbus.RxBus;
@@ -55,15 +61,21 @@ public class CouponSendListActivity extends BaseActivity implements View.OnClick
 
     private List<CouponListBean> mList = null;
 
+    private List<CouponListBean> mCheckedList = null;
+
+    private static int requestCode;
+
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.activity_coupon_send);
         ButterKnife.bind(this);
-
+        intent = getIntent();
+        initView();
         initData();
 
-        initView();
     }
 
     private void initData() {
@@ -73,7 +85,7 @@ public class CouponSendListActivity extends BaseActivity implements View.OnClick
     private void initView() {
         mTvTitle.setText(getText(R.string.send_coupon));
         mTvRight.setText(getText(R.string.next));
-
+        mCheckedList = new ArrayList<CouponListBean>();
         lRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CouponListAdapter(this);
         adapter.setDataList(mList);
@@ -93,12 +105,21 @@ public class CouponSendListActivity extends BaseActivity implements View.OnClick
                 }
             }
         });
+
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                mCheckedList.clear();
+                mCheckedList.add(mList.get(position));
+                adapter.setmCheckList(mCheckedList);
+            }
+        });
     }
 
 
     private void getCouponListRequest() {
         MyProcessDialog.showDialog(CouponSendListActivity.this);
-        subscribe = CouponPointsNetwork.getCouponListApi().getCouponList(App.APP_CLIENT_KEY)
+        subscribe = CouponPointsNetwork.getCouponListApi().getCouponList(App.getAppClientKey())
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<CouponListResponse>() {
@@ -115,8 +136,10 @@ public class CouponSendListActivity extends BaseActivity implements View.OnClick
 
                     @Override
                     public void onNext(CouponListResponse couponListResponse) {
+                        MyProcessDialog.closeDialog();
                         if (couponListResponse.code == 200) {
-
+                            mList = couponListResponse.data.voucher_list;
+                            adapter.setDataList(mList);
                             //finish();
                             //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
                         } else {
@@ -134,9 +157,30 @@ public class CouponSendListActivity extends BaseActivity implements View.OnClick
                 CouponSendListActivity.this.finish();
                 break;
             case R.id.tv_right:
+                if (mCheckedList.size() > 0) {
+                    intent.setClass(this, CouponSendActivity.class).putExtra(CouponSendActivity.SEND_EXTRA, mCheckedList.get(0));
+                    startActivityForResult(intent, requestCode);
+                } else {
+                    ToastUtils.show(this,"请选择要发送的优惠券");
+                }
                 //TODO
                 break;
         }
 
+    }
+
+    public static void startActivityForResult(Fragment fragment, Intent intent, int reCode){
+        fragment.startActivityForResult(intent,reCode);
+        requestCode = reCode;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            setResult(RESULT_OK,data);
+            CouponSendListActivity.this.finish();
+        }
     }
 }

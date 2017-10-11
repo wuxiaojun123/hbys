@@ -44,6 +44,7 @@ import com.reward.help.merchant.network.base.BaseSubscriber;
 import com.reward.help.merchant.rxbus.RxBus;
 import com.reward.help.merchant.utils.ActivitySlideAnim;
 import com.reward.help.merchant.utils.Constant;
+import com.reward.help.merchant.utils.SpUtils;
 import com.reward.help.merchant.view.MyProcessDialog;
 
 import java.net.SocketTimeoutException;
@@ -54,7 +55,6 @@ import rx.schedulers.Schedulers;
 
 /**
  * Login screen
- *
  */
 public class LoginActivity extends BaseActivity {
     private static final String TAG = "LoginActivity";
@@ -152,7 +152,7 @@ public class LoginActivity extends BaseActivity {
                             App.APP_CLIENT_KEY = res.data.key;
                             RxBus.getDefault().post("loginSuccess");
 
-                            loginToHuanxin(username, password);
+                            loginToHuanxin(username, res.data.easemobId, password);
                             //finish();
                             //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
                         } else {
@@ -186,7 +186,6 @@ public class LoginActivity extends BaseActivity {
         }
 
         loginRequest(currentUsername, currentPassword);
-
 //		progressShow = true;
 //		final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
 //		pd.setCanceledOnTouchOutside(false);
@@ -205,7 +204,9 @@ public class LoginActivity extends BaseActivity {
         // close it before login to make sure DemoDB not overlap
     }
 
-    private void loginToHuanxin(String currentUsername, String currentPassword) {
+    //    private void loginToHuanxin(String currentUsername, String currentPassword) {
+//        DemoDBManager.getInstance().closeDB();
+    private void loginToHuanxin(String currentUsername, String huanxinUsername, String currentPassword) {
         DemoDBManager.getInstance().closeDB();
 
         // reset current user name before login
@@ -213,8 +214,12 @@ public class LoginActivity extends BaseActivity {
 
         final long start = System.currentTimeMillis();
         // call login method
-        Log.d(TAG, "EMClient.getInstance().login");
-        EMClient.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
+//        Log.d(TAG, "EMClient.getInstance().login");
+//        EMClient.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
+//            final long start = System.currentTimeMillis();
+            // call login method
+		Log.d(TAG, "EMClient.getInstance().login");
+		EMClient.getInstance().login(huanxinUsername, currentPassword, new EMCallBack() {
 
             @Override
             public void onSuccess() {

@@ -27,10 +27,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by fanjunqing on 18/03/2017.
- */
-
 public class ChatSearchAdapter extends ArrayAdapter<EMConversation>  {
 
 
