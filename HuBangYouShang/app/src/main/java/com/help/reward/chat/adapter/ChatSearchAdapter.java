@@ -31,7 +31,7 @@ import java.util.List;
  * Created by fanjunqing on 18/03/2017.
  */
 
-public class ChatSearchAdapter extends ArrayAdapter<EMConversation>  {
+public class ChatSearchAdapter extends ArrayAdapter<EMConversation> {
 
 
     private List<EMConversation> conversationList;
@@ -40,7 +40,8 @@ public class ChatSearchAdapter extends ArrayAdapter<EMConversation>  {
         super(context, 0);
         this.conversationList = new ArrayList<EMConversation>();
     }
-    public void setList(List<EMConversation> conversationList){
+
+    public void setList(List<EMConversation> conversationList) {
         this.conversationList.clear();
         this.conversationList.addAll(conversationList);
         notifyDataSetChanged();
@@ -86,21 +87,21 @@ public class ChatSearchAdapter extends ArrayAdapter<EMConversation>  {
 
         if (conversation.getType() == EMConversation.EMConversationType.GroupChat) {
             String groupId = conversation.conversationId();
-            if(EaseAtMessageHelper.get().hasAtMeMsg(groupId)){
+            if (EaseAtMessageHelper.get().hasAtMeMsg(groupId)) {
                 holder.motioned.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 holder.motioned.setVisibility(View.GONE);
             }
             // group message, show group avatar
             holder.avatar.setImageResource(com.hyphenate.easeui.R.drawable.ease_group_icon);
             EMGroup group = EMClient.getInstance().groupManager().getGroup(username);
             holder.name.setText(group != null ? group.getGroupName() : username);
-        } else if(conversation.getType() == EMConversation.EMConversationType.ChatRoom){
+        } else if (conversation.getType() == EMConversation.EMConversationType.ChatRoom) {
             holder.avatar.setImageResource(com.hyphenate.easeui.R.drawable.ease_group_icon);
             EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(username);
             holder.name.setText(room != null && !TextUtils.isEmpty(room.getName()) ? room.getName() : username);
             holder.motioned.setVisibility(View.GONE);
-        }else {
+        } else {
             EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
             EaseUserUtils.setUserNick(username, holder.name);
             holder.motioned.setVisibility(View.GONE);
@@ -115,7 +116,7 @@ public class ChatSearchAdapter extends ArrayAdapter<EMConversation>  {
             //}
             holder.message.setText(EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
                     TextView.BufferType.SPANNABLE);
-            if(content != null){
+            if (content != null) {
                 holder.message.setText(content);
             }
             holder.time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
@@ -130,19 +131,30 @@ public class ChatSearchAdapter extends ArrayAdapter<EMConversation>  {
     }
 
 
-
     private static class ViewHolder {
-        /** who you chat with */
+        /**
+         * who you chat with
+         */
         TextView name;
-        /** content of last message */
+        /**
+         * content of last message
+         */
         TextView message;
-        /** time of last message */
+        /**
+         * time of last message
+         */
         TextView time;
-        /** avatar */
+        /**
+         * avatar
+         */
         ImageView avatar;
-        /** status of last message */
+        /**
+         * status of last message
+         */
         View msgState;
-        /** layout */
+        /**
+         * layout
+         */
         TextView motioned;
     }
 

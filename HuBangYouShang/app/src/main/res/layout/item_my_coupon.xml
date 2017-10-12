@@ -36,10 +36,9 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingLeft="10dp">
 
@@ -47,7 +46,7 @@
             android:id="@+id/tv_store_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_alignParentTop="true"
             android:text="苹果官方旗舰店"
             android:textColor="@color/color_3a"
             android:textSize="@dimen/dimen_15" />
@@ -56,10 +55,8 @@
             android:id="@+id/tv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:text="2016.10.01-2016.11.01"
+            android:layout_centerVertical="true"
+            android:text="2016.10.01 12:12:12-2016.11.01 11:11:11"
             android:textColor="@color/color_bf"
             android:textSize="@dimen/dimen_13" />
 
@@ -67,11 +64,11 @@
             android:id="@+id/tv_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:text="weishiyong"
             android:textColor="@color/color_fa"
-            android:textSize="@dimen/dimen_13"
-             />
+            android:textSize="@dimen/dimen_13" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
