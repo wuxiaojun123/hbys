@@ -2,7 +2,7 @@
     <string name="app_name">互帮有赏商家版</string>
 
 
-
+    <string name="string_recapture">重新获取</string>
     <!--首页底部按钮 -->
     <string name="main_bottom_chat">聊天</string>
     <string name="main_bottom_group">商家群</string>

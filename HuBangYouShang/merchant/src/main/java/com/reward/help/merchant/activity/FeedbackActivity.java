@@ -89,8 +89,8 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void feekbackRequest(String content, String phone) {
-        MyProcessDialog.showDialog(FeedbackActivity.this);
-        subscribe = PersonalNetwork.getResponseApi().getFeedbackResponse(App.getAppClientKey(),content,phone)
+        MyProcessDialog.showDialog(mContext,"正在提交");
+        PersonalNetwork.getResponseApi().getFeedbackResponse(App.APP_CLIENT_KEY, content, phone)
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -106,14 +106,13 @@ public class FeedbackActivity extends BaseActivity implements View.OnClickListen
                     }
 
                     @Override
-                    public void onNext(BaseResponse response) {
+                    public void onNext(BaseResponse res) {
                         MyProcessDialog.closeDialog();
-                        if (response.code == 200) {
-                            ToastUtils.show(mContext, "提交成功");
-                            //finish();
-                            //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                        if (res.code == 200) { // 获取验证code成功
+                            ToastUtils.show(mContext,"反馈成功");
+                            finish();
                         } else {
-                            ToastUtils.show(mContext, response.msg);
+                            ToastUtils.show(mContext, res.msg);
                         }
                     }
                 });

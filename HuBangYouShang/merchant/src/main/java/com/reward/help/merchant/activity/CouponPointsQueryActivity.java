@@ -189,7 +189,6 @@ public class CouponPointsQueryActivity extends BaseActivity {
 
                 GlideUtils.loadBoundImage(voucher_info.member_avatar, mIvStorePic);
 
-
             } catch (Exception e) {
             }
         }

@@ -25,7 +25,9 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-
+/***
+ * 设置新密码
+ */
 public class SetNewPasswordActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.iv_title_back)
     ImageView mIvBack;
@@ -38,12 +40,15 @@ public class SetNewPasswordActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.et_set_confirm_password)
     EditText mEtPwd2;
 
+    private String phone;
+
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.activity_set_password);
         ButterKnife.bind(this);
         initView();
+        phone = getIntent().getStringExtra("phone");
     }
 
     private void initView() {
@@ -54,7 +59,7 @@ public class SetNewPasswordActivity extends BaseActivity implements View.OnClick
     @OnClick(R.id.btn_commit)
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_commit:
                 //startActivity(new Intent(SetNewPasswordActivity.this,LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 sendNewPwd();
@@ -68,18 +73,30 @@ public class SetNewPasswordActivity extends BaseActivity implements View.OnClick
     }
 
     private void sendNewPwd() {
-        if (TextUtils.isEmpty(mEtPwd1.getText().toString().trim())) {
-            ToastUtils.show(mContext,"请输入新密码");
+        String pwd = mEtPwd1.getText().toString().trim();
+        if (TextUtils.isEmpty(pwd)) {
+            ToastUtils.show(mContext, "请输入新密码");
             return;
         }
-
-        if (TextUtils.isEmpty(mEtPwd2.getText().toString().trim())) {
-            ToastUtils.show(mContext,"请再次输入新密码");
+        String pwd1 = mEtPwd2.getText().toString().trim();
+        if (TextUtils.isEmpty(pwd1)) {
+            ToastUtils.show(mContext, "请再次输入新密码");
             return;
         }
+        if (!TextUtils.isEmpty(pwd1)) {
+            if (pwd.equals(pwd1)) {
+                judge(pwd, pwd1);
+            } else {
+                ToastUtils.show(mContext, "请检查您的确认密码");
+            }
+        } else {
+            ToastUtils.show(mContext, "请输入确认密码");
+        }
+    }
 
+    private void judge(String pwd, String pwd1) {
         MyProcessDialog.showDialog(SetNewPasswordActivity.this);
-        subscribe = PersonalNetwork.getLoginApi().getUpdatePwd(mEtPwd1.getText().toString().trim(),mEtPwd2.getText().toString().trim())
+        subscribe = PersonalNetwork.getLoginApi().getResetPasswordBean(pwd, pwd1,phone)
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -98,7 +115,7 @@ public class SetNewPasswordActivity extends BaseActivity implements View.OnClick
                     public void onNext(BaseResponse response) {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
-                            ToastUtils.show(SetNewPasswordActivity.this,"修改成功");
+                            ToastUtils.show(SetNewPasswordActivity.this, "修改成功");
                             setResult(RESULT_OK);
                             finish();
                             //finish();
@@ -109,4 +126,5 @@ public class SetNewPasswordActivity extends BaseActivity implements View.OnClick
                     }
                 });
     }
+
 }

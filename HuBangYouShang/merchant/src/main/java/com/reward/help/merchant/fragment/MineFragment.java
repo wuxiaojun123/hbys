@@ -123,17 +123,11 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
                 //TODO edit my store info
 
                 break;
-            /*case R.id.tv_mine_modify_password:
-                //TODO modify password
-
-                break;
-            case R.id.tv_mine_clear_cache:
-                //TODO clear cache
-                startActivity(new Intent(getActivity(), StoreInfoActivity.class));
-                break;*/
             case R.id.tv_mine_modify_password:
                 //TODO modify password
-                startActivity(new Intent(getActivity(),CheckPhoneNumberActivity.class));
+                Intent mIntent = new Intent(getActivity(),CheckPhoneNumberActivity.class);
+                mIntent.putExtra("title","修改密码");
+                startActivity(mIntent);
                 break;
             case R.id.tv_mine_clear_cache:
                 //TODO clear cache
@@ -143,12 +137,6 @@ public class MineFragment extends EaseBaseFragment implements View.OnClickListen
                 //TODO call somebody
                 call();
                 break;
-            /*case R.id.tv_mine_feek_back:
-                //TODO feekback
-
-                break;
-            case R.id.tv_mine_about_us:
-                break;*/
             case R.id.tv_mine_feek_back:
                 //TODO feekback
                 startActivity(new Intent(getActivity(), FeedbackActivity.class));

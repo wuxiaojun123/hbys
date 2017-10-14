@@ -11,13 +11,14 @@ public class Constant {
     public static final String PLATFORM_CLIENT = "android"; // 平台是安卓
 
     // 210.72.13.135 http://www.hubangyoushang.com
-//    public static final String BASE_URL = "http://210.72.13.135/";
 //    public static final String BASE_URL = "http://www.hubangyoushang.com/";
     // 测试账号
     public static final String BASE_URL = "http://test.hubangyoushang.com/";
     // 电话号码，设置页面
     public static final String TEL_PHONE = "025-58840881";
-
+    // sms短信
+    public static final String SMS_APPKEY = "1bebf93388e20"; // sms短信验证
+    public static final String SMS_APPSECRET = "007b9903829fa24053dd4386a2019e4b"; // sms短信验证
     // 登录
     public static final String URL_LOGIN = "mobile/index.php?act=login";
 

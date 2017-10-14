@@ -1,6 +1,7 @@
 package com.reward.help.merchant.network.api;
 
 
+import com.reward.help.merchant.bean.Response.BaseResponse;
 import com.reward.help.merchant.bean.Response.LoginResponse;
 import com.reward.help.merchant.bean.Response.VerificationCodeResponse;
 import com.reward.help.merchant.utils.Constant;
@@ -11,7 +12,6 @@ import retrofit2.http.POST;
 import rx.Observable;
 
 /**
- *
  * http://210.72.13.135/mobile/index.php?act=login
  * Created by wuxiaojun on 2017/2/22.
  */
@@ -33,7 +33,7 @@ public interface LoginApi {
     Observable<VerificationCodeResponse> getVerificationCodeBean(
             @Field("phone") String phone,
             @Field("type") String type
-            );
+    );
 
     // 获取code 注册和修改密码
     @FormUrlEncoded
@@ -49,5 +49,22 @@ public interface LoginApi {
     Observable<VerificationCodeResponse> getUpdatePwd(
             @Field("password") String password,
             @Field("password1") String password1
+    );
+
+    // 找回密码---验证码验证
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=connect&op=check_captcha")
+    Observable<BaseResponse<String>> getCheckCaptchaBean(
+            @Field("phone") String phone,
+            @Field("auth_code") String authcode
+    );
+
+    // 找回密码---重设密码
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=connect&op=reset_password")
+    Observable<BaseResponse<String>> getResetPasswordBean(
+            @Field("password") String password,
+            @Field("password1") String password1,
+            @Field("phone") String phone
     );
 }
