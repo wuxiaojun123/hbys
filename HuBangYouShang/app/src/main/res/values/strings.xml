@@ -144,7 +144,7 @@
     <string name="string_address_manager_title">地址管理</string>
     <!--添加地址-->
     <string name="string_add_address_title">添加地址</string>
-
+    <string name="string_zero_pay">0元支付请点击完成</string>
     <!--关于-->
     <string name="string_about_title">关于</string>
     <!--意见反馈-->

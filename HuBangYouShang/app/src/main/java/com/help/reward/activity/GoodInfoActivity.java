@@ -50,6 +50,7 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
+ * 商品详情
  * Created by MXY on 2017/3/3.
  */
 

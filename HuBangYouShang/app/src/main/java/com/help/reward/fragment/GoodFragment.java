@@ -110,7 +110,7 @@ public class GoodFragment extends BaseFragment {
             @Override
             public void call(PropertyBean bean) {
                 // 刷新界面
-                if(propertyBean != null){
+                if (propertyBean != null) {
                     propertyBean = bean;
                     initGoodsImage(propertyBean.goods_img);
                     bindGoodsInfoView(propertyBean.getGoods_name(), propertyBean.getGoods_price(),
@@ -264,7 +264,7 @@ public class GoodFragment extends BaseFragment {
         cb_goods_img.requestFocus();
     }
 
-    public void startPropertyActivity(){
+    public void startPropertyActivity() {
         Intent intent = new Intent(getActivity(), GoodPropertyActivity.class);
         intent.putExtra("goods_property", propertyBean);
         intent.putParcelableArrayListExtra("spec_all_goods", spec_all_goods);

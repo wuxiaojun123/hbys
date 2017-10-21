@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@drawable/shape_divider_line"
@@ -43,9 +43,8 @@
                 android:id="@+id/iv_head"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_toLeftOf="@id/iv_allow"
                 android:layout_centerVertical="true"
-                 />
+                android:layout_toLeftOf="@id/iv_allow" />
 
         </RelativeLayout>
 
@@ -60,22 +59,19 @@
 
             <TextView
                 style="@style/style_person_info_text_left"
-                android:text="昵称"
-
-                />
+                android:text="昵称" />
 
             <EditText
                 android:id="@+id/et_nicheng"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:textSize="@dimen/dimen_13"
-                android:textColor="@color/color_bf"
-                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:background="@null"
+                android:gravity="center_vertical|right"
                 android:maxLines="1"
-                android:layout_alignParentRight="true"
-                />
+                android:textColor="@color/color_bf"
+                android:textSize="@dimen/dimen_13" />
 
         </RelativeLayout>
 
@@ -123,8 +119,7 @@
 
             <TextView
                 android:id="@+id/tv_area"
-                style="@style/style_person_info_text_right"
-                />
+                style="@style/style_person_info_text_right" />
 
             <!--<TextView
                 android:id="@+id/tv_area2"
@@ -173,14 +168,13 @@
                 android:id="@+id/et_word_position"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:textSize="@dimen/dimen_13"
-                android:textColor="@color/color_bf"
-                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:background="@null"
+                android:gravity="center_vertical|right"
                 android:maxLines="1"
-                android:layout_alignParentRight="true"
-                />
+                android:textColor="@color/color_bf"
+                android:textSize="@dimen/dimen_13" />
 
         </RelativeLayout>
 
@@ -209,12 +203,11 @@
                 android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:gravity="left|top"
+                android:hint="请输入您可以为他人提供帮助的资源，50字以内"
                 android:inputType="textMultiLine"
                 android:maxLines="4"
                 android:textColor="@color/color_bf"
-                android:textSize="@dimen/dimen_13"
-                android:hint="请输入您可以为他人提供帮助的资源，50字以内"
-                />
+                android:textSize="@dimen/dimen_13" />
 
         </LinearLayout>
 

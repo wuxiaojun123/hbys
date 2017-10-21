@@ -142,7 +142,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         MyProcessDialog.showDialog(mContext);
-        ShopcartNetwork.getShopcartCookieApi().commitComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, confirmOrderBean.address_info.address_id
+        ShopcartNetwork
+                .getShopcartCookieApi()
+                .commitComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, confirmOrderBean.address_info.address_id
                 , confirmOrderBean.vat_hash, confirmOrderBean.address_api.offpay_hash, confirmOrderBean.address_api.offpay_hash_batch, "online",
                 voucher, general_voucher, pay_message)
                 .subscribeOn(Schedulers.io())

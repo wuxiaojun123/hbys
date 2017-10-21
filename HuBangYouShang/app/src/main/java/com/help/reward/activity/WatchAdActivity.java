@@ -313,11 +313,12 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initTimer() {
-        mTimer = new CountDownTimeUtils(15 * 1000, 15);
+        mTimer = new CountDownTimeUtils(5 * 1000, 1000);
         mTimer.setOnCountDownTimeListener(new CountDownTimeUtils.OnCountDownTimeListener() {
             @Override
             public void onTick(long millisUntilFinished) { // 计时开始
-                tv_time.setText("还需观看" + millisUntilFinished / 1000 + "s");
+                long time = millisUntilFinished / 1000;
+                tv_time.setText("还需观看" + time + "s");
             }
 
             @Override

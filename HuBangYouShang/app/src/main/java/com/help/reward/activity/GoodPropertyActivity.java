@@ -291,6 +291,7 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
                 intent.putExtra("if_cart", "0");
                 startActivity(intent);
                 ActivitySlideAnim.slideInAnim(GoodPropertyActivity.this);
+                finish();
 
                 break;
         }
@@ -358,6 +359,7 @@ public class GoodPropertyActivity extends BaseActivity implements View.OnClickLi
                             MyProcessDialog.closeDialog();
                             if (baseResponse.code == 200) {
                                 ToastUtils.show(mContext, "加入购物车成功");
+                                finish();
                             } else {
                                 ToastUtils.show(mContext, baseResponse.msg);
                             }

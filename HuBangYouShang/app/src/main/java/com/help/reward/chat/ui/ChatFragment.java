@@ -539,8 +539,6 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                     //积分
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_REWARD_POINTS : MESSAGE_TYPE_SENT_REWARD_POINTS;
                 }
-
-
 //                //red packet code : 红包消息、红包回执消息以及转账消息的chatrow type
 //                else if (RedPacketUtil.isRandomRedPacket(message)) {
 //                    //小额随机红包

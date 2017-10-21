@@ -31,6 +31,8 @@ import com.help.reward.bean.SexBean;
 import com.help.reward.manager.AddressManager;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.ChooseCameraPopuUtils;
 import com.help.reward.utils.Constant;
@@ -133,6 +135,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         sexList.add(new SexBean("1", "男"));
         sexList.add(new SexBean("2", "女"));
         if (App.mLoginReponse != null) {
+            avatarUrl = App.mLoginReponse.avator;
             GlideUtils.loadCircleImage(App.mLoginReponse.avator, iv_head);
         }
 
@@ -316,10 +319,15 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
                         if (response.code == 200) {
                             if (response.data != null) {
                                 // 设置用户属性
-                                LogUtils.e("修改个人信息成功。。。" + response.data);
+//                                LogUtils.e("修改个人信息成功。。。" + response.data);
                                 if (avatarUrl != null) {
                                     App.mLoginReponse.avator = avatarUrl;
+                                    App.mLoginReponse.username = name;
                                 }
+                                // 发送通知进行更新
+                                UpdateLoginDataRxbusType updateLoginDataRxbusType = new UpdateLoginDataRxbusType(false);
+                                updateLoginDataRxbusType.setUpdatePersonInfo(true);
+                                RxBus.getDefault().post(updateLoginDataRxbusType);
                                 finish();
                                 ActivitySlideAnim.slideOutAnim(PersonInfoActivity.this);
                             }

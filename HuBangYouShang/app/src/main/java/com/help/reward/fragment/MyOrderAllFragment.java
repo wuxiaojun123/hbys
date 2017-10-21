@@ -80,7 +80,6 @@ public class MyOrderAllFragment extends BaseFragment {
             ToastUtils.show(mContext, R.string.string_please_login);
             return;
         }
-//        LogUtils.e("当前页数是" + currentPage);
         PersonalNetwork
                 .getResponseApi()
                 .getMyOrderResponse("member_order", "order_list", currentPage + "", state_type, App.APP_CLIENT_KEY)

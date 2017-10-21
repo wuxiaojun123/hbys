@@ -30,6 +30,8 @@ import com.help.reward.network.ShopcartNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.pay.alipay.OrderInfoUtil2_0;
 import com.help.reward.pay.alipay.PayResult;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.BooleanRxbusType;
 import com.help.reward.utils.ActivityManager;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
@@ -237,6 +239,8 @@ public class PayTypeActivity extends BaseActivity {
     }
 
     private void finishActivity(){
+        //刷新当前数据,发送给MyOrderAllFragment
+        RxBus.getDefault().post(new BooleanRxbusType(true));
         finish();
         ActivitySlideAnim.slideOutAnim(PayTypeActivity.this);
     }

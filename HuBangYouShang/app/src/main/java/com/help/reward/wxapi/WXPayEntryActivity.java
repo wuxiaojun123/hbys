@@ -1,6 +1,8 @@
 package com.help.reward.wxapi;
 
 import com.help.reward.R;
+import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.BooleanRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
 import com.idotools.utils.LogUtils;
@@ -55,7 +57,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             int code = resp.errCode;
             if (code == 0) { // 支付成功
                 ToastUtils.show(mContext, "支付成功");
-
+                //刷新当前数据,发送给MyOrderAllFragment
+                RxBus.getDefault().post(new BooleanRxbusType(true));
                 finish();
 
             } else if (code == -1) { // 错误

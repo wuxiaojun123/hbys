@@ -10,7 +10,7 @@
         android:id="@+id/iv_store_img"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:scaleType="fitXY" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tv_store_name"

@@ -7,9 +7,14 @@ package com.help.reward.rxbus.event.type;
 public class UpdateLoginDataRxbusType {
 
     public boolean isUpdate;
+    public boolean updatePersonInfo;
 
-    public UpdateLoginDataRxbusType(boolean isUpdate){
+    public UpdateLoginDataRxbusType(boolean isUpdate) {
         this.isUpdate = isUpdate;
+    }
+
+    public void setUpdatePersonInfo(boolean updatePersonInfo) {
+        this.updatePersonInfo = updatePersonInfo;
     }
 
 }
