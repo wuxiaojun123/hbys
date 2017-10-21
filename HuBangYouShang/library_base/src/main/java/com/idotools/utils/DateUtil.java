@@ -49,6 +49,11 @@ public class DateUtil {
         return SDF_NO_SECONDS.format(new Date(lcc_time * 1000L));
     }
 
+    public static String getDateToString2(String time) {
+        long lcc_time = Long.valueOf(time);
+        return dateFormat.format(new Date(lcc_time * 1000L));
+    }
+
     /***
      * 在当前日期之上加多少天
      * @param addDay

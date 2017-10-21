@@ -1,5 +1,6 @@
 package com.reward.help.merchant.activity;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.base.recyclerview.LRecyclerView;
 import com.base.recyclerview.LRecyclerViewAdapter;
+import com.base.recyclerview.OnItemClickListener;
+import com.base.recyclerview.OnRefreshListener;
 import com.idotools.utils.MetricsUtils;
 import com.idotools.utils.ToastUtils;
 import com.reward.help.merchant.App;
@@ -31,15 +34,15 @@ import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-
+/***
+ * 申请进度查看
+ */
 public class QueryApplyGroupActivity extends BaseActivity {
 
     @BindView(R.id.iv_title_back)
     ImageView mIvBack;
-
     @BindView(R.id.tv_title)
     TextView mTvTitle;
-
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
 
@@ -62,8 +65,7 @@ public class QueryApplyGroupActivity extends BaseActivity {
                 QueryApplyGroupActivity.this.finish();
             }
         });
-
-        initData();
+        initData(false);
     }
 
     private void initView() {
@@ -85,11 +87,30 @@ public class QueryApplyGroupActivity extends BaseActivity {
                 }
             }
         });
+
+        lRecyclerview.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData(true);
+            }
+        });
+
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                GroupProgressResponse.GroupProgrossInfoBean bean = adapter.getDataList().get(position);
+
+                Intent mIntent = new Intent(mContext, ApplyCreateGroupActivity.class);
+                mIntent.putExtra("examine_failed", true);
+                mIntent.putExtra("id", bean.id);
+                startActivityForResult(mIntent, 1);
+            }
+        });
     }
 
-
-    private void initData() {
-        MyProcessDialog.showDialog(QueryApplyGroupActivity.this);
+    private void initData(final boolean isRefresh) {
+        if (!isRefresh)
+            MyProcessDialog.showDialog(QueryApplyGroupActivity.this);
         subscribe = CouponPointsNetwork.getCouponListApi().queryApplyProgress(App.getAppClientKey())
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
@@ -112,13 +133,22 @@ public class QueryApplyGroupActivity extends BaseActivity {
                             if (response.data != null) {
                                 adapter.setDataList(response.data.list);
                             }
-                            //finish();
-                            //ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                            if (isRefresh) {
+                                lRecyclerview.refreshComplete(1);
+                            }
                         } else {
                             ToastUtils.show(mContext, response.msg);
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 1) {
+            initData(true);
+        }
     }
 
 }

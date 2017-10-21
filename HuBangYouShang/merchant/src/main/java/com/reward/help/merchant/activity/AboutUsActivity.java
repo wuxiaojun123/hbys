@@ -46,4 +46,5 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
                 break;
         }
     }
+
 }

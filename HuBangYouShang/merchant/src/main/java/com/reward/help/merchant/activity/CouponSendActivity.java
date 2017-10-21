@@ -30,7 +30,10 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class CouponSendActivity extends BaseActivity implements View.OnClickListener{
+/***
+ * 发优惠劵
+ */
+public class CouponSendActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String SEND_EXTRA = "CouponSendActivity";
 
@@ -61,6 +64,8 @@ public class CouponSendActivity extends BaseActivity implements View.OnClickList
 
     private Intent intent;
     String greeting;
+    private String groupId;
+
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -68,30 +73,35 @@ public class CouponSendActivity extends BaseActivity implements View.OnClickList
         ButterKnife.bind(this);
         intent = getIntent();
         coupon = (CouponListBean) intent.getSerializableExtra(SEND_EXTRA);
+        groupId = intent.getStringExtra("groupid");
         initView();
     }
 
     private void initView() {
         mTvTitle.setText(getText(R.string.send_coupon));
-        int groupNum = intent.getIntExtra("num",0);
+        int groupNum = intent.getIntExtra("num", 0);
         if (coupon != null) {
             mTvStore.setText(coupon.getVoucher_t_storename());
             mTvDate.setText(DateUtils.strDateToStr(coupon.getVoucher_t_start_date()) + "-" + DateUtils.strDateToStr(coupon.getVoucher_t_end_date()));
-            mDiscount.setText(String.format(getString(R.string.format_discount_money),coupon.getVoucher_t_price()));
-            mLimit.setText(String.format(getString(R.string.format_limit_money),coupon.getVoucher_t_limit()));
+            mDiscount.setText(String.format(getString(R.string.format_discount_money), coupon.getVoucher_t_price()));
+            mLimit.setText(String.format(getString(R.string.format_limit_money), coupon.getVoucher_t_limit()));
 
             mLeftCount.setText(getString(R.string.format_left_count) + coupon.getVoucher_t_total());
 
-            greeting = String.format(getString(R.string.format_greeting),new String[]{coupon.getVoucher_t_price(),coupon.getVoucher_t_limit()});
-
-            mTvGroupNum.setText(String.format(getString(R.string.group_num),groupNum+""));
+            greeting = String.format(getString(R.string.format_greeting), new String[]{coupon.getVoucher_t_price(), coupon.getVoucher_t_limit()});
+            if (groupNum != 0) {
+                mTvGroupNum.setText(String.format(getString(R.string.group_num), groupNum + ""));
+            } else { // 表示对某个用户单独发放优惠劵
+                mEtSendCount.setText("1");
+                mEtSendCount.setFocusable(false);
+            }
         }
     }
 
-    @OnClick({R.id.iv_title_back,R.id.btn_send_coupon})
+    @OnClick({R.id.iv_title_back, R.id.btn_send_coupon})
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_title_back:
                 hideSoftKeyboard();
                 this.finish();
@@ -107,12 +117,12 @@ public class CouponSendActivity extends BaseActivity implements View.OnClickList
     private void sendCouponRequest() {
 
         if (coupon == null) {
-            ToastUtils.show(this,"暂无可使用的优惠券");
+            ToastUtils.show(this, "暂无可使用的优惠券");
             return;
         }
         String num = mEtSendCount.getText().toString();
         if (TextUtils.isEmpty(num)) {
-            ToastUtils.show(this,"请输入发放优惠券的个数");
+            ToastUtils.show(this, "请输入发放优惠券的个数");
             return;
         }
         try {
@@ -120,12 +130,12 @@ public class CouponSendActivity extends BaseActivity implements View.OnClickList
                 ToastUtils.show(this, "请重新输入发放优惠券的个数");
                 return;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return;
         }
 
         MyProcessDialog.showDialog(CouponSendActivity.this);
-        subscribe = CouponPointsNetwork.getCouponListApi().sendCoupon(App.getAppClientKey(),coupon.getVoucher_t_id(),num)
+        subscribe = CouponPointsNetwork.getCouponListApi().sendCoupon(App.getAppClientKey(), coupon.getVoucher_t_id(), num, groupId)
                 .subscribeOn(Schedulers.io()) // 请求放在io线程中
                 .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -145,9 +155,9 @@ public class CouponSendActivity extends BaseActivity implements View.OnClickList
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
                             intent = new Intent();
-                            intent.putExtra(CouponPointsConstant.EXTRA_COUPON_POINTS_RECEIVER_ID,response.data.toString());
-                            intent.putExtra(CouponPointsConstant.EXTRA_GREETING,greeting);
-                            setResult(RESULT_OK,intent);
+                            intent.putExtra(CouponPointsConstant.EXTRA_COUPON_POINTS_RECEIVER_ID, response.data.toString());
+                            intent.putExtra(CouponPointsConstant.EXTRA_GREETING, greeting);
+                            setResult(RESULT_OK, intent);
                             CouponSendActivity.this.finish();
                             //finish();
                             //ActivitySlideAnim.slideOutAnim(LoginActivity.this);

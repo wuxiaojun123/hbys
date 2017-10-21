@@ -8,13 +8,13 @@
     <include layout="@layout/layout_title"></include>
 
     <EditText
+        android:id="@+id/et_appley_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/color_while"
         android:gravity="left"
         android:hint="请写出申请APP的理由"
-        android:id="@+id/et_appley_content"
         android:lines="10"
         android:padding="6dp"
         android:textColorHint="@color/grid_state_focused" />
@@ -30,5 +30,17 @@
         android:text="@string/commit"
         android:textColor="@color/color_while"
         android:textSize="@dimen/dimen_15" />
+
+    <TextView
+        android:id="@+id/tv_failed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/color_while"
+        android:gravity="left"
+        android:padding="10dp"
+        android:text="@string/string_create_group_failed"
+        android:textSize="14dp"
+        android:visibility="gone" />
 
 </LinearLayout>

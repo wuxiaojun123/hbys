@@ -4,8 +4,10 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
+import android.view.ViewConfiguration;
 
 
 import com.reward.help.merchant.chat.DemoHelper;

@@ -3,6 +3,7 @@ package com.reward.help.merchant.chat.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.util.EasyUtils;
@@ -12,12 +13,13 @@ import com.reward.help.merchant.chat.runtimepermissions.PermissionsManager;
 
 /**
  * chat activity，EaseChatFragment was used {@link #}
- *
  */
-public class ChatActivity extends BaseActivity{
+public class ChatActivity extends BaseActivity {
     public static ChatActivity activityInstance;
     private EaseChatFragment chatFragment;
     public String toChatUsername;
+    public int chatType; // 聊天类型 1:是个人  2:是群
+
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -26,23 +28,24 @@ public class ChatActivity extends BaseActivity{
         activityInstance = this;
         //get user id or group id
         toChatUsername = getIntent().getExtras().getString("userId");
+        chatType = getIntent().getExtras().getInt("chatType");
         //use EaseChatFratFragment
         chatFragment = new ChatFragment();
         //pass parameters to chat fragment
         chatFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
-        
+
     }
-    
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         activityInstance = null;
     }
-    
+
     @Override
     protected void onNewIntent(Intent intent) {
-    	// make sure only one chat activity is opened
+        // make sure only one chat activity is opened
         String username = intent.getStringExtra("userId");
         if (toChatUsername.equals(username))
             super.onNewIntent(intent);
@@ -52,7 +55,7 @@ public class ChatActivity extends BaseActivity{
         }
 
     }
-    
+
     @Override
     public void onBackPressed() {
         chatFragment.onBackPressed();
@@ -61,8 +64,8 @@ public class ChatActivity extends BaseActivity{
             startActivity(intent);
         }
     }
-    
-    public String getToChatUsername(){
+
+    public String getToChatUsername() {
         return toChatUsername;
     }
 

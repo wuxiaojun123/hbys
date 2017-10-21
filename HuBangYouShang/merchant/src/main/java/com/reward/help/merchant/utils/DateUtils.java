@@ -40,7 +40,8 @@ public class DateUtils {
         String dateString = null;
         try {
             SimpleDateFormat formatter = new SimpleDateFormat(patten);
-            dateString = formatter.format(new Date(Long.parseLong(dateDate)));
+            long lcc_time = Long.valueOf(dateDate);
+            dateString = formatter.format(new Date(lcc_time * 1000L));
         } catch (Exception e){
 
         }

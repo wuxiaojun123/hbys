@@ -84,19 +84,36 @@
 
     <string name="send_points_per_num">每人领取</string>
     <string name="send_points_per_num_hint">请输入每位买家可领取的营销积分</string>
+    <string name="send_points_single_num_hint">请输入当前买家可领取的营销积分</string>
+    <string name="send_points_single_num">营销积分数</string>
+
 
     <string name="send_points_per_num_result">可用营销积分</string>
-
+    <string name="send_points">发营销积分</string>
 
 
     <string name="store_check_pass">您的入驻申请已通过审核</string>
     <string name="store_check_wait">您的入驻申请正在审核</string>
     <string name="store_check_unpass">您的入驻申请审核不通过</string>
-    <string name="store_check_unpass_des" >请登录网页端重新提交申请信息</string>
+    <string name="store_check_unpass_des">请登录网页端重新提交申请信息</string>
     <string name="store_name">店铺名称</string>
     <string name="store_type">店铺分类</string>
     <string name="store_type2">经营类目</string>
     <string name="store_main">经营主体</string>
     <string name="store_owner">联系人</string>
->>>>>>> 4de81b6e24160ddcb4b5a1342dcb53eef6d3ae69
+    <string name="string_error">获取数据失败</string>
+    <string name="string_help_points">帮赏分</string>
+    <string name="string_coupon_points">优惠劵</string>
+    <string name="string_remove">删除</string>
+    <string name="string_remove_member">删除成员</string>
+
+    <string name="string_create_group_failed">
+        您的申请不通过，一般是由于以下原因，如有疑问请联系平台客服：\n
+        1、申请理由不充分，不足以支撑建立群组。\n
+        2、您已有群组，还没有到达再次申请群组条件。\n
+        3、您是未入驻商家，请入驻后申请群组。\n
+        4、您是未注册用户，请注册用户后入驻平台，再申请群组。\n
+        5、因其他原因，未达到申请群组条件。
+    </string>
+
 </resources>

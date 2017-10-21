@@ -38,7 +38,9 @@ import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-
+/***
+ * 营销积分领取
+ */
 public class CouponPointsQueryActivity extends BaseActivity {
 
     public static final String Extra = "CouponPointsQueryActivity_Extra";

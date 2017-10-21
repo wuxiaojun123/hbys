@@ -43,7 +43,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class CouponSendListActivity extends BaseActivity implements View.OnClickListener{
+public class CouponSendListActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.id_recycler_view)
     LRecyclerView lRecyclerview;
@@ -66,6 +66,8 @@ public class CouponSendListActivity extends BaseActivity implements View.OnClick
     private static int requestCode;
 
     private Intent intent;
+    private int num; // 群人数，如果是0表示对当前某个用户单独发放
+    private String groupId;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -73,13 +75,15 @@ public class CouponSendListActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_coupon_send);
         ButterKnife.bind(this);
         intent = getIntent();
+        num = intent.getIntExtra("num", 0);
+        groupId = intent.getStringExtra("groupId");
         initView();
         initData();
 
     }
 
     private void initData() {
-       getCouponListRequest();
+        getCouponListRequest();
     }
 
     private void initView() {
@@ -149,19 +153,22 @@ public class CouponSendListActivity extends BaseActivity implements View.OnClick
                 });
     }
 
-    @OnClick({R.id.iv_title_back,R.id.tv_right})
+    @OnClick({R.id.iv_title_back, R.id.tv_right})
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_title_back:
                 CouponSendListActivity.this.finish();
                 break;
             case R.id.tv_right:
                 if (mCheckedList.size() > 0) {
-                    intent.setClass(this, CouponSendActivity.class).putExtra(CouponSendActivity.SEND_EXTRA, mCheckedList.get(0));
+                    intent.setClass(this, CouponSendActivity.class)
+                            .putExtra(CouponSendActivity.SEND_EXTRA, mCheckedList.get(0))
+                            .putExtra("num", num)
+                            .putExtra("groupId",groupId);
                     startActivityForResult(intent, requestCode);
                 } else {
-                    ToastUtils.show(this,"请选择要发送的优惠券");
+                    ToastUtils.show(this, "请选择要发送的优惠券");
                 }
                 //TODO
                 break;
@@ -169,8 +176,8 @@ public class CouponSendListActivity extends BaseActivity implements View.OnClick
 
     }
 
-    public static void startActivityForResult(Fragment fragment, Intent intent, int reCode){
-        fragment.startActivityForResult(intent,reCode);
+    public static void startActivityForResult(Fragment fragment, Intent intent, int reCode) {
+        fragment.startActivityForResult(intent, reCode);
         requestCode = reCode;
     }
 
@@ -179,7 +186,7 @@ public class CouponSendListActivity extends BaseActivity implements View.OnClick
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            setResult(RESULT_OK,data);
+            setResult(RESULT_OK, data);
             CouponSendListActivity.this.finish();
         }
     }

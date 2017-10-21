@@ -9,12 +9,13 @@ import java.util.List;
 public class GroupProgressResponse extends BaseResponse<GroupProgressResponse.GroupProgrossBean> {
 
 
-    public class GroupProgrossBean{
+    public class GroupProgrossBean {
         public List<GroupProgrossInfoBean> list;
     }
 
 
-    public class GroupProgrossInfoBean{
+    public class GroupProgrossInfoBean {
+        public String id;
         public String content;
         public String status;
         public String created;

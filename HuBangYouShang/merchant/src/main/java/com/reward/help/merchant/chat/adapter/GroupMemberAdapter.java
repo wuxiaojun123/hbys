@@ -21,7 +21,6 @@ import java.util.List;
 
 public class GroupMemberAdapter extends BaseRecyclerAdapter<String> {
 
-
     private List<String> mSelectList;
 
     public GroupMemberAdapter(Context context, ArrayList<String> selectlist) {

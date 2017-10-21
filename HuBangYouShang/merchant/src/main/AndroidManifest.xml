@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name="com.reward.help.merchant.App"
@@ -46,12 +47,13 @@
 
         <!--<activity
             android:name=".activity.ApplyCreateGroupActivity"-->
-        <activity android:name=".activity.StoreInfoActivity"
+        <activity
+            android:name=".activity.StoreInfoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
-        <activity android:name=".activity.ApplyCreateGroupActivity"
+        <activity
+            android:name=".activity.ApplyCreateGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
 
@@ -62,23 +64,24 @@
 
         <!--<activity
             android:name=".activity.ProfileActivity"-->
-        <activity android:name=".activity.CouponSendActivity"
+        <activity
+            android:name=".activity.CouponSendActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
-        <activity android:name=".activity.PointsSendActivity"
+        <activity
+            android:name=".activity.PointsSendActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
 
-        <activity android:name=".activity.CouponPointsQueryActivity"
+        <activity
+            android:name=".activity.CouponPointsQueryActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
-        <activity android:name=".activity.ProfileActivity"
+        <activity
+            android:name=".activity.ProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"></activity>
 
@@ -121,18 +124,17 @@
 
         <activity
             android:name=".activity.FeedbackActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".activity.AboutUsActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".chat.ui.GroupDeleteActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.GroupCouponsRecordActivity"
+            android:screenOrientation="portrait" />
         <!-- 开机自启动服务 -->
         <receiver android:name="chat.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">

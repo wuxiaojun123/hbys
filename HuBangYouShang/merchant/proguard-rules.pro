@@ -275,3 +275,9 @@
 # Gson
 -keep class com.google.gson.stream.** { *; }
 -keepattributes EnclosingMethod
+# OrmLite uses reflection
+-keep class com.help.reward.cache.nickNameAndHead.** {*;}
+
+-dontwarn com.j256.ormlite.**
+-keep class com.j256.ormlite.** { *;}
+-keep class com.envy15.cherry.base.orm.** { *;}

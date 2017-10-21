@@ -55,7 +55,7 @@ import java.util.Map;
 
 public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHelper {
 
-	// constant start from 11 to avoid conflict with constant in base class
+    // constant start from 11 to avoid conflict with constant in base class
     private static final int ITEM_TAKE_PICTURE = 1;
     private static final int ITEM_PICTURE = 2;
     private static final int ITEM_LOCATION = 3;
@@ -74,7 +74,6 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     private static final int REQUEST_CODE_SEND_COUPON = 16;
     private static final int REQUEST_CODE_SEND_POINT = 17;
 
-    
 
     private static final int MESSAGE_TYPE_SENT_VOICE_CALL = 1;
     private static final int MESSAGE_TYPE_RECV_VOICE_CALL = 2;
@@ -90,12 +89,13 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     private static final int MESSAGE_TYPE_RECV_COUPON = 8;
 
     /**
-     * if it is chatBot 
+     * if it is chatBot
      */
     private boolean isRobot;
 
     private int member;
-    
+    private String groupId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -105,8 +105,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     protected void setUpView() {
         setChatFragmentListener(this);
         if (chatType == Constant.CHATTYPE_SINGLE) {
-            Map<String,RobotUser> robotMap = DemoHelper.getInstance().getRobotList();
-            if(robotMap!=null && robotMap.containsKey(toChatUsername)){
+            Map<String, RobotUser> robotMap = DemoHelper.getInstance().getRobotList();
+            if (robotMap != null && robotMap.containsKey(toChatUsername)) {
                 isRobot = true;
             }
         }
@@ -127,9 +127,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 onBackPressed();
             }
         });
-        ((EaseEmojiconMenu)inputMenu.getEmojiconMenu()).addEmojiconGroup(EmojiconExampleGroupData.getData());
-        if(chatType == EaseConstant.CHATTYPE_GROUP){
-
+        ((EaseEmojiconMenu) inputMenu.getEmojiconMenu()).addEmojiconGroup(EmojiconExampleGroupData.getData());
+        if (chatType == EaseConstant.CHATTYPE_GROUP) {
 
             new Thread(new Runnable() {
 
@@ -139,6 +138,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                         EMGroup group = EMClient.getInstance().groupManager().getGroupFromServer(toChatUsername);
                         //EMGroup group = EMClient.getInstance().groupManager().getGroup(toChatUsername);
                         member = group.getMemberCount();
+                        groupId = group.getGroupId();
                     } catch (HyphenateException e) {
                         e.printStackTrace();
                     }
@@ -146,26 +146,28 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
             }).start();
 
             inputMenu.getPrimaryMenu().getEditText().addTextChangedListener(new TextWatcher() {
-                
+
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if(count == 1 && "@".equals(String.valueOf(s.charAt(start)))){
+                    if (count == 1 && "@".equals(String.valueOf(s.charAt(start)))) {
                         startActivityForResult(new Intent(getActivity(), PickAtUserActivity.class).
                                 putExtra("groupId", toChatUsername), REQUEST_CODE_SELECT_AT_USER);
                     }
                 }
+
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    
+
                 }
+
                 @Override
                 public void afterTextChanged(Editable s) {
-                    
-                } 
+
+                }
             });
         }
     }
-    
+
     @Override
     protected void registerExtendMenuItem() {
         //use the menu in base class
@@ -196,77 +198,77 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         inputMenu.registerExtendMenuItem(R.string.item_coupon, R.mipmap.item_coupon, ITEM_COUPON, extendMenuItemClickListener);
         inputMenu.registerExtendMenuItem(R.string.attach_location, R.mipmap.position, ITEM_LOCATION, extendMenuItemClickListener);
     }
-    
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CONTEXT_MENU) {
             switch (resultCode) {
-            case ContextMenuActivity.RESULT_CODE_COPY: // copy
-                clipboard.setPrimaryClip(ClipData.newPlainText(null,
-                        ((EMTextMessageBody) contextMenuMessage.getBody()).getMessage()));
-                break;
-            case ContextMenuActivity.RESULT_CODE_DELETE: // delete
-                conversation.removeMessage(contextMenuMessage.getMsgId());
-                messageList.refresh();
-                break;
+                case ContextMenuActivity.RESULT_CODE_COPY: // copy
+                    clipboard.setPrimaryClip(ClipData.newPlainText(null,
+                            ((EMTextMessageBody) contextMenuMessage.getBody()).getMessage()));
+                    break;
+                case ContextMenuActivity.RESULT_CODE_DELETE: // delete
+                    conversation.removeMessage(contextMenuMessage.getMsgId());
+                    messageList.refresh();
+                    break;
 
-            case ContextMenuActivity.RESULT_CODE_FORWARD: // forward
-                Intent intent = new Intent(getActivity(), ForwardMessageActivity.class);
-                intent.putExtra("forward_msg_id", contextMenuMessage.getMsgId());
-                startActivity(intent);
-                
-                break;
+                case ContextMenuActivity.RESULT_CODE_FORWARD: // forward
+                    Intent intent = new Intent(getActivity(), ForwardMessageActivity.class);
+                    intent.putExtra("forward_msg_id", contextMenuMessage.getMsgId());
+                    startActivity(intent);
 
-            default:
-                break;
+                    break;
+
+                default:
+                    break;
             }
         }
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-            case REQUEST_CODE_SELECT_VIDEO: //send the video
-                if (data != null) {
-                    int duration = data.getIntExtra("dur", 0);
-                    String videoPath = data.getStringExtra("path");
-                    File file = new File(PathUtil.getInstance().getImagePath(), "thvideo" + System.currentTimeMillis());
-                    try {
-                        FileOutputStream fos = new FileOutputStream(file);
-                        Bitmap ThumbBitmap = ThumbnailUtils.createVideoThumbnail(videoPath, 3);
-                        ThumbBitmap.compress(CompressFormat.JPEG, 100, fos);
-                        fos.close();
-                        sendVideoMessage(videoPath, file.getAbsolutePath(), duration);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                case REQUEST_CODE_SELECT_VIDEO: //send the video
+                    if (data != null) {
+                        int duration = data.getIntExtra("dur", 0);
+                        String videoPath = data.getStringExtra("path");
+                        File file = new File(PathUtil.getInstance().getImagePath(), "thvideo" + System.currentTimeMillis());
+                        try {
+                            FileOutputStream fos = new FileOutputStream(file);
+                            Bitmap ThumbBitmap = ThumbnailUtils.createVideoThumbnail(videoPath, 3);
+                            ThumbBitmap.compress(CompressFormat.JPEG, 100, fos);
+                            fos.close();
+                            sendVideoMessage(videoPath, file.getAbsolutePath(), duration);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-                break;
-            case REQUEST_CODE_SELECT_FILE: //send the file
-                if (data != null) {
-                    Uri uri = data.getData();
-                    if (uri != null) {
-                        sendFileByUri(uri);
+                    break;
+                case REQUEST_CODE_SELECT_FILE: //send the file
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        if (uri != null) {
+                            sendFileByUri(uri);
+                        }
                     }
-                }
-                break;
-            case REQUEST_CODE_SELECT_AT_USER:
-                if(data != null){
-                    String username = data.getStringExtra("username");
-                    inputAtUsername(username, false);
-                }
-                break;
+                    break;
+                case REQUEST_CODE_SELECT_AT_USER:
+                    if (data != null) {
+                        String username = data.getStringExtra("username");
+                        inputAtUsername(username, false);
+                    }
+                    break;
 
 
-            case REQUEST_CODE_SEND_COUPON:
-                if (data != null) {
-                    sendMessage(CouponPointsUtils.createCouponMessage(getActivity(), data, toChatUsername));
-                }
-                break;
-             case REQUEST_CODE_SEND_POINT:
-                 if (data != null) {
-                     sendMessage(CouponPointsUtils.createPointsMessage(getActivity(), data, toChatUsername));
-                 }
-                 break;
-            //red packet code : 发送红包消息到聊天界面
+                case REQUEST_CODE_SEND_COUPON:
+                    if (data != null) {
+                        sendMessage(CouponPointsUtils.createCouponMessage(getActivity(), data, toChatUsername));
+                    }
+                    break;
+                case REQUEST_CODE_SEND_POINT:
+                    if (data != null) {
+                        sendMessage(CouponPointsUtils.createPointsMessage(getActivity(), data, toChatUsername));
+                    }
+                    break;
+                //red packet code : 发送红包消息到聊天界面
 //            case REQUEST_CODE_SEND_RED_PACKET:
 //                if (data != null){
 //                    sendMessage(RedPacketUtil.createRPMessage(getActivity(), data, toChatUsername));
@@ -277,27 +279,27 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 //                    sendMessage(RedPacketUtil.createTRMessage(getActivity(), data, toChatUsername));
 //                }
 //                break;
-            //end of red packet code
-            default:
-                break;
+                //end of red packet code
+                default:
+                    break;
             }
         }
-        
+
     }
-    
+
     @Override
     public void onSetMessageAttributes(EMMessage message) {
-        if(isRobot){
+        if (isRobot) {
             //set message extension
             message.setAttribute("em_robot_message", isRobot);
         }
     }
-    
+
     @Override
     public EaseCustomChatRowProvider onSetCustomChatRowProvider() {
         return new CustomChatRowProvider();
     }
-  
+
 
     @Override
     public void onEnterToChatDetails() {
@@ -311,7 +313,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                     (new Intent(getActivity(), GroupDetailsActivity.class).putExtra("groupId", toChatUsername)),
                     REQUEST_CODE_GROUP_DETAIL);
         }/*else if(chatType == Constant.CHATTYPE_CHATROOM){
-        	startActivityForResult(new Intent(getActivity(), ChatRoomDetailsActivity.class).putExtra("roomId", toChatUsername), REQUEST_CODE_GROUP_DETAIL);
+            startActivityForResult(new Intent(getActivity(), ChatRoomDetailsActivity.class).putExtra("roomId", toChatUsername), REQUEST_CODE_GROUP_DETAIL);
         }*/
     }
 
@@ -322,22 +324,22 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 //        intent.putExtra("username", username);
 //        startActivity(intent);
     }
-    
+
     @Override
     public void onAvatarLongClick(String username) {
         inputAtUsername(username);
     }
-    
-    
+
+
     @Override
     public boolean onMessageBubbleClick(EMMessage message) {
         //消息框点击事件，demo这里不做覆盖，如需覆盖，return true
         //red packet code : 拆红包页面
-        if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_COUPON, false)){
+        if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_COUPON, false)) {
             //TODO 获取优惠券
             try {
                 String giveId = message.getStringAttribute(CouponPointsConstant.EXTRA_COUPON_POINTS_RECEIVER_ID);
-                startActivity(new Intent(getActivity(), CouponPointsQueryActivity.class).putExtra(CouponPointsQueryActivity.Extra_GiveId,giveId).putExtra(CouponPointsQueryActivity.Extra,CouponPointsQueryActivity.Extra_Coupon));
+                startActivity(new Intent(getActivity(), CouponPointsQueryActivity.class).putExtra(CouponPointsQueryActivity.Extra_GiveId, giveId).putExtra(CouponPointsQueryActivity.Extra, CouponPointsQueryActivity.Extra_Coupon));
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }
@@ -347,7 +349,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
             //TODO 获取优惠券
             try {
                 String giveId = message.getStringAttribute(CouponPointsConstant.EXTRA_COUPON_POINTS_RECEIVER_ID);
-                startActivity(new Intent(getActivity(), CouponPointsQueryActivity.class).putExtra(CouponPointsQueryActivity.Extra_GiveId,giveId).putExtra(CouponPointsQueryActivity.Extra,CouponPointsQueryActivity.Extra_Points));
+                startActivity(new Intent(getActivity(), CouponPointsQueryActivity.class).putExtra(CouponPointsQueryActivity.Extra_GiveId, giveId).putExtra(CouponPointsQueryActivity.Extra, CouponPointsQueryActivity.Extra_Points));
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }
@@ -356,6 +358,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         //end of red packet code
         return false;
     }
+
     @Override
     public void onCmdMessageReceived(List<EMMessage> messages) {
         //red packet code : 处理红包回执透传消息
@@ -373,9 +376,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     @Override
     public void onMessageBubbleLongClick(EMMessage message) {
-    	// no message forward when in chat room
-        startActivityForResult((new Intent(getActivity(), ContextMenuActivity.class)).putExtra("message",message)
-                .putExtra("ischatroom", chatType == EaseConstant.CHATTYPE_CHATROOM),
+        // no message forward when in chat room
+        startActivityForResult((new Intent(getActivity(), ContextMenuActivity.class)).putExtra("message", message)
+                        .putExtra("ischatroom", chatType == EaseConstant.CHATTYPE_CHATROOM),
                 REQUEST_CODE_CONTEXT_MENU);
     }
 
@@ -396,15 +399,15 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 //intent = new Intent();
                 //intent.putExtra(CouponPointsConstant.EXTRA_GREETING,"满500减20");
                 //sendMessage(CouponPointsUtils.createCouponMessage(getActivity(), intent, toChatUsername));
-                CouponSendListActivity.startActivityForResult(this,new Intent(getActivity(), CouponSendListActivity.class).putExtra("num",member),REQUEST_CODE_SEND_COUPON);
+                CouponSendListActivity.startActivityForResult(this, new Intent(getActivity(), CouponSendListActivity.class).putExtra("num", member).putExtra("groupid", groupId), REQUEST_CODE_SEND_COUPON);
                 break;
             case ITEM_POINTS:
-                intent = new Intent();
+                // intent = new Intent();
                 //sendMessage(CouponPointsUtils.createPointsMessage(getActivity(), intent, toChatUsername));
-                startActivityForResult(new Intent(getActivity(), PointsSendActivity.class).putExtra("num",member),REQUEST_CODE_SEND_POINT);
+                startActivityForResult(new Intent(getActivity(), PointsSendActivity.class).putExtra("num", member).putExtra("groupid", groupId), REQUEST_CODE_SEND_POINT);
                 break;
 
-        //red packet code : 进入发红包页面
+            //red packet code : 进入发红包页面
 //        case ITEM_RED_PACKET:
 //            if (chatType == Constant.CHATTYPE_SINGLE) {
 //                //单聊红包修改进入红包的方法，可以在小额随机红包和普通单聊红包之间切换
@@ -426,14 +429,14 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 //        case ITEM_TRANSFER_PACKET://进入转账页面
 //            RedPacketUtil.startTransferActivityForResult(this, toChatUsername, REQUEST_CODE_SEND_TRANSFER_PACKET);
 //            break;
-        //end of red packet code
-        default:
-            break;
+            //end of red packet code
+            default:
+                break;
         }
         //keep exist extend menu
         return false;
     }
-    
+
     /**
      * select file
      */
@@ -449,7 +452,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         }
         startActivityForResult(intent, REQUEST_CODE_SELECT_FILE);
     }
-    
+
     /**
      * make a voice call
      */
@@ -463,7 +466,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 //            inputMenu.hideExtendMenuContainer();
         }
     }
-    
+
     /**
      * make a video call
      */
@@ -477,22 +480,21 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 //            inputMenu.hideExtendMenuContainer();
         }
     }
-    
+
     /**
-     * chat row provider 
-     *
+     * chat row provider
      */
     private final class CustomChatRowProvider implements EaseCustomChatRowProvider {
         @Override
         public int getCustomChatRowTypeCount() {
             //here the number is the message type in EMMessage::Type
-        	//which is used to count the number of different chat row
+            //which is used to count the number of different chat row
             return 8;
         }
 
         @Override
         public int getCustomChatRowType(EMMessage message) {
-            if(message.getType() == EMMessage.Type.TXT) {
+            if (message.getType() == EMMessage.Type.TXT) {
                 //voice call
                 if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false)) {
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE_CALL : MESSAGE_TYPE_SENT_VOICE_CALL;
@@ -529,14 +531,14 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
         @Override
         public EaseChatRow getCustomChatRow(EMMessage message, int position, BaseAdapter adapter) {
-            if(message.getType() == EMMessage.Type.TXT){
+            if (message.getType() == EMMessage.Type.TXT) {
                 // voice call or video call
                 if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false) ||
-                    message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false)){
+                        message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false)) {
                     return new ChatRowVoiceCall(getActivity(), message, position, adapter);
-                } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_COUPON,false)) {
+                } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_COUPON, false)) {
                     return new ChatRowCoupon(getActivity(), message, position, adapter);
-                } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_POINTS,false)) {
+                } else if (message.getBooleanAttribute(CouponPointsConstant.MESSAGE_ATTR_IS_POINTS, false)) {
                     return new ChatRowPoints(getActivity(), message, position, adapter);
                 }
                 //red packet code : 红包消息、红包回执消息以及转账消息的chat row
