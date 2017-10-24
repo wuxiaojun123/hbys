@@ -2,6 +2,8 @@ package com.help.reward.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -112,8 +114,9 @@ public class HelpSeekInfoCommentAdapter extends BaseRecyclerAdapter<HelpSeekComm
         tv_helpinfo_count.setText("跟帖" + item.parent);
         tv_helpinfo_count.setVisibility(View.GONE);
         TextView tv_helpinfo_content = holder.getView(R.id.tv_helpinfo_content);
+//        Spanned spanned = Html.fromHtml(item.content);
         tv_helpinfo_content.setText(item.content);
-        LinearLayout bottom_layout = holder.getView(R.id.bottom_layout);
+//        LinearLayout bottom_layout = holder.getView(R.id.bottom_layout);
 
         ImageView iv_fabulous = holder.getView(R.id.iv_fabulous);
         if ("0".equals(item.useful)) {

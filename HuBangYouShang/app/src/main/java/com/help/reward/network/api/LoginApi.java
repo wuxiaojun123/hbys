@@ -5,6 +5,7 @@ import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.bean.Response.LoginResponse2;
 import com.help.reward.bean.Response.RegisterResponse;
 import com.help.reward.bean.Response.VerificationCodeResponse;
+import com.help.reward.bean.Response.VersionUpdateResponse;
 import com.help.reward.bean.Response.WXLoginTokenResponse;
 import com.help.reward.bean.Response.WebViewUrlResponse;
 import com.help.reward.utils.Constant;
@@ -133,6 +134,14 @@ public interface LoginApi {
     Observable<WebViewUrlResponse> getWebviewUrlResponse(
             @Query("act") String act,
             @Query("op") String op
+    );
+
+    // 版本更新
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=index&op=checkUpdate")
+    Observable<VersionUpdateResponse> getVersionUpdateResponse(
+            @Field("version") String version,
+            @Field("packageName") String packageName
     );
 
 }

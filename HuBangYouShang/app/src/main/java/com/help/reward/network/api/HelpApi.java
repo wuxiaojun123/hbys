@@ -36,12 +36,12 @@ public interface HelpApi {
     @FormUrlEncoded
     @POST(Constant.URL_HELP)
     Observable<HelpSeekResponse> getHelpSeekBean(
-            @Field("key") String key,
             @Query("op") String op,
+            @Query("curpage") int curpage,
+            @Field("key") String key,
             @Field("title") String title,
             @Field("board_id") String board_id,
-            @Field("area_id") String area_id,
-            @Query("curpage") int curpage
+            @Field("area_id") String area_id
     );
 
     //op=get_reward  获赏贴列表
@@ -75,7 +75,7 @@ public interface HelpApi {
             @Field("key") String key,
             @Query("op") String op,
             @Field("id") String id,
-            @Field("curpage") int curpage
+            @Query("curpage") int curpage
     );
 
     /**

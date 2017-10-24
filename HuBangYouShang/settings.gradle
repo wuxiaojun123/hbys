@@ -4,6 +4,8 @@ include ':library_base'
 
 include ':library_pagerSlidingTabStrip'
 
+//include ':library_versionUpdate'
+
 //include ':libqrcode'
 
 //include ':LRecyclerview_library'

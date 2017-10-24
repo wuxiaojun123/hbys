@@ -169,7 +169,7 @@ public class HelpSeekFragment extends BaseFragment {
 
         subscribe = HelpNetwork
                 .getHelpApi()
-                .getHelpSeekBean(App.APP_CLIENT_KEY, "seek_help", searchStr, board_id, area_id, curpage)
+                .getHelpSeekBean("seek_help", curpage, App.APP_CLIENT_KEY, searchStr, board_id, area_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HelpSeekResponse>() {

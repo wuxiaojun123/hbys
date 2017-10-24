@@ -475,6 +475,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/style_translucent" />
 
+        <!--<activity
+            android:name="com.allenliu.sample.CustomVersionDialogActivity"
+            android:theme="@style/versionCheckLibvtransparentTheme" />-->
+
         <!--sms的短信验证-->
         <activity
             android:name="com.mob.tools.MobUIShell"

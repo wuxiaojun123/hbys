@@ -1,5 +1,7 @@
 package com.help.reward.activity;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +14,8 @@ import android.widget.ToggleButton;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.VersionUpdateResponse;
+import com.help.reward.bean.Response.WebViewUrlResponse;
 import com.help.reward.chat.DemoHelper;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -24,6 +28,7 @@ import com.help.reward.view.AlertDialog;
 import com.help.reward.view.MyProcessDialog;
 import com.hyphenate.EMCallBack;
 import com.idotools.utils.DataCleanManager;
+import com.idotools.utils.DeviceUtil;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.SharedPreferencesHelper;
 import com.idotools.utils.ToastUtils;
@@ -75,7 +80,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @OnClick({R.id.iv_title_back, R.id.btn_switch, R.id.tv_clean_cache,
             R.id.tv_call, R.id.tv_help_center, R.id.tv_feedback,
-            R.id.tv_about, R.id.tv_logout})
+            R.id.tv_about, R.id.tv_version, R.id.tv_logout})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -116,12 +121,75 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 ActivitySlideAnim.slideInAnim(SettingActivity.this);
 
                 break;
+            case R.id.tv_version: // 版本更新
+                requestVersion();
+
+                break;
             case R.id.tv_logout: // 登出
                 if (App.APP_CLIENT_KEY != null) {
                     logoutDialog();
                 }
 
                 break;
+        }
+    }
+
+    /***
+     * 版本更新
+     */
+    private void requestVersion() {
+        PersonalNetwork
+                .getLoginApi()
+                .getVersionUpdateResponse(DeviceUtil.getVersionCode(mContext) + "", DeviceUtil.getPackageName(mContext))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<VersionUpdateResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(VersionUpdateResponse response) {
+                        if (response.code == 200) {
+                            if (response.data != null) {
+                                showVersionUpdate(response.data.content);
+                            }
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
+    }
+
+    private void showVersionUpdate(String content) {
+        new AlertDialog(SettingActivity.this)
+                .builder()
+                .setTitle(R.string.string_system_prompt)
+                .setMsg(content)
+                .setPositiveButton("更新", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goToMarket(mContext, DeviceUtil.getPackageName(mContext));
+                    }
+                })
+                .setNegativeButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
+    }
+
+    public static void goToMarket(Context context, String packageName) {
+        Uri uri = Uri.parse("market://details?id=" + packageName);
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            goToMarket.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

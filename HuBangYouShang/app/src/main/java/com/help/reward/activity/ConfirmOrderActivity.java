@@ -141,43 +141,53 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             ToastUtils.show(mContext, "请选择收获地址");
             return;
         }
-        MyProcessDialog.showDialog(mContext);
-        ShopcartNetwork
-                .getShopcartCookieApi()
-                .commitComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, confirmOrderBean.address_info.address_id
-                , confirmOrderBean.vat_hash, confirmOrderBean.address_api.offpay_hash, confirmOrderBean.address_api.offpay_hash_batch, "online",
-                voucher, general_voucher, pay_message)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<CommitOrderResponse>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        MyProcessDialog.closeDialog();
-                        e.printStackTrace();
-                        ToastUtils.show(mContext, R.string.string_error);
-                    }
-
-                    @Override
-                    public void onNext(CommitOrderResponse response) {
-                        MyProcessDialog.closeDialog();
-                        if (response.code == 200) {
-                            if (response.data != null) {
-//                                ToastUtils.show(mContext, response.data.pay_sn);
-                                String pay_sn = response.data.pay_sn;
-                                if (!TextUtils.isEmpty(pay_sn)) {
-                                    //TODO 支付
-                                    Intent mIntent = new Intent(ConfirmOrderActivity.this, PayTypeActivity.class);
-                                    mIntent.putExtra("pay_sn", pay_sn);
-                                    mIntent.putExtra("removeShopcatAndConfirmOrderActivity", true);
-                                    startActivity(mIntent);
-                                    ActivitySlideAnim.slideInAnim(ConfirmOrderActivity.this);
-                                }
-                            }
-                        } else {
-                            ToastUtils.show(mContext, response.msg);
+        try {
+            if (confirmOrderBean.address_api == null) {
+                ToastUtils.show(mContext, "服务器出错!");
+                return;
+            }
+            MyProcessDialog.showDialog(mContext);
+            ShopcartNetwork
+                    .getShopcartCookieApi()
+                    .commitComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, confirmOrderBean.address_info.address_id
+                            , confirmOrderBean.vat_hash, confirmOrderBean.address_api.offpay_hash,
+                            confirmOrderBean.address_api.offpay_hash_batch, "online",
+                            voucher, general_voucher, pay_message)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<CommitOrderResponse>() {
+                        @Override
+                        public void onError(Throwable e) {
+                            MyProcessDialog.closeDialog();
+                            e.printStackTrace();
+                            ToastUtils.show(mContext, R.string.string_error);
                         }
-                    }
-                });
+
+                        @Override
+                        public void onNext(CommitOrderResponse response) {
+                            MyProcessDialog.closeDialog();
+                            if (response.code == 200) {
+                                if (response.data != null) {
+//                                ToastUtils.show(mContext, response.data.pay_sn);
+                                    String pay_sn = response.data.pay_sn;
+                                    if (!TextUtils.isEmpty(pay_sn)) {
+                                        //TODO 支付
+                                        Intent mIntent = new Intent(ConfirmOrderActivity.this, PayTypeActivity.class);
+                                        mIntent.putExtra("pay_sn", pay_sn);
+                                        mIntent.putExtra("removeShopcatAndConfirmOrderActivity", true);
+                                        startActivity(mIntent);
+                                        ActivitySlideAnim.slideInAnim(ConfirmOrderActivity.this);
+                                    }
+                                }
+                            } else {
+                                ToastUtils.show(mContext, response.msg);
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtils.show(mContext, "确认订单错误，请退出再次提交!");
+        }
     }
 
     private void initData() {
@@ -238,13 +248,21 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             // 表示从地址页面过来 设置地址view
             AddressBean bean = data.getParcelableExtra("confirmAddress");
             if (adapter != null && bean != null) {
-                if (confirmOrderBean.address_info != null) {
+                /*if (confirmOrderBean.address_info != null) {
                     confirmOrderBean.address_info.address_id = bean.address_id;
                 } else {
                     confirmOrderBean.address_info = bean;
                 }
                 adapter.setAddressInfo(bean);
-                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();*/
+                // 修改了地址，需要重新刷新订单页面，因为运费是不一样的
+                if (confirmOrderBean.address_info != null) {
+                    if (!confirmOrderBean.address_info.address_id.equals(bean.address_id)) {
+                        initData();
+                    }
+                } else {
+                    initData();
+                }
             }
         }
     }

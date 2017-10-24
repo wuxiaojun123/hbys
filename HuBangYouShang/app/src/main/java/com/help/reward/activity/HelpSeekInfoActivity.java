@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -367,6 +369,8 @@ public class HelpSeekInfoActivity extends BaseActivity {
         tv_helpinfo_date.setText(DateUtil.getDateToString(info.create_time + ""));
         tv_helpinfo_count.setText("跟帖" + response.data.comment_num);
         tv_helpinfo_title.setText(info.title);
+        LogUtils.e("内容是:"+info.content);
+//        Spanned spanned = Html.fromHtml(info.content);
         tv_helpinfo_content.setText(info.content);
         if (info.img_url != null && info.img_url.size() > 0) {
             switch (info.img_url.size()) {
