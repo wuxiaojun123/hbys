@@ -133,7 +133,8 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:background="@drawable/selector_register_checkbox"
-            android:button="@null" />
+            android:button="@null"
+            android:checked="true" />
 
         <TextView
             android:id="@+id/tv_agreement"

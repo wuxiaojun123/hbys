@@ -114,7 +114,7 @@
                 android:textSize="@dimen/dimen_15" />
         </LinearLayout>
 
-        <!--<TextView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:drawableLeft="@mipmap/img_login_border_left"
@@ -136,6 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="10dp"
+                android:layout_marginRight="15dp"
                 android:drawableTop="@drawable/selector_wetchar"
                 android:gravity="center"
                 android:text="微信"
@@ -146,15 +147,14 @@
                 android:id="@+id/tv_qq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="15dp"
                 android:drawablePadding="10dp"
                 android:drawableTop="@drawable/selector_qq"
                 android:gravity="center"
                 android:text="QQ"
                 android:textColor="@color/color_while"
                 android:textSize="@dimen/dimen_15"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_weibo"
@@ -168,7 +168,7 @@
                 android:textSize="@dimen/dimen_15"
                 android:visibility="gone" />
 
-        </LinearLayout>-->
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_look"

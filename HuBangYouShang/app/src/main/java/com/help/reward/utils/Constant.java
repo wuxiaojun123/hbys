@@ -17,13 +17,19 @@ public class Constant {
 
 
     // 210.72.13.135  http://jyb.youdoidodo.com   http://192.168.3.2/   12d1:107e
-//    public static final String BASE_URL = "http://jyb.youdoidodo.com";
-    public static final String BASE_URL = "http://test.hubangyoushang.com";
+    public static final String BASE_URL = "http://www.hubangyoushang.com";
+//    public static final String BASE_URL = "http://test.hubangyoushang.com";
 
+    // 微信登陆的id
     public static final String WXCHAT_APP_ID = "wx5a5e4c632b2ae894";
     public static final String WXCHAT_APP_SECRET = "18501139afdf58a23a8d05c56169728b";
+    // QQ登陆的id
+    public static final String QQ_LOGIN_APP_ID = "1106183304";
+    public static final String QQ_LOGIN_APP_KEY = "wimYjPwDCPkKfENj";
 
-    /** 支付宝支付业务：入参app_id */
+    /**
+     * 支付宝支付业务：入参app_id
+     */
     public static final String ALIPAY_APPID = "2017050207078993";
     public static final String ALIPAY_RSA_PRIVATE = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB";
 

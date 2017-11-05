@@ -25,10 +25,24 @@ import com.hyphenate.chat.EMClient;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.SharedPreferencesHelper;
 import com.idotools.utils.ToastUtils;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.auth.QQToken;
+import com.tencent.connect.common.Constants;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tencent.open.utils.HttpUtils;
+import com.tencent.tauth.IRequestListener;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
+import org.apache.http.conn.ConnectTimeoutException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
@@ -64,7 +78,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         et_login_phone_number.setText(defaultUsername);
     }
 
-    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd, R.id.tv_look})
+    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd, R.id.tv_look, R.id.tv_wetchat, R.id.tv_qq, R.id.tv_weibo})
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -92,18 +106,33 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 break;
 
-            /*, R.id.tv_wetchat, R.id.tv_qq, R.id.tv_weibo
             case R.id.tv_wetchat:
                 // 微信登录
                 wxLogin();
 
                 break;
             case R.id.tv_qq:
+                // qq登陆
+                qqLogin();
 
                 break;
             case R.id.tv_weibo:
 
-                break;*/
+                break;
+        }
+    }
+
+    private Tencent mTencent;
+    private BaseUiListener iBaseUiListener;
+
+    /***
+     * qq登陆
+     */
+    private void qqLogin() {
+        mTencent = Tencent.createInstance(Constant.QQ_LOGIN_APP_ID, this.getApplicationContext());
+        if (!mTencent.isSessionValid()) {
+            iBaseUiListener = new BaseUiListener();
+            mTencent.login(this, "all", iBaseUiListener);
         }
     }
 
@@ -243,6 +272,86 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void setStatusBar() {
         StatusBarUtil.setTranslucentForImageView(LoginActivity.this, 0, ll_total);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mTencent.onActivityResultData(requestCode, resultCode, data, new BaseUiListener());
+    }
+
+    private class BaseUiListener implements IUiListener {
+
+        @Override
+        public void onComplete(Object o) {
+            LogUtils.e("执行 onComplete" + o);
+            JSONObject jsonObject = (JSONObject) o;
+
+            //设置openid和token，否则获取不到下面的信息
+            initOpenidAndToken(jsonObject);
+            //获取QQ用户的各信息
+            getUserInfo();
+        }
+
+        @Override
+        public void onError(UiError e) {
+            LogUtils.e("code:" + e.errorCode + ", msg:" + e.errorMessage + ", detail:" + e.errorDetail);
+        }
+
+        @Override
+        public void onCancel() {
+            LogUtils.e("onCancel");
+        }
+
+    }
+
+    private void initOpenidAndToken(JSONObject jsonObject) {
+        try {
+            String openid = jsonObject.getString("openid");
+            String token = jsonObject.getString("access_token");
+            String expires = jsonObject.getString("expires_in");
+
+            LogUtils.e("openid=" + openid + "--token=" + token + "--" + expires);
+
+            mTencent.setAccessToken(token, expires);
+            mTencent.setOpenId(openid);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getUserInfo() {
+        //sdk给我们提供了一个类UserInfo，这个类中封装了QQ用户的一些信息，我么可以通过这个类拿到这些信息
+        QQToken mQQToken = mTencent.getQQToken();
+        UserInfo userInfo = new UserInfo(LoginActivity.this, mQQToken);
+        userInfo.getUserInfo(new IUiListener() {
+                                 @Override
+                                 public void onComplete(final Object o) {
+                                     try {
+                                         JSONObject userInfoJson = (JSONObject) o;
+                                         String nickname = userInfoJson.getString("nickname");//直接传递一个昵称的内容过去
+                                         String headUrl = null;
+                                         if (userInfoJson.has("figureurl")) {
+                                             headUrl = userInfoJson.getString("figureurl_qq_2");
+                                         }
+                                         LogUtils.e("昵称是：" + nickname + "------" + headUrl);
+                                     } catch (JSONException e) {
+                                         e.printStackTrace();
+                                     }
+                                 }
+
+                                 @Override
+                                 public void onError(UiError uiError) {
+                                     LogUtils.e("GET_QQ_INFO_ERROR 获取qq用户信息错误");
+                                 }
+
+                                 @Override
+                                 public void onCancel() {
+                                     LogUtils.e("GET_QQ_INFO_CANCEL 获取qq用户信息取消");
+                                 }
+                             }
+        );
+    }
+
 
     @Override
     protected void onDestroy() {

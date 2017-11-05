@@ -56,8 +56,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- iBeancon功能所需权限 -->;
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <!-- 个推3.0电子围栏功能所需权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -462,7 +462,8 @@
             android:name=".activity.WebviewActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.HelpPeopleNumberActivity"
+        <activity
+            android:name=".activity.HelpPeopleNumberActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -474,6 +475,24 @@
             android:name=".activity.pay.WchatActivity"
             android:screenOrientation="portrait"
             android:theme="@style/style_translucent" />
+
+        <!--qq登陆 start-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent1106183304" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--qq登陆 end-->
 
         <!--<activity
             android:name="com.allenliu.sample.CustomVersionDialogActivity"
@@ -548,11 +567,11 @@
             android:label="NotificationCenter"
             android:process=":pushservice">
             <intent-filter>
-                <action android:name="com.igexin.sdk.action.service.message"/>
+                <action android:name="com.igexin.sdk.action.service.message" />
             </intent-filter>
         </service>
 
-        <receiver android:name="com.igexin.sdk.PushReceiver" >
+        <receiver android:name="com.igexin.sdk.PushReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -571,8 +590,7 @@
             android:exported="false"
             android:process=":pushservice"
             android:taskAffinity="com.igexin.sdk.PushActivityTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
         <activity
             android:name="com.igexin.sdk.GActivity"
@@ -580,7 +598,7 @@
             android:exported="true"
             android:process=":pushservice"
             android:taskAffinity="com.igexin.sdk.PushActivityTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
             android:name=".service.DemoPushService"
@@ -588,7 +606,7 @@
             android:label="PushService"
             android:process=":pushservice" />
 
-        <service android:name=".service.DemoIntentService"/>
+        <service android:name=".service.DemoIntentService" />
 
         <!--个推-->
 
