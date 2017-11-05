@@ -346,4 +346,6 @@
 -keep class com.j256.ormlite.** { *;}
 -keep class com.envy15.cherry.base.orm.** { *;}
 
-
+#######qq登陆##################
+-keep class * extends android.app.Dialog
+#######qq登陆##################
