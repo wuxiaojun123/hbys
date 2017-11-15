@@ -81,6 +81,17 @@ public interface LoginApi {
             @Field("client") String client
     );
 
+    // QQ-登录
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=connect_qq&op=login")
+    Observable<LoginResponse2> getQQLoginResponse(
+//            @Field("act") String act,
+//            @Field("op") String op,
+            @Field("access_token") String access_token,
+            @Field("openid") String openid,
+            @Field("client") String client
+    );
+
     // 获取code 注册和修改密码
     @FormUrlEncoded
     @POST(Constant.URL_GET_CODE)

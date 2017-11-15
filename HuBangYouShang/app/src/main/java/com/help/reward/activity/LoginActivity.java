@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.bean.Response.LoginResponse;
+import com.help.reward.bean.Response.LoginResponse2;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
@@ -20,6 +21,7 @@ import com.help.reward.utils.Constant;
 import com.help.reward.utils.SharedPreferenceConstant;
 import com.help.reward.utils.StatusBarUtil;
 import com.help.reward.view.MyProcessDialog;
+import com.help.reward.wxapi.WXEntryActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.idotools.utils.LogUtils;
@@ -288,7 +290,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             //设置openid和token，否则获取不到下面的信息
             initOpenidAndToken(jsonObject);
             //获取QQ用户的各信息
-            getUserInfo();
+//            getUserInfo();
         }
 
         @Override
@@ -308,15 +310,58 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             String openid = jsonObject.getString("openid");
             String token = jsonObject.getString("access_token");
             String expires = jsonObject.getString("expires_in");
-
             LogUtils.e("openid=" + openid + "--token=" + token + "--" + expires);
 
-            mTencent.setAccessToken(token, expires);
-            mTencent.setOpenId(openid);
+            qqLoginLoadData(token, openid, Constant.PLATFORM_CLIENT);
 
+//            mTencent.setAccessToken(token, expires);
+//            mTencent.setOpenId(openid);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    /***
+     * qq登陆请求服务器
+     * @param access_token
+     * @param openid
+     * @param platformClient
+     */
+    private void qqLoginLoadData(String access_token, String openid, String platformClient) {
+        PersonalNetwork
+                .getLoginApi()
+                .getQQLoginResponse(access_token, openid, platformClient)
+                .subscribeOn(Schedulers.io()) // 请求放在io线程中
+                .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
+                .subscribe(new BaseSubscriber<LoginResponse2>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                        if (e instanceof UnknownHostException) {
+                            ToastUtils.show(mContext, "请求到错误服务器");
+                        } else if (e instanceof SocketTimeoutException) {
+                            ToastUtils.show(mContext, "请求超时");
+                        }
+                    }
+
+                    @Override
+                    public void onNext(LoginResponse2 res) {
+                        LogUtils.e("qq登录成功...." + res.code + "----res" + res);
+                        if (res.code == 200) {
+                            LogUtils.e("res.data.key=" + res.data.key);
+                            // 登录成功
+                            App.APP_CLIENT_KEY = res.data.key;
+                            App.APP_USER_ID = res.data.userid;
+                            // 请求会员信息
+                            App.mLoginReponse = res.data;
+                            RxBus.getDefault().post("loginSuccess");
+                            // 登陆环信
+//                            LoginToHuanxin(App.mLoginReponse.easemobId, password);
+                        } else {
+                            ToastUtils.show(mContext, res.msg);
+                        }
+                    }
+                });
     }
 
     private void getUserInfo() {
