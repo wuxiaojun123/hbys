@@ -116,7 +116,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
                 doHeadView(holder, position);
                 break;
             case ITEM_BOTTOM:
-                doBottomView(holder, position);
+                doBottomView(holder);
                 break;
             default:
                 doNormalView(holder, position);
@@ -277,12 +277,10 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
         }
     }
 
-    private void doBottomView(SuperViewHolder holder, int position) {
-//        TextView mOrderDiscountPer = (TextView) holder.itemView.findViewById(R.id.tv_confim_order_discount);
+    private void doBottomView(SuperViewHolder holder) {
         TextView mOrderDiscount = (TextView) holder.itemView.findViewById(R.id.tv_confim_order_discount_name);
         ToggleButton btn_switch = (ToggleButton) holder.itemView.findViewById(R.id.btn_switch); // 开关按钮
         // 有可能没有通用劵的情况，应该进行区分
-//        mOrderDiscountPer.setText("商家设置的通用券抵扣比例为:" + discount_level + "%");
         if (TextUtils.isEmpty(available_general_voucher) || "".equals(available_general_voucher)
                 || "0".equals(available_general_voucher)) {
             mOrderDiscount.setText("无可用通用劵");
@@ -304,6 +302,7 @@ public class ConfirmOrderAdapter extends RecyclerView.Adapter<SuperViewHolder> {
                     LogUtils.e("是否使用通用劵" + isChecked + "----" + useGeneralVoucher);
                 }
             });
+            btn_switch.performClick();
         }
     }
 

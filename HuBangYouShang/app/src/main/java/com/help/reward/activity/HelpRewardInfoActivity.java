@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -107,18 +108,19 @@ public class HelpRewardInfoActivity extends BaseActivity {
     int numSize = 15;
     String u_name, content;
     String from;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helprewardinfo);
         ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null) {
+        if (bundle != null) {
             id = bundle.getString("id");
             if (!StringUtils.checkStr(id)) {
                 finish();
             }
-            if(bundle.containsKey("from")){
+            if (bundle.containsKey("from")) {
                 from = bundle.getString("from");
             }
         }
@@ -228,7 +230,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
 
-        if("ReleaseRewardActivity".equals(from)){
+        if ("ReleaseRewardActivity".equals(from)) {
             startActivity(new Intent(mContext, MyRewardActivity.class));
         }
         super.onBackPressed();
@@ -256,7 +258,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
                                 intentDetail.putExtra("id", has_chatted);
                                 intentDetail.putExtra("post_id", id);
                                 intentDetail.putExtra("hint", "跟帖");
-                                startActivityForResult(intentDetail,200);
+                                startActivityForResult(intentDetail, 200);
                                 ActivitySlideAnim.slideInAnim(HelpRewardInfoActivity.this);
                             }
                         }
@@ -266,7 +268,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
                     intentDetail.putExtra("id", has_chatted);
                     intentDetail.putExtra("post_id", id);
                     intentDetail.putExtra("hint", "继续跟帖");
-                    startActivityForResult(intentDetail,200);
+                    startActivityForResult(intentDetail, 200);
                     ActivitySlideAnim.slideInAnim(this);
                 }
                 break;
@@ -276,7 +278,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("post_id", id);
                 intent.putExtras(bundle);
-                startActivityForResult(intent,100);
+                startActivityForResult(intent, 100);
                 ActivitySlideAnim.slideInAnim(this);
                 break;
 
@@ -287,13 +289,13 @@ public class HelpRewardInfoActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==100){
-            if(resultCode ==RESULT_OK){
+        if (requestCode == 100) {
+            if (resultCode == RESULT_OK) {
                 curpage = 1;
                 requestData();
             }
-        }else  if(requestCode==200){
-            if(resultCode ==RESULT_OK){
+        } else if (requestCode == 200) {
+            if (resultCode == RESULT_OK) {
                 curpage = 1;
                 requestData();
             }
@@ -432,15 +434,19 @@ public class HelpRewardInfoActivity extends BaseActivity {
         lRecyclerview.setVisibility(View.VISIBLE);
         HelpRewardInfoBean info = response.data.info;
         GlideUtils.loadCircleImage(info.member_avatar, iv_helpinfo_headimg);
-        IntentUtil.startPersonalHomePage(HelpRewardInfoActivity.this,info.u_id,iv_helpinfo_headimg);
+        IntentUtil.startPersonalHomePage(HelpRewardInfoActivity.this, info.u_id, iv_helpinfo_headimg);
         u_name = info.u_name;
         content = info.content;
         tv_helpinfo_uname.setText(info.u_name);
         tv_helpinfo_date.setText(DateUtil.getDateToString(info.create_time + ""));
-        tv_helpinfo_count.setText("获赏" + info.admiration_all);
+        if(!TextUtils.isEmpty(info.admiration_all)){
+            tv_helpinfo_count.setText("获赏" + info.admiration_all);
+        }
         tv_helpinfo_title.setText(info.title);
         tv_helpinfo_content.setText(info.content);
-        tv_reward_num.setText(info.admiration + "人赞赏");
+        if(!TextUtils.isEmpty(info.admiration)){
+            tv_reward_num.setText(info.admiration + "人赞赏");
+        }
         if (info.img_url != null && info.img_url.size() > 0) {
             switch (info.img_url.size()) {
                 case 4:
@@ -465,8 +471,8 @@ public class HelpRewardInfoActivity extends BaseActivity {
         if (!"False".equalsIgnoreCase(response.data.has_chatted)) {
             has_chatted = response.data.has_chatted;
         }
-        adapter.setIsMyPost(info.u_id.equals(App.APP_USER_ID));
-        if (!info.u_id.equals(App.APP_USER_ID)) {
+        adapter.setIsMyPost(App.APP_USER_ID.equals(info.u_id));
+        if (!App.APP_USER_ID.equals(info.u_id)) {
             iv_title_right.setVisibility(View.VISIBLE);
             comment_layout.setVisibility(View.VISIBLE);
             if ("False".equalsIgnoreCase(response.data.has_chatted)) {
@@ -591,7 +597,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
             params.setMargins(DisplayUtil.dipToPixel(mContext, 5), 0, 0, 0);
             circle_img.setLayoutParams(params);
             GlideUtils.loadCircleImage(info.admiration_list.get(i).avatar, circle_img);
-            IntentUtil.startPersonalHomePage(HelpRewardInfoActivity.this,info.admiration_list.get(i).id,circle_img);
+            IntentUtil.startPersonalHomePage(HelpRewardInfoActivity.this, info.admiration_list.get(i).id, circle_img);
             if (i < 8) {
                 collect_layout1.addView(circle_img);
             } else {

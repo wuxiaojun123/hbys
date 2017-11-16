@@ -138,7 +138,6 @@ public class ShopInfoAllFragment extends BaseFragment {
     }
 
     private void requestData() {
-
         subscribe = StoreDetailNetwork
                 .getStroeApi()
                 .getStoreGoodsResponse("store_goods", key, store_id,order,"", "", curpage)

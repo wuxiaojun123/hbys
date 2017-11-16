@@ -21,6 +21,7 @@ import com.help.reward.activity.ShopcartActivity;
 import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
+import com.help.reward.rxbus.event.type.LoginSuccessRxbusType;
 import com.help.reward.rxbus.event.type.UpdateLoginDataRxbusType;
 import com.help.reward.rxbus.event.type.UpdateMessageDataRxbusType;
 import com.help.reward.utils.GlideUtils;
@@ -134,6 +135,26 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     tv_title_help_msgcount.setVisibility(View.VISIBLE);
                 } else {
                     tv_title_help_msgcount.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+//        loginSubscribe = RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
+//            @Override
+//            public void call(String s) {
+//                if ("loginSuccess".equals(s)) {
+//                    loginSuccess();
+//                } else if ("logout".equals(s)) {
+//                    logout();
+//                }
+//            }
+//        });
+        loginSubscribe = RxBus.getDefault().toObservable(LoginSuccessRxbusType.class).subscribe(new Action1<LoginSuccessRxbusType>() {
+            @Override
+            public void call(LoginSuccessRxbusType s) {
+                if ("loginSuccess".equals(s.loginFlag)) {
+                    loginSuccess();
+                } else if ("logout".equals(s.loginFlag)) {
+                    logout();
                 }
             }
         });
@@ -338,16 +359,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
      * 获取到是否登录的信息
      */
     private void login() {
-        loginSubscribe = RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
-            @Override
-            public void call(String s) {
-                if ("loginSuccess".equals(s)) {
-                    loginSuccess();
-                } else if ("logout".equals(s)) {
-                    logout();
-                }
-            }
-        });
         startActivity(new Intent(getActivity(), LoginActivity.class));
         ActivitySlideAnim.slideInAnim(getActivity());
     }

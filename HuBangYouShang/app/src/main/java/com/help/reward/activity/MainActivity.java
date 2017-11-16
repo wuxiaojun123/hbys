@@ -24,6 +24,7 @@ import com.help.reward.App;
 import com.help.reward.chat.db.UserDao;
 import com.help.reward.chat.ui.GroupActivity;
 import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.LoginSuccessRxbusType;
 import com.help.reward.service.DemoIntentService;
 import com.help.reward.service.DemoPushService;
 import com.help.reward.utils.ActivitySlideAnim;
@@ -224,7 +225,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         App.APP_CLIENT_COOKIE = null;
                         App.mLoginReponse = null;
                         // 应该清除个人信息页面的信息
-                        RxBus.getDefault().post("logout");
+                        RxBus.getDefault().post(new LoginSuccessRxbusType("logout"));
                     }
                 });
             }

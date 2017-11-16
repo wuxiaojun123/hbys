@@ -15,6 +15,7 @@ import com.help.reward.bean.Response.LoginResponse2;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.LoginSuccessRxbusType;
 import com.help.reward.rxbus.event.type.WeiXinLoginRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
@@ -164,8 +165,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void call(WeiXinLoginRxbusType type) {
                 if (type.isLogin) {
-                    finish();
-                    ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+                    thirdLoginHuanXin();
                 }
                 if (!subscribeRxbusWeixin.isUnsubscribed()) {
                     subscribeRxbusWeixin.unsubscribe();
@@ -215,7 +215,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             App.APP_USER_ID = res.data.userid;
                             // 请求会员信息
                             App.mLoginReponse = res.data;
-                            RxBus.getDefault().post("loginSuccess");
+                            RxBus.getDefault().post(new LoginSuccessRxbusType("loginSuccess"));
                             LogUtils.e("用户名是:" + App.mLoginReponse.easemobId + "----密码是:" + password + App.mLoginReponse.new_message);
                             SharedPreferencesHelper.getInstance(mContext).putString(SharedPreferenceConstant.KEY_LOGIN_USERNAME, username);
 
@@ -354,14 +354,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                             App.APP_USER_ID = res.data.userid;
                             // 请求会员信息
                             App.mLoginReponse = res.data;
-                            RxBus.getDefault().post("loginSuccess");
-                            // 登陆环信
-//                            LoginToHuanxin(App.mLoginReponse.easemobId, password);
+                            RxBus.getDefault().post(new LoginSuccessRxbusType("loginSuccess"));
+                            thirdLoginHuanXin();
+
                         } else {
                             ToastUtils.show(mContext, res.msg);
                         }
                     }
                 });
+    }
+
+    /**
+     * 第三方登录环信
+     */
+    public void thirdLoginHuanXin() {
+        String password = App.mLoginReponse.easemobId + (Integer.parseInt(App.mLoginReponse.userid) + 201);
+        LoginToHuanxin(App.mLoginReponse.easemobId, password);
     }
 
     private void getUserInfo() {

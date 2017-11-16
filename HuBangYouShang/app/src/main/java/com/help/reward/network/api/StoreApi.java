@@ -67,7 +67,7 @@ public interface StoreApi {
             @Field("order") String order,
             @Field("stc_id") String stc_id,
             @Field("keyword") String keyword,
-            @Field("curpage") int curpage
+            @Query("curpage") int curpage
     );
 
     /**

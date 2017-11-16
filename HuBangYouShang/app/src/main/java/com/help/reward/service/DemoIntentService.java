@@ -9,6 +9,7 @@ import com.help.reward.App;
 import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.bean.UserBean;
 import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.LoginSuccessRxbusType;
 import com.help.reward.rxbus.event.type.UpdateMessageDataRxbusType;
 import com.help.reward.utils.JsonUtils;
 import com.idotools.utils.LogUtils;
@@ -74,7 +75,7 @@ public class DemoIntentService extends GTIntentService {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
-                RxBus.getDefault().post("loginSuccess");
+                RxBus.getDefault().post(new LoginSuccessRxbusType("loginSuccess"));
             }
         }
     };

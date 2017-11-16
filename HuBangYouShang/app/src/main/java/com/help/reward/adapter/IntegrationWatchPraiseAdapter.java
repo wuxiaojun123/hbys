@@ -15,6 +15,7 @@ import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.AdvertisementBean;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
+import com.idotools.utils.LogUtils;
 
 /**
  * Created by wuxiaojun on 17-3-2.
@@ -42,18 +43,19 @@ public class IntegrationWatchPraiseAdapter extends BaseRecyclerAdapter {
         final AdvertisementBean bean = (AdvertisementBean) mDataList.get(position);
         tv_title.setText(bean.name);
         tv_name.setText(bean.user_name);
-        tv_score.setText(bean.per_credit+"帮赏分");
-        GlideUtils.loadImage(bean.url,iv_img_ad);
+        tv_score.setText(bean.per_credit + "帮赏分");
+        GlideUtils.loadImage(bean.url, iv_img_ad);
+        LogUtils.e("积分的图片是" + bean.url);
 
         ll_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mIntent = new Intent();
-                mIntent.putExtra("ad_id",bean.id);
-                mIntent.putExtra("ad_type",bean.type);
+                mIntent.putExtra("ad_id", bean.id);
+                mIntent.putExtra("ad_type", bean.type);
                 mIntent.setClassName(mContext.getPackageName(), WatchAdActivity.class.getName());
                 mContext.startActivity(mIntent);
-                ActivitySlideAnim.slideInAnim((BaseActivity)mContext);
+                ActivitySlideAnim.slideInAnim((BaseActivity) mContext);
             }
         });
     }

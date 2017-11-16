@@ -323,6 +323,7 @@ public class ReleaseRewardActivity extends BaseActivity {
                     public void onNext(AreaResponse response) {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
+                            cityList.add(0, new AreaBean("-1", "全国"));
                             cityList.addAll(response.data.area_list);
                             PickerUtils.alertBottomWheelOption(mContext, cityList, new PickerUtils.OnWheelViewClick() {
                                 @Override

@@ -14,6 +14,11 @@ public class AreaBean {
         //这里还可以判断文字超长截断再提供显示
         return area_name;
     }
-
+    public AreaBean() {
+    }
+    public AreaBean(String area_id, String area_name) {
+        this.area_id = area_id;
+        this.area_name = area_name;
+    }
 
 }

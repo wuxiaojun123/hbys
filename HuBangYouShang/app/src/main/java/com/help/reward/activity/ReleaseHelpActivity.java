@@ -248,10 +248,10 @@ public class ReleaseHelpActivity extends BaseActivity {
 
 
     private void subHelp() {
-       final String title = etReleaseHelpTitle.getText().toString().trim();
+        final String title = etReleaseHelpTitle.getText().toString().trim();
 //        String endTimeStr = tvReleaseHelpData.getText().toString().trim();
-        final  String content = etReleaseHelpContent.getText().toString().trim();
-        final   String score = tv_release_help_score.getText().toString().trim();
+        final String content = etReleaseHelpContent.getText().toString().trim();
+        final String score = tv_release_help_score.getText().toString().trim();
         if (!StringUtils.checkStr(title)) {
             ToastUtils.show(mContext, "请输入标题");
             return;
@@ -276,7 +276,7 @@ public class ReleaseHelpActivity extends BaseActivity {
             ToastUtils.show(mContext, "请选择有效时间");
             return;
         }
-        DialogUtil.showConfirmCancleDialog(this, "您的求助帖即将发布，需扣除"+score+"帮赏分冻结，确认发布？", new DialogUtil.OnDialogUtilClickListener() {
+        DialogUtil.showConfirmCancleDialog(this, "您的求助帖即将发布，需扣除" + score + "帮赏分冻结，确认发布？", new DialogUtil.OnDialogUtilClickListener() {
             @Override
             public void onClick(boolean isLeft) {
                 if (isLeft) {
@@ -357,6 +357,7 @@ public class ReleaseHelpActivity extends BaseActivity {
                     public void onNext(AreaResponse response) {
                         MyProcessDialog.closeDialog();
                         if (response.code == 200) {
+                            cityList.add(0, new AreaBean("-1", "全国"));
                             cityList.addAll(response.data.area_list);
                             PickerUtils.alertBottomWheelOption(mContext, cityList, new PickerUtils.OnWheelViewClick() {
                                 @Override

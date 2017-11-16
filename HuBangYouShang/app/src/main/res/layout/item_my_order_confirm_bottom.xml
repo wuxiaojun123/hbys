@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/color_while">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/color_while"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="@dimen/dimen_10"
-        android:background="@drawable/shape_divider_line" />
+        android:background="@drawable/shape_divider_line"/>
 
     <RelativeLayout
         android:id="@+id/layout"
@@ -36,9 +37,9 @@
 
         <TextView
             android:id="@+id/tv_confim_order_discount_name"
-            android:text=""
             style="@style/style_setting_text"
             android:drawableRight="@null"
+            android:text=""
             />
 
         <ToggleButton
@@ -46,14 +47,13 @@
             android:layout_width="55dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="2dp"
             android:background="@null"
             android:button="@drawable/switch_button_ios"
-            android:checked="false"
             android:gravity="center_vertical|right"
             android:textOff=""
             android:textOn=""
-            android:layout_marginRight="10dp"
             />
     </RelativeLayout>
 

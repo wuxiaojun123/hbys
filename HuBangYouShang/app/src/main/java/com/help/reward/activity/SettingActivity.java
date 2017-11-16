@@ -20,6 +20,7 @@ import com.help.reward.chat.DemoHelper;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
+import com.help.reward.rxbus.event.type.LoginSuccessRxbusType;
 import com.help.reward.rxbus.event.type.UpdateMessageDataRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
@@ -139,7 +140,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
      */
     private void requestVersion() {
         PersonalNetwork
-                .getLoginApi()
+                .getResponseApi()
                 .getVersionUpdateResponse(DeviceUtil.getVersionCode(mContext) + "", DeviceUtil.getPackageName(mContext))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -305,7 +306,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         App.mLoginReponse = null;
                         App.APP_USER_ID = null;
                         // 应该清除个人信息页面的信息
-                        RxBus.getDefault().post("logout");
+                        RxBus.getDefault().post(new LoginSuccessRxbusType("logout"));
                         // 清除当前activity
                         finish();
                         ActivitySlideAnim.slideOutAnim(SettingActivity.this);

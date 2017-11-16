@@ -36,6 +36,7 @@ import com.help.reward.bean.Response.OrderInfoResponse;
 import com.help.reward.bean.Response.PersonInfoResponse;
 import com.help.reward.bean.Response.SaveNewAddressResponse;
 import com.help.reward.bean.Response.UploadHeadImageReponse;
+import com.help.reward.bean.Response.VersionUpdateResponse;
 import com.help.reward.bean.Response.WebViewUrlResponse;
 import com.help.reward.utils.Constant;
 
@@ -676,5 +677,11 @@ public interface PersonalApi {
             @Field("key") String key
     );
 
-
+    // 版本更新
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=index&op=checkUpdate")
+    Observable<VersionUpdateResponse> getVersionUpdateResponse(
+            @Field("version") String version,
+            @Field("packageName") String packageName
+    );
 }
