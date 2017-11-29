@@ -13,6 +13,7 @@ import android.view.ViewConfiguration;
 import com.reward.help.merchant.chat.DemoHelper;
 import com.reward.help.merchant.chat.db.DbOpenHelper;
 import com.reward.help.merchant.chat.db.TopUser;
+import com.reward.help.merchant.utils.Constant;
 import com.reward.help.merchant.utils.CrashHandler;
 import com.reward.help.merchant.utils.SpUtils;
 
@@ -88,7 +89,7 @@ public class App extends Application{
 //        EaseUI.getInstance().init(this,options);
         DemoHelper.getInstance().init(mApp);
 
-
+        Constant.BASE_URL = BuildConfig.BASE_URL;
     }
 
     public static App getApplication(){

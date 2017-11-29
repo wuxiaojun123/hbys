@@ -281,3 +281,15 @@
 -dontwarn com.j256.ormlite.**
 -keep class com.j256.ormlite.** { *;}
 -keep class com.envy15.cherry.base.orm.** { *;}
+######################umeng统计 start##################
+-keepclassmembers class * {
+    public <init> (org.json.JSONObject);
+}
+-keep public class com.help.reward.R$*{
+    public static final int *;
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+#######################umeng统计 end####################

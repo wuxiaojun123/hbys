@@ -144,5 +144,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
+
+        <!-- 国内 key -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5a1d09fea40fa329ea0001f8" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="111" />
+        <!-- 友盟 END -->
+        <!--环信-->
+        <meta-data android:name="EASEMOB_APPKEY"  android:value="${EASEMOB_APPKEY}" />
     </application>
 </manifest>

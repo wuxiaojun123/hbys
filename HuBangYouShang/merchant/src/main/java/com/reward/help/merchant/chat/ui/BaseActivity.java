@@ -20,6 +20,7 @@ import android.os.Bundle;
 
 import com.hyphenate.easeui.ui.EaseBaseActivity;
 import com.reward.help.merchant.utils.ActivitySlideAnim;
+import com.reward.help.merchant.utils.DoAnalyticsManager;
 
 import rx.Subscription;
 
@@ -37,15 +38,21 @@ public class BaseActivity extends EaseBaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         // umeng
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        // umeng
+    protected void onResume() {
+        super.onResume();
+        DoAnalyticsManager.pageResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DoAnalyticsManager.pagePause(this);
     }
 
     @Override

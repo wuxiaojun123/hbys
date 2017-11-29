@@ -48,7 +48,7 @@
             android:layout_alignBottom="@+id/tv_send_points_num_tip"
             android:layout_toRightOf="@+id/tv_send_points_num_tip"
             android:background="@null"
-            android:hint="@string/send_coupon_count_hint"
+            android:hint="请输入领取人数"
             android:layout_marginLeft="@dimen/dimen_13"
             android:inputType="number"
             android:textSize="@dimen/dimen_15"/>

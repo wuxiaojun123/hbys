@@ -26,25 +26,25 @@ android {
     }
     buildTypes {
 
-        /*release {
-            minifyEnabled false
-//            lintOptions {
-//                abortOnError false
-//            }
-//            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }*/
+            debug {
+                debuggable true
+                signingConfig signingConfigs.myConfig
+                buildConfigField("String", "BASE_URL", "\"http://test.hubangyoushang.com\"")
+                manifestPlaceholders = [EASEMOB_APPKEY: "1133170228178926#buyer"]
+            }
+            release {
+                minifyEnabled false
+                shrinkResources false
+                zipAlignEnabled true
+                debuggable false
 
-        release {
-            minifyEnabled false
-            shrinkResources false
-            zipAlignEnabled true
-            debuggable false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.myConfig
 
-            signingConfig signingConfigs.myConfig
-        }
+                buildConfigField("String", "BASE_URL", "\"http://www.hubangyoushang.com\"")
+                manifestPlaceholders = [EASEMOB_APPKEY: "1133170228178926#helpreward"]
+            }
     }
     sourceSets{
         main{
@@ -107,4 +107,6 @@ dependencies {
     compile project(':library_chat')
     compile project(':pickerview')
     compile 'com.j256.ormlite:ormlite-android:5.0'
+    // umeng统计
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }
