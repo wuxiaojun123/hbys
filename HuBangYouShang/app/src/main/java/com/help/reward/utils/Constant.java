@@ -17,8 +17,8 @@ public class Constant {
 
 
     // 210.72.13.135  http://jyb.youdoidodo.com   http://192.168.3.2/   12d1:107e
-//    public static final String BASE_URL = "http://www.hubangyoushang.com"; // 正式域名
-    public static final String BASE_URL = "http://test.hubangyoushang.com";
+    public static String BASE_URL = "http://www.hubangyoushang.com"; // 正式域名
+//    public static String BASE_URL = "http://test.hubangyoushang.com";
 
     // 微信登陆的id
     public static final String WXCHAT_APP_ID = "wx5a5e4c632b2ae894";

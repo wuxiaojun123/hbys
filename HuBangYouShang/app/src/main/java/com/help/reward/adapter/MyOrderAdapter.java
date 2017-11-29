@@ -34,6 +34,7 @@ import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,8 +48,8 @@ import rx.schedulers.Schedulers;
 public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperationManager.OnItemRemoveOrderClickListener {
 
     private OrderOperationManager mOperationManager;
-    private SparseArray<View> sparseArray = new SparseArray<>();
-
+//    private SparseArray<View> sparseArray = new SparseArray<>();
+    private HashMap<Integer,View> mLayoutMap = new HashMap<>();
 
     public MyOrderAdapter(Context context) {
         super(context);
@@ -77,8 +78,8 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
         int size = 0;
         if (bean.extend_order_goods != null) {
             size = bean.extend_order_goods.size();
-            if (sparseArray.get(position) != null) {
-                View mLayout = sparseArray.get(position);
+            if (mLayoutMap.get(position) != null) {
+                View mLayout = mLayoutMap.get(position);
                 if (ll_shop.getChildCount() > 0) {
                     ll_shop.removeAllViews();
                 }
@@ -379,15 +380,18 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
             parentView.removeAllViews();
         }
         ll_shop.addView(mLayout);
-        sparseArray.put(position, mLayout);
+        mLayoutMap.put(position, mLayout);
     }
 
     @Override
     public void onItemRemoveOrderClickListener(int position) {
+        mLayoutMap.clear();
         this.mDataList.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, getItemCount());
-//        RxBus.getDefault().post(new BooleanRxbusType(true));
+        if(position != (getDataList().size())){ // 如果移除的是最后一个，忽略
+            notifyItemRangeChanged(position,this.mDataList.size()-position);
+        }
+//        notifyItemRangeChanged(position, getItemCount());
     }
 
 }

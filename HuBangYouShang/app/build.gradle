@@ -31,24 +31,22 @@ android {
         }
     }
     buildTypes {
-        /*debug {
-            minifyEnabled true
-            shrinkResources false
-            zipAlignEnabled true
+        debug {
             debuggable true
-
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
             signingConfig signingConfigs.myConfig
-        }*/
+            buildConfigField("String", "BASE_URL", "\"http://test.hubangyoushang.com\"")
+            manifestPlaceholders = [EASEMOB_APPKEY: "1133170228178926#buyer"]
+        }
         release {
             minifyEnabled true
             shrinkResources false
             zipAlignEnabled true
             debuggable false
 
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"http://www.hubangyoushang.com\"")
+            manifestPlaceholders = [EASEMOB_APPKEY: "1133170228178926#helpreward"]
 
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.myConfig
         }
     }

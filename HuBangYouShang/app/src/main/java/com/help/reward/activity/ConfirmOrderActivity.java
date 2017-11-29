@@ -141,11 +141,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             ToastUtils.show(mContext, "请选择收获地址");
             return;
         }
+        if (confirmOrderBean.address_api == null) {
+            ToastUtils.show(mContext, "服务器出错!");
+            return;
+        }
         try {
-            if (confirmOrderBean.address_api == null) {
-                ToastUtils.show(mContext, "服务器出错!");
-                return;
-            }
             MyProcessDialog.showDialog(mContext);
             ShopcartNetwork
                     .getShopcartCookieApi()
@@ -195,7 +195,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             ToastUtils.show(mContext, R.string.string_please_login);
             return;
         }
-        // cart_id=66|1,67|1,68|1,69|1---if_cart=1
         LogUtils.e("确认订单页面 cart_id=" + cart_id + "---if_cart=" + if_cart);
         MyProcessDialog.showDialog(mContext);
         ShopcartNetwork.getShopcartCookieApi().getComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, null)

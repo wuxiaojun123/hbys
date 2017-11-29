@@ -2,6 +2,8 @@ package com.help.reward.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.widget.LinearLayout;
 
 import com.base.recyclerview.LRecyclerView;
@@ -59,6 +61,8 @@ public class MyOrderAllFragment extends BaseFragment {
         if (bundle != null) {
             state_type = bundle.getString(MyOrderActivity.STATE_TYPE);
         }
+        ((SimpleItemAnimator) lRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
+
         initNetwork();
         initRxbus();
     }

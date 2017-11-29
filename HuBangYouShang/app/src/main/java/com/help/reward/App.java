@@ -10,12 +10,11 @@ import com.help.reward.bean.Response.LoginResponse;
 import com.help.reward.chat.DemoHelper;
 import com.help.reward.chat.db.TopUser;
 import com.help.reward.utils.Constant;
+import com.idotools.utils.LogUtils;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import cn.smssdk.SMSSDK;
 
 /**
  * 更新一下,加了个注释
@@ -60,6 +59,8 @@ public class App extends Application {
 //        EaseUI.getInstance().init(this,options);
         DemoHelper.getInstance().init(mApp);
 
+        Constant.BASE_URL = BuildConfig.BASE_URL;
+        LogUtils.e("请求路径是...." + Constant.BASE_URL);
     }
 
     public static App getApplication(){

@@ -229,8 +229,8 @@ public interface PersonalApi {
             @Field("true_name") String true_name,
             @Field("mob_phone") String mob_phone,
             @Field("pro_id") String pro_id,
-            @Field("area_id") String area_id,
             @Field("city_id") String cite_id,
+            @Field("area_id") String area_id,
             @Field("area_info") String area_info,
             @Field("address") String address
     );
@@ -244,8 +244,8 @@ public interface PersonalApi {
             @Field("true_name") String true_name,
             @Field("mob_phone") String mob_phone,
             @Field("pro_id") String pro_id,
-            @Field("area_id") String area_id,
             @Field("city_id") String cite_id,
+            @Field("area_id") String area_id,
             @Field("area_info") String area_info,
             @Field("address") String address
     );
