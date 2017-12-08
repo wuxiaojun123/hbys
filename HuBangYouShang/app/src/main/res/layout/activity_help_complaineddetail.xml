@@ -386,6 +386,14 @@
                 android:visibility="gone">
 
                 <TextView
+                    style="@style/style_text_lable"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_44"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/color_fa"
+                    android:text="您的申诉提交1天后系统自动进行公示投票，投票有效时间10天" />
+
+                <TextView
                     android:id="@+id/et_content_title"
                     style="@style/style_text_lable"
                     android:layout_width="match_parent"

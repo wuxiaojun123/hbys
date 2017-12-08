@@ -94,6 +94,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //这是添加retrofit对rxjava的支持
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
     // umeng统计

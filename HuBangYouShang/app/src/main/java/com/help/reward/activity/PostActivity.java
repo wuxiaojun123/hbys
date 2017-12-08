@@ -58,6 +58,7 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
     List<MessageBean> mDatas = new ArrayList<>();
     int curpage = 1;
     String type;
+    private GotoHelpVoteInfoUtils gotoHelpVoteInfoUtils;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,7 +138,7 @@ public class PostActivity extends BaseActivity implements MessageAdapter.IonSlid
         }
     }
 
-    private GotoHelpVoteInfoUtils gotoHelpVoteInfoUtils;
+
 
     @Override
     public void onItemClick(View view, int position) {

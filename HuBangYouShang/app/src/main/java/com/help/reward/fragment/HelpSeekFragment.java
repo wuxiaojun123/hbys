@@ -166,7 +166,7 @@ public class HelpSeekFragment extends BaseFragment {
 
 
     private void requestData() {
-
+        LogUtils.e(curpage+ App.APP_CLIENT_KEY+ searchStr+ board_id+ area_id);
         subscribe = HelpNetwork
                 .getHelpApi()
                 .getHelpSeekBean("seek_help", curpage, App.APP_CLIENT_KEY, searchStr, board_id, area_id)

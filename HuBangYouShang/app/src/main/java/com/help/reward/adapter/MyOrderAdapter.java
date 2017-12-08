@@ -3,17 +3,14 @@ package com.help.reward.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.help.reward.App;
 import com.help.reward.R;
 import com.help.reward.activity.BaseActivity;
-import com.help.reward.activity.ConfirmOrderActivity;
 import com.help.reward.activity.OrderDetailsActivity;
 import com.help.reward.activity.OrderPulishedEvaluateActivity;
 import com.help.reward.activity.PayTypeActivity;
@@ -21,24 +18,14 @@ import com.help.reward.adapter.viewholder.SuperViewHolder;
 import com.help.reward.bean.GoodsSpecBean;
 import com.help.reward.bean.MyOrderListBean;
 import com.help.reward.bean.MyOrderShopBean;
-import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.biz.MyOrderBiz;
 import com.help.reward.manager.OrderOperationManager;
-import com.help.reward.network.PersonalNetwork;
-import com.help.reward.network.base.BaseSubscriber;
-import com.help.reward.rxbus.RxBus;
-import com.help.reward.rxbus.event.type.BooleanRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.GlideUtils;
-import com.help.reward.view.AlertDialog;
-import com.help.reward.view.MyProcessDialog;
-import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.util.HashMap;
 import java.util.List;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * 我的订单
@@ -48,11 +35,14 @@ import rx.schedulers.Schedulers;
 public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperationManager.OnItemRemoveOrderClickListener {
 
     private OrderOperationManager mOperationManager;
-//    private SparseArray<View> sparseArray = new SparseArray<>();
     private HashMap<Integer,View> mLayoutMap = new HashMap<>();
+    private Context mContext;
+    private MyOrderBiz mMyOrderBiz;
 
     public MyOrderAdapter(Context context) {
         super(context);
+        mContext = context;
+        mMyOrderBiz = new MyOrderBiz(context);
         mOperationManager = new OrderOperationManager(context);
         mOperationManager.setOnItemRemoveOrderClickListener(this);
     }
@@ -145,8 +135,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
                         ActivitySlideAnim.slideInAnim((Activity) mContext);
 
                     } else if ("2".equals(tag)) {// 确认收货
-                        confirmReceiver(bean.order_id);
-
+                        mMyOrderBiz.showDialogConfirmReceiver(bean.order_id);
                     } else if ("3".equals(tag)) {// 评价页面
                         gotoEvaluateActivity(size, bean);
                     }
@@ -163,6 +152,8 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
             }
         });
     }
+
+
 
     /***
      * 待付款（lock_state=0,order_state=10）
@@ -235,39 +226,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
         }
     }
 
-    /***
-     * 确认收货
-     */
-    private void confirmReceiver(String order_id) {
-        PersonalNetwork
-                .getResponseApi()
-                .getConfirmReceiveResponse(order_id, App.APP_CLIENT_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<String>>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        MyProcessDialog.closeDialog();
-                        e.printStackTrace();
-                        ToastUtils.show(mContext, R.string.string_error);
-                    }
 
-                    @Override
-                    public void onNext(BaseResponse<String> response) {
-                        MyProcessDialog.closeDialog();
-                        if (response.code == 200) {
-                            if (response.data != null) { // 显示数据
-//                                showMyDialog(response.msg);
-                                ToastUtils.show(mContext, response.msg);
-                            }
-                            //刷新当前数据,发送给MyOrderAllFragment
-                            RxBus.getDefault().post(new BooleanRxbusType(true));
-                        } else {
-                            ToastUtils.show(mContext, response.msg);
-                        }
-                    }
-                });
-    }
 
     /***
      * 设置评论状态

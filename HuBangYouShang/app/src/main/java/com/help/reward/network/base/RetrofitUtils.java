@@ -12,6 +12,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
@@ -39,11 +40,21 @@ public class RetrofitUtils {
             return getRetrofitCookie();
         }
         if (notsetCookieRetrofit == null) {
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                @Override
+                public void log(String message) {
+                    //打印retrofit日志
+                    LogUtils.e("retrofitBack = "+message);
+                }
+
+            });
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient mOkHttpClient = new OkHttpClient()
                     .newBuilder()
                     .connectTimeout(20, TimeUnit.SECONDS)
                     .readTimeout(20, TimeUnit.SECONDS)
                     .writeTimeout(20, TimeUnit.SECONDS)
+                    .addInterceptor(loggingInterceptor)
                     .build();
 
             notsetCookieRetrofit = new Retrofit.Builder()

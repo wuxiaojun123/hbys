@@ -616,8 +616,9 @@ public interface PersonalApi {
     @FormUrlEncoded
     @POST("/mobile/index.php?act=member_order&op=order_receive")
     Observable<BaseResponse<String>> getConfirmReceiveResponse(
+            @Field("key") String key,
             @Field("order_id") String order_id,
-            @Field("key") String key
+            @Field("payPwd") String payPwd
     );
 
 

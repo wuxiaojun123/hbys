@@ -78,7 +78,7 @@ public class MyShareActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.btn_share:
                 // 点击分享
-                shareText(mContext, "发现互帮有赏好应用，互助、分钱，快来下载吧！" + Constant.BASE_URL + "/mobile/index.php?act=share&op=share&id=" + App.APP_USER_ID);
+                shareText(mContext, "人人无成本享用广告费，开局给你30没有门槛任你花。资源共享、人人互助、快来下载互帮有赏吧！" + Constant.BASE_URL + "/mobile/index.php?act=share&op=share&id=" + App.APP_USER_ID);
 
                 break;
         }

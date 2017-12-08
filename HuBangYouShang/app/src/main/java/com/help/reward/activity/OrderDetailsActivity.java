@@ -21,6 +21,7 @@ import com.help.reward.bean.MyOrderShopBean;
 import com.help.reward.bean.OrderInfoBean;
 import com.help.reward.bean.Response.BaseResponse;
 import com.help.reward.bean.Response.OrderInfoResponse;
+import com.help.reward.biz.MyOrderBiz;
 import com.help.reward.manager.OrderOperationManager;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
@@ -110,7 +111,10 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     private String[] goods_name;
     private String[] rec_id; // 购买商品记录id
 
+    private Subscription subscribe;
+    private MyOrderBiz mMyOrderBiz;
     private OrderOperationManager mOperationManager;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,6 +133,12 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initEvent() {
+        mMyOrderBiz = new MyOrderBiz(mContext);
+        mMyOrderBiz.setOnSuccessConfirmReceiverListener(new MyOrderBiz.OnSuccessConfirmReceiverListener() {
+            @Override public void onSuccessConfirmReceiverListener() {
+                initNetwork();
+            }
+        });
         order_id = getIntent().getStringExtra("order_id");
         if (TextUtils.isEmpty(order_id)) {
             ToastUtils.show(mContext, "订单号不存在");
@@ -170,7 +180,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 });
     }
 
-    private Subscription subscribe;
+
 
     private void initRxbus() {
         subscribe = RxBus.getDefault().toObservable(BooleanRxbusType.class).subscribe(new Action1<BooleanRxbusType>() {
@@ -243,7 +253,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 ActivitySlideAnim.slideInAnim((Activity) mContext);
 
             } else if ("2".equals(tag)) {// 确认收货
-                confirmReceiver(order_id);
+                mMyOrderBiz.showDialogConfirmReceiver(order_id);
 
             } else if ("3".equals(tag)) {// 评价页面
                 Intent mIntent = new Intent(mContext, OrderPulishedEvaluateActivity.class);
@@ -261,38 +271,37 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
     /***
      * 确认收货
      */
-    private void confirmReceiver(String order_id) {
-        PersonalNetwork
-                .getResponseApi()
-                .getConfirmReceiveResponse(order_id, App.APP_CLIENT_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<String>>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        MyProcessDialog.closeDialog();
-                        e.printStackTrace();
-                        ToastUtils.show(mContext, R.string.string_error);
-                    }
-
-                    @Override
-                    public void onNext(BaseResponse<String> response) {
-                        MyProcessDialog.closeDialog();
-                        if (response.code == 200) {
-                            if (response.data != null) { // 显示数据
-//                                showMyDialog(response.msg);
-                                ToastUtils.show(mContext, response.msg);
-                            }
-                            //刷新当前页面吗？
-                            initNetwork();
-                            //刷新当前数据,发送给MyOrderAllFragment
-                            RxBus.getDefault().post(new BooleanRxbusType(true));
-                        } else {
-                            ToastUtils.show(mContext, response.msg);
-                        }
-                    }
-                });
-    }
+//    private void confirmReceiver(String order_id) {
+//        PersonalNetwork
+//                .getResponseApi()
+//                .getConfirmReceiveResponse(order_id, App.APP_CLIENT_KEY,null)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new BaseSubscriber<BaseResponse<String>>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        MyProcessDialog.closeDialog();
+//                        e.printStackTrace();
+//                        ToastUtils.show(mContext, R.string.string_error);
+//                    }
+//
+//                    @Override
+//                    public void onNext(BaseResponse<String> response) {
+//                        MyProcessDialog.closeDialog();
+//                        if (response.code == 200) {
+//                            if (response.data != null) { // 显示数据
+//                                ToastUtils.show(mContext, response.msg);
+//                            }
+//                            //刷新当前页面吗？
+//                            initNetwork();
+//                            //刷新当前数据,发送给MyOrderAllFragment
+//                            RxBus.getDefault().post(new BooleanRxbusType(true));
+//                        } else {
+//                            ToastUtils.show(mContext, response.msg);
+//                        }
+//                    }
+//                });
+//    }
 
 
     private void showDialogContactSeller() { // 联系买家--拨打电话
