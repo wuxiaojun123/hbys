@@ -13,7 +13,6 @@
  */
 package com.reward.help.merchant.activity;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -40,10 +39,8 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
-
 import com.hyphenate.util.EMLog;
 import com.reward.help.merchant.R;
-import com.reward.help.merchant.fragment.ContactListFragment;
 import com.reward.help.merchant.chat.Constant;
 import com.reward.help.merchant.chat.DemoHelper;
 import com.reward.help.merchant.chat.db.InviteMessgeDao;
@@ -53,6 +50,7 @@ import com.reward.help.merchant.chat.runtimepermissions.PermissionsResultAction;
 import com.reward.help.merchant.chat.ui.BaseActivity;
 import com.reward.help.merchant.chat.ui.ChatActivity;
 import com.reward.help.merchant.chat.ui.ConversationListFragment;
+import com.reward.help.merchant.fragment.ContactListFragment;
 import com.reward.help.merchant.fragment.MineFragment;
 
 import java.util.List;
@@ -61,7 +59,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@SuppressLint("NewApi")
+
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 	protected static final String TAG = "MainActivity";
@@ -92,17 +90,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-		    String packageName = getPackageName();
-		    PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		    if (!pm.isIgnoringBatteryOptimizations(packageName)) {
-		        Intent intent = new Intent();
-		        intent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-		        intent.setData(Uri.parse("package:" + packageName));
-		        startActivity(intent);
-		    }
+		try{ // http://blog.csdn.net/laxian2009/article/details/52474214
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+				String packageName = getPackageName();
+				PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+				if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+					Intent intent = new Intent();
+					intent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+					intent.addCategory(Intent.CATEGORY_DEFAULT);
+					intent.setData(Uri.parse("package:" + packageName));
+					startActivity(intent);
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
 		}
-		
 		//make sure activity will not in background if user is logged into another device or removed
 		if (savedInstanceState != null && savedInstanceState.getBoolean(Constant.ACCOUNT_REMOVED, false)) {
 		    DemoHelper.getInstance().logout(false,null);
