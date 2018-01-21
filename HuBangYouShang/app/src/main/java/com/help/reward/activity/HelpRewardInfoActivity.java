@@ -471,7 +471,7 @@ public class HelpRewardInfoActivity extends BaseActivity {
         if (!"False".equalsIgnoreCase(response.data.has_chatted)) {
             has_chatted = response.data.has_chatted;
         }
-        adapter.setIsMyPost(App.APP_USER_ID.equals(info.u_id));
+        adapter.setIsMyPost(info.u_id.equals(App.APP_USER_ID));
         if (!App.APP_USER_ID.equals(info.u_id)) {
             iv_title_right.setVisibility(View.VISIBLE);
             comment_layout.setVisibility(View.VISIBLE);

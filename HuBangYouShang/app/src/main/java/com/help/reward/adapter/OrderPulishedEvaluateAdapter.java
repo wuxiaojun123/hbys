@@ -93,25 +93,25 @@ public class OrderPulishedEvaluateAdapter extends BaseRecyclerAdapter {
         ivReleaseAddphoto.setVisibility(View.VISIBLE);
 
 
-        int length = bean.evaluate_images.size();
+        int length = bean.evaluate_image.size();
         switch (length) {
             case 4:
                 ivReleaseAddphoto.setVisibility(View.GONE);
                 iv_photo4.setVisibility(View.VISIBLE);
                 iv_delete4.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(bean.evaluate_images.get(3), iv_photo4);
+                GlideUtils.loadImage(bean.evaluate_image.get(3), iv_photo4);
             case 3:
                 iv_photo3.setVisibility(View.VISIBLE);
                 iv_delete3.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(bean.evaluate_images.get(2), iv_photo3);
+                GlideUtils.loadImage(bean.evaluate_image.get(2), iv_photo3);
             case 2:
                 iv_photo2.setVisibility(View.VISIBLE);
                 iv_delete2.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(bean.evaluate_images.get(1), iv_photo2);
+                GlideUtils.loadImage(bean.evaluate_image.get(1), iv_photo2);
             case 1:
                 iv_photo1.setVisibility(View.VISIBLE);
                 iv_delete1.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(bean.evaluate_images.get(0), iv_photo1);
+                GlideUtils.loadImage(bean.evaluate_image.get(0), iv_photo1);
                 break;
         }
         tv_photonum.setText("还可上传（" + (4 - length) + "）张");
@@ -139,8 +139,8 @@ public class OrderPulishedEvaluateAdapter extends BaseRecyclerAdapter {
 
     public void setPhotoImageView(int position,String file_name,String url){
         OrderPulishedEvaluateBean bean = (OrderPulishedEvaluateBean) mDataList.get(position);
-        bean.evaluate_images.add(url);
-        bean.file_names.add(file_name);
+        bean.evaluate_image.add(file_name);
+//        bean.file_names.add(file_name);
         mDataList.set(position,bean);
         notifyDataSetChanged();
     }

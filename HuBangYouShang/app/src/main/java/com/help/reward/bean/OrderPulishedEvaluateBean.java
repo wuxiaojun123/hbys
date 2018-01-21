@@ -17,7 +17,7 @@ public class OrderPulishedEvaluateBean {
     public String comment; // 评论内容
     /*public String[] evaluate_images; // 评论的图片
     public String[] file_names;*/
-    public List<String> evaluate_images;
+    public List<String> evaluate_image;
     public List<String> file_names;
 
 }

@@ -43,7 +43,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_title"
                 android:layout_marginTop="@dimen/content_margin"
-                android:maxLines="1"
                 android:text="帖子内容" />
 
             <TextView

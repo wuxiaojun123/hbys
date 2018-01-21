@@ -127,7 +127,7 @@ public class OrderPulishedEvaluateActivity extends BaseActivity implements View.
                 bean.goods_img = goods_img[i];
                 bean.goods_name = goods_name[i];
                 bean.rec_id = rec_id[i];
-                bean.evaluate_images = new ArrayList<>();
+                bean.evaluate_image = new ArrayList<>();
                 bean.file_names = new ArrayList<>();
                 mList.add(bean);
             }

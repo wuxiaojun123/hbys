@@ -213,13 +213,6 @@ public class GoodInfoActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-
-        }
-    };
-
     private void showDialogWhetherEnterGroup(int textResId) {
         new AlertDialog(mContext)
                 .builder()

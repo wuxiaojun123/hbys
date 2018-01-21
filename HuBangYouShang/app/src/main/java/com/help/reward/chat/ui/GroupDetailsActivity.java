@@ -219,7 +219,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
      */
     private void setGroupNameAndMemberNumber() {
         mTvGroupName.setText(group.getGroupName() + "(" + group.getMemberCount() + st);
-        mTvMemberNumber.setText(group.getMemberCount() + "/200");
+        mTvMemberNumber.setText(group.getMemberCount() + "/2000");
     }
 
     @Override

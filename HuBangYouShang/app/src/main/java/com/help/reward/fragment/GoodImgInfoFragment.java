@@ -166,6 +166,7 @@ public class GoodImgInfoFragment extends BaseFragment {
                                     if (!url.contains("http")) {
                                         url = "http://" + url;
                                     }
+                                    LogUtils.e("请求的url是:"+url);
                                     webView.loadUrl(url);
                                     webView.setVisibility(View.VISIBLE);
                                     mTvEmpty.setVisibility(View.GONE);
