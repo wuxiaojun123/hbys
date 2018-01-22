@@ -53,6 +53,7 @@ public class SmsSDKUtils {
                 LogUtils.e("注册接口中：data" + data);
                 try {
                     if (data instanceof String) {
+                        LogUtils.e("进入了" + data);
                         JSONObject jsonObject = new JSONObject((String) data);
                         String detail = jsonObject.getString("detail");
                         if (detail != null) {
@@ -77,7 +78,7 @@ public class SmsSDKUtils {
     }
 
     public void initSms() {
-        SMSSDK.initSDK(mContext, Constant.SMS_APPKEY, Constant.SMS_APPSECRET);
+//        SMSSDK.initSDK(mContext, Constant.SMS_APPKEY, Constant.SMS_APPSECRET);
         eh = new EventHandler() {
             @Override
             public void afterEvent(int event, int result, Object data) {

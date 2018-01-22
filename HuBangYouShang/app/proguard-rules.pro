@@ -144,11 +144,8 @@
 ################### retrofit end ###################
 
 ################## sms ############################
--keep class cn.smssdk.**{*;}
 -keep class com.mob.**{*;}
-
--dontwarn com.mob.**
--dontwarn cn.smssdk.**
+-keep class cn.smssdk.**{*;}
 ################## sms ############################
 
 ######################umeng统计 start##################

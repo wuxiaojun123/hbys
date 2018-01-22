@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 //apply plugin: 'com.antfortune.freeline'
+// 添加插件
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -78,11 +80,11 @@ android {
     buildToolsVersion '25.0.0'
 }
 
-repositories{
-    flatDir{
-        dirs 'libs' //就是你放aar的目录地址
-    }
-}
+//repositories{
+//    flatDir{
+//        dirs 'libs' //就是你放aar的目录地址
+//    }
+//}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -107,8 +109,8 @@ dependencies {
     //    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     //    compile project(':libqrcode')
     compile files('libs/zxing.jar')
-    compile name: 'SMSSDK-2.1.3', ext: 'aar'
-    compile name: 'SMSSDKGUI-2.1.3', ext: 'aar'
+//    compile name: 'SMSSDK-2.1.3', ext: 'aar'
+//    compile name: 'SMSSDKGUI-2.1.3', ext: 'aar'
     compile project(':sticknavlayout')
     compile project(':library_address')
     compile project(':library_chat')
@@ -120,4 +122,11 @@ dependencies {
 //    compile 'com.google.code.gson:gson:2.8.0'
     // LeanCloud 基础包
 //    compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
+}
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+MobSDK {
+    appKey "1bebf93388e20"
+    appSecret "007b9903829fa24053dd4386a2019e4b"
+
+    SMSSDK {}
 }

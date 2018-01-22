@@ -129,7 +129,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
 
     private void sms() {
-        SMSSDK.initSDK(this, Constant.SMS_APPKEY, Constant.SMS_APPSECRET);
+//        SMSSDK.initSDK(this, Constant.SMS_APPKEY, Constant.SMS_APPSECRET);
         eh = new EventHandler() {
             @Override
             public void afterEvent(int event, int result, Object data) {
