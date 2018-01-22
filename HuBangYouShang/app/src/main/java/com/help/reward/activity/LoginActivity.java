@@ -16,9 +16,11 @@ import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.LoginSuccessRxbusType;
+import com.help.reward.rxbus.event.type.LoginSuccessRxbusType2;
 import com.help.reward.rxbus.event.type.WeiXinLoginRxbusType;
 import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.utils.Constant;
+import com.help.reward.utils.LoginUtils;
 import com.help.reward.utils.SharedPreferenceConstant;
 import com.help.reward.utils.StatusBarUtil;
 import com.help.reward.view.MyProcessDialog;
@@ -70,6 +72,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     EditText et_login_pwd; // 密码
 
     private Subscription subscribe;
+    private boolean isFromMainActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +80,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        isFromMainActivity = getIntent().getBooleanExtra(LoginUtils.LOGIN_TYPE, false);
         String defaultUsername = SharedPreferencesHelper.getInstance(mContext).getString(SharedPreferenceConstant.KEY_LOGIN_USERNAME, null);
         et_login_phone_number.setText(defaultUsername);
     }
@@ -210,13 +214,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onNext(LoginResponse res) {
                         if (res.code == 200) {
-                            LogUtils.e("请求到的key是：" + res.data.key + "=======" + res.data.userid);
                             App.APP_CLIENT_KEY = res.data.key;
                             App.APP_USER_ID = res.data.userid;
                             // 请求会员信息
                             App.mLoginReponse = res.data;
                             RxBus.getDefault().post(new LoginSuccessRxbusType("loginSuccess"));
-                            LogUtils.e("用户名是:" + App.mLoginReponse.easemobId + "----密码是:" + password + App.mLoginReponse.new_message);
+//                            LogUtils.e("用户名是:" + App.mLoginReponse.easemobId + "----密码是:" + password + App.mLoginReponse.new_message);
                             SharedPreferencesHelper.getInstance(mContext).putString(SharedPreferenceConstant.KEY_LOGIN_USERNAME, username);
 
                             LoginToHuanxin(App.mLoginReponse.easemobId, password);
@@ -237,7 +240,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
                 LogUtils.e("onSuccess--登录聊天服务器成功！");
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isFromMainActivity) {
+                            RxBus.getDefault().post(new LoginSuccessRxbusType2(true));
+                        }
+                    }
+                });
                 finishActivity();
             }
 

@@ -41,7 +41,7 @@ public class SmsSDKUtils {
                 } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                     //获取验证码成功  开始计时
                     LogUtils.e("获取验证码成功");
-                    if(mOnSMSSDKListener != null){
+                    if (mOnSMSSDKListener != null) {
                         mOnSMSSDKListener.onSMSSDKSendSuccessListener();
                     }
 
@@ -52,12 +52,12 @@ public class SmsSDKUtils {
             } else {
                 LogUtils.e("注册接口中：data" + data);
                 try {
-                    if(data instanceof String){
+                    if (data instanceof String) {
                         JSONObject jsonObject = new JSONObject((String) data);
                         String detail = jsonObject.getString("detail");
-                        if(detail != null){
+                        if (detail != null) {
                             ToastUtils.show(mContext, detail);
-                        }else{
+                        } else {
                             ToastUtils.show(mContext, "发送验证码失败!");
                         }
                     }
@@ -81,6 +81,7 @@ public class SmsSDKUtils {
         eh = new EventHandler() {
             @Override
             public void afterEvent(int event, int result, Object data) {
+                LogUtils.e("event=" + event + "--" + result + "--data" + data.toString() + "--" + data);
                 Message msg = new Message();
                 msg.arg1 = event;
                 msg.arg2 = result;

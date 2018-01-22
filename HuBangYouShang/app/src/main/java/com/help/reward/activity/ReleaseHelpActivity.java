@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -248,43 +249,47 @@ public class ReleaseHelpActivity extends BaseActivity {
 
 
     private void subHelp() {
-        final String title = etReleaseHelpTitle.getText().toString().trim();
+        if (TextUtils.isEmpty(App.APP_USER_ID)) {
+            Intent mIntent = new Intent(ReleaseHelpActivity.this, LoginActivity.class);
+            startActivity(mIntent);
+        } else {
+            final String title = etReleaseHelpTitle.getText().toString().trim();
 //        String endTimeStr = tvReleaseHelpData.getText().toString().trim();
-        final String content = etReleaseHelpContent.getText().toString().trim();
-        final String score = tv_release_help_score.getText().toString().trim();
-        if (!StringUtils.checkStr(title)) {
-            ToastUtils.show(mContext, "请输入标题");
-            return;
-        }
-        if (!StringUtils.checkStr(content)) {
-            ToastUtils.show(mContext, "请输入内容");
-            return;
-        }
-        if (!StringUtils.checkStr(score) || Integer.parseInt(score) < 10) {
-            ToastUtils.show(mContext, "请输入悬赏分，最少10分");
-            return;
-        }
-        if (!StringUtils.checkStr(board_id)) {
-            ToastUtils.show(mContext, "请选择分类");
-            return;
-        }
-        if (!StringUtils.checkStr(area_id)) {
-            ToastUtils.show(mContext, "请选择地区");
-            return;
-        }
-        if (!StringUtils.checkStr(end_time)) {
-            ToastUtils.show(mContext, "请选择有效时间");
-            return;
-        }
-        DialogUtil.showConfirmCancleDialog(this, "您的求助帖即将发布，需扣除" + score + "帮赏分冻结，确认发布？", new DialogUtil.OnDialogUtilClickListener() {
-            @Override
-            public void onClick(boolean isLeft) {
-                if (isLeft) {
-                    subHelpData(title, content, score, end_time);
-                }
+            final String content = etReleaseHelpContent.getText().toString().trim();
+            final String score = tv_release_help_score.getText().toString().trim();
+            if (!StringUtils.checkStr(title)) {
+                ToastUtils.show(mContext, "请输入标题");
+                return;
             }
-        });
-
+            if (!StringUtils.checkStr(content)) {
+                ToastUtils.show(mContext, "请输入内容");
+                return;
+            }
+            if (!StringUtils.checkStr(score) || Integer.parseInt(score) < 10) {
+                ToastUtils.show(mContext, "请输入悬赏分，最少10分");
+                return;
+            }
+            if (!StringUtils.checkStr(board_id)) {
+                ToastUtils.show(mContext, "请选择分类");
+                return;
+            }
+            if (!StringUtils.checkStr(area_id)) {
+                ToastUtils.show(mContext, "请选择地区");
+                return;
+            }
+            if (!StringUtils.checkStr(end_time)) {
+                ToastUtils.show(mContext, "请选择有效时间");
+                return;
+            }
+            DialogUtil.showConfirmCancleDialog(this, "您的求助帖即将发布，需扣除" + score + "帮赏分冻结，确认发布？", new DialogUtil.OnDialogUtilClickListener() {
+                @Override
+                public void onClick(boolean isLeft) {
+                    if (isLeft) {
+                        subHelpData(title, content, score, end_time);
+                    }
+                }
+            });
+        }
     }
 
     protected Subscription subscribe;

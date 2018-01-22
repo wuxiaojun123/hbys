@@ -25,9 +25,11 @@ import com.help.reward.chat.db.UserDao;
 import com.help.reward.chat.ui.GroupActivity;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.LoginSuccessRxbusType;
+import com.help.reward.rxbus.event.type.LoginSuccessRxbusType2;
 import com.help.reward.service.DemoIntentService;
 import com.help.reward.service.DemoPushService;
 import com.help.reward.utils.ActivitySlideAnim;
+import com.help.reward.utils.LoginUtils;
 import com.help.reward.utils.StatusBarUtil;
 import com.help.reward.view.MyProcessDialog;
 import com.hyphenate.EMCallBack;
@@ -59,6 +61,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /***
  *
@@ -86,7 +90,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ConversationListFragment mBenefitFragment; //获益
     private ConsumptionFragment mConSumptionFragment;//消费
     private MyFragment mMyFragment;//我的
-
+    private Subscription loginSubscribe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,23 +131,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         showFragment(id);
-        switch (id) {
-            case R.id.radio_help:
-
-                break;
-            case R.id.radio_integration:
-
-                break;
-            case R.id.radio_benefit:
-
-                break;
-            case R.id.radio_consumption:
-
-                break;
-            case R.id.radio_my:
-
-                break;
-        }
     }
 
     private int currentIndex = 0;
@@ -173,19 +160,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 break;
             case R.id.radio_benefit:
-
-                if (TextUtils.isEmpty(App.APP_CLIENT_KEY)) {
-                    logoutHuanxin();
-                }
-
-                if (mBenefitFragment == null) {
-                    //mBenefitFragment = new BenefitFragment();
-                    mBenefitFragment = new ConversationListFragment();
-                    mFragmentTransaction.add(R.id.fl_content, mBenefitFragment);
+                if (TextUtils.isEmpty(App.APP_USER_ID)) { // 未登录
+                    radio_benefit.setChecked(false);
+                    Intent mIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    mIntent.putExtra(LoginUtils.LOGIN_TYPE, true);
+                    startActivity(mIntent);
+                    initSubscribe();
+                    showRadiaButton();
+                    return;
                 } else {
-                    mFragmentTransaction.show(mBenefitFragment);
+                    radio_benefit.setChecked(true);
+                    if (TextUtils.isEmpty(App.APP_CLIENT_KEY)) {
+                        logoutHuanxin();
+                    }
+                    if (mBenefitFragment == null) {
+                        //mBenefitFragment = new BenefitFragment();
+                        mBenefitFragment = new ConversationListFragment();
+                        mFragmentTransaction.add(R.id.fl_content, mBenefitFragment);
+                    } else {
+                        mFragmentTransaction.show(mBenefitFragment);
+                    }
+                    currentIndex = 2;
                 }
-                currentIndex = 2;
 
                 break;
             case R.id.radio_consumption:
@@ -210,6 +206,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
         mFragmentTransaction.commitAllowingStateLoss();
+    }
+
+
+    /***
+     * 订阅获益登录成功的消息
+     */
+    private void initSubscribe() {
+        if (loginSubscribe != null) {
+            return;
+        }
+        loginSubscribe = RxBus.getDefault().toObservable(LoginSuccessRxbusType2.class).subscribe(new Action1<LoginSuccessRxbusType2>() {
+            @Override
+            public void call(LoginSuccessRxbusType2 loginSuccessRxbusType2) {
+                if (loginSuccessRxbusType2.loginFlag) {
+                    showFragment(R.id.radio_benefit);
+                }
+            }
+        });
     }
 
     private void logoutHuanxin() {
@@ -689,7 +703,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             finish();
         }
     }
-
 
 
     @Override

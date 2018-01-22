@@ -87,7 +87,7 @@ public class OrderComplaintsMerchantActivity extends BaseActivity implements Vie
     }
 
     private void initData() {
-        chooseCameraPopuUtils = new ChooseCameraPopuUtils(this, "p_complaint");
+        chooseCameraPopuUtils = new ChooseCameraPopuUtils(this, "complaint");
         chooseCameraPopuUtils.setOnUploadImageListener(new ChooseCameraPopuUtils.OnUploadImageListener() {
             @Override
             public void onLoadError() {

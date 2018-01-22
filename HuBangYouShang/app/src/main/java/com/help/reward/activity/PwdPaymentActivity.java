@@ -29,11 +29,11 @@ import rx.schedulers.Schedulers;
 
 /**
  * 支付密码
- *
+ * <p>
  * Created by wuxiaojun on 2017/1/15.
  */
 
-public class PwdPaymentActivity extends BaseActivity implements View.OnClickListener{
+public class PwdPaymentActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.iv_title_back)
     ImageView iv_title_back;
@@ -69,14 +69,7 @@ public class PwdPaymentActivity extends BaseActivity implements View.OnClickList
 
     private void initData() {
         initTimer();
-        smsSDKUtils = new SmsSDKUtils(mContext);
-        smsSDKUtils.setOnSMSSDKListener(new SmsSDKUtils.OnSMSSDKListener() {
-            @Override
-            public void onSMSSDKSendSuccessListener() {
-                tv_code.setClickable(false);
-                mTimer.start();
-            }
-        });
+
     }
 
     private void initTimer() {
@@ -95,11 +88,11 @@ public class PwdPaymentActivity extends BaseActivity implements View.OnClickList
         });
     }
 
-    @OnClick({R.id.iv_title_back,R.id.tv_code, R.id.btn_next})
+    @OnClick({R.id.iv_title_back, R.id.tv_code, R.id.btn_next})
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.iv_title_back:
                 finish();
                 ActivitySlideAnim.slideOutAnim(PwdPaymentActivity.this);
@@ -109,6 +102,16 @@ public class PwdPaymentActivity extends BaseActivity implements View.OnClickList
                 String registerUserName = et_phone_number.getText().toString().trim();
                 if (!TextUtils.isEmpty(registerUserName)) {
                     LogUtils.e("点击获取code");
+                    if(smsSDKUtils == null){
+                        smsSDKUtils = new SmsSDKUtils(mContext);
+                        smsSDKUtils.setOnSMSSDKListener(new SmsSDKUtils.OnSMSSDKListener() {
+                            @Override
+                            public void onSMSSDKSendSuccessListener() {
+                                tv_code.setClickable(false);
+                                mTimer.start();
+                            }
+                        });
+                    }
                     smsSDKUtils.sendCode(registerUserName);
                 } else {
                     ToastUtils.show(mContext, "请输入手机号");
@@ -141,7 +144,7 @@ public class PwdPaymentActivity extends BaseActivity implements View.OnClickList
 
     private void validateCode(final String phoneNumber, String verificationCode) {
         PersonalNetwork.getResponseApi()
-                .getModifyPayStep3(App.APP_CLIENT_KEY,phoneNumber, verificationCode)
+                .getModifyPayStep3(App.APP_CLIENT_KEY, phoneNumber, verificationCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<String>>() {

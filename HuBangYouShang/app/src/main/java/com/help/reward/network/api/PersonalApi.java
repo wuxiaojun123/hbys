@@ -36,6 +36,7 @@ import com.help.reward.bean.Response.OrderInfoResponse;
 import com.help.reward.bean.Response.PersonInfoResponse;
 import com.help.reward.bean.Response.SaveNewAddressResponse;
 import com.help.reward.bean.Response.UploadHeadImageReponse;
+import com.help.reward.bean.Response.ValidateHasConfirmPwdResponse;
 import com.help.reward.bean.Response.VersionUpdateResponse;
 import com.help.reward.bean.Response.WebViewUrlResponse;
 import com.help.reward.utils.Constant;
@@ -609,6 +610,13 @@ public interface PersonalApi {
             @Field("pic2") String pic2,
             @Field("pic3") String pic3,
             @Field("pic4") String pic4,
+            @Field("key") String key
+    );
+
+    // 是否设置了收货密码
+    @FormUrlEncoded
+    @POST("/mobile/index.php?act=member_index&op=hasSetPayPwd")
+    Observable<ValidateHasConfirmPwdResponse> getHasSetPayPwdResponse(
             @Field("key") String key
     );
 

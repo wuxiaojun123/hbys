@@ -79,7 +79,7 @@ public class AccountManagerActivity extends BaseActivity implements View.OnClick
 
                 break;
             case R.id.tv_payment_pwd:
-                // 支付密码
+                // 收货密码
                 startActivity(new Intent(mContext, PwdPaymentActivity.class));
                 ActivitySlideAnim.slideInAnim(AccountManagerActivity.this);
 

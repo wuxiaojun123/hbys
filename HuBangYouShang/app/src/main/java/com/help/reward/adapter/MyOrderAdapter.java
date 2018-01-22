@@ -135,7 +135,7 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
                         ActivitySlideAnim.slideInAnim((Activity) mContext);
 
                     } else if ("2".equals(tag)) {// 确认收货
-                        mMyOrderBiz.showDialogConfirmReceiver(bean.order_id);
+                        mMyOrderBiz.validateHasConfirmPwd(bean.order_id);
                     } else if ("3".equals(tag)) {// 评价页面
                         gotoEvaluateActivity(size, bean);
                     }

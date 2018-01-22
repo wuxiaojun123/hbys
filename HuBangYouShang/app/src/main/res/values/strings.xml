@@ -139,7 +139,7 @@
     <!--修改密码-->
     <string name="string_pwd_update_title">修改密码</string>
     <!--支付密码-->
-    <string name="string_pwd_payment_title">支付密码</string>
+    <string name="string_pwd_payment_title">收货密码</string>
     <!--地址管理-->
     <string name="string_address_manager_title">地址管理</string>
     <!--添加地址-->

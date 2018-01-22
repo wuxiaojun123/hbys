@@ -1,18 +1,25 @@
 package com.help.reward.biz;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.help.reward.App;
 import com.help.reward.R;
+import com.help.reward.activity.AccountManagerActivity;
+import com.help.reward.activity.PwdPaymentActivity;
 import com.help.reward.bean.Response.BaseResponse;
+import com.help.reward.bean.Response.ValidateHasConfirmPwdResponse;
 import com.help.reward.network.PersonalNetwork;
 import com.help.reward.network.base.BaseSubscriber;
 import com.help.reward.rxbus.RxBus;
 import com.help.reward.rxbus.event.type.BooleanRxbusType;
+import com.help.reward.utils.ActivitySlideAnim;
 import com.help.reward.view.AlertEditTextDialog;
 import com.help.reward.view.MyProcessDialog;
+import com.idotools.utils.LogUtils;
 import com.idotools.utils.ToastUtils;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,25 +33,59 @@ import rx.schedulers.Schedulers;
 public class MyOrderBiz {
     private Context mContext;
 
-    public MyOrderBiz(Context context){
+    public MyOrderBiz(Context context) {
         this.mContext = context;
+    }
+
+    public void validateHasConfirmPwd(final String order_id) {
+        PersonalNetwork
+                .getResponseApi()
+                .getHasSetPayPwdResponse(App.APP_CLIENT_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<ValidateHasConfirmPwdResponse>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        MyProcessDialog.closeDialog();
+                        e.printStackTrace();
+                        ToastUtils.show(mContext, R.string.string_error);
+                    }
+
+                    @Override
+                    public void onNext(ValidateHasConfirmPwdResponse response) {
+                        MyProcessDialog.closeDialog();
+                        if (response.code == 200) {
+                            LogUtils.e("是否设置了收货密码:" + response.data.hasSet);
+                            if (response.data.hasSet) { // 显示数据
+                                showDialogConfirmReceiver(order_id);
+                            } else { // 前往设置收货密码页面
+                                mContext.startActivity(new Intent(mContext, PwdPaymentActivity.class));
+                                ActivitySlideAnim.slideInAnim((Activity) mContext);
+                            }
+                        } else {
+                            ToastUtils.show(mContext, response.msg);
+                        }
+                    }
+                });
     }
 
     public void showDialogConfirmReceiver(final String order_id) {
         final AlertEditTextDialog dialog = new AlertEditTextDialog(mContext).builder();
         dialog.setTitle("确认收货");
         dialog.setPositiveButton("确定", new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 String pwdEdit = dialog.getEditText();
-                if(TextUtils.isEmpty(pwdEdit)){
-                    ToastUtils.show(mContext,"请输入收货密码");
+                if (TextUtils.isEmpty(pwdEdit)) {
+                    ToastUtils.show(mContext, "请输入收货密码");
                     return;
                 }
-                confirmReceiver(order_id,pwdEdit);
+                confirmReceiver(order_id, pwdEdit);
             }
         });
         dialog.setNegativeButton("取消", new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
             }
         });
         dialog.show();
@@ -53,10 +94,10 @@ public class MyOrderBiz {
     /***
      * 确认收货
      */
-    private void confirmReceiver(String order_id,String payPwd) {
+    private void confirmReceiver(String order_id, String payPwd) {
         PersonalNetwork
                 .getResponseApi()
-                .getConfirmReceiveResponse(App.APP_CLIENT_KEY,order_id,payPwd)
+                .getConfirmReceiveResponse(App.APP_CLIENT_KEY, order_id, payPwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<String>>() {
@@ -74,7 +115,7 @@ public class MyOrderBiz {
                             if (response.data != null) { // 显示数据
                                 ToastUtils.show(mContext, response.msg);
                             }
-                            if(mOnSuccessConfirmReceiverListener != null){
+                            if (mOnSuccessConfirmReceiverListener != null) {
                                 mOnSuccessConfirmReceiverListener.onSuccessConfirmReceiverListener();
                             }
                             //刷新当前数据,发送给MyOrderAllFragment
@@ -86,13 +127,13 @@ public class MyOrderBiz {
                 });
     }
 
-    public interface OnSuccessConfirmReceiverListener{
+    public interface OnSuccessConfirmReceiverListener {
         void onSuccessConfirmReceiverListener();
     }
 
     private OnSuccessConfirmReceiverListener mOnSuccessConfirmReceiverListener;
 
-    public void setOnSuccessConfirmReceiverListener(OnSuccessConfirmReceiverListener listener){
+    public void setOnSuccessConfirmReceiverListener(OnSuccessConfirmReceiverListener listener) {
         this.mOnSuccessConfirmReceiverListener = listener;
     }
 

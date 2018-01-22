@@ -138,16 +138,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 }
             }
         });
-//        loginSubscribe = RxBus.getDefault().toObservable(String.class).subscribe(new Action1<String>() {
-//            @Override
-//            public void call(String s) {
-//                if ("loginSuccess".equals(s)) {
-//                    loginSuccess();
-//                } else if ("logout".equals(s)) {
-//                    logout();
-//                }
-//            }
-//        });
         loginSubscribe = RxBus.getDefault().toObservable(LoginSuccessRxbusType.class).subscribe(new Action1<LoginSuccessRxbusType>() {
             @Override
             public void call(LoginSuccessRxbusType s) {

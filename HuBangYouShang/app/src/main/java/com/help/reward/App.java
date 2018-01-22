@@ -44,7 +44,7 @@ public class App extends Application {
         // 为了防止环信SDK被初始化2次，加此判断会保证SDK被初始化1次
         // 默认的APP会在以包名为默认的process name下运行，如果查到的process name不是APP的process name就立即返回
 
-        if (processAppName == null ||!processAppName.equalsIgnoreCase(mApp.getPackageName())) {
+        if (processAppName == null || !processAppName.equalsIgnoreCase(mApp.getPackageName())) {
             // 则此application::onCreate 是被service 调用的，直接返回
             return;
         }
@@ -63,7 +63,7 @@ public class App extends Application {
         LogUtils.e("请求路径是...." + Constant.BASE_URL);
     }
 
-    public static App getApplication(){
+    public static App getApplication() {
         return mApp;
     }
 
@@ -93,11 +93,11 @@ public class App extends Application {
         return processName;
     }
 
-    public Map<String,TopUser> getTopUserList(){
+    public Map<String, TopUser> getTopUserList() {
         return DemoHelper.getInstance().getTopUserList();
     }
 
-    public void setTopUserList(Map<String,TopUser> contactList){
+    public void setTopUserList(Map<String, TopUser> contactList) {
         DemoHelper.getInstance().setTopUserList(contactList);
     }
 

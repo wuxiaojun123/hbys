@@ -253,7 +253,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
                 ActivitySlideAnim.slideInAnim((Activity) mContext);
 
             } else if ("2".equals(tag)) {// 确认收货
-                mMyOrderBiz.showDialogConfirmReceiver(order_id);
+                mMyOrderBiz.validateHasConfirmPwd(order_id);
 
             } else if ("3".equals(tag)) {// 评价页面
                 Intent mIntent = new Intent(mContext, OrderPulishedEvaluateActivity.class);
