@@ -11,6 +11,7 @@ import com.help.reward.chat.DemoHelper;
 import com.help.reward.chat.db.TopUser;
 import com.help.reward.utils.Constant;
 import com.idotools.utils.LogUtils;
+import com.mob.MobSDK;
 
 import java.util.Iterator;
 import java.util.List;
@@ -37,7 +38,7 @@ public class App extends Application {
         super.onCreate();
 //        FreelineCore.init(this);
         mApp = this;
-
+        MobSDK.init(this);
         int pid = android.os.Process.myPid();
         String processAppName = getAppName(pid);
         // 如果APP启用了远程的service，此application:onCreate会被调用2次

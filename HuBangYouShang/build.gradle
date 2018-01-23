@@ -18,7 +18,7 @@ buildscript {
         classpath 'com.antfortune.freeline:gradle:0.8.4'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
         // 注册MobSDK
-        classpath "com.mob.sdk:MobSDK:2017.1222.1811"
+        classpath "com.mob.sdk:MobSDK:+"
 
     }
 }

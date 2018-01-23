@@ -145,7 +145,9 @@
 
 ################## sms ############################
 -keep class com.mob.**{*;}
+-dontwarn com.mob.**
 -keep class cn.smssdk.**{*;}
+-dontwarn cn.smssdk.**
 ################## sms ############################
 
 ######################umeng统计 start##################
