@@ -31,137 +31,134 @@ import butterknife.OnClick;
  */
 public class MyOrderActivity extends BaseActivity implements View.OnClickListener {
 
-    public static final String STATE_TYPE = "state_type";
-    public static final String STATE_TYPE_DEFAULT = "";
-    public static final String STATE_TYPE_NEW = "state_new"; // 未付款
-    public static final String STATE_TYPE_SEND = "state_send"; // 待收货
-    public static final String STATE_TYPE_NOEVAL = "state_noeval"; // 待评价
-    public static final String STATE_TYPE_NOTAKES = "state_notakes"; // 退款、收货
+	public static final String					STATE_TYPE			= "state_type";
 
-    @BindView(R.id.iv_title_back)
-    ImageView iv_title_back;
-    @BindView(R.id.tv_title)
-    TextView tv_title;
-    @BindView(R.id.tv_title_right)
-    TextView tv_title_right;
+	public static final String					STATE_TYPE_DEFAULT	= "";
 
-    @BindView(R.id.id_viewpager)
-    ViewPager viewPager;
-    @BindView(R.id.tabs)
-    PagerSlidingTabStrip tabStrip;
+	public static final String					STATE_TYPE_NEW		= "state_new";		// 未付款
 
-    private int firstPage; // 第一次进来显示哪一个页面
-    private List<BaseFragment> fragmentList;
+	public static final String					STATE_TYPE_SEND		= "state_send";		// 待收货
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_order);
-        ButterKnife.bind(this);
-        firstPage = getIntent().getIntExtra("firstPage", 0);
+	public static final String					STATE_TYPE_NOEVAL	= "state_noeval";	// 待评价
 
-        initView();
-        initEvent();
-        initData();
-    }
+	public static final String					STATE_TYPE_NOTAKES	= "state_notakes";	// 退款、收货
 
-    private void initView() {
-        tv_title.setText(R.string.string_my_order_title);
-        tv_title_right.setVisibility(View.GONE);
-    }
+	@BindView(R.id.iv_title_back) ImageView		iv_title_back;
 
-    private void initData() {
-        fragmentList = new ArrayList<>(5);
-        MyOrderAllFragment allFragment = new MyOrderAllFragment();
-        Bundle bundle1 = new Bundle();
-        bundle1.putString(STATE_TYPE, STATE_TYPE_DEFAULT);
-        allFragment.setArguments(bundle1);
+	@BindView(R.id.tv_title) TextView			tv_title;
 
-        MyOrderAllFragment fragment2 = new MyOrderAllFragment();
-        Bundle bundle2 = new Bundle();
-        bundle2.putString(STATE_TYPE, STATE_TYPE_NEW);
-        fragment2.setArguments(bundle2);
+	@BindView(R.id.tv_title_right) TextView		tv_title_right;
 
-        MyOrderAllFragment fragment3 = new MyOrderAllFragment();
-        Bundle bundle3 = new Bundle();
-        bundle3.putString(STATE_TYPE, STATE_TYPE_SEND);
-        fragment3.setArguments(bundle3);
+	@BindView(R.id.id_viewpager) ViewPager		viewPager;
 
-        MyOrderAllFragment fragment4 = new MyOrderAllFragment();
-        Bundle bundle4 = new Bundle();
-        bundle4.putString(STATE_TYPE, STATE_TYPE_NOEVAL);
-        fragment4.setArguments(bundle4);
+	@BindView(R.id.tabs) PagerSlidingTabStrip	tabStrip;
 
-        MyOrderAllFragment fragment5 = new MyOrderAllFragment();
-        Bundle bundle5 = new Bundle();
-        bundle5.putString(STATE_TYPE, STATE_TYPE_NOTAKES);
-        fragment5.setArguments(bundle5);
+	private int									firstPage;								// 第一次进来显示哪一个页面
 
-        fragmentList.add(allFragment);
-        fragmentList.add(fragment2);
-        fragmentList.add(fragment3);
-        fragmentList.add(fragment4);
-        fragmentList.add(fragment5);
-        MyFragmentPageAdapter myFragmentPageAdapter = new MyFragmentPageAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(myFragmentPageAdapter);
-        tabStrip.setViewPager(viewPager);
-        viewPager.setOffscreenPageLimit(5);
-        // 显示那一个fragment
-        viewPager.setCurrentItem(firstPage);
-    }
+	private List<BaseFragment>					fragmentList;
 
-    private void initEvent() {
+	@Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_my_order);
+		ButterKnife.bind(this);
+		firstPage = getIntent().getIntExtra("firstPage", 0);
 
-    }
+		initView();
+		initEvent();
+		initData();
+	}
 
-    @OnClick({R.id.iv_title_back})
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.iv_title_back:
-                finish();
-                ActivitySlideAnim.slideOutAnim(MyOrderActivity.this);
+	private void initView() {
+		tv_title.setText(R.string.string_my_order_title);
+		tv_title_right.setVisibility(View.GONE);
+	}
 
-                break;
-        }
-    }
+	private void initData() {
+		fragmentList = new ArrayList<>(5);
+		MyOrderAllFragment allFragment = new MyOrderAllFragment();
+		Bundle bundle1 = new Bundle();
+		bundle1.putString(STATE_TYPE, STATE_TYPE_DEFAULT);
+		allFragment.setArguments(bundle1);
 
+		MyOrderAllFragment fragment2 = new MyOrderAllFragment();
+		Bundle bundle2 = new Bundle();
+		bundle2.putString(STATE_TYPE, STATE_TYPE_NEW);
+		fragment2.setArguments(bundle2);
 
-    private class MyFragmentPageAdapter extends FragmentPagerAdapter {
+		MyOrderAllFragment fragment3 = new MyOrderAllFragment();
+		Bundle bundle3 = new Bundle();
+		bundle3.putString(STATE_TYPE, STATE_TYPE_SEND);
+		fragment3.setArguments(bundle3);
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            if (position == 0) {
-                return getMString(R.string.string_all_order);
-            } else if (position == 1) {
-                return getMString(R.string.string_stay_payment);
-            } else if (position == 2) {
-                return getMString(R.string.string_stay_goods_receipt);
-            } else if (position == 3) {
-                return getMString(R.string.string_stay_evaluate);
-            } else {
-                return getMString(R.string.string_refund);
-            }
-        }
+		MyOrderAllFragment fragment4 = new MyOrderAllFragment();
+		Bundle bundle4 = new Bundle();
+		bundle4.putString(STATE_TYPE, STATE_TYPE_NOEVAL);
+		fragment4.setArguments(bundle4);
 
-        public MyFragmentPageAdapter(FragmentManager fm) {
-            super(fm);
-        }
+		MyOrderAllFragment fragment5 = new MyOrderAllFragment();
+		Bundle bundle5 = new Bundle();
+		bundle5.putString(STATE_TYPE, STATE_TYPE_NOTAKES);
+		fragment5.setArguments(bundle5);
 
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
+		fragmentList.add(allFragment);
+		fragmentList.add(fragment2);
+		fragmentList.add(fragment3);
+		fragmentList.add(fragment4);
+		fragmentList.add(fragment5);
+		MyFragmentPageAdapter myFragmentPageAdapter = new MyFragmentPageAdapter(getSupportFragmentManager());
+		viewPager.setAdapter(myFragmentPageAdapter);
+		tabStrip.setViewPager(viewPager);
+		viewPager.setOffscreenPageLimit(5);
+		// 显示那一个fragment
+		viewPager.setCurrentItem(firstPage);
+	}
 
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-    }
+	private void initEvent() {
 
-    private String getMString(int resId) {
-        return mContext.getString(resId);
-    }
+	}
+
+	@OnClick({ R.id.iv_title_back }) @Override public void onClick(View v) {
+		int id = v.getId();
+		switch (id) {
+			case R.id.iv_title_back:
+				finish();
+				ActivitySlideAnim.slideOutAnim(MyOrderActivity.this);
+
+				break;
+		}
+	}
+
+	private class MyFragmentPageAdapter extends FragmentPagerAdapter {
+
+		@Override public CharSequence getPageTitle(int position) {
+			if (position == 0) {
+				return getMString(R.string.string_all_order);
+			} else if (position == 1) {
+				return getMString(R.string.string_stay_payment);
+			} else if (position == 2) {
+				return getMString(R.string.string_stay_goods_receipt);
+			} else if (position == 3) {
+				return getMString(R.string.string_stay_evaluate);
+			} else {
+				return getMString(R.string.string_refund);
+			}
+		}
+
+		public MyFragmentPageAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override public Fragment getItem(int position) {
+			return fragmentList.get(position);
+		}
+
+		@Override public int getCount() {
+			return fragmentList.size();
+		}
+	}
+
+	private String getMString(int resId) {
+		return mContext.getString(resId);
+	}
 
 }

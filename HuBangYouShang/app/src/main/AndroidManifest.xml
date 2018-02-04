@@ -466,6 +466,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/style_translucent" />
 
+        <activity
+            android:name=".activity.ApplyForRefundActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
         <!--qq登陆 start-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -473,8 +478,10 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent1106183304" />
             </intent-filter>
         </activity>
@@ -609,7 +616,9 @@
             android:value="111" />
         <!-- 友盟 END -->
         <!--环信-->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="${EASEMOB_APPKEY}" />
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="${EASEMOB_APPKEY}" />
     </application>
 
 </manifest>

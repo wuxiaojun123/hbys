@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.help.reward.R;
+import com.help.reward.activity.ApplyForRefundActivity;
 import com.help.reward.activity.BaseActivity;
 import com.help.reward.activity.OrderDetailsActivity;
 import com.help.reward.activity.OrderPulishedEvaluateActivity;
@@ -111,7 +112,10 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
             public void onClick(View v) { // 删除订单逻辑
                 String tag = (String) tv_remove_order.getTag();
                 if (tag != null) {
-                    ToastUtils.show(mContext, "退款退货");
+                    Intent mIntent = new Intent(mContext, ApplyForRefundActivity.class);
+                    mIntent.putExtra("order_id", bean.order_id);
+                    mContext.startActivity(mIntent);
+                    ActivitySlideAnim.slideInAnim((BaseActivity) mContext);
                 } else {
                     mOperationManager.showRemoveDialog(bean.order_id, position);
                 }
