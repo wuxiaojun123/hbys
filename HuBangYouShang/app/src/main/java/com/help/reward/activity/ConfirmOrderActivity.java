@@ -75,7 +75,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 		if_cart = intent.getStringExtra("if_cart");
 		ButterKnife.bind(this);
 		initView();
-		initData();
+		initData(true);
 	}
 
 	private void initView() {
@@ -183,15 +183,39 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 		}
 	}
 
-	private void initData() {
+	public void initData(boolean first) {
 		if (App.APP_CLIENT_KEY == null) {
 			ToastUtils.show(mContext, R.string.string_please_login);
 			return;
 		}
 		LogUtils.e("确认订单页面 cart_id=" + cart_id + "---if_cart=" + if_cart);
+		String voucher = "||";
+		if (first) {
+			voucher = null;
+		} else {
+			if (adapter != null && !adapter.getVoucher().isEmpty()) {
+				voucher = adapter.getVoucher();
+				if (voucher.startsWith(",")) {
+					voucher = voucher.substring(1);
+				}
+			}
+		}
+		String use_g_voucher = "0"; // 1or0 用or不用
+		if (adapter != null && adapter.getGeneral_voucher()) {
+			use_g_voucher = "1";
+		}
+		String address_id = null;
+		if (confirmOrderBean != null) {
+			if (confirmOrderBean.address_info != null && confirmOrderBean.address_info.address_id == null) {
+				if (confirmOrderBean.address_api == null) {
+					address_id = confirmOrderBean.address_info.address_id;
+				}
+			}
+		}
+		LogUtils.e("优惠券" + voucher + "--通用卷" + use_g_voucher + "地址" + address_id);
 		MyProcessDialog.showDialog(mContext);
-		ShopcartNetwork.getShopcartCookieApi().getComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, null).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new BaseSubscriber<ConfirmOrderResponse>() {
+		ShopcartNetwork.getShopcartCookieApi().getComfirmOrderList(App.APP_CLIENT_KEY, cart_id, if_cart, address_id, voucher, use_g_voucher).subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread()).subscribe(new BaseSubscriber<ConfirmOrderResponse>() {
 
 					@Override public void onError(Throwable e) {
 						MyProcessDialog.closeDialog();
@@ -218,6 +242,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 									adapter.setDataList(store_cart_list);
 									lRecyclerview.setVisibility(View.VISIBLE);
 								}
+								LogUtils.e("返回的总价和adapter价格是" + response.data.order_amount + "--" + response.data.order_amount);
 								if (!TextUtils.isEmpty(response.data.order_amount)) {
 									mTvTotal.setText(response.data.order_amount);
 									adapter.setTvTotal(mTvTotal, response.data.order_amount);
@@ -245,10 +270,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 				// 修改了地址，需要重新刷新订单页面，因为运费是不一样的
 				if (confirmOrderBean.address_info != null) {
 					if (!confirmOrderBean.address_info.address_id.equals(bean.address_id)) {
-						initData();
+						initData(false);
 					}
 				} else {
-					initData();
+					initData(false);
 				}
 			}
 		}

@@ -81,7 +81,9 @@ public interface ShopcartApi {
             @Field("key") String key,
             @Field("cart_id") String cart_id,
             @Field("ifcart") String ifcart,
-            @Field("address_id") String address_id
+            @Field("address_id") String address_id,
+            @Field("voucher_t_id") String voucher_t_id,
+            @Field("use_g_voucher") String use_g_voucher
     );
 
 
