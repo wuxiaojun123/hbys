@@ -32,10 +32,10 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
 	private Context				mContext;
 
 	private int					mDefaultIndex	= -1;
-	
+
 	private VoucherDialog		mVoucherDialog;
 
-	public VoucherAdapter(Context context,VoucherDialog voucherDialog, List<VoucherBean> mDataList) {
+	public VoucherAdapter(Context context, VoucherDialog voucherDialog, List<VoucherBean> mDataList) {
 		this.mContext = context;
 		this.mVoucherDialog = voucherDialog;
 		this.mDataList = mDataList;
@@ -68,11 +68,11 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
 	 * @param position
 	 * @param checkBox
 	 */
-	private void setOnCheckedListener(final int position, CheckBox checkBox) {
-		checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+	private void setOnCheckedListener(final int position, final CheckBox checkBox) {
+		checkBox.setOnClickListener(new View.OnClickListener() {
 
-			@Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
+			@Override public void onClick(View view) {
+				if (checkBox.isChecked()) {
 					VoucherBean lastDefaultBean = null;
 					if (mDefaultIndex != -1) { // 设置原来的bean对象为没选中
 						lastDefaultBean = mDataList.get(mDefaultIndex);
@@ -85,17 +85,27 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
 					mDataList.set(position, currentBean);
 					// 更新索引
 					mDefaultIndex = position;
+					mNotifyAdapter(lastDefaultBean);
+				} else {
+					VoucherBean lastDefaultBean = null;
+					if (mDefaultIndex != -1) { // 设置原来的bean对象为没选中
+						lastDefaultBean = mDataList.get(mDefaultIndex);
+						lastDefaultBean.isChecked = false;
+						mDataList.set(mDefaultIndex, lastDefaultBean);
+					}
 					if (onVoucherCheckedChangedListener != null) {
-						onVoucherCheckedChangedListener.onCheckedChangedListener(lastDefaultBean == null ? null : lastDefaultBean.voucher_id, false);
+						onVoucherCheckedChangedListener.onCheckedChangedListener(lastDefaultBean == null ? null : lastDefaultBean.voucher_id, true);
 					}
 				}
-//				else {
-//					if (onVoucherCheckedChangedListener != null) {
-//						onVoucherCheckedChangedListener.onCheckedChangedListener(null, true);
-//					}
-//				}
 			}
 		});
+	}
+
+	private void mNotifyAdapter(VoucherBean lastDefaultBean) {
+		mVoucherDialog.notifyDataSetChanged();
+		if (onVoucherCheckedChangedListener != null) {
+			onVoucherCheckedChangedListener.onCheckedChangedListener(lastDefaultBean == null ? null : lastDefaultBean.voucher_id, false);
+		}
 	}
 
 	/***
@@ -146,6 +156,10 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
 
 	public void setNoUseVoucherCheckbox(CheckBox checkbox) {
 		this.noUseVoucherCheckbox = checkbox;
+	}
+
+	public List<VoucherBean> getList() {
+		return mDataList;
 	}
 
 	@Override public int getItemCount() {

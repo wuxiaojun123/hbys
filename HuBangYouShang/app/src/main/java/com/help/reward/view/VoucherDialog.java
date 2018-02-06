@@ -154,25 +154,50 @@ public class VoucherDialog implements VoucherAdapter.OnVoucherCheckedChangedList
 			}
 		}
 		if (userVoucher) {
-			 id_cb_use_voucher.setChecked(true);
+			boolean hasOne = false;
+			mList = mAdapter.getList();
+			for (VoucherBean voucherBean : mList) {
+				if (voucherBean.isChecked) {
+					hasOne = true;
+					break;
+				}
+			}
+			if (!hasOne) id_cb_use_voucher.setChecked(true);
 		} else {
-			 id_cb_use_voucher.setChecked(false);
+			id_cb_use_voucher.setChecked(false);
 		}
 	}
 
 	private void initCheckListener() {
-		id_cb_use_voucher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		id_cb_use_voucher.setOnClickListener(new View.OnClickListener() {
 
-			@Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) { // 不使用优惠卷
+			@Override public void onClick(View view) {
+				if (id_cb_use_voucher.isChecked()) {// 不使用优惠卷
 					if (mList != null) {
+						boolean hasOne = false;
 						for (VoucherBean voucherBean : mList) {
-							voucherBean.isChecked = false;
+							if (voucherBean.isChecked) {
+								voucherBean.isChecked = false;
+								hasOne = true;
+							}
 						}
-						notifyDataSetChanged();
+						if (hasOne) {
+							notifyDataSetChanged();
+						}
 					}
-				} else { // 使用优惠券，默认选中第一个优惠券
+				} else {// 使用优惠券，默认选中第一个优惠券，当没有选中任何一个优惠券的时候才有用
 					if (mList != null) {
+						// boolean hasOne = false;
+						// for (VoucherBean voucherBean : mList) {
+						// if (voucherBean.isChecked && !hasOne) {
+						// hasOne = true;
+						// } else {
+						// voucherBean.isChecked = false;
+						// }
+						// }
+						// if (!hasOne) {
+						// mList.get(0).isChecked = true;
+						// }
 						mList.get(0).isChecked = true;
 						notifyDataSetChanged();
 					}
