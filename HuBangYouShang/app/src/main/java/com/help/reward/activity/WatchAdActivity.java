@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.help.reward.App;
@@ -25,6 +26,7 @@ import com.help.reward.utils.GlideUtils;
 import com.help.reward.view.AlertDialog;
 import com.help.reward.view.MyProcessDialog;
 import com.idotools.utils.LogUtils;
+import com.idotools.utils.MetricsUtils;
 import com.idotools.utils.ToastUtils;
 
 import java.net.SocketTimeoutException;
@@ -103,6 +105,11 @@ public class WatchAdActivity extends BaseActivity implements View.OnClickListene
     private void initView() {
         tv_title.setText(R.string.string_watch_ad);
         tv_title_right.setVisibility(View.GONE);
+        // 固定图片的宽和高
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) iv_img_ad.getLayoutParams();
+        params.width = MetricsUtils.dipToPx(710);
+        params.height = MetricsUtils.dipToPx(950);
+        iv_img_ad.setLayoutParams(params);
     }
 
     /***

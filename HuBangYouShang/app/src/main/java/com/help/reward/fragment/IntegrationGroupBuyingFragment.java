@@ -73,7 +73,7 @@ public class IntegrationGroupBuyingFragment extends BaseFragment {
     private void initNetwor() {
         subscribe = IntegrationNetwork
                 .getIntegrationApi()
-                .getAdvertisementGroupBuying("advertisement", ""+currentPage,"join")
+                .getAdvertisementGroupBuying("advertisement", "" + currentPage, "join")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<AdvertisementResponse>() {
@@ -89,15 +89,15 @@ public class IntegrationGroupBuyingFragment extends BaseFragment {
                         lRecyclerview.refreshComplete(numSize);
                         if (response.code == 200) {
                             if (response.data != null) {
-                                if(currentPage == 1){
+                                if (currentPage == 1) {
                                     mIntegrationWatchPraiseAdapter.setDataList(response.data.adv_list);
-                                }else{
+                                } else {
                                     mIntegrationWatchPraiseAdapter.addAll(response.data.adv_list);
                                 }
                             }
                             if (!response.hasmore) { // 是否有更多数据
                                 lRecyclerview.setLoadMoreEnabled(false);
-                            }else{
+                            } else {
                                 currentPage += 1;
                             }
                         } else {
