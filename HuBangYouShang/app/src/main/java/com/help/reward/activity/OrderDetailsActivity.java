@@ -327,7 +327,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
 	private void bindData(OrderInfoBean bean) {
 		tv_order_number.setText("订单号:" + bean.order_sn);
-		tv_order_state.setText(bean.state_desc);
+		tv_order_state.setText(bean.state_desc + (TextUtils.isEmpty(bean.refund_desc) ? "" : "(" + bean.refund_desc + ")"));
 		tv_order_start_time.setText(bean.add_time);
 
 		if (bean.extend_order_common.dlyo_pickup_code == null) {
