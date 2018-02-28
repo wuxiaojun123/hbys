@@ -78,6 +78,18 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
 	@BindView(R.id.ll_refund) LinearLayout			ll_refund;				// 退款信息
 
+	@BindView(R.id.tv_refund_desc) TextView			tv_refund_desc;			// 退款信息
+
+	@BindView(R.id.tv_seller_feedback) TextView		tv_seller_feedback;		// 卖家反馈
+
+	@BindView(R.id.iv_photo1) ImageView				iv_photo1;				// 退款图片
+
+	@BindView(R.id.iv_photo2) ImageView				iv_photo2;				// 退款图片
+
+	@BindView(R.id.iv_photo3) ImageView				iv_photo3;				// 退款图片
+
+	@BindView(R.id.iv_photo4) ImageView				iv_photo4;				// 退款图片
+
 	@BindView(R.id.tv_complaint) TextView			tv_complaint;			// 投诉
 
 	@BindView(R.id.tv_pay_way) TextView				tv_pay_way;				// 支付方式
@@ -312,7 +324,6 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 	// }
 	// });
 	// }
-
 	private void showDialogContactSeller() { // 联系买家--拨打电话
 		if (TextUtils.isEmpty(sellerPhoneNumber)) {
 			ToastUtils.show(mContext, "无卖家电话号码");
@@ -333,8 +344,10 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
 		if (TextUtils.isEmpty(bean.refund_desc)) {
 			tv_order_state.setText(bean.state_desc);
+			ll_refund.setVisibility(View.GONE);
 		} else {
 			tv_order_state.setText(bean.state_desc + "(" + bean.refund_desc + ")");
+			ll_refund.setVisibility(View.VISIBLE);
 			showRefundView(bean.refund_list);
 		}
 
@@ -364,13 +377,32 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 	 */
 	private void showRefundView(OrderInfoBean.Refund_list refundList) {
 		if (refundList != null) {
-
+			tv_refund_desc.setText(refundList.buyer_message);
+			tv_seller_feedback.setText("卖家反馈:" + refundList.seller_message);
+			if (refundList.pic_info != null && !refundList.pic_info.isEmpty()) {
+				for (int i = 0; i < refundList.pic_info.size(); i++) {
+					if (i == 0) {
+						iv_photo1.setVisibility(View.VISIBLE);
+						GlideUtils.loadImage(refundList.pic_info.get(i), iv_photo1);
+					} else if (i == 1) {
+						iv_photo2.setVisibility(View.VISIBLE);
+						GlideUtils.loadImage(refundList.pic_info.get(i), iv_photo2);
+					} else if (i == 2) {
+						iv_photo3.setVisibility(View.VISIBLE);
+						GlideUtils.loadImage(refundList.pic_info.get(i), iv_photo3);
+					} else if (i == 3) {
+						iv_photo4.setVisibility(View.VISIBLE);
+						GlideUtils.loadImage(refundList.pic_info.get(i), iv_photo4);
+					}
+					LogUtils.e("图片路径是"+refundList.pic_info.get(i));
+				}
+			}
 		}
 	}
 
 	/***
 	 * 设置商品信息
-	 * 
+	 *
 	 * @param bean
 	 */
 	private void setShopText(OrderInfoBean bean) {

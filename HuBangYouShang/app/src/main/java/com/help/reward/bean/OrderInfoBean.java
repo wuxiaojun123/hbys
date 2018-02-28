@@ -90,10 +90,11 @@ public class OrderInfoBean {
 
 		public String		buyer_message;	// 买家备注
 
+		public String		seller_message;	// 卖家备注
+
 		public String		seller_state;	// 卖家是否同意1为待审核,2为同意,3为不同意
 
-		public String		refund_state;	// 1为处理中,2为待管理员处理,3为已完成
-		// 退款成功失败退款中状态按钮判断依据seller_state=3 失败、refund_state=3 是成功
+		public String		refund_state;	// 1为处理中,2为待管理员处理,3为已完成 // 退款成功失败退款中状态按钮判断依据seller_state=3 失败、refund_state=3 是成功
 
 	}
 
