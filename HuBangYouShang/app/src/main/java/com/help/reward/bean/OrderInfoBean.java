@@ -46,6 +46,8 @@ public class OrderInfoBean {
 
 	public String					refund_desc;			// 退款成功or失败 文字描述。没有退款时返回空
 
+	public Refund_list				refund_list;
+
 	public class Extend_order_common {
 
 		public String		reciver_name;			// 收货人姓名
@@ -80,6 +82,19 @@ public class OrderInfoBean {
 		public String	live_store_tel;		// 商家电话
 
 		public String	live_store_address;	// 商家地址
+	}
+
+	public class Refund_list {
+
+		public List<String>	pic_info;
+
+		public String		buyer_message;	// 买家备注
+
+		public String		seller_state;	// 卖家是否同意1为待审核,2为同意,3为不同意
+
+		public String		refund_state;	// 1为处理中,2为待管理员处理,3为已完成
+		// 退款成功失败退款中状态按钮判断依据seller_state=3 失败、refund_state=3 是成功
+
 	}
 
 }

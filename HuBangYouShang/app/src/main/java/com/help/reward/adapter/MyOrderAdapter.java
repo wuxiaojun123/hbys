@@ -192,7 +192,9 @@ public class MyOrderAdapter extends BaseRecyclerAdapter implements OrderOperatio
 				sb.append("待付款");
 
 			} else if ("20".equals(order_state)) { // 待发货 不显示
-				tv_remove_order.setVisibility(View.GONE);
+				tv_remove_order.setText("退款退货");
+				tv_remove_order.setTag("1");
+				tv_remove_order.setVisibility(View.VISIBLE);
 				tv_cancel_order.setVisibility(View.GONE);
 				tv_evaluate_order.setVisibility(View.GONE);
 				tv_evaluate_order.setTag("0");

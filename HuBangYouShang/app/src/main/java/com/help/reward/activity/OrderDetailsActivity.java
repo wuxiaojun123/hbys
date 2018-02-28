@@ -76,6 +76,8 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
 	@BindView(R.id.ll_shop) LinearLayout			ll_shop;				// 商品列表
 
+	@BindView(R.id.ll_refund) LinearLayout			ll_refund;				// 退款信息
+
 	@BindView(R.id.tv_complaint) TextView			tv_complaint;			// 投诉
 
 	@BindView(R.id.tv_pay_way) TextView				tv_pay_way;				// 支付方式
@@ -327,8 +329,14 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
 	private void bindData(OrderInfoBean bean) {
 		tv_order_number.setText("订单号:" + bean.order_sn);
-		tv_order_state.setText(bean.state_desc + (TextUtils.isEmpty(bean.refund_desc) ? "" : "(" + bean.refund_desc + ")"));
 		tv_order_start_time.setText(bean.add_time);
+
+		if (TextUtils.isEmpty(bean.refund_desc)) {
+			tv_order_state.setText(bean.state_desc);
+		} else {
+			tv_order_state.setText(bean.state_desc + "(" + bean.refund_desc + ")");
+			showRefundView(bean.refund_list);
+		}
 
 		if (bean.extend_order_common.dlyo_pickup_code == null) {
 			tv_express.setText("快递单号:" + bean.shipping_code);
@@ -351,6 +359,20 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 		sellerPhoneNumber = bean.store_phone;
 	}
 
+	/***
+	 * 显示退款信息
+	 */
+	private void showRefundView(OrderInfoBean.Refund_list refundList) {
+		if (refundList != null) {
+
+		}
+	}
+
+	/***
+	 * 设置商品信息
+	 * 
+	 * @param bean
+	 */
 	private void setShopText(OrderInfoBean bean) {
 		pay_sn = bean.pay_sn;
 		int size = bean.goods_list.size();
@@ -393,6 +415,7 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 
 			ll_shop.addView(shopView);
 		}
+
 	}
 
 	private void setOrderState(OrderInfoBean bean) {
@@ -414,7 +437,9 @@ public class OrderDetailsActivity extends BaseActivity implements View.OnClickLi
 				tv_evaluate_order.setTag("1");
 
 			} else if ("20".equals(order_state)) { // 待发货 不显示
-				tv_remove_order.setVisibility(View.GONE);
+				tv_remove_order.setText("退款退货");
+				tv_remove_order.setTag("1");
+				tv_remove_order.setVisibility(View.VISIBLE);
 				tv_cancel_order.setVisibility(View.GONE);
 				tv_evaluate_order.setVisibility(View.GONE);
 				tv_evaluate_order.setTag("0");
