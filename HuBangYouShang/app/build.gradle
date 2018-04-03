@@ -122,6 +122,8 @@ dependencies {
 //    compile 'com.google.code.gson:gson:2.8.0'
     // LeanCloud 基础包
 //    compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
+    // multidex分包
+    compile "com.android.support:multidex:1.0.0"
 }
 // 在MobSDK的扩展中注册SMSSDK的相关信息
 MobSDK {

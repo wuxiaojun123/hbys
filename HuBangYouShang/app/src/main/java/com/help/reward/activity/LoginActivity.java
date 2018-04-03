@@ -60,367 +60,342 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
- * 登陆
- * Created by wuxiaojun on 2017/1/6.
+ * 登陆 Created by wuxiaojun on 2017/1/6.
  */
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.et_login_phone_number)
-    EditText et_login_phone_number;// 用户名
-    @BindView(R.id.et_login_pwd)
-    EditText et_login_pwd; // 密码
+	@BindView(R.id.et_login_phone_number) EditText	et_login_phone_number;	// 用户名
 
-    private Subscription subscribe;
-    private boolean isFromMainActivity;
+	@BindView(R.id.et_login_pwd) EditText			et_login_pwd;			// 密码
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+	private Subscription							subscribe;
 
-        isFromMainActivity = getIntent().getBooleanExtra(LoginUtils.LOGIN_TYPE, false);
-        String defaultUsername = SharedPreferencesHelper.getInstance(mContext).getString(SharedPreferenceConstant.KEY_LOGIN_USERNAME, null);
-        et_login_phone_number.setText(defaultUsername);
-    }
+	private boolean									isFromMainActivity;
 
-    @OnClick({R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd, R.id.tv_look, R.id.tv_wetchat, R.id.tv_qq, R.id.tv_weibo})
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.btn_login:
-                login();
+	@Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_login);
+		ButterKnife.bind(this);
 
-                break;
-            case R.id.tv_register:
-                // 快速注册
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-                ActivitySlideAnim.slideInAnim(LoginActivity.this);
+		isFromMainActivity = getIntent().getBooleanExtra(LoginUtils.LOGIN_TYPE, false);
+		String defaultUsername = SharedPreferencesHelper.getInstance(mContext).getString(SharedPreferenceConstant.KEY_LOGIN_USERNAME, null);
+		et_login_phone_number.setText(defaultUsername);
+	}
 
-                break;
-            case R.id.tv_forget_pwd: // 忘记密码
-                Intent mIntent = new Intent(LoginActivity.this, ForgetPwdActivity.class);
-                mIntent.putExtra("title", "忘记密码");
-                startActivity(mIntent);
-                ActivitySlideAnim.slideInAnim(LoginActivity.this);
+	@OnClick({ R.id.btn_login, R.id.tv_register, R.id.tv_forget_pwd, R.id.tv_look, R.id.tv_wetchat, R.id.tv_qq, R.id.tv_weibo }) @Override public void onClick(View v) {
+		int id = v.getId();
+		switch (id) {
+			case R.id.btn_login:
+				login();
 
-                break;
-            case R.id.tv_look:
-                finish();
-                ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+				break;
+			case R.id.tv_register:
+				// 快速注册
+				startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+				ActivitySlideAnim.slideInAnim(LoginActivity.this);
 
-                break;
+				break;
+			case R.id.tv_forget_pwd: // 忘记密码
+				Intent mIntent = new Intent(LoginActivity.this, ForgetPwdActivity.class);
+				mIntent.putExtra("title", "忘记密码");
+				startActivity(mIntent);
+				ActivitySlideAnim.slideInAnim(LoginActivity.this);
 
-            case R.id.tv_wetchat:
-                // 微信登录
-                wxLogin();
+				break;
+			case R.id.tv_look:
+				finish();
+				ActivitySlideAnim.slideOutAnim(LoginActivity.this);
 
-                break;
-            case R.id.tv_qq:
-                // qq登陆
-                qqLogin();
+				break;
 
-                break;
-            case R.id.tv_weibo:
+			case R.id.tv_wetchat:
+				// 微信登录
+				wxLogin();
 
-                break;
-        }
-    }
+				break;
+			case R.id.tv_qq:
+				// qq登陆
+				qqLogin();
 
-    private Tencent mTencent;
-    private BaseUiListener iBaseUiListener;
+				break;
+			case R.id.tv_weibo:
 
-    /***
-     * qq登陆
-     */
-    private void qqLogin() {
-        mTencent = Tencent.createInstance(Constant.QQ_LOGIN_APP_ID, this.getApplicationContext());
-        if (!mTencent.isSessionValid()) {
-            iBaseUiListener = new BaseUiListener();
-            mTencent.login(this, "all", iBaseUiListener);
-        }
-    }
+				break;
+		}
+	}
 
-    /***
-     * 微信登录
-     */
-    private void wxLogin() {
-        getLoginSuccessInfo();
-        IWXAPI api = WXAPIFactory.createWXAPI(this, Constant.WXCHAT_APP_ID, true);
-        api.registerApp(Constant.WXCHAT_APP_ID); // 将应用注册到微信
-        if (api != null && api.isWXAppInstalled()) {
+	private Tencent			mTencent;
 
-            SendAuth.Req req = new SendAuth.Req();
-            req.scope = "snsapi_userinfo"; // 作用域 只获取用户信息
-            req.state = String.valueOf(System.currentTimeMillis());
-            api.sendReq(req);
+	private BaseUiListener	iBaseUiListener;
 
-        } else {
-            ToastUtils.show(getApplicationContext(), "请安装微信");
-        }
-    }
+	/***
+	 * qq登陆
+	 */
+	private void qqLogin() {
+		mTencent = Tencent.createInstance(Constant.QQ_LOGIN_APP_ID, this.getApplicationContext());
+		if (!mTencent.isSessionValid()) {
+			iBaseUiListener = new BaseUiListener();
+			mTencent.login(this, "all", iBaseUiListener);
+		}
+	}
 
-    private Subscription subscribeRxbusWeixin;
+	/***
+	 * 微信登录
+	 */
+	private void wxLogin() {
+		getLoginSuccessInfo();
+		IWXAPI api = WXAPIFactory.createWXAPI(this, Constant.WXCHAT_APP_ID, true);
+		api.registerApp(Constant.WXCHAT_APP_ID); // 将应用注册到微信
+		if (api != null && api.isWXAppInstalled()) {
 
-    private void getLoginSuccessInfo() {
-        subscribeRxbusWeixin = RxBus.getDefault().toObservable(WeiXinLoginRxbusType.class).subscribe(new Action1<WeiXinLoginRxbusType>() {
-            @Override
-            public void call(WeiXinLoginRxbusType type) {
-                if (type.isLogin) {
-                    thirdLoginHuanXin();
-                }
-                if (!subscribeRxbusWeixin.isUnsubscribed()) {
-                    subscribeRxbusWeixin.unsubscribe();
-                }
-            }
-        });
-    }
+			SendAuth.Req req = new SendAuth.Req();
+			req.scope = "snsapi_userinfo"; // 作用域 只获取用户信息
+			req.state = String.valueOf(System.currentTimeMillis());
+			api.sendReq(req);
 
+		} else {
+			ToastUtils.show(getApplicationContext(), "请安装微信");
+		}
+	}
 
-    /***
-     * 登录逻辑
-     */
-    private void login() {
-        final String username = et_login_phone_number.getText().toString().trim();
-        if (TextUtils.isEmpty(username)) {
-            ToastUtils.show(mContext, "请输入用户名");
-            return;
-        }
-        final String password = et_login_pwd.getText().toString().trim();
-        if (TextUtils.isEmpty(password)) {
-            ToastUtils.show(mContext, "请输入密码");
-            return;
-        }
+	private Subscription subscribeRxbusWeixin;
 
-        MyProcessDialog.showDialog(mContext);
-        subscribe = PersonalNetwork
-                .getLoginApi()
-                .getLoginBean(username, password, App.GETUI_CLIENT_ID, Constant.PLATFORM_CLIENT).subscribeOn(Schedulers.io()) // 请求放在io线程中
-                .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
-                .subscribe(new BaseSubscriber<LoginResponse>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        MyProcessDialog.closeDialog();
-                        e.printStackTrace();
-                        if (e instanceof UnknownHostException) {
-                            ToastUtils.show(mContext, "请求到错误服务器");
-                        } else if (e instanceof SocketTimeoutException) {
-                            ToastUtils.show(mContext, "请求超时");
-                        }
-                    }
+	private void getLoginSuccessInfo() {
+		subscribeRxbusWeixin = RxBus.getDefault().toObservable(WeiXinLoginRxbusType.class).subscribe(new Action1<WeiXinLoginRxbusType>() {
 
-                    @Override
-                    public void onNext(LoginResponse res) {
-                        if (res.code == 200) {
-                            App.APP_CLIENT_KEY = res.data.key;
-                            App.APP_USER_ID = res.data.userid;
-                            // 请求会员信息
-                            App.mLoginReponse = res.data;
-                            RxBus.getDefault().post(new LoginSuccessRxbusType("loginSuccess"));
-//                            LogUtils.e("用户名是:" + App.mLoginReponse.easemobId + "----密码是:" + password + App.mLoginReponse.new_message);
-                            SharedPreferencesHelper.getInstance(mContext).putString(SharedPreferenceConstant.KEY_LOGIN_USERNAME, username);
+			@Override public void call(WeiXinLoginRxbusType type) {
+				if (type.isLogin) {
+					thirdLoginHuanXin();
+				}
+				if (!subscribeRxbusWeixin.isUnsubscribed()) {
+					subscribeRxbusWeixin.unsubscribe();
+				}
+			}
+		});
+	}
 
-                            LoginToHuanxin(App.mLoginReponse.easemobId, password);
-                        } else {
-                            MyProcessDialog.closeDialog();
-                            ToastUtils.show(mContext, res.msg);
-                        }
-                    }
-                });
-    }
+	/***
+	 * 登录逻辑
+	 */
+	private void login() {
+		final String username = et_login_phone_number.getText().toString().trim();
+		if (TextUtils.isEmpty(username)) {
+			ToastUtils.show(mContext, "请输入用户名");
+			return;
+		}
+		final String password = et_login_pwd.getText().toString().trim();
+		if (TextUtils.isEmpty(password)) {
+			ToastUtils.show(mContext, "请输入密码");
+			return;
+		}
 
+		MyProcessDialog.showDialog(mContext);
+		subscribe = PersonalNetwork.getLoginApi().getLoginBean(username, password, App.GETUI_CLIENT_ID, Constant.PLATFORM_CLIENT).subscribeOn(Schedulers.io()) // 请求放在io线程中
+				.observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
+				.subscribe(new BaseSubscriber<LoginResponse>() {
 
-    private void LoginToHuanxin(String username, String password) {
-        EMClient.getInstance().login(username, password, new EMCallBack() {//回调
-            @Override
-            public void onSuccess() {
-                MyProcessDialog.closeDialog();
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
-                LogUtils.e("onSuccess--登录聊天服务器成功！");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (isFromMainActivity) {
-                            RxBus.getDefault().post(new LoginSuccessRxbusType2(true));
-                        }
-                    }
-                });
-                finishActivity();
-            }
+					@Override public void onError(Throwable e) {
+						MyProcessDialog.closeDialog();
+						e.printStackTrace();
+						if (e instanceof UnknownHostException) {
+							ToastUtils.show(mContext, "请求到错误服务器");
+						} else if (e instanceof SocketTimeoutException) {
+							ToastUtils.show(mContext, "请求超时");
+						}
+					}
 
-            @Override
-            public void onProgress(int progress, String status) {
-                LogUtils.e("onProgress中" + progress + "--status" + status);
-            }
+					@Override public void onNext(LoginResponse res) {
+						if (res.code == 200) {
+							App.APP_CLIENT_KEY = res.data.key;
+							App.APP_USER_ID = res.data.userid;
+							// 请求会员信息
+							App.mLoginReponse = res.data;
+							RxBus.getDefault().post(new LoginSuccessRxbusType("loginSuccess"));
+							SharedPreferencesHelper.getInstance(mContext).putString(SharedPreferenceConstant.KEY_LOGIN_USERNAME, username);
 
-            @Override
-            public void onError(int code, String message) {
-                MyProcessDialog.closeDialog();
-//                ToastUtils.show(LoginActivity.this,"登录聊天服务器失败！");
-                LogUtils.e("onError  登录聊天服务器失败！");
+							LoginToHuanxin(App.mLoginReponse.easemobId, password);
+						} else {
+							MyProcessDialog.closeDialog();
+							ToastUtils.show(mContext, res.msg);
+						}
+					}
+				});
+	}
 
-                finishActivity();
-            }
-        });
-    }
+	private void LoginToHuanxin(String username, String password) {
+		EMClient.getInstance().login(username, password, new EMCallBack() {// 回调
 
-    private void finishActivity() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                LoginActivity.this.finish();
-                ActivitySlideAnim.slideOutAnim(LoginActivity.this);
-            }
-        });
-    }
+			@Override public void onSuccess() {
+				MyProcessDialog.closeDialog();
+				EMClient.getInstance().groupManager().loadAllGroups();
+				EMClient.getInstance().chatManager().loadAllConversations();
+				LogUtils.e("onSuccess--登录聊天服务器成功！");
+				runOnUiThread(new Runnable() {
 
-    @BindView(R.id.ll_total)
-    LinearLayout ll_total;
+					@Override public void run() {
+						if (isFromMainActivity) {
+							RxBus.getDefault().post(new LoginSuccessRxbusType2(true));
+						}
+					}
+				});
+				finishActivity();
+			}
 
-    @Override
-    protected void setStatusBar() {
-        StatusBarUtil.setTranslucentForImageView(LoginActivity.this, 0, ll_total);
-    }
+			@Override public void onProgress(int progress, String status) {
+				LogUtils.e("onProgress中" + progress + "--status" + status);
+			}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mTencent.onActivityResultData(requestCode, resultCode, data, new BaseUiListener());
-    }
+			@Override public void onError(int code, String message) {
+				MyProcessDialog.closeDialog();
+				// ToastUtils.show(LoginActivity.this,"登录聊天服务器失败！");
+				LogUtils.e("onError  登录聊天服务器失败！");
 
-    private class BaseUiListener implements IUiListener {
+				finishActivity();
+			}
+		});
+	}
 
-        @Override
-        public void onComplete(Object o) {
-            LogUtils.e("执行 onComplete" + o);
-            JSONObject jsonObject = (JSONObject) o;
+	private void finishActivity() {
+		runOnUiThread(new Runnable() {
 
-            //设置openid和token，否则获取不到下面的信息
-            initOpenidAndToken(jsonObject);
-            //获取QQ用户的各信息
-//            getUserInfo();
-        }
+			@Override public void run() {
+				LoginActivity.this.finish();
+				ActivitySlideAnim.slideOutAnim(LoginActivity.this);
+			}
+		});
+	}
 
-        @Override
-        public void onError(UiError e) {
-            LogUtils.e("code:" + e.errorCode + ", msg:" + e.errorMessage + ", detail:" + e.errorDetail);
-        }
+	@BindView(R.id.ll_total) LinearLayout ll_total;
 
-        @Override
-        public void onCancel() {
-            LogUtils.e("onCancel");
-        }
+	@Override protected void setStatusBar() {
+		StatusBarUtil.setTranslucentForImageView(LoginActivity.this, 0, ll_total);
+	}
 
-    }
+	@Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		mTencent.onActivityResultData(requestCode, resultCode, data, new BaseUiListener());
+	}
 
-    private void initOpenidAndToken(JSONObject jsonObject) {
-        try {
-            String openid = jsonObject.getString("openid");
-            String token = jsonObject.getString("access_token");
-            String expires = jsonObject.getString("expires_in");
-            LogUtils.e("openid=" + openid + "--token=" + token + "--" + expires);
+	private class BaseUiListener implements IUiListener {
 
-            qqLoginLoadData(token, openid, Constant.PLATFORM_CLIENT);
+		@Override public void onComplete(Object o) {
+			LogUtils.e("执行 onComplete" + o);
+			JSONObject jsonObject = (JSONObject) o;
 
-//            mTencent.setAccessToken(token, expires);
-//            mTencent.setOpenId(openid);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+			// 设置openid和token，否则获取不到下面的信息
+			initOpenidAndToken(jsonObject);
+			// 获取QQ用户的各信息
+			// getUserInfo();
+		}
 
-    /***
-     * qq登陆请求服务器
-     * @param access_token
-     * @param openid
-     * @param platformClient
-     */
-    private void qqLoginLoadData(String access_token, String openid, String platformClient) {
-        PersonalNetwork
-                .getLoginApi()
-                .getQQLoginResponse(access_token, openid, platformClient)
-                .subscribeOn(Schedulers.io()) // 请求放在io线程中
-                .observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
-                .subscribe(new BaseSubscriber<LoginResponse2>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        if (e instanceof UnknownHostException) {
-                            ToastUtils.show(mContext, "请求到错误服务器");
-                        } else if (e instanceof SocketTimeoutException) {
-                            ToastUtils.show(mContext, "请求超时");
-                        }
-                    }
+		@Override public void onError(UiError e) {
+			LogUtils.e("code:" + e.errorCode + ", msg:" + e.errorMessage + ", detail:" + e.errorDetail);
+		}
 
-                    @Override
-                    public void onNext(LoginResponse2 res) {
-                        LogUtils.e("qq登录成功...." + res.code + "----res" + res);
-                        if (res.code == 200) {
-                            LogUtils.e("res.data.key=" + res.data.key);
-                            // 登录成功
-                            App.APP_CLIENT_KEY = res.data.key;
-                            App.APP_USER_ID = res.data.userid;
-                            // 请求会员信息
-                            App.mLoginReponse = res.data;
-                            RxBus.getDefault().post(new LoginSuccessRxbusType("loginSuccess"));
-                            thirdLoginHuanXin();
+		@Override public void onCancel() {
+			LogUtils.e("onCancel");
+		}
 
-                        } else {
-                            ToastUtils.show(mContext, res.msg);
-                        }
-                    }
-                });
-    }
+	}
 
-    /**
-     * 第三方登录环信
-     */
-    public void thirdLoginHuanXin() {
-        String password = App.mLoginReponse.easemobId + (Integer.parseInt(App.mLoginReponse.userid) + 201);
-        LoginToHuanxin(App.mLoginReponse.easemobId, password);
-    }
+	private void initOpenidAndToken(JSONObject jsonObject) {
+		try {
+			String openid = jsonObject.getString("openid");
+			String token = jsonObject.getString("access_token");
+			String expires = jsonObject.getString("expires_in");
+			LogUtils.e("openid=" + openid + "--token=" + token + "--" + expires);
 
-    private void getUserInfo() {
-        //sdk给我们提供了一个类UserInfo，这个类中封装了QQ用户的一些信息，我么可以通过这个类拿到这些信息
-        QQToken mQQToken = mTencent.getQQToken();
-        UserInfo userInfo = new UserInfo(LoginActivity.this, mQQToken);
-        userInfo.getUserInfo(new IUiListener() {
-                                 @Override
-                                 public void onComplete(final Object o) {
-                                     try {
-                                         JSONObject userInfoJson = (JSONObject) o;
-                                         String nickname = userInfoJson.getString("nickname");//直接传递一个昵称的内容过去
-                                         String headUrl = null;
-                                         if (userInfoJson.has("figureurl")) {
-                                             headUrl = userInfoJson.getString("figureurl_qq_2");
-                                         }
-                                         LogUtils.e("昵称是：" + nickname + "------" + headUrl);
-                                     } catch (JSONException e) {
-                                         e.printStackTrace();
-                                     }
-                                 }
+			qqLoginLoadData(token, openid, Constant.PLATFORM_CLIENT);
 
-                                 @Override
-                                 public void onError(UiError uiError) {
-                                     LogUtils.e("GET_QQ_INFO_ERROR 获取qq用户信息错误");
-                                 }
+			// mTencent.setAccessToken(token, expires);
+			// mTencent.setOpenId(openid);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
 
-                                 @Override
-                                 public void onCancel() {
-                                     LogUtils.e("GET_QQ_INFO_CANCEL 获取qq用户信息取消");
-                                 }
-                             }
-        );
-    }
+	/***
+	 * qq登陆请求服务器
+	 * 
+	 * @param access_token
+	 * @param openid
+	 * @param platformClient
+	 */
+	private void qqLoginLoadData(String access_token, String openid, String platformClient) {
+		PersonalNetwork.getLoginApi().getQQLoginResponse(access_token, openid, platformClient).subscribeOn(Schedulers.io()) // 请求放在io线程中
+				.observeOn(AndroidSchedulers.mainThread()) // 请求结果放在主线程中
+				.subscribe(new BaseSubscriber<LoginResponse2>() {
 
+					@Override public void onError(Throwable e) {
+						e.printStackTrace();
+						if (e instanceof UnknownHostException) {
+							ToastUtils.show(mContext, "请求到错误服务器");
+						} else if (e instanceof SocketTimeoutException) {
+							ToastUtils.show(mContext, "请求超时");
+						}
+					}
 
-    @Override
-    protected void onDestroy() {
-        if (subscribe != null && !subscribe.isUnsubscribed()) {
-            subscribe.unsubscribe();
-        }
-        super.onDestroy();
-    }
+					@Override public void onNext(LoginResponse2 res) {
+						LogUtils.e("qq登录成功...." + res.code + "----res" + res);
+						if (res.code == 200) {
+							LogUtils.e("res.data.key=" + res.data.key);
+							// 登录成功
+							App.APP_CLIENT_KEY = res.data.key;
+							App.APP_USER_ID = res.data.userid;
+							// 请求会员信息
+							App.mLoginReponse = res.data;
+							RxBus.getDefault().post(new LoginSuccessRxbusType("loginSuccess"));
+							thirdLoginHuanXin();
+
+						} else {
+							ToastUtils.show(mContext, res.msg);
+						}
+					}
+				});
+	}
+
+	/**
+	 * 第三方登录环信
+	 */
+	public void thirdLoginHuanXin() {
+		String password = App.mLoginReponse.easemobId + (Integer.parseInt(App.mLoginReponse.userid) + 201);
+		LoginToHuanxin(App.mLoginReponse.easemobId, password);
+	}
+
+	private void getUserInfo() {
+		// sdk给我们提供了一个类UserInfo，这个类中封装了QQ用户的一些信息，我么可以通过这个类拿到这些信息
+		QQToken mQQToken = mTencent.getQQToken();
+		UserInfo userInfo = new UserInfo(LoginActivity.this, mQQToken);
+		userInfo.getUserInfo(new IUiListener() {
+
+			@Override public void onComplete(final Object o) {
+				try {
+					JSONObject userInfoJson = (JSONObject) o;
+					String nickname = userInfoJson.getString("nickname");// 直接传递一个昵称的内容过去
+					String headUrl = null;
+					if (userInfoJson.has("figureurl")) {
+						headUrl = userInfoJson.getString("figureurl_qq_2");
+					}
+					LogUtils.e("昵称是：" + nickname + "------" + headUrl);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override public void onError(UiError uiError) {
+				LogUtils.e("GET_QQ_INFO_ERROR 获取qq用户信息错误");
+			}
+
+			@Override public void onCancel() {
+				LogUtils.e("GET_QQ_INFO_CANCEL 获取qq用户信息取消");
+			}
+		});
+	}
+
+	@Override protected void onDestroy() {
+		if (subscribe != null && !subscribe.isUnsubscribed()) {
+			subscribe.unsubscribe();
+		}
+		super.onDestroy();
+	}
 }
